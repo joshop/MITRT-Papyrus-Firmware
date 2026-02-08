@@ -1,0 +1,388 @@
+ARM GAS  /tmp/cct6Loa6.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.arch armv6s-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.file	"user_diskio.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "FATFS/Target/user_diskio.c"
+  18              		.section	.text.USER_initialize,"ax",%progbits
+  19              		.align	1
+  20              		.global	USER_initialize
+  21              		.syntax unified
+  22              		.code	16
+  23              		.thumb_func
+  25              	USER_initialize:
+  26              	.LVL0:
+  27              	.LFB493:
+   1:FATFS/Target/user_diskio.c **** /* USER CODE BEGIN Header */
+   2:FATFS/Target/user_diskio.c **** /**
+   3:FATFS/Target/user_diskio.c ****  ******************************************************************************
+   4:FATFS/Target/user_diskio.c ****   * @file    user_diskio.c
+   5:FATFS/Target/user_diskio.c ****   * @brief   This file includes a diskio driver skeleton to be completed by the user.
+   6:FATFS/Target/user_diskio.c ****   ******************************************************************************
+   7:FATFS/Target/user_diskio.c ****   * @attention
+   8:FATFS/Target/user_diskio.c ****   *
+   9:FATFS/Target/user_diskio.c ****   * Copyright (c) 2026 STMicroelectronics.
+  10:FATFS/Target/user_diskio.c ****   * All rights reserved.
+  11:FATFS/Target/user_diskio.c ****   *
+  12:FATFS/Target/user_diskio.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  13:FATFS/Target/user_diskio.c ****   * in the root directory of this software component.
+  14:FATFS/Target/user_diskio.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:FATFS/Target/user_diskio.c ****   *
+  16:FATFS/Target/user_diskio.c ****   ******************************************************************************
+  17:FATFS/Target/user_diskio.c ****   */
+  18:FATFS/Target/user_diskio.c ****  /* USER CODE END Header */
+  19:FATFS/Target/user_diskio.c **** 
+  20:FATFS/Target/user_diskio.c **** #ifdef USE_OBSOLETE_USER_CODE_SECTION_0
+  21:FATFS/Target/user_diskio.c **** /*
+  22:FATFS/Target/user_diskio.c ****  * Warning: the user section 0 is no more in use (starting from CubeMx version 4.16.0)
+  23:FATFS/Target/user_diskio.c ****  * To be suppressed in the future.
+  24:FATFS/Target/user_diskio.c ****  * Kept to ensure backward compatibility with previous CubeMx versions when
+  25:FATFS/Target/user_diskio.c ****  * migrating projects.
+  26:FATFS/Target/user_diskio.c ****  * User code previously added there should be copied in the new user sections before
+  27:FATFS/Target/user_diskio.c ****  * the section contents can be deleted.
+  28:FATFS/Target/user_diskio.c ****  */
+  29:FATFS/Target/user_diskio.c **** /* USER CODE BEGIN 0 */
+  30:FATFS/Target/user_diskio.c **** /* USER CODE END 0 */
+  31:FATFS/Target/user_diskio.c **** #endif
+ARM GAS  /tmp/cct6Loa6.s 			page 2
+
+
+  32:FATFS/Target/user_diskio.c **** 
+  33:FATFS/Target/user_diskio.c **** /* USER CODE BEGIN DECL */
+  34:FATFS/Target/user_diskio.c **** 
+  35:FATFS/Target/user_diskio.c **** 
+  36:FATFS/Target/user_diskio.c **** /* Includes ------------------------------------------------------------------*/
+  37:FATFS/Target/user_diskio.c **** #include <string.h>
+  38:FATFS/Target/user_diskio.c **** #include "ff_gen_drv.h"
+  39:FATFS/Target/user_diskio.c **** #include "user_diskio_spi.h"
+  40:FATFS/Target/user_diskio.c **** 
+  41:FATFS/Target/user_diskio.c **** /* Private typedef -----------------------------------------------------------*/
+  42:FATFS/Target/user_diskio.c **** /* Private define ------------------------------------------------------------*/
+  43:FATFS/Target/user_diskio.c **** 
+  44:FATFS/Target/user_diskio.c **** /* Private variables ---------------------------------------------------------*/
+  45:FATFS/Target/user_diskio.c **** /* Disk status */
+  46:FATFS/Target/user_diskio.c **** static volatile DSTATUS Stat = STA_NOINIT;
+  47:FATFS/Target/user_diskio.c **** 
+  48:FATFS/Target/user_diskio.c **** /* USER CODE END DECL */
+  49:FATFS/Target/user_diskio.c **** 
+  50:FATFS/Target/user_diskio.c **** /* Private function prototypes -----------------------------------------------*/
+  51:FATFS/Target/user_diskio.c **** DSTATUS USER_initialize (BYTE pdrv);
+  52:FATFS/Target/user_diskio.c **** DSTATUS USER_status (BYTE pdrv);
+  53:FATFS/Target/user_diskio.c **** DRESULT USER_read (BYTE pdrv, BYTE *buff, DWORD sector, UINT count);
+  54:FATFS/Target/user_diskio.c **** #if _USE_WRITE == 1
+  55:FATFS/Target/user_diskio.c ****   DRESULT USER_write (BYTE pdrv, const BYTE *buff, DWORD sector, UINT count);
+  56:FATFS/Target/user_diskio.c **** #endif /* _USE_WRITE == 1 */
+  57:FATFS/Target/user_diskio.c **** #if _USE_IOCTL == 1
+  58:FATFS/Target/user_diskio.c ****   DRESULT USER_ioctl (BYTE pdrv, BYTE cmd, void *buff);
+  59:FATFS/Target/user_diskio.c **** #endif /* _USE_IOCTL == 1 */
+  60:FATFS/Target/user_diskio.c **** 
+  61:FATFS/Target/user_diskio.c **** Diskio_drvTypeDef  USER_Driver =
+  62:FATFS/Target/user_diskio.c **** {
+  63:FATFS/Target/user_diskio.c ****   USER_initialize,
+  64:FATFS/Target/user_diskio.c ****   USER_status,
+  65:FATFS/Target/user_diskio.c ****   USER_read,
+  66:FATFS/Target/user_diskio.c **** #if  _USE_WRITE
+  67:FATFS/Target/user_diskio.c ****   USER_write,
+  68:FATFS/Target/user_diskio.c **** #endif  /* _USE_WRITE == 1 */
+  69:FATFS/Target/user_diskio.c **** #if  _USE_IOCTL == 1
+  70:FATFS/Target/user_diskio.c ****   USER_ioctl,
+  71:FATFS/Target/user_diskio.c **** #endif /* _USE_IOCTL == 1 */
+  72:FATFS/Target/user_diskio.c **** };
+  73:FATFS/Target/user_diskio.c **** 
+  74:FATFS/Target/user_diskio.c **** /* Private functions ---------------------------------------------------------*/
+  75:FATFS/Target/user_diskio.c **** 
+  76:FATFS/Target/user_diskio.c **** /**
+  77:FATFS/Target/user_diskio.c ****   * @brief  Initializes a Drive
+  78:FATFS/Target/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
+  79:FATFS/Target/user_diskio.c ****   * @retval DSTATUS: Operation status
+  80:FATFS/Target/user_diskio.c ****   */
+  81:FATFS/Target/user_diskio.c **** DSTATUS USER_initialize (
+  82:FATFS/Target/user_diskio.c **** 	BYTE pdrv           /* Physical drive nmuber to identify the drive */
+  83:FATFS/Target/user_diskio.c **** )
+  84:FATFS/Target/user_diskio.c **** {
+  28              		.loc 1 84 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/cct6Loa6.s 			page 3
+
+
+  32              		.loc 1 84 1 is_stmt 0 view .LVU1
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  85:FATFS/Target/user_diskio.c ****   /* USER CODE BEGIN INIT */
+  86:FATFS/Target/user_diskio.c ****     return USER_SPI_initialize(pdrv); //ADD THIS LINE
+  38              		.loc 1 86 5 is_stmt 1 view .LVU2
+  39              		.loc 1 86 12 is_stmt 0 view .LVU3
+  40 0002 FFF7FEFF 		bl	USER_SPI_initialize
+  41              	.LVL1:
+  87:FATFS/Target/user_diskio.c ****   /* USER CODE END INIT */
+  88:FATFS/Target/user_diskio.c **** }
+  42              		.loc 1 88 1 view .LVU4
+  43              		@ sp needed
+  44 0006 10BD     		pop	{r4, pc}
+  45              		.cfi_endproc
+  46              	.LFE493:
+  48              		.section	.text.USER_status,"ax",%progbits
+  49              		.align	1
+  50              		.global	USER_status
+  51              		.syntax unified
+  52              		.code	16
+  53              		.thumb_func
+  55              	USER_status:
+  56              	.LVL2:
+  57              	.LFB494:
+  89:FATFS/Target/user_diskio.c **** 
+  90:FATFS/Target/user_diskio.c **** /**
+  91:FATFS/Target/user_diskio.c ****   * @brief  Gets Disk Status
+  92:FATFS/Target/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
+  93:FATFS/Target/user_diskio.c ****   * @retval DSTATUS: Operation status
+  94:FATFS/Target/user_diskio.c ****   */
+  95:FATFS/Target/user_diskio.c **** DSTATUS USER_status (
+  96:FATFS/Target/user_diskio.c **** 	BYTE pdrv       /* Physical drive number to identify the drive */
+  97:FATFS/Target/user_diskio.c **** )
+  98:FATFS/Target/user_diskio.c **** {
+  58              		.loc 1 98 1 is_stmt 1 view -0
+  59              		.cfi_startproc
+  60              		@ args = 0, pretend = 0, frame = 0
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62              		.loc 1 98 1 is_stmt 0 view .LVU6
+  63 0000 10B5     		push	{r4, lr}
+  64              	.LCFI1:
+  65              		.cfi_def_cfa_offset 8
+  66              		.cfi_offset 4, -8
+  67              		.cfi_offset 14, -4
+  99:FATFS/Target/user_diskio.c ****   /* USER CODE BEGIN STATUS */
+ 100:FATFS/Target/user_diskio.c ****     return USER_SPI_status(pdrv); //ADD THIS LINE
+  68              		.loc 1 100 5 is_stmt 1 view .LVU7
+  69              		.loc 1 100 12 is_stmt 0 view .LVU8
+  70 0002 FFF7FEFF 		bl	USER_SPI_status
+  71              	.LVL3:
+ 101:FATFS/Target/user_diskio.c ****   /* USER CODE END STATUS */
+ 102:FATFS/Target/user_diskio.c **** }
+  72              		.loc 1 102 1 view .LVU9
+ARM GAS  /tmp/cct6Loa6.s 			page 4
+
+
+  73              		@ sp needed
+  74 0006 10BD     		pop	{r4, pc}
+  75              		.cfi_endproc
+  76              	.LFE494:
+  78              		.section	.text.USER_read,"ax",%progbits
+  79              		.align	1
+  80              		.global	USER_read
+  81              		.syntax unified
+  82              		.code	16
+  83              		.thumb_func
+  85              	USER_read:
+  86              	.LVL4:
+  87              	.LFB495:
+ 103:FATFS/Target/user_diskio.c **** 
+ 104:FATFS/Target/user_diskio.c **** /**
+ 105:FATFS/Target/user_diskio.c ****   * @brief  Reads Sector(s)
+ 106:FATFS/Target/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
+ 107:FATFS/Target/user_diskio.c ****   * @param  *buff: Data buffer to store read data
+ 108:FATFS/Target/user_diskio.c ****   * @param  sector: Sector address (LBA)
+ 109:FATFS/Target/user_diskio.c ****   * @param  count: Number of sectors to read (1..128)
+ 110:FATFS/Target/user_diskio.c ****   * @retval DRESULT: Operation result
+ 111:FATFS/Target/user_diskio.c ****   */
+ 112:FATFS/Target/user_diskio.c **** DRESULT USER_read (
+ 113:FATFS/Target/user_diskio.c **** 	BYTE pdrv,      /* Physical drive nmuber to identify the drive */
+ 114:FATFS/Target/user_diskio.c **** 	BYTE *buff,     /* Data buffer to store read data */
+ 115:FATFS/Target/user_diskio.c **** 	DWORD sector,   /* Sector address in LBA */
+ 116:FATFS/Target/user_diskio.c **** 	UINT count      /* Number of sectors to read */
+ 117:FATFS/Target/user_diskio.c **** )
+ 118:FATFS/Target/user_diskio.c **** {
+  88              		.loc 1 118 1 is_stmt 1 view -0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92              		.loc 1 118 1 is_stmt 0 view .LVU11
+  93 0000 10B5     		push	{r4, lr}
+  94              	.LCFI2:
+  95              		.cfi_def_cfa_offset 8
+  96              		.cfi_offset 4, -8
+  97              		.cfi_offset 14, -4
+ 119:FATFS/Target/user_diskio.c ****   /* USER CODE BEGIN READ */
+ 120:FATFS/Target/user_diskio.c ****     return USER_SPI_read(pdrv, buff, sector, count); //ADD THIS LINE
+  98              		.loc 1 120 5 is_stmt 1 view .LVU12
+  99              		.loc 1 120 12 is_stmt 0 view .LVU13
+ 100 0002 FFF7FEFF 		bl	USER_SPI_read
+ 101              	.LVL5:
+ 121:FATFS/Target/user_diskio.c ****   /* USER CODE END READ */
+ 122:FATFS/Target/user_diskio.c **** }
+ 102              		.loc 1 122 1 view .LVU14
+ 103              		@ sp needed
+ 104 0006 10BD     		pop	{r4, pc}
+ 105              		.cfi_endproc
+ 106              	.LFE495:
+ 108              		.section	.text.USER_write,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	USER_write
+ 111              		.syntax unified
+ 112              		.code	16
+ARM GAS  /tmp/cct6Loa6.s 			page 5
+
+
+ 113              		.thumb_func
+ 115              	USER_write:
+ 116              	.LVL6:
+ 117              	.LFB496:
+ 123:FATFS/Target/user_diskio.c **** 
+ 124:FATFS/Target/user_diskio.c **** /**
+ 125:FATFS/Target/user_diskio.c ****   * @brief  Writes Sector(s)
+ 126:FATFS/Target/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
+ 127:FATFS/Target/user_diskio.c ****   * @param  *buff: Data to be written
+ 128:FATFS/Target/user_diskio.c ****   * @param  sector: Sector address (LBA)
+ 129:FATFS/Target/user_diskio.c ****   * @param  count: Number of sectors to write (1..128)
+ 130:FATFS/Target/user_diskio.c ****   * @retval DRESULT: Operation result
+ 131:FATFS/Target/user_diskio.c ****   */
+ 132:FATFS/Target/user_diskio.c **** #if _USE_WRITE == 1
+ 133:FATFS/Target/user_diskio.c **** DRESULT USER_write (
+ 134:FATFS/Target/user_diskio.c **** 	BYTE pdrv,          /* Physical drive nmuber to identify the drive */
+ 135:FATFS/Target/user_diskio.c **** 	const BYTE *buff,   /* Data to be written */
+ 136:FATFS/Target/user_diskio.c **** 	DWORD sector,       /* Sector address in LBA */
+ 137:FATFS/Target/user_diskio.c **** 	UINT count          /* Number of sectors to write */
+ 138:FATFS/Target/user_diskio.c **** )
+ 139:FATFS/Target/user_diskio.c **** {
+ 118              		.loc 1 139 1 is_stmt 1 view -0
+ 119              		.cfi_startproc
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122              		.loc 1 139 1 is_stmt 0 view .LVU16
+ 123 0000 10B5     		push	{r4, lr}
+ 124              	.LCFI3:
+ 125              		.cfi_def_cfa_offset 8
+ 126              		.cfi_offset 4, -8
+ 127              		.cfi_offset 14, -4
+ 140:FATFS/Target/user_diskio.c ****   /* USER CODE BEGIN WRITE */
+ 141:FATFS/Target/user_diskio.c ****   /* USER CODE HERE */
+ 142:FATFS/Target/user_diskio.c ****     return USER_SPI_write(pdrv, buff, sector, count); //ADD THIS LINE
+ 128              		.loc 1 142 5 is_stmt 1 view .LVU17
+ 129              		.loc 1 142 12 is_stmt 0 view .LVU18
+ 130 0002 FFF7FEFF 		bl	USER_SPI_write
+ 131              	.LVL7:
+ 143:FATFS/Target/user_diskio.c ****   /* USER CODE END WRITE */
+ 144:FATFS/Target/user_diskio.c **** }
+ 132              		.loc 1 144 1 view .LVU19
+ 133              		@ sp needed
+ 134 0006 10BD     		pop	{r4, pc}
+ 135              		.cfi_endproc
+ 136              	.LFE496:
+ 138              		.section	.text.USER_ioctl,"ax",%progbits
+ 139              		.align	1
+ 140              		.global	USER_ioctl
+ 141              		.syntax unified
+ 142              		.code	16
+ 143              		.thumb_func
+ 145              	USER_ioctl:
+ 146              	.LVL8:
+ 147              	.LFB497:
+ 145:FATFS/Target/user_diskio.c **** #endif /* _USE_WRITE == 1 */
+ 146:FATFS/Target/user_diskio.c **** 
+ 147:FATFS/Target/user_diskio.c **** /**
+ARM GAS  /tmp/cct6Loa6.s 			page 6
+
+
+ 148:FATFS/Target/user_diskio.c ****   * @brief  I/O control operation
+ 149:FATFS/Target/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
+ 150:FATFS/Target/user_diskio.c ****   * @param  cmd: Control code
+ 151:FATFS/Target/user_diskio.c ****   * @param  *buff: Buffer to send/receive control data
+ 152:FATFS/Target/user_diskio.c ****   * @retval DRESULT: Operation result
+ 153:FATFS/Target/user_diskio.c ****   */
+ 154:FATFS/Target/user_diskio.c **** #if _USE_IOCTL == 1
+ 155:FATFS/Target/user_diskio.c **** DRESULT USER_ioctl (
+ 156:FATFS/Target/user_diskio.c **** 	BYTE pdrv,      /* Physical drive nmuber (0..) */
+ 157:FATFS/Target/user_diskio.c **** 	BYTE cmd,       /* Control code */
+ 158:FATFS/Target/user_diskio.c **** 	void *buff      /* Buffer to send/receive control data */
+ 159:FATFS/Target/user_diskio.c **** )
+ 160:FATFS/Target/user_diskio.c **** {
+ 148              		.loc 1 160 1 is_stmt 1 view -0
+ 149              		.cfi_startproc
+ 150              		@ args = 0, pretend = 0, frame = 0
+ 151              		@ frame_needed = 0, uses_anonymous_args = 0
+ 152              		.loc 1 160 1 is_stmt 0 view .LVU21
+ 153 0000 10B5     		push	{r4, lr}
+ 154              	.LCFI4:
+ 155              		.cfi_def_cfa_offset 8
+ 156              		.cfi_offset 4, -8
+ 157              		.cfi_offset 14, -4
+ 161:FATFS/Target/user_diskio.c ****   /* USER CODE BEGIN IOCTL */
+ 162:FATFS/Target/user_diskio.c ****     return USER_SPI_ioctl(pdrv, cmd, buff); //ADD THIS LINE
+ 158              		.loc 1 162 5 is_stmt 1 view .LVU22
+ 159              		.loc 1 162 12 is_stmt 0 view .LVU23
+ 160 0002 FFF7FEFF 		bl	USER_SPI_ioctl
+ 161              	.LVL9:
+ 163:FATFS/Target/user_diskio.c ****   /* USER CODE END IOCTL */
+ 164:FATFS/Target/user_diskio.c **** }
+ 162              		.loc 1 164 1 view .LVU24
+ 163              		@ sp needed
+ 164 0006 10BD     		pop	{r4, pc}
+ 165              		.cfi_endproc
+ 166              	.LFE497:
+ 168              		.global	USER_Driver
+ 169              		.section	.data.USER_Driver,"aw"
+ 170              		.align	2
+ 173              	USER_Driver:
+ 174 0000 00000000 		.word	USER_initialize
+ 175 0004 00000000 		.word	USER_status
+ 176 0008 00000000 		.word	USER_read
+ 177 000c 00000000 		.word	USER_write
+ 178 0010 00000000 		.word	USER_ioctl
+ 179              		.section	.data.Stat,"aw"
+ 182              	Stat:
+ 183 0000 01       		.byte	1
+ 184              		.text
+ 185              	.Letext0:
+ 186              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 187              		.file 3 "Middlewares/Third_Party/FatFs/src/integer.h"
+ 188              		.file 4 "Middlewares/Third_Party/FatFs/src/diskio.h"
+ 189              		.file 5 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 190              		.file 6 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.h"
+ 191              		.file 7 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
+ 192              		.file 8 "Core/Inc/user_diskio_spi.h"
+ARM GAS  /tmp/cct6Loa6.s 			page 7
+
+
+ARM GAS  /tmp/cct6Loa6.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 user_diskio.c
+     /tmp/cct6Loa6.s:19     .text.USER_initialize:00000000 $t
+     /tmp/cct6Loa6.s:25     .text.USER_initialize:00000000 USER_initialize
+     /tmp/cct6Loa6.s:49     .text.USER_status:00000000 $t
+     /tmp/cct6Loa6.s:55     .text.USER_status:00000000 USER_status
+     /tmp/cct6Loa6.s:79     .text.USER_read:00000000 $t
+     /tmp/cct6Loa6.s:85     .text.USER_read:00000000 USER_read
+     /tmp/cct6Loa6.s:109    .text.USER_write:00000000 $t
+     /tmp/cct6Loa6.s:115    .text.USER_write:00000000 USER_write
+     /tmp/cct6Loa6.s:139    .text.USER_ioctl:00000000 $t
+     /tmp/cct6Loa6.s:145    .text.USER_ioctl:00000000 USER_ioctl
+     /tmp/cct6Loa6.s:173    .data.USER_Driver:00000000 USER_Driver
+     /tmp/cct6Loa6.s:170    .data.USER_Driver:00000000 $d
+     /tmp/cct6Loa6.s:182    .data.Stat:00000000 Stat
+
+UNDEFINED SYMBOLS
+USER_SPI_initialize
+USER_SPI_status
+USER_SPI_read
+USER_SPI_write
+USER_SPI_ioctl

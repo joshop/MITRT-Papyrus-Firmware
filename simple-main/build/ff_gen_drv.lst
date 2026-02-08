@@ -1,0 +1,478 @@
+ARM GAS  /tmp/ccDiogPo.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.arch armv6s-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.file	"ff_gen_drv.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.c"
+  18              		.section	.text.FATFS_LinkDriverEx,"ax",%progbits
+  19              		.align	1
+  20              		.global	FATFS_LinkDriverEx
+  21              		.syntax unified
+  22              		.code	16
+  23              		.thumb_func
+  25              	FATFS_LinkDriverEx:
+  26              	.LVL0:
+  27              	.LFB493:
+   1:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
+   2:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   ******************************************************************************
+   3:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @file    ff_gen_drv.c
+   4:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @author  MCD Application Team
+   5:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @brief   FatFs generic low level driver.
+   6:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   *****************************************************************************
+   7:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @attention
+   8:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   *
+   9:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  10:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   *
+  11:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * This software component is licensed by ST under BSD 3-Clause license,
+  12:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * the "License"; You may not use this file except in compliance with the
+  13:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * License. You may obtain a copy of the License at:
+  14:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   *                       opensource.org/licenses/BSD-3-Clause
+  15:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   *
+  16:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   ******************************************************************************
+  17:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** **/
+  18:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /* Includes ------------------------------------------------------------------*/
+  19:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** #include "ff_gen_drv.h"
+  20:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+  21:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /* Private typedef -----------------------------------------------------------*/
+  22:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /* Private define ------------------------------------------------------------*/
+  23:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /* Private variables ---------------------------------------------------------*/
+  24:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** Disk_drvTypeDef disk = {{0},{0},{0},0};
+  25:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+  26:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /* Private function prototypes -----------------------------------------------*/
+  27:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /* Private functions ---------------------------------------------------------*/
+  28:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+  29:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
+  30:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @brief  Links a compatible diskio driver/lun id and increments the number of active
+  31:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   *         linked drivers.
+ARM GAS  /tmp/ccDiogPo.s 			page 2
+
+
+  32:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @note   The number of linked drivers (volumes) is up to 10 due to FatFs limits.
+  33:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @param  drv: pointer to the disk IO Driver structure
+  34:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @param  path: pointer to the logical drive path
+  35:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @param  lun : only used for USB Key Disk to add multi-lun management
+  36:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****             else the parameter must be equal to 0
+  37:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @retval Returns 0 in case of success, otherwise 1.
+  38:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   */
+  39:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** uint8_t FATFS_LinkDriverEx(const Diskio_drvTypeDef *drv, char *path, uint8_t lun)
+  40:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** {
+  28              		.loc 1 40 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 40 1 is_stmt 0 view .LVU1
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0400     		movs	r4, r0
+  41:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   uint8_t ret = 1;
+  41              		.loc 1 41 3 is_stmt 1 view .LVU2
+  42              	.LVL1:
+  42:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   uint8_t DiskNum = 0;
+  43              		.loc 1 42 3 view .LVU3
+  43:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+  44:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   if(disk.nbr < _VOLUMES)
+  44              		.loc 1 44 3 view .LVU4
+  45              		.loc 1 44 10 is_stmt 0 view .LVU5
+  46 0004 0F4B     		ldr	r3, .L4
+  47 0006 5B7A     		ldrb	r3, [r3, #9]
+  48 0008 D8B2     		uxtb	r0, r3
+  49              	.LVL2:
+  50              		.loc 1 44 5 view .LVU6
+  51 000a 002B     		cmp	r3, #0
+  52 000c 17D1     		bne	.L3
+  45:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   {
+  46:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     disk.is_initialized[disk.nbr] = 0;
+  53              		.loc 1 46 5 is_stmt 1 view .LVU7
+  54              		.loc 1 46 29 is_stmt 0 view .LVU8
+  55 000e 0D4B     		ldr	r3, .L4
+  56 0010 5D7A     		ldrb	r5, [r3, #9]
+  57 0012 EDB2     		uxtb	r5, r5
+  58              		.loc 1 46 35 view .LVU9
+  59 0014 0026     		movs	r6, #0
+  60 0016 5E55     		strb	r6, [r3, r5]
+  47:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     disk.drv[disk.nbr] = drv;
+  61              		.loc 1 47 5 is_stmt 1 view .LVU10
+  62              		.loc 1 47 18 is_stmt 0 view .LVU11
+  63 0018 5D7A     		ldrb	r5, [r3, #9]
+  64              		.loc 1 47 24 view .LVU12
+  65 001a AD00     		lsls	r5, r5, #2
+  66 001c 5D19     		adds	r5, r3, r5
+  67 001e 6C60     		str	r4, [r5, #4]
+  48:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     disk.lun[disk.nbr] = lun;
+ARM GAS  /tmp/ccDiogPo.s 			page 3
+
+
+  68              		.loc 1 48 5 is_stmt 1 view .LVU13
+  69              		.loc 1 48 18 is_stmt 0 view .LVU14
+  70 0020 5C7A     		ldrb	r4, [r3, #9]
+  71              	.LVL3:
+  72              		.loc 1 48 24 view .LVU15
+  73 0022 1C19     		adds	r4, r3, r4
+  74 0024 2272     		strb	r2, [r4, #8]
+  49:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     DiskNum = disk.nbr++;
+  75              		.loc 1 49 5 is_stmt 1 view .LVU16
+  76              		.loc 1 49 19 is_stmt 0 view .LVU17
+  77 0026 5A7A     		ldrb	r2, [r3, #9]
+  78              	.LVL4:
+  79              		.loc 1 49 23 view .LVU18
+  80 0028 541C     		adds	r4, r2, #1
+  81              	.LVL5:
+  82              		.loc 1 49 23 view .LVU19
+  83 002a E4B2     		uxtb	r4, r4
+  84 002c 5C72     		strb	r4, [r3, #9]
+  85              	.LVL6:
+  50:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     path[0] = DiskNum + '0';
+  86              		.loc 1 50 5 is_stmt 1 view .LVU20
+  87              		.loc 1 50 23 is_stmt 0 view .LVU21
+  88 002e 3032     		adds	r2, r2, #48
+  89              	.LVL7:
+  90              		.loc 1 50 13 view .LVU22
+  91 0030 0A70     		strb	r2, [r1]
+  92              	.LVL8:
+  51:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     path[1] = ':';
+  93              		.loc 1 51 5 is_stmt 1 view .LVU23
+  94              		.loc 1 51 13 is_stmt 0 view .LVU24
+  95 0032 3A23     		movs	r3, #58
+  96 0034 4B70     		strb	r3, [r1, #1]
+  52:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     path[2] = '/';
+  97              		.loc 1 52 5 is_stmt 1 view .LVU25
+  98              		.loc 1 52 13 is_stmt 0 view .LVU26
+  99 0036 0B3B     		subs	r3, r3, #11
+ 100 0038 8B70     		strb	r3, [r1, #2]
+  53:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     path[3] = 0;
+ 101              		.loc 1 53 5 is_stmt 1 view .LVU27
+ 102              		.loc 1 53 13 is_stmt 0 view .LVU28
+ 103 003a CE70     		strb	r6, [r1, #3]
+  54:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     ret = 0;
+ 104              		.loc 1 54 5 is_stmt 1 view .LVU29
+ 105              	.LVL9:
+ 106              	.L2:
+  55:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   }
+  56:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+  57:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   return ret;
+ 107              		.loc 1 57 3 view .LVU30
+  58:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** }
+ 108              		.loc 1 58 1 is_stmt 0 view .LVU31
+ 109              		@ sp needed
+ 110 003c 70BD     		pop	{r4, r5, r6, pc}
+ 111              	.LVL10:
+ 112              	.L3:
+  41:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   uint8_t DiskNum = 0;
+ 113              		.loc 1 41 11 view .LVU32
+ARM GAS  /tmp/ccDiogPo.s 			page 4
+
+
+ 114 003e 0120     		movs	r0, #1
+ 115 0040 FCE7     		b	.L2
+ 116              	.L5:
+ 117 0042 C046     		.align	2
+ 118              	.L4:
+ 119 0044 00000000 		.word	disk
+ 120              		.cfi_endproc
+ 121              	.LFE493:
+ 123              		.section	.text.FATFS_LinkDriver,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	FATFS_LinkDriver
+ 126              		.syntax unified
+ 127              		.code	16
+ 128              		.thumb_func
+ 130              	FATFS_LinkDriver:
+ 131              	.LVL11:
+ 132              	.LFB494:
+  59:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+  60:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
+  61:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @brief  Links a compatible diskio driver and increments the number of active
+  62:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   *         linked drivers.
+  63:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @note   The number of linked drivers (volumes) is up to 10 due to FatFs limits
+  64:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @param  drv: pointer to the disk IO Driver structure
+  65:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @param  path: pointer to the logical drive path
+  66:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @retval Returns 0 in case of success, otherwise 1.
+  67:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   */
+  68:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** uint8_t FATFS_LinkDriver(const Diskio_drvTypeDef *drv, char *path)
+  69:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** {
+ 133              		.loc 1 69 1 is_stmt 1 view -0
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              		.loc 1 69 1 is_stmt 0 view .LVU34
+ 138 0000 10B5     		push	{r4, lr}
+ 139              	.LCFI1:
+ 140              		.cfi_def_cfa_offset 8
+ 141              		.cfi_offset 4, -8
+ 142              		.cfi_offset 14, -4
+  70:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   return FATFS_LinkDriverEx(drv, path, 0);
+ 143              		.loc 1 70 3 is_stmt 1 view .LVU35
+ 144              		.loc 1 70 10 is_stmt 0 view .LVU36
+ 145 0002 0022     		movs	r2, #0
+ 146 0004 FFF7FEFF 		bl	FATFS_LinkDriverEx
+ 147              	.LVL12:
+  71:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** }
+ 148              		.loc 1 71 1 view .LVU37
+ 149              		@ sp needed
+ 150 0008 10BD     		pop	{r4, pc}
+ 151              		.cfi_endproc
+ 152              	.LFE494:
+ 154              		.section	.text.FATFS_UnLinkDriverEx,"ax",%progbits
+ 155              		.align	1
+ 156              		.global	FATFS_UnLinkDriverEx
+ 157              		.syntax unified
+ 158              		.code	16
+ 159              		.thumb_func
+ 161              	FATFS_UnLinkDriverEx:
+ARM GAS  /tmp/ccDiogPo.s 			page 5
+
+
+ 162              	.LVL13:
+ 163              	.LFB495:
+  72:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+  73:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
+  74:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @brief  Unlinks a diskio driver and decrements the number of active linked
+  75:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   *         drivers.
+  76:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @param  path: pointer to the logical drive path
+  77:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @param  lun : not used
+  78:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @retval Returns 0 in case of success, otherwise 1.
+  79:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   */
+  80:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** uint8_t FATFS_UnLinkDriverEx(char *path, uint8_t lun)
+  81:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** {
+ 164              		.loc 1 81 1 is_stmt 1 view -0
+ 165              		.cfi_startproc
+ 166              		@ args = 0, pretend = 0, frame = 0
+ 167              		@ frame_needed = 0, uses_anonymous_args = 0
+ 168              		@ link register save eliminated.
+  82:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   uint8_t DiskNum = 0;
+ 169              		.loc 1 82 3 view .LVU39
+  83:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   uint8_t ret = 1;
+ 170              		.loc 1 83 3 view .LVU40
+  84:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+  85:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   if(disk.nbr >= 1)
+ 171              		.loc 1 85 3 view .LVU41
+ 172              		.loc 1 85 10 is_stmt 0 view .LVU42
+ 173 0000 0D4B     		ldr	r3, .L11
+ 174 0002 5B7A     		ldrb	r3, [r3, #9]
+ 175              		.loc 1 85 5 view .LVU43
+ 176 0004 002B     		cmp	r3, #0
+ 177 0006 13D0     		beq	.L9
+  86:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   {
+  87:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     DiskNum = path[0] - '0';
+ 178              		.loc 1 87 5 is_stmt 1 view .LVU44
+ 179              		.loc 1 87 19 is_stmt 0 view .LVU45
+ 180 0008 0378     		ldrb	r3, [r0]
+ 181              		.loc 1 87 13 view .LVU46
+ 182 000a 303B     		subs	r3, r3, #48
+ 183 000c DBB2     		uxtb	r3, r3
+ 184              	.LVL14:
+  88:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     if(disk.drv[DiskNum] != 0)
+ 185              		.loc 1 88 5 is_stmt 1 view .LVU47
+ 186              		.loc 1 88 16 is_stmt 0 view .LVU48
+ 187 000e 0A4A     		ldr	r2, .L11
+ 188 0010 9900     		lsls	r1, r3, #2
+ 189              	.LVL15:
+ 190              		.loc 1 88 16 view .LVU49
+ 191 0012 5218     		adds	r2, r2, r1
+ 192 0014 5268     		ldr	r2, [r2, #4]
+ 193              		.loc 1 88 7 view .LVU50
+ 194 0016 002A     		cmp	r2, #0
+ 195 0018 0CD0     		beq	.L10
+  89:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     {
+  90:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****       disk.drv[DiskNum] = 0;
+ 196              		.loc 1 90 7 is_stmt 1 view .LVU51
+ 197              		.loc 1 90 25 is_stmt 0 view .LVU52
+ 198 001a 074A     		ldr	r2, .L11
+ 199 001c 5118     		adds	r1, r2, r1
+ARM GAS  /tmp/ccDiogPo.s 			page 6
+
+
+ 200 001e 0020     		movs	r0, #0
+ 201              	.LVL16:
+ 202              		.loc 1 90 25 view .LVU53
+ 203 0020 4860     		str	r0, [r1, #4]
+  91:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****       disk.lun[DiskNum] = 0;
+ 204              		.loc 1 91 7 is_stmt 1 view .LVU54
+ 205              		.loc 1 91 25 is_stmt 0 view .LVU55
+ 206 0022 D318     		adds	r3, r2, r3
+ 207              	.LVL17:
+ 208              		.loc 1 91 25 view .LVU56
+ 209 0024 1872     		strb	r0, [r3, #8]
+  92:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****       disk.nbr--;
+ 210              		.loc 1 92 7 is_stmt 1 view .LVU57
+ 211              		.loc 1 92 11 is_stmt 0 view .LVU58
+ 212 0026 537A     		ldrb	r3, [r2, #9]
+ 213              		.loc 1 92 15 view .LVU59
+ 214 0028 013B     		subs	r3, r3, #1
+ 215 002a DBB2     		uxtb	r3, r3
+ 216 002c 5372     		strb	r3, [r2, #9]
+  93:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****       ret = 0;
+ 217              		.loc 1 93 7 is_stmt 1 view .LVU60
+ 218              	.LVL18:
+ 219              		.loc 1 93 7 is_stmt 0 view .LVU61
+ 220 002e 00E0     		b	.L8
+ 221              	.LVL19:
+ 222              	.L9:
+  83:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+ 223              		.loc 1 83 11 view .LVU62
+ 224 0030 0120     		movs	r0, #1
+ 225              	.LVL20:
+ 226              	.L8:
+  94:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     }
+  95:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   }
+  96:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+  97:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   return ret;
+ 227              		.loc 1 97 3 is_stmt 1 view .LVU63
+  98:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** }
+ 228              		.loc 1 98 1 is_stmt 0 view .LVU64
+ 229              		@ sp needed
+ 230 0032 7047     		bx	lr
+ 231              	.LVL21:
+ 232              	.L10:
+  83:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+ 233              		.loc 1 83 11 view .LVU65
+ 234 0034 0120     		movs	r0, #1
+ 235              	.LVL22:
+  83:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+ 236              		.loc 1 83 11 view .LVU66
+ 237 0036 FCE7     		b	.L8
+ 238              	.L12:
+ 239              		.align	2
+ 240              	.L11:
+ 241 0038 00000000 		.word	disk
+ 242              		.cfi_endproc
+ 243              	.LFE495:
+ 245              		.section	.text.FATFS_UnLinkDriver,"ax",%progbits
+ 246              		.align	1
+ARM GAS  /tmp/ccDiogPo.s 			page 7
+
+
+ 247              		.global	FATFS_UnLinkDriver
+ 248              		.syntax unified
+ 249              		.code	16
+ 250              		.thumb_func
+ 252              	FATFS_UnLinkDriver:
+ 253              	.LVL23:
+ 254              	.LFB496:
+  99:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+ 100:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
+ 101:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @brief  Unlinks a diskio driver and decrements the number of active linked
+ 102:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   *         drivers.
+ 103:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @param  path: pointer to the logical drive path
+ 104:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @retval Returns 0 in case of success, otherwise 1.
+ 105:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   */
+ 106:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** uint8_t FATFS_UnLinkDriver(char *path)
+ 107:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** {
+ 255              		.loc 1 107 1 is_stmt 1 view -0
+ 256              		.cfi_startproc
+ 257              		@ args = 0, pretend = 0, frame = 0
+ 258              		@ frame_needed = 0, uses_anonymous_args = 0
+ 259              		.loc 1 107 1 is_stmt 0 view .LVU68
+ 260 0000 10B5     		push	{r4, lr}
+ 261              	.LCFI2:
+ 262              		.cfi_def_cfa_offset 8
+ 263              		.cfi_offset 4, -8
+ 264              		.cfi_offset 14, -4
+ 108:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   return FATFS_UnLinkDriverEx(path, 0);
+ 265              		.loc 1 108 3 is_stmt 1 view .LVU69
+ 266              		.loc 1 108 10 is_stmt 0 view .LVU70
+ 267 0002 0021     		movs	r1, #0
+ 268 0004 FFF7FEFF 		bl	FATFS_UnLinkDriverEx
+ 269              	.LVL24:
+ 109:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** }
+ 270              		.loc 1 109 1 view .LVU71
+ 271              		@ sp needed
+ 272 0008 10BD     		pop	{r4, pc}
+ 273              		.cfi_endproc
+ 274              	.LFE496:
+ 276              		.section	.text.FATFS_GetAttachedDriversNbr,"ax",%progbits
+ 277              		.align	1
+ 278              		.global	FATFS_GetAttachedDriversNbr
+ 279              		.syntax unified
+ 280              		.code	16
+ 281              		.thumb_func
+ 283              	FATFS_GetAttachedDriversNbr:
+ 284              	.LFB497:
+ 110:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
+ 111:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
+ 112:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @brief  Gets number of linked drivers to the FatFs module.
+ 113:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @param  None
+ 114:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @retval Number of attached drivers.
+ 115:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   */
+ 116:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** uint8_t FATFS_GetAttachedDriversNbr(void)
+ 117:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** {
+ 285              		.loc 1 117 1 is_stmt 1 view -0
+ 286              		.cfi_startproc
+ 287              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccDiogPo.s 			page 8
+
+
+ 288              		@ frame_needed = 0, uses_anonymous_args = 0
+ 289              		@ link register save eliminated.
+ 118:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   return disk.nbr;
+ 290              		.loc 1 118 3 view .LVU73
+ 291              		.loc 1 118 14 is_stmt 0 view .LVU74
+ 292 0000 014B     		ldr	r3, .L15
+ 293 0002 587A     		ldrb	r0, [r3, #9]
+ 294 0004 C0B2     		uxtb	r0, r0
+ 119:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** }
+ 295              		.loc 1 119 1 view .LVU75
+ 296              		@ sp needed
+ 297 0006 7047     		bx	lr
+ 298              	.L16:
+ 299              		.align	2
+ 300              	.L15:
+ 301 0008 00000000 		.word	disk
+ 302              		.cfi_endproc
+ 303              	.LFE497:
+ 305              		.global	disk
+ 306              		.section	.bss.disk,"aw",%nobits
+ 307              		.align	2
+ 310              	disk:
+ 311 0000 00000000 		.space	12
+ 311      00000000 
+ 311      00000000 
+ 312              		.text
+ 313              	.Letext0:
+ 314              		.file 2 "Middlewares/Third_Party/FatFs/src/integer.h"
+ 315              		.file 3 "Middlewares/Third_Party/FatFs/src/diskio.h"
+ 316              		.file 4 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 317              		.file 5 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 318              		.file 6 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.h"
+ 319              		.file 7 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
+ARM GAS  /tmp/ccDiogPo.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ff_gen_drv.c
+     /tmp/ccDiogPo.s:19     .text.FATFS_LinkDriverEx:00000000 $t
+     /tmp/ccDiogPo.s:25     .text.FATFS_LinkDriverEx:00000000 FATFS_LinkDriverEx
+     /tmp/ccDiogPo.s:119    .text.FATFS_LinkDriverEx:00000044 $d
+     /tmp/ccDiogPo.s:310    .bss.disk:00000000 disk
+     /tmp/ccDiogPo.s:124    .text.FATFS_LinkDriver:00000000 $t
+     /tmp/ccDiogPo.s:130    .text.FATFS_LinkDriver:00000000 FATFS_LinkDriver
+     /tmp/ccDiogPo.s:155    .text.FATFS_UnLinkDriverEx:00000000 $t
+     /tmp/ccDiogPo.s:161    .text.FATFS_UnLinkDriverEx:00000000 FATFS_UnLinkDriverEx
+     /tmp/ccDiogPo.s:241    .text.FATFS_UnLinkDriverEx:00000038 $d
+     /tmp/ccDiogPo.s:246    .text.FATFS_UnLinkDriver:00000000 $t
+     /tmp/ccDiogPo.s:252    .text.FATFS_UnLinkDriver:00000000 FATFS_UnLinkDriver
+     /tmp/ccDiogPo.s:277    .text.FATFS_GetAttachedDriversNbr:00000000 $t
+     /tmp/ccDiogPo.s:283    .text.FATFS_GetAttachedDriversNbr:00000000 FATFS_GetAttachedDriversNbr
+     /tmp/ccDiogPo.s:301    .text.FATFS_GetAttachedDriversNbr:00000008 $d
+     /tmp/ccDiogPo.s:307    .bss.disk:00000000 $d
+
+NO UNDEFINED SYMBOLS

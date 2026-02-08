@@ -1,0 +1,3244 @@
+ARM GAS  /tmp/cc41MayP.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.arch armv6s-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.file	"user_diskio_spi.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/user_diskio_spi.c"
+  18              		.section	.text.xchg_spi,"ax",%progbits
+  19              		.align	1
+  20              		.syntax unified
+  21              		.code	16
+  22              		.thumb_func
+  24              	xchg_spi:
+  25              	.LVL0:
+  26              	.LFB495:
+   1:Core/Src/user_diskio_spi.c **** /**
+   2:Core/Src/user_diskio_spi.c ****  ******************************************************************************
+   3:Core/Src/user_diskio_spi.c ****   * @file    user_diskio_spi.c
+   4:Core/Src/user_diskio_spi.c ****   * @brief   This file contains the implementation of the user_diskio_spi FatFs
+   5:Core/Src/user_diskio_spi.c ****   *          driver.
+   6:Core/Src/user_diskio_spi.c ****   ******************************************************************************
+   7:Core/Src/user_diskio_spi.c ****   * Portions copyright (C) 2014, ChaN, all rights reserved.
+   8:Core/Src/user_diskio_spi.c ****   * Portions copyright (C) 2017, kiwih, all rights reserved.
+   9:Core/Src/user_diskio_spi.c ****   *
+  10:Core/Src/user_diskio_spi.c ****   * This software is a free software and there is NO WARRANTY.
+  11:Core/Src/user_diskio_spi.c ****   * No restriction on use. You can use, modify and redistribute it for
+  12:Core/Src/user_diskio_spi.c ****   * personal, non-profit or commercial products UNDER YOUR RESPONSIBILITY.
+  13:Core/Src/user_diskio_spi.c ****   * Redistributions of source code must retain the above copyright notice.
+  14:Core/Src/user_diskio_spi.c ****   *
+  15:Core/Src/user_diskio_spi.c ****   ******************************************************************************
+  16:Core/Src/user_diskio_spi.c ****   */
+  17:Core/Src/user_diskio_spi.c **** 
+  18:Core/Src/user_diskio_spi.c **** //This code was ported by kiwih from a copywrited (C) library written by ChaN
+  19:Core/Src/user_diskio_spi.c **** //available at http://elm-chan.org/fsw/ff/ffsample.zip
+  20:Core/Src/user_diskio_spi.c **** //(text at http://elm-chan.org/fsw/ff/00index_e.html)
+  21:Core/Src/user_diskio_spi.c **** 
+  22:Core/Src/user_diskio_spi.c **** //This file provides the FatFs driver functions and SPI code required to manage
+  23:Core/Src/user_diskio_spi.c **** //an SPI-connected MMC or compatible SD card with FAT
+  24:Core/Src/user_diskio_spi.c **** 
+  25:Core/Src/user_diskio_spi.c **** //It is designed to be wrapped by a cubemx generated user_diskio.c file.
+  26:Core/Src/user_diskio_spi.c **** 
+  27:Core/Src/user_diskio_spi.c **** #include "stm32g0xx_hal.h" /* Provide the low-level HAL functions */
+  28:Core/Src/user_diskio_spi.c **** #include "user_diskio_spi.h"
+  29:Core/Src/user_diskio_spi.c **** 
+  30:Core/Src/user_diskio_spi.c **** //Make sure you set #define SD_SPI_HANDLE as some hspix in main.h
+  31:Core/Src/user_diskio_spi.c **** //Make sure you set #define SD_CS_GPIO_Port as some GPIO port in main.h
+  32:Core/Src/user_diskio_spi.c **** //Make sure you set #define SD_CS_Pin as some GPIO pin in main.h
+ARM GAS  /tmp/cc41MayP.s 			page 2
+
+
+  33:Core/Src/user_diskio_spi.c **** extern SPI_HandleTypeDef SD_SPI_HANDLE;
+  34:Core/Src/user_diskio_spi.c **** 
+  35:Core/Src/user_diskio_spi.c **** /* Function prototypes */
+  36:Core/Src/user_diskio_spi.c **** 
+  37:Core/Src/user_diskio_spi.c **** //(Note that the _256 is used as a mask to clear the prescalar bits as it provides binary 111 in th
+  38:Core/Src/user_diskio_spi.c **** #define FCLK_SLOW() { MODIFY_REG(SD_SPI_HANDLE.Instance->CR1, SPI_BAUDRATEPRESCALER_256, SPI_BAUDRA
+  39:Core/Src/user_diskio_spi.c **** #define FCLK_FAST() { MODIFY_REG(SD_SPI_HANDLE.Instance->CR1, SPI_BAUDRATEPRESCALER_256, SPI_BAUDRA
+  40:Core/Src/user_diskio_spi.c **** 
+  41:Core/Src/user_diskio_spi.c **** #define CS_HIGH()	{HAL_GPIO_WritePin(SD_CS_GPIO_Port, SD_CS_Pin, GPIO_PIN_SET);}
+  42:Core/Src/user_diskio_spi.c **** #define CS_LOW()	{HAL_GPIO_WritePin(SD_CS_GPIO_Port, SD_CS_Pin, GPIO_PIN_RESET);}
+  43:Core/Src/user_diskio_spi.c **** 
+  44:Core/Src/user_diskio_spi.c **** /*--------------------------------------------------------------------------
+  45:Core/Src/user_diskio_spi.c **** 
+  46:Core/Src/user_diskio_spi.c ****    Module Private Functions
+  47:Core/Src/user_diskio_spi.c **** 
+  48:Core/Src/user_diskio_spi.c **** ---------------------------------------------------------------------------*/
+  49:Core/Src/user_diskio_spi.c **** 
+  50:Core/Src/user_diskio_spi.c **** /* MMC/SD command */
+  51:Core/Src/user_diskio_spi.c **** #define CMD0	(0)			/* GO_IDLE_STATE */
+  52:Core/Src/user_diskio_spi.c **** #define CMD1	(1)			/* SEND_OP_COND (MMC) */
+  53:Core/Src/user_diskio_spi.c **** #define	ACMD41	(0x80+41)	/* SEND_OP_COND (SDC) */
+  54:Core/Src/user_diskio_spi.c **** #define CMD8	(8)			/* SEND_IF_COND */
+  55:Core/Src/user_diskio_spi.c **** #define CMD9	(9)			/* SEND_CSD */
+  56:Core/Src/user_diskio_spi.c **** #define CMD10	(10)		/* SEND_CID */
+  57:Core/Src/user_diskio_spi.c **** #define CMD12	(12)		/* STOP_TRANSMISSION */
+  58:Core/Src/user_diskio_spi.c **** #define ACMD13	(0x80+13)	/* SD_STATUS (SDC) */
+  59:Core/Src/user_diskio_spi.c **** #define CMD16	(16)		/* SET_BLOCKLEN */
+  60:Core/Src/user_diskio_spi.c **** #define CMD17	(17)		/* READ_SINGLE_BLOCK */
+  61:Core/Src/user_diskio_spi.c **** #define CMD18	(18)		/* READ_MULTIPLE_BLOCK */
+  62:Core/Src/user_diskio_spi.c **** #define CMD23	(23)		/* SET_BLOCK_COUNT (MMC) */
+  63:Core/Src/user_diskio_spi.c **** #define	ACMD23	(0x80+23)	/* SET_WR_BLK_ERASE_COUNT (SDC) */
+  64:Core/Src/user_diskio_spi.c **** #define CMD24	(24)		/* WRITE_BLOCK */
+  65:Core/Src/user_diskio_spi.c **** #define CMD25	(25)		/* WRITE_MULTIPLE_BLOCK */
+  66:Core/Src/user_diskio_spi.c **** #define CMD32	(32)		/* ERASE_ER_BLK_START */
+  67:Core/Src/user_diskio_spi.c **** #define CMD33	(33)		/* ERASE_ER_BLK_END */
+  68:Core/Src/user_diskio_spi.c **** #define CMD38	(38)		/* ERASE */
+  69:Core/Src/user_diskio_spi.c **** #define CMD55	(55)		/* APP_CMD */
+  70:Core/Src/user_diskio_spi.c **** #define CMD58	(58)		/* READ_OCR */
+  71:Core/Src/user_diskio_spi.c **** 
+  72:Core/Src/user_diskio_spi.c **** /* MMC card type flags (MMC_GET_TYPE) */
+  73:Core/Src/user_diskio_spi.c **** #define CT_MMC		0x01		/* MMC ver 3 */
+  74:Core/Src/user_diskio_spi.c **** #define CT_SD1		0x02		/* SD ver 1 */
+  75:Core/Src/user_diskio_spi.c **** #define CT_SD2		0x04		/* SD ver 2 */
+  76:Core/Src/user_diskio_spi.c **** #define CT_SDC		(CT_SD1|CT_SD2)	/* SD */
+  77:Core/Src/user_diskio_spi.c **** #define CT_BLOCK	0x08		/* Block addressing */
+  78:Core/Src/user_diskio_spi.c **** 
+  79:Core/Src/user_diskio_spi.c **** static volatile
+  80:Core/Src/user_diskio_spi.c **** DSTATUS Stat = STA_NOINIT;	/* Physical drive status */
+  81:Core/Src/user_diskio_spi.c **** 
+  82:Core/Src/user_diskio_spi.c **** 
+  83:Core/Src/user_diskio_spi.c **** static
+  84:Core/Src/user_diskio_spi.c **** BYTE CardType;			/* Card type flags */
+  85:Core/Src/user_diskio_spi.c **** 
+  86:Core/Src/user_diskio_spi.c **** uint32_t spiTimerTickStart;
+  87:Core/Src/user_diskio_spi.c **** uint32_t spiTimerTickDelay;
+  88:Core/Src/user_diskio_spi.c **** 
+  89:Core/Src/user_diskio_spi.c **** void SPI_Timer_On(uint32_t waitTicks) {
+ARM GAS  /tmp/cc41MayP.s 			page 3
+
+
+  90:Core/Src/user_diskio_spi.c ****     spiTimerTickStart = HAL_GetTick();
+  91:Core/Src/user_diskio_spi.c ****     spiTimerTickDelay = waitTicks;
+  92:Core/Src/user_diskio_spi.c **** }
+  93:Core/Src/user_diskio_spi.c **** 
+  94:Core/Src/user_diskio_spi.c **** uint8_t SPI_Timer_Status() {
+  95:Core/Src/user_diskio_spi.c ****     return ((HAL_GetTick() - spiTimerTickStart) < spiTimerTickDelay);
+  96:Core/Src/user_diskio_spi.c **** }
+  97:Core/Src/user_diskio_spi.c **** 
+  98:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+  99:Core/Src/user_diskio_spi.c **** /* SPI controls (Platform dependent)                                     */
+ 100:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 101:Core/Src/user_diskio_spi.c **** 
+ 102:Core/Src/user_diskio_spi.c **** /* Exchange a byte */
+ 103:Core/Src/user_diskio_spi.c **** static
+ 104:Core/Src/user_diskio_spi.c **** BYTE xchg_spi (
+ 105:Core/Src/user_diskio_spi.c **** 	BYTE dat	/* Data to send */
+ 106:Core/Src/user_diskio_spi.c **** )
+ 107:Core/Src/user_diskio_spi.c **** {
+  27              		.loc 1 107 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 16
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		.loc 1 107 1 is_stmt 0 view .LVU1
+  32 0000 10B5     		push	{r4, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  37 0002 86B0     		sub	sp, sp, #24
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 32
+  40 0004 0F21     		movs	r1, #15
+  41 0006 6944     		add	r1, r1, sp
+  42 0008 0870     		strb	r0, [r1]
+ 108:Core/Src/user_diskio_spi.c **** 	BYTE rxDat;
+  43              		.loc 1 108 2 is_stmt 1 view .LVU2
+ 109:Core/Src/user_diskio_spi.c ****     HAL_SPI_TransmitReceive(&SD_SPI_HANDLE, &dat, &rxDat, 1, 50);
+  44              		.loc 1 109 5 view .LVU3
+  45 000a 1724     		movs	r4, #23
+  46 000c 6C44     		add	r4, r4, sp
+  47 000e 0548     		ldr	r0, .L2
+  48              	.LVL1:
+  49              		.loc 1 109 5 is_stmt 0 view .LVU4
+  50 0010 3223     		movs	r3, #50
+  51 0012 0093     		str	r3, [sp]
+  52              	.LVL2:
+  53              		.loc 1 109 5 view .LVU5
+  54 0014 313B     		subs	r3, r3, #49
+  55 0016 2200     		movs	r2, r4
+  56 0018 FFF7FEFF 		bl	HAL_SPI_TransmitReceive
+  57              	.LVL3:
+ 110:Core/Src/user_diskio_spi.c ****     return rxDat;
+  58              		.loc 1 110 5 is_stmt 1 view .LVU6
+  59              		.loc 1 110 12 is_stmt 0 view .LVU7
+  60 001c 2078     		ldrb	r0, [r4]
+ 111:Core/Src/user_diskio_spi.c **** }
+  61              		.loc 1 111 1 view .LVU8
+ARM GAS  /tmp/cc41MayP.s 			page 4
+
+
+  62 001e 06B0     		add	sp, sp, #24
+  63              		@ sp needed
+  64 0020 10BD     		pop	{r4, pc}
+  65              	.L3:
+  66 0022 C046     		.align	2
+  67              	.L2:
+  68 0024 00000000 		.word	hspi2
+  69              		.cfi_endproc
+  70              	.LFE495:
+  72              		.section	.text.wait_ready,"ax",%progbits
+  73              		.align	1
+  74              		.syntax unified
+  75              		.code	16
+  76              		.thumb_func
+  78              	wait_ready:
+  79              	.LVL4:
+  80              	.LFB498:
+ 112:Core/Src/user_diskio_spi.c **** 
+ 113:Core/Src/user_diskio_spi.c **** 
+ 114:Core/Src/user_diskio_spi.c **** /* Receive multiple byte */
+ 115:Core/Src/user_diskio_spi.c **** static
+ 116:Core/Src/user_diskio_spi.c **** void rcvr_spi_multi (
+ 117:Core/Src/user_diskio_spi.c **** 	BYTE *buff,		/* Pointer to data buffer */
+ 118:Core/Src/user_diskio_spi.c **** 	UINT btr		/* Number of bytes to receive (even number) */
+ 119:Core/Src/user_diskio_spi.c **** )
+ 120:Core/Src/user_diskio_spi.c **** {
+ 121:Core/Src/user_diskio_spi.c **** 	for(UINT i=0; i<btr; i++) {
+ 122:Core/Src/user_diskio_spi.c **** 		*(buff+i) = xchg_spi(0xFF);
+ 123:Core/Src/user_diskio_spi.c **** 	}
+ 124:Core/Src/user_diskio_spi.c **** }
+ 125:Core/Src/user_diskio_spi.c **** 
+ 126:Core/Src/user_diskio_spi.c **** 
+ 127:Core/Src/user_diskio_spi.c **** #if _USE_WRITE
+ 128:Core/Src/user_diskio_spi.c **** /* Send multiple byte */
+ 129:Core/Src/user_diskio_spi.c **** static
+ 130:Core/Src/user_diskio_spi.c **** void xmit_spi_multi (
+ 131:Core/Src/user_diskio_spi.c **** 	const BYTE *buff,	/* Pointer to the data */
+ 132:Core/Src/user_diskio_spi.c **** 	UINT btx			/* Number of bytes to send (even number) */
+ 133:Core/Src/user_diskio_spi.c **** )
+ 134:Core/Src/user_diskio_spi.c **** {
+ 135:Core/Src/user_diskio_spi.c **** 	HAL_SPI_Transmit(&SD_SPI_HANDLE, buff, btx, HAL_MAX_DELAY);
+ 136:Core/Src/user_diskio_spi.c **** }
+ 137:Core/Src/user_diskio_spi.c **** #endif
+ 138:Core/Src/user_diskio_spi.c **** 
+ 139:Core/Src/user_diskio_spi.c **** 
+ 140:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 141:Core/Src/user_diskio_spi.c **** /* Wait for card ready                                                   */
+ 142:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 143:Core/Src/user_diskio_spi.c **** 
+ 144:Core/Src/user_diskio_spi.c **** static
+ 145:Core/Src/user_diskio_spi.c **** int wait_ready (	/* 1:Ready, 0:Timeout */
+ 146:Core/Src/user_diskio_spi.c **** 	UINT wt			/* Timeout [ms] */
+ 147:Core/Src/user_diskio_spi.c **** )
+ 148:Core/Src/user_diskio_spi.c **** {
+  81              		.loc 1 148 1 is_stmt 1 view -0
+  82              		.cfi_startproc
+  83              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/cc41MayP.s 			page 5
+
+
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85              		.loc 1 148 1 is_stmt 0 view .LVU10
+  86 0000 70B5     		push	{r4, r5, r6, lr}
+  87              	.LCFI2:
+  88              		.cfi_def_cfa_offset 16
+  89              		.cfi_offset 4, -16
+  90              		.cfi_offset 5, -12
+  91              		.cfi_offset 6, -8
+  92              		.cfi_offset 14, -4
+  93 0002 0600     		movs	r6, r0
+ 149:Core/Src/user_diskio_spi.c **** 	BYTE d;
+  94              		.loc 1 149 2 is_stmt 1 view .LVU11
+ 150:Core/Src/user_diskio_spi.c **** 	//wait_ready needs its own timer, unfortunately, so it can't use the
+ 151:Core/Src/user_diskio_spi.c **** 	//spi_timer functions
+ 152:Core/Src/user_diskio_spi.c **** 	uint32_t waitSpiTimerTickStart;
+  95              		.loc 1 152 2 view .LVU12
+ 153:Core/Src/user_diskio_spi.c **** 	uint32_t waitSpiTimerTickDelay;
+  96              		.loc 1 153 2 view .LVU13
+ 154:Core/Src/user_diskio_spi.c **** 
+ 155:Core/Src/user_diskio_spi.c **** 	waitSpiTimerTickStart = HAL_GetTick();
+  97              		.loc 1 155 2 view .LVU14
+  98              		.loc 1 155 26 is_stmt 0 view .LVU15
+  99 0004 FFF7FEFF 		bl	HAL_GetTick
+ 100              	.LVL5:
+ 101              		.loc 1 155 26 view .LVU16
+ 102 0008 0500     		movs	r5, r0
+ 103              	.LVL6:
+ 156:Core/Src/user_diskio_spi.c **** 	waitSpiTimerTickDelay = (uint32_t)wt;
+ 104              		.loc 1 156 2 is_stmt 1 view .LVU17
+ 105              	.L6:
+ 157:Core/Src/user_diskio_spi.c **** 	do {
+ 106              		.loc 1 157 2 view .LVU18
+ 158:Core/Src/user_diskio_spi.c **** 		d = xchg_spi(0xFF);
+ 107              		.loc 1 158 3 view .LVU19
+ 108              		.loc 1 158 7 is_stmt 0 view .LVU20
+ 109 000a FF20     		movs	r0, #255
+ 110 000c FFF7FEFF 		bl	xchg_spi
+ 111              	.LVL7:
+ 112 0010 0400     		movs	r4, r0
+ 113              	.LVL8:
+ 159:Core/Src/user_diskio_spi.c **** 		/* This loop takes a time. Insert rot_rdq() here for multitask envilonment. */
+ 160:Core/Src/user_diskio_spi.c **** 	} while (d != 0xFF && ((HAL_GetTick() - waitSpiTimerTickStart) < waitSpiTimerTickDelay));	/* Wait 
+ 114              		.loc 1 160 21 is_stmt 1 discriminator 2 view .LVU21
+ 115 0012 FF28     		cmp	r0, #255
+ 116 0014 04D0     		beq	.L5
+ 117              		.loc 1 160 26 is_stmt 0 discriminator 1 view .LVU22
+ 118 0016 FFF7FEFF 		bl	HAL_GetTick
+ 119              	.LVL9:
+ 120              		.loc 1 160 40 discriminator 1 view .LVU23
+ 121 001a 401B     		subs	r0, r0, r5
+ 122              		.loc 1 160 21 discriminator 1 view .LVU24
+ 123 001c B042     		cmp	r0, r6
+ 124 001e F4D3     		bcc	.L6
+ 125              	.L5:
+ 161:Core/Src/user_diskio_spi.c **** 
+ 162:Core/Src/user_diskio_spi.c **** 	return (d == 0xFF) ? 1 : 0;
+ 126              		.loc 1 162 2 is_stmt 1 view .LVU25
+ARM GAS  /tmp/cc41MayP.s 			page 6
+
+
+ 127              		.loc 1 162 25 is_stmt 0 view .LVU26
+ 128 0020 2000     		movs	r0, r4
+ 129 0022 FF38     		subs	r0, r0, #255
+ 130 0024 4342     		rsbs	r3, r0, #0
+ 131 0026 5841     		adcs	r0, r0, r3
+ 163:Core/Src/user_diskio_spi.c **** }
+ 132              		.loc 1 163 1 view .LVU27
+ 133              		@ sp needed
+ 134              	.LVL10:
+ 135              	.LVL11:
+ 136              		.loc 1 163 1 view .LVU28
+ 137 0028 70BD     		pop	{r4, r5, r6, pc}
+ 138              		.cfi_endproc
+ 139              	.LFE498:
+ 141              		.section	.text.rcvr_spi_multi,"ax",%progbits
+ 142              		.align	1
+ 143              		.syntax unified
+ 144              		.code	16
+ 145              		.thumb_func
+ 147              	rcvr_spi_multi:
+ 148              	.LVL12:
+ 149              	.LFB496:
+ 120:Core/Src/user_diskio_spi.c **** 	for(UINT i=0; i<btr; i++) {
+ 150              		.loc 1 120 1 is_stmt 1 view -0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 0
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120:Core/Src/user_diskio_spi.c **** 	for(UINT i=0; i<btr; i++) {
+ 154              		.loc 1 120 1 is_stmt 0 view .LVU30
+ 155 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 156              	.LCFI3:
+ 157              		.cfi_def_cfa_offset 24
+ 158              		.cfi_offset 3, -24
+ 159              		.cfi_offset 4, -20
+ 160              		.cfi_offset 5, -16
+ 161              		.cfi_offset 6, -12
+ 162              		.cfi_offset 7, -8
+ 163              		.cfi_offset 14, -4
+ 164 0002 0700     		movs	r7, r0
+ 165 0004 0E00     		movs	r6, r1
+ 121:Core/Src/user_diskio_spi.c **** 		*(buff+i) = xchg_spi(0xFF);
+ 166              		.loc 1 121 2 is_stmt 1 view .LVU31
+ 167              	.LBB2:
+ 121:Core/Src/user_diskio_spi.c **** 		*(buff+i) = xchg_spi(0xFF);
+ 168              		.loc 1 121 6 view .LVU32
+ 169              	.LVL13:
+ 121:Core/Src/user_diskio_spi.c **** 		*(buff+i) = xchg_spi(0xFF);
+ 170              		.loc 1 121 11 is_stmt 0 view .LVU33
+ 171 0006 0024     		movs	r4, #0
+ 121:Core/Src/user_diskio_spi.c **** 		*(buff+i) = xchg_spi(0xFF);
+ 172              		.loc 1 121 2 view .LVU34
+ 173 0008 05E0     		b	.L8
+ 174              	.LVL14:
+ 175              	.L9:
+ 122:Core/Src/user_diskio_spi.c **** 	}
+ 176              		.loc 1 122 3 is_stmt 1 view .LVU35
+ 122:Core/Src/user_diskio_spi.c **** 	}
+ARM GAS  /tmp/cc41MayP.s 			page 7
+
+
+ 177              		.loc 1 122 9 is_stmt 0 view .LVU36
+ 178 000a 3D19     		adds	r5, r7, r4
+ 122:Core/Src/user_diskio_spi.c **** 	}
+ 179              		.loc 1 122 15 view .LVU37
+ 180 000c FF20     		movs	r0, #255
+ 181 000e FFF7FEFF 		bl	xchg_spi
+ 182              	.LVL15:
+ 122:Core/Src/user_diskio_spi.c **** 	}
+ 183              		.loc 1 122 13 discriminator 1 view .LVU38
+ 184 0012 2870     		strb	r0, [r5]
+ 121:Core/Src/user_diskio_spi.c **** 		*(buff+i) = xchg_spi(0xFF);
+ 185              		.loc 1 121 24 is_stmt 1 discriminator 3 view .LVU39
+ 186 0014 0134     		adds	r4, r4, #1
+ 187              	.LVL16:
+ 188              	.L8:
+ 121:Core/Src/user_diskio_spi.c **** 		*(buff+i) = xchg_spi(0xFF);
+ 189              		.loc 1 121 17 discriminator 1 view .LVU40
+ 190 0016 B442     		cmp	r4, r6
+ 191 0018 F7D3     		bcc	.L9
+ 192              	.LBE2:
+ 124:Core/Src/user_diskio_spi.c **** 
+ 193              		.loc 1 124 1 is_stmt 0 view .LVU41
+ 194              		@ sp needed
+ 195              	.LVL17:
+ 196              	.LVL18:
+ 197              	.LVL19:
+ 124:Core/Src/user_diskio_spi.c **** 
+ 198              		.loc 1 124 1 view .LVU42
+ 199 001a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 200              		.cfi_endproc
+ 201              	.LFE496:
+ 203              		.section	.text.despiselect,"ax",%progbits
+ 204              		.align	1
+ 205              		.syntax unified
+ 206              		.code	16
+ 207              		.thumb_func
+ 209              	despiselect:
+ 210              	.LFB499:
+ 164:Core/Src/user_diskio_spi.c **** 
+ 165:Core/Src/user_diskio_spi.c **** 
+ 166:Core/Src/user_diskio_spi.c **** 
+ 167:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 168:Core/Src/user_diskio_spi.c **** /* Despiselect card and release SPI                                         */
+ 169:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 170:Core/Src/user_diskio_spi.c **** 
+ 171:Core/Src/user_diskio_spi.c **** static
+ 172:Core/Src/user_diskio_spi.c **** void despiselect (void)
+ 173:Core/Src/user_diskio_spi.c **** {
+ 211              		.loc 1 173 1 is_stmt 1 view -0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215 0000 10B5     		push	{r4, lr}
+ 216              	.LCFI4:
+ 217              		.cfi_def_cfa_offset 8
+ 218              		.cfi_offset 4, -8
+ 219              		.cfi_offset 14, -4
+ARM GAS  /tmp/cc41MayP.s 			page 8
+
+
+ 174:Core/Src/user_diskio_spi.c **** 	CS_HIGH();		/* Set CS# high */
+ 220              		.loc 1 174 2 view .LVU44
+ 221 0002 0122     		movs	r2, #1
+ 222 0004 0221     		movs	r1, #2
+ 223 0006 0348     		ldr	r0, .L11
+ 224 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 225              	.LVL20:
+ 226              		.loc 1 174 11 discriminator 1 view .LVU45
+ 175:Core/Src/user_diskio_spi.c **** 	xchg_spi(0xFF);	/* Dummy clock (force DO hi-z for multiple slave SPI) */
+ 227              		.loc 1 175 2 view .LVU46
+ 228 000c FF20     		movs	r0, #255
+ 229 000e FFF7FEFF 		bl	xchg_spi
+ 230              	.LVL21:
+ 176:Core/Src/user_diskio_spi.c **** 
+ 177:Core/Src/user_diskio_spi.c **** }
+ 231              		.loc 1 177 1 is_stmt 0 view .LVU47
+ 232              		@ sp needed
+ 233 0012 10BD     		pop	{r4, pc}
+ 234              	.L12:
+ 235              		.align	2
+ 236              	.L11:
+ 237 0014 00040050 		.word	1342178304
+ 238              		.cfi_endproc
+ 239              	.LFE499:
+ 241              		.section	.text.spiselect,"ax",%progbits
+ 242              		.align	1
+ 243              		.syntax unified
+ 244              		.code	16
+ 245              		.thumb_func
+ 247              	spiselect:
+ 248              	.LFB500:
+ 178:Core/Src/user_diskio_spi.c **** 
+ 179:Core/Src/user_diskio_spi.c **** 
+ 180:Core/Src/user_diskio_spi.c **** 
+ 181:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 182:Core/Src/user_diskio_spi.c **** /* Select card and wait for ready                                        */
+ 183:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 184:Core/Src/user_diskio_spi.c **** 
+ 185:Core/Src/user_diskio_spi.c **** static
+ 186:Core/Src/user_diskio_spi.c **** int spiselect (void)	/* 1:OK, 0:Timeout */
+ 187:Core/Src/user_diskio_spi.c **** {
+ 249              		.loc 1 187 1 is_stmt 1 view -0
+ 250              		.cfi_startproc
+ 251              		@ args = 0, pretend = 0, frame = 0
+ 252              		@ frame_needed = 0, uses_anonymous_args = 0
+ 253 0000 10B5     		push	{r4, lr}
+ 254              	.LCFI5:
+ 255              		.cfi_def_cfa_offset 8
+ 256              		.cfi_offset 4, -8
+ 257              		.cfi_offset 14, -4
+ 188:Core/Src/user_diskio_spi.c **** 	CS_LOW();		/* Set CS# low */
+ 258              		.loc 1 188 2 view .LVU49
+ 259 0002 0022     		movs	r2, #0
+ 260 0004 0221     		movs	r1, #2
+ 261 0006 0948     		ldr	r0, .L17
+ 262 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 263              	.LVL22:
+ARM GAS  /tmp/cc41MayP.s 			page 9
+
+
+ 264              		.loc 1 188 10 discriminator 1 view .LVU50
+ 189:Core/Src/user_diskio_spi.c **** 	xchg_spi(0xFF);	/* Dummy clock (force DO enabled) */
+ 265              		.loc 1 189 2 view .LVU51
+ 266 000c FF20     		movs	r0, #255
+ 267 000e FFF7FEFF 		bl	xchg_spi
+ 268              	.LVL23:
+ 190:Core/Src/user_diskio_spi.c **** 	if (wait_ready(500)) return 1;	/* Wait for card ready */
+ 269              		.loc 1 190 2 view .LVU52
+ 270              		.loc 1 190 6 is_stmt 0 view .LVU53
+ 271 0012 FA20     		movs	r0, #250
+ 272 0014 4000     		lsls	r0, r0, #1
+ 273 0016 FFF7FEFF 		bl	wait_ready
+ 274              	.LVL24:
+ 275 001a 041E     		subs	r4, r0, #0
+ 276              		.loc 1 190 5 discriminator 1 view .LVU54
+ 277 001c 02D0     		beq	.L16
+ 278              		.loc 1 190 30 discriminator 1 view .LVU55
+ 279 001e 0124     		movs	r4, #1
+ 280              	.L13:
+ 191:Core/Src/user_diskio_spi.c **** 
+ 192:Core/Src/user_diskio_spi.c **** 	despiselect();
+ 193:Core/Src/user_diskio_spi.c **** 	return 0;	/* Timeout */
+ 194:Core/Src/user_diskio_spi.c **** }
+ 281              		.loc 1 194 1 view .LVU56
+ 282 0020 2000     		movs	r0, r4
+ 283              		@ sp needed
+ 284 0022 10BD     		pop	{r4, pc}
+ 285              	.L16:
+ 192:Core/Src/user_diskio_spi.c **** 	return 0;	/* Timeout */
+ 286              		.loc 1 192 2 is_stmt 1 view .LVU57
+ 287 0024 FFF7FEFF 		bl	despiselect
+ 288              	.LVL25:
+ 193:Core/Src/user_diskio_spi.c **** }
+ 289              		.loc 1 193 2 view .LVU58
+ 193:Core/Src/user_diskio_spi.c **** }
+ 290              		.loc 1 193 9 is_stmt 0 view .LVU59
+ 291 0028 FAE7     		b	.L13
+ 292              	.L18:
+ 293 002a C046     		.align	2
+ 294              	.L17:
+ 295 002c 00040050 		.word	1342178304
+ 296              		.cfi_endproc
+ 297              	.LFE500:
+ 299              		.section	.text.send_cmd,"ax",%progbits
+ 300              		.align	1
+ 301              		.syntax unified
+ 302              		.code	16
+ 303              		.thumb_func
+ 305              	send_cmd:
+ 306              	.LVL26:
+ 307              	.LFB503:
+ 195:Core/Src/user_diskio_spi.c **** 
+ 196:Core/Src/user_diskio_spi.c **** 
+ 197:Core/Src/user_diskio_spi.c **** 
+ 198:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 199:Core/Src/user_diskio_spi.c **** /* Receive a data packet from the MMC                                    */
+ 200:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ARM GAS  /tmp/cc41MayP.s 			page 10
+
+
+ 201:Core/Src/user_diskio_spi.c **** 
+ 202:Core/Src/user_diskio_spi.c **** static
+ 203:Core/Src/user_diskio_spi.c **** int rcvr_datablock (	/* 1:OK, 0:Error */
+ 204:Core/Src/user_diskio_spi.c **** 	BYTE *buff,			/* Data buffer */
+ 205:Core/Src/user_diskio_spi.c **** 	UINT btr			/* Data block length (byte) */
+ 206:Core/Src/user_diskio_spi.c **** )
+ 207:Core/Src/user_diskio_spi.c **** {
+ 208:Core/Src/user_diskio_spi.c **** 	BYTE token;
+ 209:Core/Src/user_diskio_spi.c **** 
+ 210:Core/Src/user_diskio_spi.c **** 
+ 211:Core/Src/user_diskio_spi.c **** 	SPI_Timer_On(200);
+ 212:Core/Src/user_diskio_spi.c **** 	do {							/* Wait for DataStart token in timeout of 200ms */
+ 213:Core/Src/user_diskio_spi.c **** 		token = xchg_spi(0xFF);
+ 214:Core/Src/user_diskio_spi.c **** 		/* This loop will take a time. Insert rot_rdq() here for multitask envilonment. */
+ 215:Core/Src/user_diskio_spi.c **** 	} while ((token == 0xFF) && SPI_Timer_Status());
+ 216:Core/Src/user_diskio_spi.c **** 	if(token != 0xFE) return 0;		/* Function fails if invalid DataStart token or timeout */
+ 217:Core/Src/user_diskio_spi.c **** 
+ 218:Core/Src/user_diskio_spi.c **** 	rcvr_spi_multi(buff, btr);		/* Store trailing data to the buffer */
+ 219:Core/Src/user_diskio_spi.c **** 	xchg_spi(0xFF); xchg_spi(0xFF);			/* Discard CRC */
+ 220:Core/Src/user_diskio_spi.c **** 
+ 221:Core/Src/user_diskio_spi.c **** 	return 1;						/* Function succeeded */
+ 222:Core/Src/user_diskio_spi.c **** }
+ 223:Core/Src/user_diskio_spi.c **** 
+ 224:Core/Src/user_diskio_spi.c **** 
+ 225:Core/Src/user_diskio_spi.c **** 
+ 226:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 227:Core/Src/user_diskio_spi.c **** /* Send a data packet to the MMC                                         */
+ 228:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 229:Core/Src/user_diskio_spi.c **** 
+ 230:Core/Src/user_diskio_spi.c **** #if _USE_WRITE
+ 231:Core/Src/user_diskio_spi.c **** static
+ 232:Core/Src/user_diskio_spi.c **** int xmit_datablock (	/* 1:OK, 0:Failed */
+ 233:Core/Src/user_diskio_spi.c **** 	const BYTE *buff,	/* Ponter to 512 byte data to be sent */
+ 234:Core/Src/user_diskio_spi.c **** 	BYTE token			/* Token */
+ 235:Core/Src/user_diskio_spi.c **** )
+ 236:Core/Src/user_diskio_spi.c **** {
+ 237:Core/Src/user_diskio_spi.c **** 	BYTE resp;
+ 238:Core/Src/user_diskio_spi.c **** 
+ 239:Core/Src/user_diskio_spi.c **** 
+ 240:Core/Src/user_diskio_spi.c **** 	if (!wait_ready(500)) return 0;		/* Wait for card ready */
+ 241:Core/Src/user_diskio_spi.c **** 
+ 242:Core/Src/user_diskio_spi.c **** 	xchg_spi(token);					/* Send token */
+ 243:Core/Src/user_diskio_spi.c **** 	if (token != 0xFD) {				/* Send data if token is other than StopTran */
+ 244:Core/Src/user_diskio_spi.c **** 		xmit_spi_multi(buff, 512);		/* Data */
+ 245:Core/Src/user_diskio_spi.c **** 		xchg_spi(0xFF); xchg_spi(0xFF);	/* Dummy CRC */
+ 246:Core/Src/user_diskio_spi.c **** 
+ 247:Core/Src/user_diskio_spi.c **** 		resp = xchg_spi(0xFF);				/* Receive data resp */
+ 248:Core/Src/user_diskio_spi.c **** 		if ((resp & 0x1F) != 0x05) return 0;	/* Function fails if the data packet was not accepted */
+ 249:Core/Src/user_diskio_spi.c **** 	}
+ 250:Core/Src/user_diskio_spi.c **** 	return 1;
+ 251:Core/Src/user_diskio_spi.c **** }
+ 252:Core/Src/user_diskio_spi.c **** #endif
+ 253:Core/Src/user_diskio_spi.c **** 
+ 254:Core/Src/user_diskio_spi.c **** 
+ 255:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 256:Core/Src/user_diskio_spi.c **** /* Send a command packet to the MMC                                      */
+ 257:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ARM GAS  /tmp/cc41MayP.s 			page 11
+
+
+ 258:Core/Src/user_diskio_spi.c **** 
+ 259:Core/Src/user_diskio_spi.c **** static
+ 260:Core/Src/user_diskio_spi.c **** BYTE send_cmd (		/* Return value: R1 resp (bit7==1:Failed to send) */
+ 261:Core/Src/user_diskio_spi.c **** 	BYTE cmd,		/* Command index */
+ 262:Core/Src/user_diskio_spi.c **** 	DWORD arg		/* Argument */
+ 263:Core/Src/user_diskio_spi.c **** )
+ 264:Core/Src/user_diskio_spi.c **** {
+ 308              		.loc 1 264 1 is_stmt 1 view -0
+ 309              		.cfi_startproc
+ 310              		@ args = 0, pretend = 0, frame = 0
+ 311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 312              		.loc 1 264 1 is_stmt 0 view .LVU61
+ 313 0000 70B5     		push	{r4, r5, r6, lr}
+ 314              	.LCFI6:
+ 315              		.cfi_def_cfa_offset 16
+ 316              		.cfi_offset 4, -16
+ 317              		.cfi_offset 5, -12
+ 318              		.cfi_offset 6, -8
+ 319              		.cfi_offset 14, -4
+ 320 0002 0400     		movs	r4, r0
+ 321 0004 0D00     		movs	r5, r1
+ 265:Core/Src/user_diskio_spi.c **** 	BYTE n, res;
+ 322              		.loc 1 265 2 is_stmt 1 view .LVU62
+ 266:Core/Src/user_diskio_spi.c **** 
+ 267:Core/Src/user_diskio_spi.c **** 
+ 268:Core/Src/user_diskio_spi.c **** 	if (cmd & 0x80) {	/* Send a CMD55 prior to ACMD<n> */
+ 323              		.loc 1 268 2 view .LVU63
+ 324              		.loc 1 268 6 is_stmt 0 view .LVU64
+ 325 0006 43B2     		sxtb	r3, r0
+ 326              		.loc 1 268 5 view .LVU65
+ 327 0008 002B     		cmp	r3, #0
+ 328 000a 20DB     		blt	.L30
+ 329              	.LVL27:
+ 330              	.L20:
+ 269:Core/Src/user_diskio_spi.c **** 		cmd &= 0x7F;
+ 270:Core/Src/user_diskio_spi.c **** 		res = send_cmd(CMD55, 0);
+ 271:Core/Src/user_diskio_spi.c **** 		if (res > 1) return res;
+ 272:Core/Src/user_diskio_spi.c **** 	}
+ 273:Core/Src/user_diskio_spi.c **** 
+ 274:Core/Src/user_diskio_spi.c **** 	/* Select the card and wait for ready except to stop multiple block read */
+ 275:Core/Src/user_diskio_spi.c **** 	if (cmd != CMD12) {
+ 331              		.loc 1 275 2 is_stmt 1 view .LVU66
+ 332              		.loc 1 275 5 is_stmt 0 view .LVU67
+ 333 000c 0C2C     		cmp	r4, #12
+ 334 000e 05D0     		beq	.L22
+ 276:Core/Src/user_diskio_spi.c **** 		despiselect();
+ 335              		.loc 1 276 3 is_stmt 1 view .LVU68
+ 336 0010 FFF7FEFF 		bl	despiselect
+ 337              	.LVL28:
+ 277:Core/Src/user_diskio_spi.c **** 		if (!spiselect()) return 0xFF;
+ 338              		.loc 1 277 3 view .LVU69
+ 339              		.loc 1 277 8 is_stmt 0 view .LVU70
+ 340 0014 FFF7FEFF 		bl	spiselect
+ 341              	.LVL29:
+ 342              		.loc 1 277 6 discriminator 1 view .LVU71
+ 343 0018 0028     		cmp	r0, #0
+ 344 001a 3AD0     		beq	.L26
+ARM GAS  /tmp/cc41MayP.s 			page 12
+
+
+ 345              	.L22:
+ 278:Core/Src/user_diskio_spi.c **** 	}
+ 279:Core/Src/user_diskio_spi.c **** 
+ 280:Core/Src/user_diskio_spi.c **** 	/* Send command packet */
+ 281:Core/Src/user_diskio_spi.c **** 	xchg_spi(0x40 | cmd);				/* Start + command index */
+ 346              		.loc 1 281 2 is_stmt 1 view .LVU72
+ 347 001c 4020     		movs	r0, #64
+ 348 001e 2043     		orrs	r0, r4
+ 349 0020 C0B2     		uxtb	r0, r0
+ 350 0022 FFF7FEFF 		bl	xchg_spi
+ 351              	.LVL30:
+ 282:Core/Src/user_diskio_spi.c **** 	xchg_spi((BYTE)(arg >> 24));		/* Argument[31..24] */
+ 352              		.loc 1 282 2 view .LVU73
+ 353 0026 280E     		lsrs	r0, r5, #24
+ 354 0028 FFF7FEFF 		bl	xchg_spi
+ 355              	.LVL31:
+ 283:Core/Src/user_diskio_spi.c **** 	xchg_spi((BYTE)(arg >> 16));		/* Argument[23..16] */
+ 356              		.loc 1 283 2 view .LVU74
+ 357              		.loc 1 283 22 is_stmt 0 view .LVU75
+ 358 002c 280C     		lsrs	r0, r5, #16
+ 359              		.loc 1 283 2 view .LVU76
+ 360 002e C0B2     		uxtb	r0, r0
+ 361 0030 FFF7FEFF 		bl	xchg_spi
+ 362              	.LVL32:
+ 284:Core/Src/user_diskio_spi.c **** 	xchg_spi((BYTE)(arg >> 8));			/* Argument[15..8] */
+ 363              		.loc 1 284 2 is_stmt 1 view .LVU77
+ 364              		.loc 1 284 22 is_stmt 0 view .LVU78
+ 365 0034 280A     		lsrs	r0, r5, #8
+ 366              		.loc 1 284 2 view .LVU79
+ 367 0036 C0B2     		uxtb	r0, r0
+ 368 0038 FFF7FEFF 		bl	xchg_spi
+ 369              	.LVL33:
+ 285:Core/Src/user_diskio_spi.c **** 	xchg_spi((BYTE)arg);				/* Argument[7..0] */
+ 370              		.loc 1 285 2 is_stmt 1 view .LVU80
+ 371 003c E8B2     		uxtb	r0, r5
+ 372 003e FFF7FEFF 		bl	xchg_spi
+ 373              	.LVL34:
+ 286:Core/Src/user_diskio_spi.c **** 	n = 0x01;							/* Dummy CRC + Stop */
+ 374              		.loc 1 286 2 view .LVU81
+ 287:Core/Src/user_diskio_spi.c **** 	if (cmd == CMD0) n = 0x95;			/* Valid CRC for CMD0(0) */
+ 375              		.loc 1 287 2 view .LVU82
+ 376              		.loc 1 287 5 is_stmt 0 view .LVU83
+ 377 0042 002C     		cmp	r4, #0
+ 378 0044 0DD0     		beq	.L27
+ 288:Core/Src/user_diskio_spi.c **** 	if (cmd == CMD8) n = 0x87;			/* Valid CRC for CMD8(0x1AA) */
+ 379              		.loc 1 288 2 is_stmt 1 view .LVU84
+ 380              		.loc 1 288 5 is_stmt 0 view .LVU85
+ 381 0046 082C     		cmp	r4, #8
+ 382 0048 1DD0     		beq	.L28
+ 383 004a 0120     		movs	r0, #1
+ 384 004c 0AE0     		b	.L23
+ 385              	.LVL35:
+ 386              	.L30:
+ 269:Core/Src/user_diskio_spi.c **** 		res = send_cmd(CMD55, 0);
+ 387              		.loc 1 269 3 is_stmt 1 view .LVU86
+ 269:Core/Src/user_diskio_spi.c **** 		res = send_cmd(CMD55, 0);
+ 388              		.loc 1 269 7 is_stmt 0 view .LVU87
+ARM GAS  /tmp/cc41MayP.s 			page 13
+
+
+ 389 004e 7F23     		movs	r3, #127
+ 390 0050 1C40     		ands	r4, r3
+ 391              	.LVL36:
+ 270:Core/Src/user_diskio_spi.c **** 		if (res > 1) return res;
+ 392              		.loc 1 270 3 is_stmt 1 view .LVU88
+ 270:Core/Src/user_diskio_spi.c **** 		if (res > 1) return res;
+ 393              		.loc 1 270 9 is_stmt 0 view .LVU89
+ 394 0052 0021     		movs	r1, #0
+ 395              	.LVL37:
+ 270:Core/Src/user_diskio_spi.c **** 		if (res > 1) return res;
+ 396              		.loc 1 270 9 view .LVU90
+ 397 0054 3720     		movs	r0, #55
+ 398 0056 FFF7D3FF 		bl	send_cmd
+ 399              	.LVL38:
+ 400 005a 0200     		movs	r2, r0
+ 401              	.LVL39:
+ 271:Core/Src/user_diskio_spi.c **** 	}
+ 402              		.loc 1 271 3 is_stmt 1 view .LVU91
+ 271:Core/Src/user_diskio_spi.c **** 	}
+ 403              		.loc 1 271 6 is_stmt 0 view .LVU92
+ 404 005c 0128     		cmp	r0, #1
+ 405 005e D5D9     		bls	.L20
+ 406 0060 0FE0     		b	.L21
+ 407              	.LVL40:
+ 408              	.L27:
+ 287:Core/Src/user_diskio_spi.c **** 	if (cmd == CMD8) n = 0x87;			/* Valid CRC for CMD8(0x1AA) */
+ 409              		.loc 1 287 21 discriminator 1 view .LVU93
+ 410 0062 9520     		movs	r0, #149
+ 411              	.L23:
+ 412              	.LVL41:
+ 289:Core/Src/user_diskio_spi.c **** 	xchg_spi(n);
+ 413              		.loc 1 289 2 is_stmt 1 view .LVU94
+ 414 0064 FFF7FEFF 		bl	xchg_spi
+ 415              	.LVL42:
+ 290:Core/Src/user_diskio_spi.c **** 
+ 291:Core/Src/user_diskio_spi.c **** 	/* Receive command resp */
+ 292:Core/Src/user_diskio_spi.c **** 	if (cmd == CMD12) xchg_spi(0xFF);	/* Diacard following one byte when CMD12 */
+ 416              		.loc 1 292 2 view .LVU95
+ 417              		.loc 1 292 5 is_stmt 0 view .LVU96
+ 418 0068 0C2C     		cmp	r4, #12
+ 419 006a 0ED0     		beq	.L31
+ 420              	.L24:
+ 287:Core/Src/user_diskio_spi.c **** 	if (cmd == CMD8) n = 0x87;			/* Valid CRC for CMD8(0x1AA) */
+ 421              		.loc 1 287 21 discriminator 1 view .LVU97
+ 422 006c 0A24     		movs	r4, #10
+ 423              	.LVL43:
+ 424              	.L25:
+ 293:Core/Src/user_diskio_spi.c **** 	n = 10;								/* Wait for response (10 bytes max) */
+ 294:Core/Src/user_diskio_spi.c **** 	do {
+ 425              		.loc 1 294 2 is_stmt 1 view .LVU98
+ 295:Core/Src/user_diskio_spi.c **** 		res = xchg_spi(0xFF);
+ 426              		.loc 1 295 3 view .LVU99
+ 427              		.loc 1 295 9 is_stmt 0 view .LVU100
+ 428 006e FF20     		movs	r0, #255
+ 429 0070 FFF7FEFF 		bl	xchg_spi
+ 430              	.LVL44:
+ 431 0074 0200     		movs	r2, r0
+ARM GAS  /tmp/cc41MayP.s 			page 14
+
+
+ 432              	.LVL45:
+ 296:Core/Src/user_diskio_spi.c **** 	} while ((res & 0x80) && --n);
+ 433              		.loc 1 296 24 is_stmt 1 discriminator 2 view .LVU101
+ 434 0076 0006     		lsls	r0, r0, #24
+ 435 0078 03D5     		bpl	.L21
+ 436              	.LVL46:
+ 437              		.loc 1 296 24 is_stmt 0 discriminator 1 view .LVU102
+ 438 007a 013C     		subs	r4, r4, #1
+ 439              	.LVL47:
+ 440              		.loc 1 296 24 discriminator 1 view .LVU103
+ 441 007c E4B2     		uxtb	r4, r4
+ 442              	.LVL48:
+ 443              		.loc 1 296 24 discriminator 1 view .LVU104
+ 444 007e 002C     		cmp	r4, #0
+ 445 0080 F5D1     		bne	.L25
+ 446              	.LVL49:
+ 447              	.L21:
+ 297:Core/Src/user_diskio_spi.c **** 
+ 298:Core/Src/user_diskio_spi.c **** 	return res;							/* Return received response */
+ 299:Core/Src/user_diskio_spi.c **** }
+ 448              		.loc 1 299 1 view .LVU105
+ 449 0082 1000     		movs	r0, r2
+ 450              		@ sp needed
+ 451              	.LVL50:
+ 452              		.loc 1 299 1 view .LVU106
+ 453 0084 70BD     		pop	{r4, r5, r6, pc}
+ 454              	.LVL51:
+ 455              	.L28:
+ 288:Core/Src/user_diskio_spi.c **** 	xchg_spi(n);
+ 456              		.loc 1 288 21 discriminator 1 view .LVU107
+ 457 0086 8720     		movs	r0, #135
+ 458 0088 ECE7     		b	.L23
+ 459              	.LVL52:
+ 460              	.L31:
+ 292:Core/Src/user_diskio_spi.c **** 	n = 10;								/* Wait for response (10 bytes max) */
+ 461              		.loc 1 292 20 is_stmt 1 discriminator 1 view .LVU108
+ 462 008a FF20     		movs	r0, #255
+ 463 008c FFF7FEFF 		bl	xchg_spi
+ 464              	.LVL53:
+ 465 0090 ECE7     		b	.L24
+ 466              	.LVL54:
+ 467              	.L26:
+ 277:Core/Src/user_diskio_spi.c **** 	}
+ 468              		.loc 1 277 28 is_stmt 0 discriminator 1 view .LVU109
+ 469 0092 FF22     		movs	r2, #255
+ 470 0094 F5E7     		b	.L21
+ 471              		.cfi_endproc
+ 472              	.LFE503:
+ 474              		.section	.text.xmit_spi_multi,"ax",%progbits
+ 475              		.align	1
+ 476              		.syntax unified
+ 477              		.code	16
+ 478              		.thumb_func
+ 480              	xmit_spi_multi:
+ 481              	.LVL55:
+ 482              	.LFB497:
+ 134:Core/Src/user_diskio_spi.c **** 	HAL_SPI_Transmit(&SD_SPI_HANDLE, buff, btx, HAL_MAX_DELAY);
+ARM GAS  /tmp/cc41MayP.s 			page 15
+
+
+ 483              		.loc 1 134 1 is_stmt 1 view -0
+ 484              		.cfi_startproc
+ 485              		@ args = 0, pretend = 0, frame = 0
+ 486              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134:Core/Src/user_diskio_spi.c **** 	HAL_SPI_Transmit(&SD_SPI_HANDLE, buff, btx, HAL_MAX_DELAY);
+ 487              		.loc 1 134 1 is_stmt 0 view .LVU111
+ 488 0000 10B5     		push	{r4, lr}
+ 489              	.LCFI7:
+ 490              		.cfi_def_cfa_offset 8
+ 491              		.cfi_offset 4, -8
+ 492              		.cfi_offset 14, -4
+ 135:Core/Src/user_diskio_spi.c **** }
+ 493              		.loc 1 135 2 is_stmt 1 view .LVU112
+ 494 0002 0123     		movs	r3, #1
+ 495 0004 8AB2     		uxth	r2, r1
+ 496 0006 034C     		ldr	r4, .L33
+ 497 0008 5B42     		rsbs	r3, r3, #0
+ 498 000a 0100     		movs	r1, r0
+ 499              	.LVL56:
+ 135:Core/Src/user_diskio_spi.c **** }
+ 500              		.loc 1 135 2 is_stmt 0 view .LVU113
+ 501 000c 2000     		movs	r0, r4
+ 502              	.LVL57:
+ 135:Core/Src/user_diskio_spi.c **** }
+ 503              		.loc 1 135 2 view .LVU114
+ 504 000e FFF7FEFF 		bl	HAL_SPI_Transmit
+ 505              	.LVL58:
+ 136:Core/Src/user_diskio_spi.c **** #endif
+ 506              		.loc 1 136 1 view .LVU115
+ 507              		@ sp needed
+ 508 0012 10BD     		pop	{r4, pc}
+ 509              	.L34:
+ 510              		.align	2
+ 511              	.L33:
+ 512 0014 00000000 		.word	hspi2
+ 513              		.cfi_endproc
+ 514              	.LFE497:
+ 516              		.section	.text.xmit_datablock,"ax",%progbits
+ 517              		.align	1
+ 518              		.syntax unified
+ 519              		.code	16
+ 520              		.thumb_func
+ 522              	xmit_datablock:
+ 523              	.LVL59:
+ 524              	.LFB502:
+ 236:Core/Src/user_diskio_spi.c **** 	BYTE resp;
+ 525              		.loc 1 236 1 is_stmt 1 view -0
+ 526              		.cfi_startproc
+ 527              		@ args = 0, pretend = 0, frame = 0
+ 528              		@ frame_needed = 0, uses_anonymous_args = 0
+ 236:Core/Src/user_diskio_spi.c **** 	BYTE resp;
+ 529              		.loc 1 236 1 is_stmt 0 view .LVU117
+ 530 0000 70B5     		push	{r4, r5, r6, lr}
+ 531              	.LCFI8:
+ 532              		.cfi_def_cfa_offset 16
+ 533              		.cfi_offset 4, -16
+ 534              		.cfi_offset 5, -12
+ARM GAS  /tmp/cc41MayP.s 			page 16
+
+
+ 535              		.cfi_offset 6, -8
+ 536              		.cfi_offset 14, -4
+ 537 0002 0400     		movs	r4, r0
+ 538 0004 0D00     		movs	r5, r1
+ 237:Core/Src/user_diskio_spi.c **** 
+ 539              		.loc 1 237 2 is_stmt 1 view .LVU118
+ 240:Core/Src/user_diskio_spi.c **** 
+ 540              		.loc 1 240 2 view .LVU119
+ 240:Core/Src/user_diskio_spi.c **** 
+ 541              		.loc 1 240 7 is_stmt 0 view .LVU120
+ 542 0006 FA20     		movs	r0, #250
+ 543              	.LVL60:
+ 240:Core/Src/user_diskio_spi.c **** 
+ 544              		.loc 1 240 7 view .LVU121
+ 545 0008 4000     		lsls	r0, r0, #1
+ 546 000a FFF7FEFF 		bl	wait_ready
+ 547              	.LVL61:
+ 240:Core/Src/user_diskio_spi.c **** 
+ 548              		.loc 1 240 5 discriminator 1 view .LVU122
+ 549 000e 0028     		cmp	r0, #0
+ 550 0010 00D1     		bne	.L39
+ 551              	.L35:
+ 251:Core/Src/user_diskio_spi.c **** #endif
+ 552              		.loc 1 251 1 view .LVU123
+ 553              		@ sp needed
+ 554              	.LVL62:
+ 555              	.LVL63:
+ 251:Core/Src/user_diskio_spi.c **** #endif
+ 556              		.loc 1 251 1 view .LVU124
+ 557 0012 70BD     		pop	{r4, r5, r6, pc}
+ 558              	.LVL64:
+ 559              	.L39:
+ 242:Core/Src/user_diskio_spi.c **** 	if (token != 0xFD) {				/* Send data if token is other than StopTran */
+ 560              		.loc 1 242 2 is_stmt 1 view .LVU125
+ 561 0014 2800     		movs	r0, r5
+ 562 0016 FFF7FEFF 		bl	xchg_spi
+ 563              	.LVL65:
+ 243:Core/Src/user_diskio_spi.c **** 		xmit_spi_multi(buff, 512);		/* Data */
+ 564              		.loc 1 243 2 view .LVU126
+ 243:Core/Src/user_diskio_spi.c **** 		xmit_spi_multi(buff, 512);		/* Data */
+ 565              		.loc 1 243 5 is_stmt 0 view .LVU127
+ 566 001a FD2D     		cmp	r5, #253
+ 567 001c 01D1     		bne	.L40
+ 250:Core/Src/user_diskio_spi.c **** }
+ 568              		.loc 1 250 9 view .LVU128
+ 569 001e 0120     		movs	r0, #1
+ 570 0020 F7E7     		b	.L35
+ 571              	.L40:
+ 244:Core/Src/user_diskio_spi.c **** 		xchg_spi(0xFF); xchg_spi(0xFF);	/* Dummy CRC */
+ 572              		.loc 1 244 3 is_stmt 1 view .LVU129
+ 573 0022 8021     		movs	r1, #128
+ 574 0024 8900     		lsls	r1, r1, #2
+ 575 0026 2000     		movs	r0, r4
+ 576 0028 FFF7FEFF 		bl	xmit_spi_multi
+ 577              	.LVL66:
+ 245:Core/Src/user_diskio_spi.c **** 
+ 578              		.loc 1 245 3 view .LVU130
+ARM GAS  /tmp/cc41MayP.s 			page 17
+
+
+ 579 002c FF20     		movs	r0, #255
+ 580 002e FFF7FEFF 		bl	xchg_spi
+ 581              	.LVL67:
+ 245:Core/Src/user_diskio_spi.c **** 
+ 582              		.loc 1 245 19 discriminator 1 view .LVU131
+ 583 0032 FF20     		movs	r0, #255
+ 584 0034 FFF7FEFF 		bl	xchg_spi
+ 585              	.LVL68:
+ 247:Core/Src/user_diskio_spi.c **** 		if ((resp & 0x1F) != 0x05) return 0;	/* Function fails if the data packet was not accepted */
+ 586              		.loc 1 247 3 view .LVU132
+ 247:Core/Src/user_diskio_spi.c **** 		if ((resp & 0x1F) != 0x05) return 0;	/* Function fails if the data packet was not accepted */
+ 587              		.loc 1 247 10 is_stmt 0 view .LVU133
+ 588 0038 FF20     		movs	r0, #255
+ 589 003a FFF7FEFF 		bl	xchg_spi
+ 590              	.LVL69:
+ 248:Core/Src/user_diskio_spi.c **** 	}
+ 591              		.loc 1 248 3 is_stmt 1 view .LVU134
+ 248:Core/Src/user_diskio_spi.c **** 	}
+ 592              		.loc 1 248 6 is_stmt 0 view .LVU135
+ 593 003e 1F23     		movs	r3, #31
+ 594 0040 0340     		ands	r3, r0
+ 595 0042 052B     		cmp	r3, #5
+ 596 0044 01D1     		bne	.L38
+ 250:Core/Src/user_diskio_spi.c **** }
+ 597              		.loc 1 250 9 view .LVU136
+ 598 0046 0120     		movs	r0, #1
+ 599              	.LVL70:
+ 250:Core/Src/user_diskio_spi.c **** }
+ 600              		.loc 1 250 9 view .LVU137
+ 601 0048 E3E7     		b	.L35
+ 602              	.LVL71:
+ 603              	.L38:
+ 248:Core/Src/user_diskio_spi.c **** 	}
+ 604              		.loc 1 248 37 discriminator 1 view .LVU138
+ 605 004a 0020     		movs	r0, #0
+ 606              	.LVL72:
+ 248:Core/Src/user_diskio_spi.c **** 	}
+ 607              		.loc 1 248 37 discriminator 1 view .LVU139
+ 608 004c E1E7     		b	.L35
+ 609              		.cfi_endproc
+ 610              	.LFE502:
+ 612              		.section	.text.SPI_Timer_On,"ax",%progbits
+ 613              		.align	1
+ 614              		.global	SPI_Timer_On
+ 615              		.syntax unified
+ 616              		.code	16
+ 617              		.thumb_func
+ 619              	SPI_Timer_On:
+ 620              	.LVL73:
+ 621              	.LFB493:
+  89:Core/Src/user_diskio_spi.c ****     spiTimerTickStart = HAL_GetTick();
+ 622              		.loc 1 89 39 is_stmt 1 view -0
+ 623              		.cfi_startproc
+ 624              		@ args = 0, pretend = 0, frame = 0
+ 625              		@ frame_needed = 0, uses_anonymous_args = 0
+  89:Core/Src/user_diskio_spi.c ****     spiTimerTickStart = HAL_GetTick();
+ 626              		.loc 1 89 39 is_stmt 0 view .LVU141
+ARM GAS  /tmp/cc41MayP.s 			page 18
+
+
+ 627 0000 10B5     		push	{r4, lr}
+ 628              	.LCFI9:
+ 629              		.cfi_def_cfa_offset 8
+ 630              		.cfi_offset 4, -8
+ 631              		.cfi_offset 14, -4
+ 632 0002 0400     		movs	r4, r0
+  90:Core/Src/user_diskio_spi.c ****     spiTimerTickDelay = waitTicks;
+ 633              		.loc 1 90 5 is_stmt 1 view .LVU142
+  90:Core/Src/user_diskio_spi.c ****     spiTimerTickDelay = waitTicks;
+ 634              		.loc 1 90 25 is_stmt 0 view .LVU143
+ 635 0004 FFF7FEFF 		bl	HAL_GetTick
+ 636              	.LVL74:
+  90:Core/Src/user_diskio_spi.c ****     spiTimerTickDelay = waitTicks;
+ 637              		.loc 1 90 23 discriminator 1 view .LVU144
+ 638 0008 024B     		ldr	r3, .L42
+ 639 000a 1860     		str	r0, [r3]
+  91:Core/Src/user_diskio_spi.c **** }
+ 640              		.loc 1 91 5 is_stmt 1 view .LVU145
+  91:Core/Src/user_diskio_spi.c **** }
+ 641              		.loc 1 91 23 is_stmt 0 view .LVU146
+ 642 000c 024B     		ldr	r3, .L42+4
+ 643 000e 1C60     		str	r4, [r3]
+  92:Core/Src/user_diskio_spi.c **** 
+ 644              		.loc 1 92 1 view .LVU147
+ 645              		@ sp needed
+ 646              	.LVL75:
+  92:Core/Src/user_diskio_spi.c **** 
+ 647              		.loc 1 92 1 view .LVU148
+ 648 0010 10BD     		pop	{r4, pc}
+ 649              	.L43:
+ 650 0012 C046     		.align	2
+ 651              	.L42:
+ 652 0014 00000000 		.word	spiTimerTickStart
+ 653 0018 00000000 		.word	spiTimerTickDelay
+ 654              		.cfi_endproc
+ 655              	.LFE493:
+ 657              		.section	.text.SPI_Timer_Status,"ax",%progbits
+ 658              		.align	1
+ 659              		.global	SPI_Timer_Status
+ 660              		.syntax unified
+ 661              		.code	16
+ 662              		.thumb_func
+ 664              	SPI_Timer_Status:
+ 665              	.LFB494:
+  94:Core/Src/user_diskio_spi.c ****     return ((HAL_GetTick() - spiTimerTickStart) < spiTimerTickDelay);
+ 666              		.loc 1 94 28 is_stmt 1 view -0
+ 667              		.cfi_startproc
+ 668              		@ args = 0, pretend = 0, frame = 0
+ 669              		@ frame_needed = 0, uses_anonymous_args = 0
+ 670 0000 10B5     		push	{r4, lr}
+ 671              	.LCFI10:
+ 672              		.cfi_def_cfa_offset 8
+ 673              		.cfi_offset 4, -8
+ 674              		.cfi_offset 14, -4
+  95:Core/Src/user_diskio_spi.c **** }
+ 675              		.loc 1 95 5 view .LVU150
+  95:Core/Src/user_diskio_spi.c **** }
+ARM GAS  /tmp/cc41MayP.s 			page 19
+
+
+ 676              		.loc 1 95 14 is_stmt 0 view .LVU151
+ 677 0002 FFF7FEFF 		bl	HAL_GetTick
+ 678              	.LVL76:
+  95:Core/Src/user_diskio_spi.c **** }
+ 679              		.loc 1 95 28 discriminator 1 view .LVU152
+ 680 0006 044B     		ldr	r3, .L45
+ 681 0008 1B68     		ldr	r3, [r3]
+ 682 000a C01A     		subs	r0, r0, r3
+  95:Core/Src/user_diskio_spi.c **** }
+ 683              		.loc 1 95 49 discriminator 1 view .LVU153
+ 684 000c 034B     		ldr	r3, .L45+4
+ 685 000e 1B68     		ldr	r3, [r3]
+ 686 0010 9842     		cmp	r0, r3
+ 687 0012 8041     		sbcs	r0, r0, r0
+ 688 0014 4042     		rsbs	r0, r0, #0
+  96:Core/Src/user_diskio_spi.c **** 
+ 689              		.loc 1 96 1 view .LVU154
+ 690              		@ sp needed
+ 691 0016 10BD     		pop	{r4, pc}
+ 692              	.L46:
+ 693              		.align	2
+ 694              	.L45:
+ 695 0018 00000000 		.word	spiTimerTickStart
+ 696 001c 00000000 		.word	spiTimerTickDelay
+ 697              		.cfi_endproc
+ 698              	.LFE494:
+ 700              		.section	.text.rcvr_datablock,"ax",%progbits
+ 701              		.align	1
+ 702              		.syntax unified
+ 703              		.code	16
+ 704              		.thumb_func
+ 706              	rcvr_datablock:
+ 707              	.LVL77:
+ 708              	.LFB501:
+ 207:Core/Src/user_diskio_spi.c **** 	BYTE token;
+ 709              		.loc 1 207 1 is_stmt 1 view -0
+ 710              		.cfi_startproc
+ 711              		@ args = 0, pretend = 0, frame = 0
+ 712              		@ frame_needed = 0, uses_anonymous_args = 0
+ 207:Core/Src/user_diskio_spi.c **** 	BYTE token;
+ 713              		.loc 1 207 1 is_stmt 0 view .LVU156
+ 714 0000 70B5     		push	{r4, r5, r6, lr}
+ 715              	.LCFI11:
+ 716              		.cfi_def_cfa_offset 16
+ 717              		.cfi_offset 4, -16
+ 718              		.cfi_offset 5, -12
+ 719              		.cfi_offset 6, -8
+ 720              		.cfi_offset 14, -4
+ 721 0002 0500     		movs	r5, r0
+ 722 0004 0E00     		movs	r6, r1
+ 208:Core/Src/user_diskio_spi.c **** 
+ 723              		.loc 1 208 2 is_stmt 1 view .LVU157
+ 211:Core/Src/user_diskio_spi.c **** 	do {							/* Wait for DataStart token in timeout of 200ms */
+ 724              		.loc 1 211 2 view .LVU158
+ 725 0006 C820     		movs	r0, #200
+ 726              	.LVL78:
+ 211:Core/Src/user_diskio_spi.c **** 	do {							/* Wait for DataStart token in timeout of 200ms */
+ARM GAS  /tmp/cc41MayP.s 			page 20
+
+
+ 727              		.loc 1 211 2 is_stmt 0 view .LVU159
+ 728 0008 FFF7FEFF 		bl	SPI_Timer_On
+ 729              	.LVL79:
+ 730              	.L49:
+ 212:Core/Src/user_diskio_spi.c **** 		token = xchg_spi(0xFF);
+ 731              		.loc 1 212 2 is_stmt 1 view .LVU160
+ 213:Core/Src/user_diskio_spi.c **** 		/* This loop will take a time. Insert rot_rdq() here for multitask envilonment. */
+ 732              		.loc 1 213 3 view .LVU161
+ 213:Core/Src/user_diskio_spi.c **** 		/* This loop will take a time. Insert rot_rdq() here for multitask envilonment. */
+ 733              		.loc 1 213 11 is_stmt 0 view .LVU162
+ 734 000c FF20     		movs	r0, #255
+ 735 000e FFF7FEFF 		bl	xchg_spi
+ 736              	.LVL80:
+ 737 0012 0400     		movs	r4, r0
+ 738              	.LVL81:
+ 215:Core/Src/user_diskio_spi.c **** 	if(token != 0xFE) return 0;		/* Function fails if invalid DataStart token or timeout */
+ 739              		.loc 1 215 27 is_stmt 1 discriminator 2 view .LVU163
+ 740 0014 FF28     		cmp	r0, #255
+ 741 0016 03D1     		bne	.L48
+ 215:Core/Src/user_diskio_spi.c **** 	if(token != 0xFE) return 0;		/* Function fails if invalid DataStart token or timeout */
+ 742              		.loc 1 215 30 is_stmt 0 discriminator 1 view .LVU164
+ 743 0018 FFF7FEFF 		bl	SPI_Timer_Status
+ 744              	.LVL82:
+ 215:Core/Src/user_diskio_spi.c **** 	if(token != 0xFE) return 0;		/* Function fails if invalid DataStart token or timeout */
+ 745              		.loc 1 215 27 discriminator 1 view .LVU165
+ 746 001c 0028     		cmp	r0, #0
+ 747 001e F5D1     		bne	.L49
+ 748              	.L48:
+ 216:Core/Src/user_diskio_spi.c **** 
+ 749              		.loc 1 216 2 is_stmt 1 view .LVU166
+ 216:Core/Src/user_diskio_spi.c **** 
+ 750              		.loc 1 216 4 is_stmt 0 view .LVU167
+ 751 0020 FE2C     		cmp	r4, #254
+ 752 0022 01D0     		beq	.L52
+ 216:Core/Src/user_diskio_spi.c **** 
+ 753              		.loc 1 216 27 discriminator 1 view .LVU168
+ 754 0024 0020     		movs	r0, #0
+ 755              	.L47:
+ 222:Core/Src/user_diskio_spi.c **** 
+ 756              		.loc 1 222 1 view .LVU169
+ 757              		@ sp needed
+ 758              	.LVL83:
+ 759              	.LVL84:
+ 760              	.LVL85:
+ 222:Core/Src/user_diskio_spi.c **** 
+ 761              		.loc 1 222 1 view .LVU170
+ 762 0026 70BD     		pop	{r4, r5, r6, pc}
+ 763              	.LVL86:
+ 764              	.L52:
+ 218:Core/Src/user_diskio_spi.c **** 	xchg_spi(0xFF); xchg_spi(0xFF);			/* Discard CRC */
+ 765              		.loc 1 218 2 is_stmt 1 view .LVU171
+ 766 0028 3100     		movs	r1, r6
+ 767 002a 2800     		movs	r0, r5
+ 768 002c FFF7FEFF 		bl	rcvr_spi_multi
+ 769              	.LVL87:
+ 219:Core/Src/user_diskio_spi.c **** 
+ 770              		.loc 1 219 2 view .LVU172
+ARM GAS  /tmp/cc41MayP.s 			page 21
+
+
+ 771 0030 FF20     		movs	r0, #255
+ 772 0032 FFF7FEFF 		bl	xchg_spi
+ 773              	.LVL88:
+ 219:Core/Src/user_diskio_spi.c **** 
+ 774              		.loc 1 219 18 discriminator 1 view .LVU173
+ 775 0036 FF20     		movs	r0, #255
+ 776 0038 FFF7FEFF 		bl	xchg_spi
+ 777              	.LVL89:
+ 221:Core/Src/user_diskio_spi.c **** }
+ 778              		.loc 1 221 2 view .LVU174
+ 221:Core/Src/user_diskio_spi.c **** }
+ 779              		.loc 1 221 9 is_stmt 0 view .LVU175
+ 780 003c 0120     		movs	r0, #1
+ 781 003e F2E7     		b	.L47
+ 782              		.cfi_endproc
+ 783              	.LFE501:
+ 785              		.section	.text.USER_SPI_initialize,"ax",%progbits
+ 786              		.align	1
+ 787              		.global	USER_SPI_initialize
+ 788              		.syntax unified
+ 789              		.code	16
+ 790              		.thumb_func
+ 792              	USER_SPI_initialize:
+ 793              	.LVL90:
+ 794              	.LFB504:
+ 300:Core/Src/user_diskio_spi.c **** 
+ 301:Core/Src/user_diskio_spi.c **** 
+ 302:Core/Src/user_diskio_spi.c **** /*--------------------------------------------------------------------------
+ 303:Core/Src/user_diskio_spi.c **** 
+ 304:Core/Src/user_diskio_spi.c ****    Public FatFs Functions (wrapped in user_diskio.c)
+ 305:Core/Src/user_diskio_spi.c **** 
+ 306:Core/Src/user_diskio_spi.c **** ---------------------------------------------------------------------------*/
+ 307:Core/Src/user_diskio_spi.c **** 
+ 308:Core/Src/user_diskio_spi.c **** //The following functions are defined as inline because they aren't the functions that
+ 309:Core/Src/user_diskio_spi.c **** //are passed to FatFs - they are wrapped by autogenerated (non-inline) cubemx template
+ 310:Core/Src/user_diskio_spi.c **** //code.
+ 311:Core/Src/user_diskio_spi.c **** //If you do not wish to use cubemx, remove the "inline" from these functions here
+ 312:Core/Src/user_diskio_spi.c **** //and in the associated .h
+ 313:Core/Src/user_diskio_spi.c **** 
+ 314:Core/Src/user_diskio_spi.c **** 
+ 315:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 316:Core/Src/user_diskio_spi.c **** /* Initialize disk drive                                                 */
+ 317:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 318:Core/Src/user_diskio_spi.c **** 
+ 319:Core/Src/user_diskio_spi.c **** inline DSTATUS USER_SPI_initialize (
+ 320:Core/Src/user_diskio_spi.c **** 	BYTE drv		/* Physical drive number (0) */
+ 321:Core/Src/user_diskio_spi.c **** )
+ 322:Core/Src/user_diskio_spi.c **** {
+ 795              		.loc 1 322 1 is_stmt 1 view -0
+ 796              		.cfi_startproc
+ 797              		@ args = 0, pretend = 0, frame = 8
+ 798              		@ frame_needed = 0, uses_anonymous_args = 0
+ 799              		.loc 1 322 1 is_stmt 0 view .LVU177
+ 800 0000 70B5     		push	{r4, r5, r6, lr}
+ 801              	.LCFI12:
+ 802              		.cfi_def_cfa_offset 16
+ 803              		.cfi_offset 4, -16
+ARM GAS  /tmp/cc41MayP.s 			page 22
+
+
+ 804              		.cfi_offset 5, -12
+ 805              		.cfi_offset 6, -8
+ 806              		.cfi_offset 14, -4
+ 807 0002 82B0     		sub	sp, sp, #8
+ 808              	.LCFI13:
+ 809              		.cfi_def_cfa_offset 24
+ 323:Core/Src/user_diskio_spi.c **** 	BYTE n, cmd, ty, ocr[4];
+ 810              		.loc 1 323 2 is_stmt 1 view .LVU178
+ 324:Core/Src/user_diskio_spi.c **** 
+ 325:Core/Src/user_diskio_spi.c **** 	if (drv != 0) return STA_NOINIT;		/* Supports only drive 0 */
+ 811              		.loc 1 325 2 view .LVU179
+ 812              		.loc 1 325 5 is_stmt 0 view .LVU180
+ 813 0004 0028     		cmp	r0, #0
+ 814 0006 00D0     		beq	.LCB690
+ 815 0008 A7E0     		b	.L71	@long jump
+ 816              	.LCB690:
+ 326:Core/Src/user_diskio_spi.c **** 	//assume SPI already init init_spi();	/* Initialize SPI */
+ 327:Core/Src/user_diskio_spi.c **** 
+ 328:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NODISK) return Stat;	/* Is card existing in the soket? */
+ 817              		.loc 1 328 2 is_stmt 1 view .LVU181
+ 818              		.loc 1 328 11 is_stmt 0 view .LVU182
+ 819 000a 554B     		ldr	r3, .L85
+ 820 000c 1B78     		ldrb	r3, [r3]
+ 821              		.loc 1 328 5 view .LVU183
+ 822 000e 9B07     		lsls	r3, r3, #30
+ 823 0010 10D4     		bmi	.L78
+ 329:Core/Src/user_diskio_spi.c **** 
+ 330:Core/Src/user_diskio_spi.c **** 	FCLK_SLOW();
+ 824              		.loc 1 330 2 is_stmt 1 view .LVU184
+ 825 0012 544B     		ldr	r3, .L85+4
+ 826 0014 1A68     		ldr	r2, [r3]
+ 827 0016 1368     		ldr	r3, [r2]
+ 828 0018 3821     		movs	r1, #56
+ 829 001a 8B43     		bics	r3, r1
+ 830 001c 0839     		subs	r1, r1, #8
+ 831 001e 0B43     		orrs	r3, r1
+ 832 0020 1360     		str	r3, [r2]
+ 833              		.loc 1 330 13 view .LVU185
+ 331:Core/Src/user_diskio_spi.c **** 	for (n = 10; n; n--) xchg_spi(0xFF);	/* Send 80 dummy clocks */
+ 834              		.loc 1 331 2 view .LVU186
+ 835              	.LVL91:
+ 836              		.loc 1 331 9 is_stmt 0 view .LVU187
+ 837 0022 0A24     		movs	r4, #10
+ 838              	.LVL92:
+ 839              	.L56:
+ 840              		.loc 1 331 15 is_stmt 1 discriminator 2 view .LVU188
+ 841 0024 002C     		cmp	r4, #0
+ 842 0026 09D0     		beq	.L79
+ 843              		.loc 1 331 23 discriminator 3 view .LVU189
+ 844 0028 FF20     		movs	r0, #255
+ 845 002a FFF7FEFF 		bl	xchg_spi
+ 846              	.LVL93:
+ 847              		.loc 1 331 19 discriminator 3 view .LVU190
+ 848 002e 013C     		subs	r4, r4, #1
+ 849              	.LVL94:
+ 850              		.loc 1 331 19 is_stmt 0 discriminator 3 view .LVU191
+ 851 0030 E4B2     		uxtb	r4, r4
+ARM GAS  /tmp/cc41MayP.s 			page 23
+
+
+ 852              	.LVL95:
+ 853              		.loc 1 331 19 discriminator 3 view .LVU192
+ 854 0032 F7E7     		b	.L56
+ 855              	.LVL96:
+ 856              	.L78:
+ 328:Core/Src/user_diskio_spi.c **** 
+ 857              		.loc 1 328 25 is_stmt 1 discriminator 1 view .LVU193
+ 328:Core/Src/user_diskio_spi.c **** 
+ 858              		.loc 1 328 32 is_stmt 0 discriminator 1 view .LVU194
+ 859 0034 4A4B     		ldr	r3, .L85
+ 860 0036 1878     		ldrb	r0, [r3]
+ 861              	.LVL97:
+ 328:Core/Src/user_diskio_spi.c **** 
+ 862              		.loc 1 328 32 discriminator 1 view .LVU195
+ 863 0038 C0B2     		uxtb	r0, r0
+ 328:Core/Src/user_diskio_spi.c **** 
+ 864              		.loc 1 328 32 view .LVU196
+ 865 003a 1EE0     		b	.L54
+ 866              	.LVL98:
+ 867              	.L79:
+ 332:Core/Src/user_diskio_spi.c **** 
+ 333:Core/Src/user_diskio_spi.c **** 	ty = 0;
+ 868              		.loc 1 333 2 is_stmt 1 view .LVU197
+ 334:Core/Src/user_diskio_spi.c **** 	if (send_cmd(CMD0, 0) == 1) {			/* Put the card SPI/Idle state */
+ 869              		.loc 1 334 2 view .LVU198
+ 870              		.loc 1 334 6 is_stmt 0 view .LVU199
+ 871 003c 0021     		movs	r1, #0
+ 872 003e 0020     		movs	r0, #0
+ 873 0040 FFF7FEFF 		bl	send_cmd
+ 874              	.LVL99:
+ 875 0044 0500     		movs	r5, r0
+ 876 0046 0600     		movs	r6, r0
+ 877              		.loc 1 334 5 discriminator 1 view .LVU200
+ 878 0048 0128     		cmp	r0, #1
+ 879 004a 18D0     		beq	.L80
+ 880              	.LVL100:
+ 881              	.L58:
+ 335:Core/Src/user_diskio_spi.c **** 		SPI_Timer_On(1000);					/* Initialization timeout = 1 sec */
+ 336:Core/Src/user_diskio_spi.c **** 		if (send_cmd(CMD8, 0x1AA) == 1) {	/* SDv2? */
+ 337:Core/Src/user_diskio_spi.c **** 			for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);	/* Get 32 bit return value of R7 resp */
+ 338:Core/Src/user_diskio_spi.c **** 			if (ocr[2] == 0x01 && ocr[3] == 0xAA) {				/* Is the card supports vcc of 2.7-3.6V? */
+ 339:Core/Src/user_diskio_spi.c **** 				while (SPI_Timer_Status() && send_cmd(ACMD41, 1UL << 30)) ;	/* Wait for end of initialization w
+ 340:Core/Src/user_diskio_spi.c **** 				if (SPI_Timer_Status() && send_cmd(CMD58, 0) == 0) {		/* Check CCS bit in the OCR */
+ 341:Core/Src/user_diskio_spi.c **** 					for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);
+ 342:Core/Src/user_diskio_spi.c **** 					ty = (ocr[0] & 0x40) ? CT_SD2 | CT_BLOCK : CT_SD2;	/* Card id SDv2 */
+ 343:Core/Src/user_diskio_spi.c **** 				}
+ 344:Core/Src/user_diskio_spi.c **** 			}
+ 345:Core/Src/user_diskio_spi.c **** 		} else {	/* Not SDv2 card */
+ 346:Core/Src/user_diskio_spi.c **** 			if (send_cmd(ACMD41, 0) <= 1) 	{	/* SDv1 or MMC? */
+ 347:Core/Src/user_diskio_spi.c **** 				ty = CT_SD1; cmd = ACMD41;	/* SDv1 (ACMD41(0)) */
+ 348:Core/Src/user_diskio_spi.c **** 			} else {
+ 349:Core/Src/user_diskio_spi.c **** 				ty = CT_MMC; cmd = CMD1;	/* MMCv3 (CMD1(0)) */
+ 350:Core/Src/user_diskio_spi.c **** 			}
+ 351:Core/Src/user_diskio_spi.c **** 			while (SPI_Timer_Status() && send_cmd(cmd, 0)) ;		/* Wait for end of initialization */
+ 352:Core/Src/user_diskio_spi.c **** 			if (!SPI_Timer_Status() || send_cmd(CMD16, 512) != 0)	/* Set block length: 512 */
+ 353:Core/Src/user_diskio_spi.c **** 				ty = 0;
+ 354:Core/Src/user_diskio_spi.c **** 		}
+ARM GAS  /tmp/cc41MayP.s 			page 24
+
+
+ 355:Core/Src/user_diskio_spi.c **** 	}
+ 356:Core/Src/user_diskio_spi.c **** 	CardType = ty;	/* Card type */
+ 882              		.loc 1 356 2 is_stmt 1 view .LVU201
+ 883              		.loc 1 356 11 is_stmt 0 view .LVU202
+ 884 004c 464B     		ldr	r3, .L85+8
+ 885 004e 1C70     		strb	r4, [r3]
+ 357:Core/Src/user_diskio_spi.c **** 	despiselect();
+ 886              		.loc 1 357 2 is_stmt 1 view .LVU203
+ 887 0050 FFF7FEFF 		bl	despiselect
+ 888              	.LVL101:
+ 358:Core/Src/user_diskio_spi.c **** 
+ 359:Core/Src/user_diskio_spi.c **** 	if (ty) {			/* OK */
+ 889              		.loc 1 359 2 view .LVU204
+ 890              		.loc 1 359 5 is_stmt 0 view .LVU205
+ 891 0054 002C     		cmp	r4, #0
+ 892 0056 00D1     		bne	.LCB766
+ 893 0058 7BE0     		b	.L69	@long jump
+ 894              	.LCB766:
+ 360:Core/Src/user_diskio_spi.c **** 		FCLK_FAST();			/* Set fast clock */
+ 895              		.loc 1 360 3 is_stmt 1 view .LVU206
+ 896 005a 424B     		ldr	r3, .L85+4
+ 897 005c 1A68     		ldr	r2, [r3]
+ 898 005e 1368     		ldr	r3, [r2]
+ 899 0060 3821     		movs	r1, #56
+ 900 0062 8B43     		bics	r3, r1
+ 901 0064 2839     		subs	r1, r1, #40
+ 902 0066 0B43     		orrs	r3, r1
+ 903 0068 1360     		str	r3, [r2]
+ 904              		.loc 1 360 14 view .LVU207
+ 361:Core/Src/user_diskio_spi.c **** 		Stat &= ~STA_NOINIT;	/* Clear STA_NOINIT flag */
+ 905              		.loc 1 361 3 view .LVU208
+ 906              		.loc 1 361 8 is_stmt 0 view .LVU209
+ 907 006a 3D4A     		ldr	r2, .L85
+ 908 006c 1378     		ldrb	r3, [r2]
+ 909 006e 0F39     		subs	r1, r1, #15
+ 910 0070 8B43     		bics	r3, r1
+ 911 0072 1370     		strb	r3, [r2]
+ 912              	.L70:
+ 362:Core/Src/user_diskio_spi.c **** 	} else {			/* Failed */
+ 363:Core/Src/user_diskio_spi.c **** 		Stat = STA_NOINIT;
+ 364:Core/Src/user_diskio_spi.c **** 	}
+ 365:Core/Src/user_diskio_spi.c **** 
+ 366:Core/Src/user_diskio_spi.c **** 	return Stat;
+ 913              		.loc 1 366 2 is_stmt 1 view .LVU210
+ 914              		.loc 1 366 9 is_stmt 0 view .LVU211
+ 915 0074 3A4B     		ldr	r3, .L85
+ 916 0076 1878     		ldrb	r0, [r3]
+ 917 0078 C0B2     		uxtb	r0, r0
+ 918              	.LVL102:
+ 919              	.L54:
+ 367:Core/Src/user_diskio_spi.c **** }
+ 920              		.loc 1 367 1 view .LVU212
+ 921 007a 02B0     		add	sp, sp, #8
+ 922              		@ sp needed
+ 923 007c 70BD     		pop	{r4, r5, r6, pc}
+ 924              	.LVL103:
+ 925              	.L80:
+ARM GAS  /tmp/cc41MayP.s 			page 25
+
+
+ 335:Core/Src/user_diskio_spi.c **** 		if (send_cmd(CMD8, 0x1AA) == 1) {	/* SDv2? */
+ 926              		.loc 1 335 3 is_stmt 1 view .LVU213
+ 927 007e FA20     		movs	r0, #250
+ 928 0080 8000     		lsls	r0, r0, #2
+ 929 0082 FFF7FEFF 		bl	SPI_Timer_On
+ 930              	.LVL104:
+ 336:Core/Src/user_diskio_spi.c **** 			for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);	/* Get 32 bit return value of R7 resp */
+ 931              		.loc 1 336 3 view .LVU214
+ 336:Core/Src/user_diskio_spi.c **** 			for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);	/* Get 32 bit return value of R7 resp */
+ 932              		.loc 1 336 7 is_stmt 0 view .LVU215
+ 933 0086 D521     		movs	r1, #213
+ 934 0088 4900     		lsls	r1, r1, #1
+ 935 008a 0820     		movs	r0, #8
+ 936 008c FFF7FEFF 		bl	send_cmd
+ 937              	.LVL105:
+ 336:Core/Src/user_diskio_spi.c **** 			for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);	/* Get 32 bit return value of R7 resp */
+ 938              		.loc 1 336 6 discriminator 1 view .LVU216
+ 939 0090 0128     		cmp	r0, #1
+ 940 0092 39D1     		bne	.L81
+ 337:Core/Src/user_diskio_spi.c **** 			if (ocr[2] == 0x01 && ocr[3] == 0xAA) {				/* Is the card supports vcc of 2.7-3.6V? */
+ 941              		.loc 1 337 11 view .LVU217
+ 942 0094 2500     		movs	r5, r4
+ 943 0096 06E0     		b	.L59
+ 944              	.LVL106:
+ 945              	.L61:
+ 337:Core/Src/user_diskio_spi.c **** 			if (ocr[2] == 0x01 && ocr[3] == 0xAA) {				/* Is the card supports vcc of 2.7-3.6V? */
+ 946              		.loc 1 337 28 is_stmt 1 discriminator 3 view .LVU218
+ 337:Core/Src/user_diskio_spi.c **** 			if (ocr[2] == 0x01 && ocr[3] == 0xAA) {				/* Is the card supports vcc of 2.7-3.6V? */
+ 947              		.loc 1 337 37 is_stmt 0 discriminator 3 view .LVU219
+ 948 0098 FF20     		movs	r0, #255
+ 949 009a FFF7FEFF 		bl	xchg_spi
+ 950              	.LVL107:
+ 337:Core/Src/user_diskio_spi.c **** 			if (ocr[2] == 0x01 && ocr[3] == 0xAA) {				/* Is the card supports vcc of 2.7-3.6V? */
+ 951              		.loc 1 337 35 discriminator 3 view .LVU220
+ 952 009e 01AB     		add	r3, sp, #4
+ 953 00a0 5855     		strb	r0, [r3, r5]
+ 337:Core/Src/user_diskio_spi.c **** 			if (ocr[2] == 0x01 && ocr[3] == 0xAA) {				/* Is the card supports vcc of 2.7-3.6V? */
+ 954              		.loc 1 337 24 is_stmt 1 discriminator 3 view .LVU221
+ 955 00a2 0135     		adds	r5, r5, #1
+ 956              	.LVL108:
+ 337:Core/Src/user_diskio_spi.c **** 			if (ocr[2] == 0x01 && ocr[3] == 0xAA) {				/* Is the card supports vcc of 2.7-3.6V? */
+ 957              		.loc 1 337 24 is_stmt 0 discriminator 3 view .LVU222
+ 958 00a4 EDB2     		uxtb	r5, r5
+ 959              	.LVL109:
+ 960              	.L59:
+ 337:Core/Src/user_diskio_spi.c **** 			if (ocr[2] == 0x01 && ocr[3] == 0xAA) {				/* Is the card supports vcc of 2.7-3.6V? */
+ 961              		.loc 1 337 18 is_stmt 1 discriminator 2 view .LVU223
+ 962 00a6 032D     		cmp	r5, #3
+ 963 00a8 F6D9     		bls	.L61
+ 338:Core/Src/user_diskio_spi.c **** 				while (SPI_Timer_Status() && send_cmd(ACMD41, 1UL << 30)) ;	/* Wait for end of initialization w
+ 964              		.loc 1 338 4 view .LVU224
+ 338:Core/Src/user_diskio_spi.c **** 				while (SPI_Timer_Status() && send_cmd(ACMD41, 1UL << 30)) ;	/* Wait for end of initialization w
+ 965              		.loc 1 338 11 is_stmt 0 view .LVU225
+ 966 00aa 01AB     		add	r3, sp, #4
+ 967 00ac 9B78     		ldrb	r3, [r3, #2]
+ 338:Core/Src/user_diskio_spi.c **** 				while (SPI_Timer_Status() && send_cmd(ACMD41, 1UL << 30)) ;	/* Wait for end of initialization w
+ 968              		.loc 1 338 7 view .LVU226
+ARM GAS  /tmp/cc41MayP.s 			page 26
+
+
+ 969 00ae 012B     		cmp	r3, #1
+ 970 00b0 CCD1     		bne	.L58
+ 338:Core/Src/user_diskio_spi.c **** 				while (SPI_Timer_Status() && send_cmd(ACMD41, 1UL << 30)) ;	/* Wait for end of initialization w
+ 971              		.loc 1 338 29 discriminator 1 view .LVU227
+ 972 00b2 01AB     		add	r3, sp, #4
+ 973 00b4 DB78     		ldrb	r3, [r3, #3]
+ 338:Core/Src/user_diskio_spi.c **** 				while (SPI_Timer_Status() && send_cmd(ACMD41, 1UL << 30)) ;	/* Wait for end of initialization w
+ 974              		.loc 1 338 23 discriminator 1 view .LVU228
+ 975 00b6 AA2B     		cmp	r3, #170
+ 976 00b8 C8D1     		bne	.L58
+ 977              	.L63:
+ 339:Core/Src/user_diskio_spi.c **** 				if (SPI_Timer_Status() && send_cmd(CMD58, 0) == 0) {		/* Check CCS bit in the OCR */
+ 978              		.loc 1 339 31 is_stmt 1 discriminator 2 view .LVU229
+ 339:Core/Src/user_diskio_spi.c **** 				if (SPI_Timer_Status() && send_cmd(CMD58, 0) == 0) {		/* Check CCS bit in the OCR */
+ 979              		.loc 1 339 12 is_stmt 0 discriminator 2 view .LVU230
+ 980 00ba FFF7FEFF 		bl	SPI_Timer_Status
+ 981              	.LVL110:
+ 339:Core/Src/user_diskio_spi.c **** 				if (SPI_Timer_Status() && send_cmd(CMD58, 0) == 0) {		/* Check CCS bit in the OCR */
+ 982              		.loc 1 339 31 discriminator 2 view .LVU231
+ 983 00be 0028     		cmp	r0, #0
+ 984 00c0 06D0     		beq	.L62
+ 339:Core/Src/user_diskio_spi.c **** 				if (SPI_Timer_Status() && send_cmd(CMD58, 0) == 0) {		/* Check CCS bit in the OCR */
+ 985              		.loc 1 339 34 discriminator 1 view .LVU232
+ 986 00c2 8021     		movs	r1, #128
+ 987 00c4 C905     		lsls	r1, r1, #23
+ 988 00c6 A920     		movs	r0, #169
+ 989 00c8 FFF7FEFF 		bl	send_cmd
+ 990              	.LVL111:
+ 339:Core/Src/user_diskio_spi.c **** 				if (SPI_Timer_Status() && send_cmd(CMD58, 0) == 0) {		/* Check CCS bit in the OCR */
+ 991              		.loc 1 339 31 discriminator 1 view .LVU233
+ 992 00cc 0028     		cmp	r0, #0
+ 993 00ce F4D1     		bne	.L63
+ 994              	.L62:
+ 340:Core/Src/user_diskio_spi.c **** 					for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);
+ 995              		.loc 1 340 5 is_stmt 1 view .LVU234
+ 340:Core/Src/user_diskio_spi.c **** 					for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);
+ 996              		.loc 1 340 9 is_stmt 0 view .LVU235
+ 997 00d0 FFF7FEFF 		bl	SPI_Timer_Status
+ 998              	.LVL112:
+ 340:Core/Src/user_diskio_spi.c **** 					for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);
+ 999              		.loc 1 340 8 discriminator 1 view .LVU236
+ 1000 00d4 0028     		cmp	r0, #0
+ 1001 00d6 01D1     		bne	.L82
+ 333:Core/Src/user_diskio_spi.c **** 	if (send_cmd(CMD0, 0) == 1) {			/* Put the card SPI/Idle state */
+ 1002              		.loc 1 333 5 view .LVU237
+ 1003 00d8 0400     		movs	r4, r0
+ 1004 00da B7E7     		b	.L58
+ 1005              	.L82:
+ 340:Core/Src/user_diskio_spi.c **** 					for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);
+ 1006              		.loc 1 340 31 discriminator 1 view .LVU238
+ 1007 00dc 0021     		movs	r1, #0
+ 1008 00de 3A20     		movs	r0, #58
+ 1009 00e0 FFF7FEFF 		bl	send_cmd
+ 1010              	.LVL113:
+ 1011 00e4 051E     		subs	r5, r0, #0
+ 1012              	.LVL114:
+ 340:Core/Src/user_diskio_spi.c **** 					for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);
+ARM GAS  /tmp/cc41MayP.s 			page 27
+
+
+ 1013              		.loc 1 340 28 discriminator 1 view .LVU239
+ 1014 00e6 07D0     		beq	.L64
+ 1015 00e8 B0E7     		b	.L58
+ 1016              	.LVL115:
+ 1017              	.L65:
+ 341:Core/Src/user_diskio_spi.c **** 					ty = (ocr[0] & 0x40) ? CT_SD2 | CT_BLOCK : CT_SD2;	/* Card id SDv2 */
+ 1018              		.loc 1 341 30 is_stmt 1 discriminator 3 view .LVU240
+ 341:Core/Src/user_diskio_spi.c **** 					ty = (ocr[0] & 0x40) ? CT_SD2 | CT_BLOCK : CT_SD2;	/* Card id SDv2 */
+ 1019              		.loc 1 341 39 is_stmt 0 discriminator 3 view .LVU241
+ 1020 00ea FF20     		movs	r0, #255
+ 1021 00ec FFF7FEFF 		bl	xchg_spi
+ 1022              	.LVL116:
+ 341:Core/Src/user_diskio_spi.c **** 					ty = (ocr[0] & 0x40) ? CT_SD2 | CT_BLOCK : CT_SD2;	/* Card id SDv2 */
+ 1023              		.loc 1 341 37 discriminator 3 view .LVU242
+ 1024 00f0 01AB     		add	r3, sp, #4
+ 1025 00f2 5855     		strb	r0, [r3, r5]
+ 341:Core/Src/user_diskio_spi.c **** 					ty = (ocr[0] & 0x40) ? CT_SD2 | CT_BLOCK : CT_SD2;	/* Card id SDv2 */
+ 1026              		.loc 1 341 26 is_stmt 1 discriminator 3 view .LVU243
+ 1027 00f4 0135     		adds	r5, r5, #1
+ 1028              	.LVL117:
+ 341:Core/Src/user_diskio_spi.c **** 					ty = (ocr[0] & 0x40) ? CT_SD2 | CT_BLOCK : CT_SD2;	/* Card id SDv2 */
+ 1029              		.loc 1 341 26 is_stmt 0 discriminator 3 view .LVU244
+ 1030 00f6 EDB2     		uxtb	r5, r5
+ 1031              	.LVL118:
+ 1032              	.L64:
+ 341:Core/Src/user_diskio_spi.c **** 					ty = (ocr[0] & 0x40) ? CT_SD2 | CT_BLOCK : CT_SD2;	/* Card id SDv2 */
+ 1033              		.loc 1 341 20 is_stmt 1 discriminator 2 view .LVU245
+ 1034 00f8 032D     		cmp	r5, #3
+ 1035 00fa F6D9     		bls	.L65
+ 342:Core/Src/user_diskio_spi.c **** 				}
+ 1036              		.loc 1 342 6 view .LVU246
+ 342:Core/Src/user_diskio_spi.c **** 				}
+ 1037              		.loc 1 342 15 is_stmt 0 view .LVU247
+ 1038 00fc 01AB     		add	r3, sp, #4
+ 1039 00fe 1B78     		ldrb	r3, [r3]
+ 342:Core/Src/user_diskio_spi.c **** 				}
+ 1040              		.loc 1 342 9 view .LVU248
+ 1041 0100 5B06     		lsls	r3, r3, #25
+ 1042 0102 24D5     		bpl	.L74
+ 342:Core/Src/user_diskio_spi.c **** 				}
+ 1043              		.loc 1 342 9 discriminator 1 view .LVU249
+ 1044 0104 0C24     		movs	r4, #12
+ 1045 0106 A1E7     		b	.L58
+ 1046              	.LVL119:
+ 1047              	.L81:
+ 346:Core/Src/user_diskio_spi.c **** 				ty = CT_SD1; cmd = ACMD41;	/* SDv1 (ACMD41(0)) */
+ 1048              		.loc 1 346 4 is_stmt 1 view .LVU250
+ 346:Core/Src/user_diskio_spi.c **** 				ty = CT_SD1; cmd = ACMD41;	/* SDv1 (ACMD41(0)) */
+ 1049              		.loc 1 346 8 is_stmt 0 view .LVU251
+ 1050 0108 0021     		movs	r1, #0
+ 1051 010a A920     		movs	r0, #169
+ 1052 010c FFF7FEFF 		bl	send_cmd
+ 1053              	.LVL120:
+ 346:Core/Src/user_diskio_spi.c **** 				ty = CT_SD1; cmd = ACMD41;	/* SDv1 (ACMD41(0)) */
+ 1054              		.loc 1 346 7 discriminator 1 view .LVU252
+ 1055 0110 0128     		cmp	r0, #1
+ 1056 0112 0FD9     		bls	.L83
+ARM GAS  /tmp/cc41MayP.s 			page 28
+
+
+ 1057              	.LVL121:
+ 1058              	.L68:
+ 351:Core/Src/user_diskio_spi.c **** 			if (!SPI_Timer_Status() || send_cmd(CMD16, 512) != 0)	/* Set block length: 512 */
+ 1059              		.loc 1 351 30 is_stmt 1 discriminator 2 view .LVU253
+ 351:Core/Src/user_diskio_spi.c **** 			if (!SPI_Timer_Status() || send_cmd(CMD16, 512) != 0)	/* Set block length: 512 */
+ 1060              		.loc 1 351 11 is_stmt 0 discriminator 2 view .LVU254
+ 1061 0114 FFF7FEFF 		bl	SPI_Timer_Status
+ 1062              	.LVL122:
+ 351:Core/Src/user_diskio_spi.c **** 			if (!SPI_Timer_Status() || send_cmd(CMD16, 512) != 0)	/* Set block length: 512 */
+ 1063              		.loc 1 351 30 discriminator 2 view .LVU255
+ 1064 0118 0028     		cmp	r0, #0
+ 1065 011a 05D0     		beq	.L67
+ 351:Core/Src/user_diskio_spi.c **** 			if (!SPI_Timer_Status() || send_cmd(CMD16, 512) != 0)	/* Set block length: 512 */
+ 1066              		.loc 1 351 33 discriminator 1 view .LVU256
+ 1067 011c 0021     		movs	r1, #0
+ 1068 011e 3000     		movs	r0, r6
+ 1069 0120 FFF7FEFF 		bl	send_cmd
+ 1070              	.LVL123:
+ 351:Core/Src/user_diskio_spi.c **** 			if (!SPI_Timer_Status() || send_cmd(CMD16, 512) != 0)	/* Set block length: 512 */
+ 1071              		.loc 1 351 30 discriminator 1 view .LVU257
+ 1072 0124 0028     		cmp	r0, #0
+ 1073 0126 F5D1     		bne	.L68
+ 1074              	.L67:
+ 352:Core/Src/user_diskio_spi.c **** 				ty = 0;
+ 1075              		.loc 1 352 4 is_stmt 1 view .LVU258
+ 352:Core/Src/user_diskio_spi.c **** 				ty = 0;
+ 1076              		.loc 1 352 9 is_stmt 0 view .LVU259
+ 1077 0128 FFF7FEFF 		bl	SPI_Timer_Status
+ 1078              	.LVL124:
+ 352:Core/Src/user_diskio_spi.c **** 				ty = 0;
+ 1079              		.loc 1 352 7 discriminator 1 view .LVU260
+ 1080 012c 0028     		cmp	r0, #0
+ 1081 012e 04D1     		bne	.L84
+ 353:Core/Src/user_diskio_spi.c **** 		}
+ 1082              		.loc 1 353 8 view .LVU261
+ 1083 0130 0400     		movs	r4, r0
+ 1084              	.LVL125:
+ 353:Core/Src/user_diskio_spi.c **** 		}
+ 1085              		.loc 1 353 8 view .LVU262
+ 1086 0132 8BE7     		b	.L58
+ 1087              	.LVL126:
+ 1088              	.L83:
+ 347:Core/Src/user_diskio_spi.c **** 			} else {
+ 1089              		.loc 1 347 8 view .LVU263
+ 1090 0134 0225     		movs	r5, #2
+ 347:Core/Src/user_diskio_spi.c **** 			} else {
+ 1091              		.loc 1 347 22 view .LVU264
+ 1092 0136 A926     		movs	r6, #169
+ 1093 0138 ECE7     		b	.L68
+ 1094              	.LVL127:
+ 1095              	.L84:
+ 352:Core/Src/user_diskio_spi.c **** 				ty = 0;
+ 1096              		.loc 1 352 31 discriminator 1 view .LVU265
+ 1097 013a 8021     		movs	r1, #128
+ 1098 013c 8900     		lsls	r1, r1, #2
+ 1099 013e 1020     		movs	r0, #16
+ 1100 0140 FFF7FEFF 		bl	send_cmd
+ARM GAS  /tmp/cc41MayP.s 			page 29
+
+
+ 1101              	.LVL128:
+ 352:Core/Src/user_diskio_spi.c **** 				ty = 0;
+ 1102              		.loc 1 352 28 discriminator 1 view .LVU266
+ 1103 0144 0028     		cmp	r0, #0
+ 1104 0146 00D0     		beq	.LCB972
+ 1105 0148 80E7     		b	.L58	@long jump
+ 1106              	.LCB972:
+ 1107 014a 2C00     		movs	r4, r5
+ 1108              	.LVL129:
+ 352:Core/Src/user_diskio_spi.c **** 				ty = 0;
+ 1109              		.loc 1 352 28 discriminator 1 view .LVU267
+ 1110 014c 7EE7     		b	.L58
+ 1111              	.LVL130:
+ 1112              	.L74:
+ 342:Core/Src/user_diskio_spi.c **** 				}
+ 1113              		.loc 1 342 9 discriminator 2 view .LVU268
+ 1114 014e 0424     		movs	r4, #4
+ 1115 0150 7CE7     		b	.L58
+ 1116              	.LVL131:
+ 1117              	.L69:
+ 363:Core/Src/user_diskio_spi.c **** 	}
+ 1118              		.loc 1 363 3 is_stmt 1 view .LVU269
+ 363:Core/Src/user_diskio_spi.c **** 	}
+ 1119              		.loc 1 363 8 is_stmt 0 view .LVU270
+ 1120 0152 034B     		ldr	r3, .L85
+ 1121 0154 0122     		movs	r2, #1
+ 1122 0156 1A70     		strb	r2, [r3]
+ 1123 0158 8CE7     		b	.L70
+ 1124              	.LVL132:
+ 1125              	.L71:
+ 325:Core/Src/user_diskio_spi.c **** 	//assume SPI already init init_spi();	/* Initialize SPI */
+ 1126              		.loc 1 325 23 discriminator 1 view .LVU271
+ 1127 015a 0120     		movs	r0, #1
+ 1128              	.LVL133:
+ 325:Core/Src/user_diskio_spi.c **** 	//assume SPI already init init_spi();	/* Initialize SPI */
+ 1129              		.loc 1 325 23 discriminator 1 view .LVU272
+ 1130 015c 8DE7     		b	.L54
+ 1131              	.L86:
+ 1132 015e C046     		.align	2
+ 1133              	.L85:
+ 1134 0160 00000000 		.word	Stat
+ 1135 0164 00000000 		.word	hspi2
+ 1136 0168 00000000 		.word	CardType
+ 1137              		.cfi_endproc
+ 1138              	.LFE504:
+ 1140              		.section	.text.USER_SPI_status,"ax",%progbits
+ 1141              		.align	1
+ 1142              		.global	USER_SPI_status
+ 1143              		.syntax unified
+ 1144              		.code	16
+ 1145              		.thumb_func
+ 1147              	USER_SPI_status:
+ 1148              	.LVL134:
+ 1149              	.LFB505:
+ 368:Core/Src/user_diskio_spi.c **** 
+ 369:Core/Src/user_diskio_spi.c **** 
+ 370:Core/Src/user_diskio_spi.c **** 
+ARM GAS  /tmp/cc41MayP.s 			page 30
+
+
+ 371:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 372:Core/Src/user_diskio_spi.c **** /* Get disk status                                                       */
+ 373:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 374:Core/Src/user_diskio_spi.c **** 
+ 375:Core/Src/user_diskio_spi.c **** inline DSTATUS USER_SPI_status (
+ 376:Core/Src/user_diskio_spi.c **** 	BYTE drv		/* Physical drive number (0) */
+ 377:Core/Src/user_diskio_spi.c **** )
+ 378:Core/Src/user_diskio_spi.c **** {
+ 1150              		.loc 1 378 1 is_stmt 1 view -0
+ 1151              		.cfi_startproc
+ 1152              		@ args = 0, pretend = 0, frame = 0
+ 1153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1154              		@ link register save eliminated.
+ 379:Core/Src/user_diskio_spi.c **** 	if (drv) return STA_NOINIT;		/* Supports only drive 0 */
+ 1155              		.loc 1 379 2 view .LVU274
+ 1156              		.loc 1 379 5 is_stmt 0 view .LVU275
+ 1157 0000 0028     		cmp	r0, #0
+ 1158 0002 03D1     		bne	.L89
+ 380:Core/Src/user_diskio_spi.c **** 
+ 381:Core/Src/user_diskio_spi.c **** 	return Stat;	/* Return disk status */
+ 1159              		.loc 1 381 2 is_stmt 1 view .LVU276
+ 1160              		.loc 1 381 9 is_stmt 0 view .LVU277
+ 1161 0004 024B     		ldr	r3, .L90
+ 1162 0006 1878     		ldrb	r0, [r3]
+ 1163              	.LVL135:
+ 1164              		.loc 1 381 9 view .LVU278
+ 1165 0008 C0B2     		uxtb	r0, r0
+ 1166              	.L88:
+ 382:Core/Src/user_diskio_spi.c **** }
+ 1167              		.loc 1 382 1 view .LVU279
+ 1168              		@ sp needed
+ 1169 000a 7047     		bx	lr
+ 1170              	.LVL136:
+ 1171              	.L89:
+ 379:Core/Src/user_diskio_spi.c **** 	if (drv) return STA_NOINIT;		/* Supports only drive 0 */
+ 1172              		.loc 1 379 18 discriminator 1 view .LVU280
+ 1173 000c 0120     		movs	r0, #1
+ 1174              	.LVL137:
+ 379:Core/Src/user_diskio_spi.c **** 	if (drv) return STA_NOINIT;		/* Supports only drive 0 */
+ 1175              		.loc 1 379 18 discriminator 1 view .LVU281
+ 1176 000e FCE7     		b	.L88
+ 1177              	.L91:
+ 1178              		.align	2
+ 1179              	.L90:
+ 1180 0010 00000000 		.word	Stat
+ 1181              		.cfi_endproc
+ 1182              	.LFE505:
+ 1184              		.section	.text.USER_SPI_read,"ax",%progbits
+ 1185              		.align	1
+ 1186              		.global	USER_SPI_read
+ 1187              		.syntax unified
+ 1188              		.code	16
+ 1189              		.thumb_func
+ 1191              	USER_SPI_read:
+ 1192              	.LVL138:
+ 1193              	.LFB506:
+ 383:Core/Src/user_diskio_spi.c **** 
+ARM GAS  /tmp/cc41MayP.s 			page 31
+
+
+ 384:Core/Src/user_diskio_spi.c **** 
+ 385:Core/Src/user_diskio_spi.c **** 
+ 386:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 387:Core/Src/user_diskio_spi.c **** /* Read sector(s)                                                        */
+ 388:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 389:Core/Src/user_diskio_spi.c **** 
+ 390:Core/Src/user_diskio_spi.c **** inline DRESULT USER_SPI_read (
+ 391:Core/Src/user_diskio_spi.c **** 	BYTE drv,		/* Physical drive number (0) */
+ 392:Core/Src/user_diskio_spi.c **** 	BYTE *buff,		/* Pointer to the data buffer to store read data */
+ 393:Core/Src/user_diskio_spi.c **** 	DWORD sector,	/* Start sector number (LBA) */
+ 394:Core/Src/user_diskio_spi.c **** 	UINT count		/* Number of sectors to read (1..128) */
+ 395:Core/Src/user_diskio_spi.c **** )
+ 396:Core/Src/user_diskio_spi.c **** {
+ 1194              		.loc 1 396 1 is_stmt 1 view -0
+ 1195              		.cfi_startproc
+ 1196              		@ args = 0, pretend = 0, frame = 0
+ 1197              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1198              		.loc 1 396 1 is_stmt 0 view .LVU283
+ 1199 0000 70B5     		push	{r4, r5, r6, lr}
+ 1200              	.LCFI14:
+ 1201              		.cfi_def_cfa_offset 16
+ 1202              		.cfi_offset 4, -16
+ 1203              		.cfi_offset 5, -12
+ 1204              		.cfi_offset 6, -8
+ 1205              		.cfi_offset 14, -4
+ 1206 0002 0D00     		movs	r5, r1
+ 1207 0004 1100     		movs	r1, r2
+ 1208              	.LVL139:
+ 1209              		.loc 1 396 1 view .LVU284
+ 1210 0006 1C00     		movs	r4, r3
+ 397:Core/Src/user_diskio_spi.c **** 	if (drv || !count) return RES_PARERR;		/* Check parameter */
+ 1211              		.loc 1 397 2 is_stmt 1 view .LVU285
+ 1212              		.loc 1 397 5 is_stmt 0 view .LVU286
+ 1213 0008 0028     		cmp	r0, #0
+ 1214 000a 37D1     		bne	.L99
+ 1215              		.loc 1 397 10 discriminator 2 view .LVU287
+ 1216 000c 002B     		cmp	r3, #0
+ 1217 000e 37D0     		beq	.L100
+ 398:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check if drive is ready */
+ 1218              		.loc 1 398 2 is_stmt 1 view .LVU288
+ 1219              		.loc 1 398 11 is_stmt 0 view .LVU289
+ 1220 0010 1D4B     		ldr	r3, .L105
+ 1221              	.LVL140:
+ 1222              		.loc 1 398 11 view .LVU290
+ 1223 0012 1B78     		ldrb	r3, [r3]
+ 1224              		.loc 1 398 5 view .LVU291
+ 1225 0014 DB07     		lsls	r3, r3, #31
+ 1226 0016 35D4     		bmi	.L101
+ 399:Core/Src/user_diskio_spi.c **** 
+ 400:Core/Src/user_diskio_spi.c **** 	if (!(CardType & CT_BLOCK)) sector *= 512;	/* LBA ot BA conversion (byte addressing cards) */
+ 1227              		.loc 1 400 2 is_stmt 1 view .LVU292
+ 1228              		.loc 1 400 17 is_stmt 0 view .LVU293
+ 1229 0018 1C4B     		ldr	r3, .L105+4
+ 1230 001a 1B78     		ldrb	r3, [r3]
+ 1231              		.loc 1 400 5 view .LVU294
+ 1232 001c 1B07     		lsls	r3, r3, #28
+ 1233 001e 00D4     		bmi	.L94
+ARM GAS  /tmp/cc41MayP.s 			page 32
+
+
+ 1234              		.loc 1 400 30 is_stmt 1 discriminator 1 view .LVU295
+ 1235              		.loc 1 400 37 is_stmt 0 discriminator 1 view .LVU296
+ 1236 0020 5102     		lsls	r1, r2, #9
+ 1237              	.L94:
+ 1238              	.LVL141:
+ 401:Core/Src/user_diskio_spi.c **** 
+ 402:Core/Src/user_diskio_spi.c **** 	if (count == 1) {	/* Single sector read */
+ 1239              		.loc 1 402 2 is_stmt 1 view .LVU297
+ 1240              		.loc 1 402 5 is_stmt 0 view .LVU298
+ 1241 0022 012C     		cmp	r4, #1
+ 1242 0024 1CD0     		beq	.L104
+ 403:Core/Src/user_diskio_spi.c **** 		if ((send_cmd(CMD17, sector) == 0)	/* READ_SINGLE_BLOCK */
+ 404:Core/Src/user_diskio_spi.c **** 			&& rcvr_datablock(buff, 512)) {
+ 405:Core/Src/user_diskio_spi.c **** 			count = 0;
+ 406:Core/Src/user_diskio_spi.c **** 		}
+ 407:Core/Src/user_diskio_spi.c **** 	}
+ 408:Core/Src/user_diskio_spi.c **** 	else {				/* Multiple sector read */
+ 409:Core/Src/user_diskio_spi.c **** 		if (send_cmd(CMD18, sector) == 0) {	/* READ_MULTIPLE_BLOCK */
+ 1243              		.loc 1 409 3 is_stmt 1 view .LVU299
+ 1244              		.loc 1 409 7 is_stmt 0 view .LVU300
+ 1245 0026 1220     		movs	r0, #18
+ 1246              	.LVL142:
+ 1247              		.loc 1 409 7 view .LVU301
+ 1248 0028 FFF7FEFF 		bl	send_cmd
+ 1249              	.LVL143:
+ 1250              		.loc 1 409 6 discriminator 1 view .LVU302
+ 1251 002c 0028     		cmp	r0, #0
+ 1252 002e 11D1     		bne	.L96
+ 1253              	.L98:
+ 410:Core/Src/user_diskio_spi.c **** 			do {
+ 1254              		.loc 1 410 4 is_stmt 1 view .LVU303
+ 411:Core/Src/user_diskio_spi.c **** 				if (!rcvr_datablock(buff, 512)) break;
+ 1255              		.loc 1 411 5 view .LVU304
+ 1256              		.loc 1 411 10 is_stmt 0 view .LVU305
+ 1257 0030 8021     		movs	r1, #128
+ 1258 0032 8900     		lsls	r1, r1, #2
+ 1259 0034 2800     		movs	r0, r5
+ 1260 0036 FFF7FEFF 		bl	rcvr_datablock
+ 1261              	.LVL144:
+ 1262              		.loc 1 411 8 discriminator 1 view .LVU306
+ 1263 003a 0028     		cmp	r0, #0
+ 1264 003c 06D0     		beq	.L97
+ 412:Core/Src/user_diskio_spi.c **** 				buff += 512;
+ 1265              		.loc 1 412 5 is_stmt 1 view .LVU307
+ 1266              		.loc 1 412 10 is_stmt 0 view .LVU308
+ 1267 003e 8023     		movs	r3, #128
+ 1268 0040 9B00     		lsls	r3, r3, #2
+ 1269 0042 9C46     		mov	ip, r3
+ 1270 0044 6544     		add	r5, r5, ip
+ 1271              	.LVL145:
+ 413:Core/Src/user_diskio_spi.c **** 			} while (--count);
+ 1272              		.loc 1 413 13 is_stmt 1 view .LVU309
+ 1273 0046 013C     		subs	r4, r4, #1
+ 1274              	.LVL146:
+ 1275              		.loc 1 413 13 is_stmt 0 view .LVU310
+ 1276 0048 002C     		cmp	r4, #0
+ 1277 004a F1D1     		bne	.L98
+ARM GAS  /tmp/cc41MayP.s 			page 33
+
+
+ 1278              	.L97:
+ 414:Core/Src/user_diskio_spi.c **** 			send_cmd(CMD12, 0);				/* STOP_TRANSMISSION */
+ 1279              		.loc 1 414 4 is_stmt 1 view .LVU311
+ 1280 004c 0021     		movs	r1, #0
+ 1281 004e 0C20     		movs	r0, #12
+ 1282 0050 FFF7FEFF 		bl	send_cmd
+ 1283              	.LVL147:
+ 1284              	.L96:
+ 415:Core/Src/user_diskio_spi.c **** 		}
+ 416:Core/Src/user_diskio_spi.c **** 	}
+ 417:Core/Src/user_diskio_spi.c **** 	despiselect();
+ 1285              		.loc 1 417 2 view .LVU312
+ 1286 0054 FFF7FEFF 		bl	despiselect
+ 1287              	.LVL148:
+ 418:Core/Src/user_diskio_spi.c **** 
+ 419:Core/Src/user_diskio_spi.c **** 	return count ? RES_ERROR : RES_OK;	/* Return result */
+ 1288              		.loc 1 419 2 view .LVU313
+ 1289              		.loc 1 419 27 is_stmt 0 view .LVU314
+ 1290 0058 631E     		subs	r3, r4, #1
+ 1291 005a 9C41     		sbcs	r4, r4, r3
+ 1292              	.LVL149:
+ 1293              		.loc 1 419 27 view .LVU315
+ 1294 005c E0B2     		uxtb	r0, r4
+ 1295              	.LVL150:
+ 1296              	.L93:
+ 420:Core/Src/user_diskio_spi.c **** }
+ 1297              		.loc 1 420 1 view .LVU316
+ 1298              		@ sp needed
+ 1299              	.LVL151:
+ 1300              		.loc 1 420 1 view .LVU317
+ 1301 005e 70BD     		pop	{r4, r5, r6, pc}
+ 1302              	.LVL152:
+ 1303              	.L104:
+ 403:Core/Src/user_diskio_spi.c **** 			&& rcvr_datablock(buff, 512)) {
+ 1304              		.loc 1 403 3 is_stmt 1 view .LVU318
+ 403:Core/Src/user_diskio_spi.c **** 			&& rcvr_datablock(buff, 512)) {
+ 1305              		.loc 1 403 8 is_stmt 0 view .LVU319
+ 1306 0060 1120     		movs	r0, #17
+ 1307              	.LVL153:
+ 403:Core/Src/user_diskio_spi.c **** 			&& rcvr_datablock(buff, 512)) {
+ 1308              		.loc 1 403 8 view .LVU320
+ 1309 0062 FFF7FEFF 		bl	send_cmd
+ 1310              	.LVL154:
+ 403:Core/Src/user_diskio_spi.c **** 			&& rcvr_datablock(buff, 512)) {
+ 1311              		.loc 1 403 6 discriminator 1 view .LVU321
+ 1312 0066 0028     		cmp	r0, #0
+ 1313 0068 F4D1     		bne	.L96
+ 404:Core/Src/user_diskio_spi.c **** 			count = 0;
+ 1314              		.loc 1 404 7 view .LVU322
+ 1315 006a 8021     		movs	r1, #128
+ 1316 006c 8900     		lsls	r1, r1, #2
+ 1317 006e 2800     		movs	r0, r5
+ 1318 0070 FFF7FEFF 		bl	rcvr_datablock
+ 1319              	.LVL155:
+ 404:Core/Src/user_diskio_spi.c **** 			count = 0;
+ 1320              		.loc 1 404 4 discriminator 1 view .LVU323
+ 1321 0074 0028     		cmp	r0, #0
+ARM GAS  /tmp/cc41MayP.s 			page 34
+
+
+ 1322 0076 EDD0     		beq	.L96
+ 405:Core/Src/user_diskio_spi.c **** 		}
+ 1323              		.loc 1 405 10 view .LVU324
+ 1324 0078 0024     		movs	r4, #0
+ 1325              	.LVL156:
+ 405:Core/Src/user_diskio_spi.c **** 		}
+ 1326              		.loc 1 405 10 view .LVU325
+ 1327 007a EBE7     		b	.L96
+ 1328              	.LVL157:
+ 1329              	.L99:
+ 397:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check if drive is ready */
+ 1330              		.loc 1 397 28 discriminator 3 view .LVU326
+ 1331 007c 0420     		movs	r0, #4
+ 1332              	.LVL158:
+ 397:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check if drive is ready */
+ 1333              		.loc 1 397 28 discriminator 3 view .LVU327
+ 1334 007e EEE7     		b	.L93
+ 1335              	.LVL159:
+ 1336              	.L100:
+ 397:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check if drive is ready */
+ 1337              		.loc 1 397 28 discriminator 3 view .LVU328
+ 1338 0080 0420     		movs	r0, #4
+ 1339              	.LVL160:
+ 397:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check if drive is ready */
+ 1340              		.loc 1 397 28 discriminator 3 view .LVU329
+ 1341 0082 ECE7     		b	.L93
+ 1342              	.LVL161:
+ 1343              	.L101:
+ 398:Core/Src/user_diskio_spi.c **** 
+ 1344              		.loc 1 398 32 discriminator 1 view .LVU330
+ 1345 0084 0320     		movs	r0, #3
+ 1346              	.LVL162:
+ 398:Core/Src/user_diskio_spi.c **** 
+ 1347              		.loc 1 398 32 discriminator 1 view .LVU331
+ 1348 0086 EAE7     		b	.L93
+ 1349              	.L106:
+ 1350              		.align	2
+ 1351              	.L105:
+ 1352 0088 00000000 		.word	Stat
+ 1353 008c 00000000 		.word	CardType
+ 1354              		.cfi_endproc
+ 1355              	.LFE506:
+ 1357              		.section	.text.USER_SPI_write,"ax",%progbits
+ 1358              		.align	1
+ 1359              		.global	USER_SPI_write
+ 1360              		.syntax unified
+ 1361              		.code	16
+ 1362              		.thumb_func
+ 1364              	USER_SPI_write:
+ 1365              	.LVL163:
+ 1366              	.LFB507:
+ 421:Core/Src/user_diskio_spi.c **** 
+ 422:Core/Src/user_diskio_spi.c **** 
+ 423:Core/Src/user_diskio_spi.c **** 
+ 424:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 425:Core/Src/user_diskio_spi.c **** /* Write sector(s)                                                       */
+ 426:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ARM GAS  /tmp/cc41MayP.s 			page 35
+
+
+ 427:Core/Src/user_diskio_spi.c **** 
+ 428:Core/Src/user_diskio_spi.c **** #if _USE_WRITE
+ 429:Core/Src/user_diskio_spi.c **** inline DRESULT USER_SPI_write (
+ 430:Core/Src/user_diskio_spi.c **** 	BYTE drv,			/* Physical drive number (0) */
+ 431:Core/Src/user_diskio_spi.c **** 	const BYTE *buff,	/* Ponter to the data to write */
+ 432:Core/Src/user_diskio_spi.c **** 	DWORD sector,		/* Start sector number (LBA) */
+ 433:Core/Src/user_diskio_spi.c **** 	UINT count			/* Number of sectors to write (1..128) */
+ 434:Core/Src/user_diskio_spi.c **** )
+ 435:Core/Src/user_diskio_spi.c **** {
+ 1367              		.loc 1 435 1 is_stmt 1 view -0
+ 1368              		.cfi_startproc
+ 1369              		@ args = 0, pretend = 0, frame = 0
+ 1370              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1371              		.loc 1 435 1 is_stmt 0 view .LVU333
+ 1372 0000 70B5     		push	{r4, r5, r6, lr}
+ 1373              	.LCFI15:
+ 1374              		.cfi_def_cfa_offset 16
+ 1375              		.cfi_offset 4, -16
+ 1376              		.cfi_offset 5, -12
+ 1377              		.cfi_offset 6, -8
+ 1378              		.cfi_offset 14, -4
+ 1379 0002 0D00     		movs	r5, r1
+ 1380 0004 1600     		movs	r6, r2
+ 1381 0006 1C00     		movs	r4, r3
+ 436:Core/Src/user_diskio_spi.c **** 	if (drv || !count) return RES_PARERR;		/* Check parameter */
+ 1382              		.loc 1 436 2 is_stmt 1 view .LVU334
+ 1383              		.loc 1 436 5 is_stmt 0 view .LVU335
+ 1384 0008 0028     		cmp	r0, #0
+ 1385 000a 47D1     		bne	.L115
+ 1386              		.loc 1 436 10 discriminator 2 view .LVU336
+ 1387 000c 002B     		cmp	r3, #0
+ 1388 000e 47D0     		beq	.L116
+ 437:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check drive status */
+ 1389              		.loc 1 437 2 is_stmt 1 view .LVU337
+ 1390              		.loc 1 437 11 is_stmt 0 view .LVU338
+ 1391 0010 264B     		ldr	r3, .L124
+ 1392              	.LVL164:
+ 1393              		.loc 1 437 11 view .LVU339
+ 1394 0012 1B78     		ldrb	r3, [r3]
+ 1395              		.loc 1 437 5 view .LVU340
+ 1396 0014 DB07     		lsls	r3, r3, #31
+ 1397 0016 45D4     		bmi	.L117
+ 438:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_PROTECT) return RES_WRPRT;	/* Check write protect */
+ 1398              		.loc 1 438 2 is_stmt 1 view .LVU341
+ 1399              		.loc 1 438 11 is_stmt 0 view .LVU342
+ 1400 0018 244B     		ldr	r3, .L124
+ 1401 001a 1B78     		ldrb	r3, [r3]
+ 1402              		.loc 1 438 5 view .LVU343
+ 1403 001c 5B07     		lsls	r3, r3, #29
+ 1404 001e 43D4     		bmi	.L118
+ 439:Core/Src/user_diskio_spi.c **** 
+ 440:Core/Src/user_diskio_spi.c **** 	if (!(CardType & CT_BLOCK)) sector *= 512;	/* LBA ==> BA conversion (byte addressing cards) */
+ 1405              		.loc 1 440 2 is_stmt 1 view .LVU344
+ 1406              		.loc 1 440 17 is_stmt 0 view .LVU345
+ 1407 0020 234B     		ldr	r3, .L124+4
+ 1408 0022 1B78     		ldrb	r3, [r3]
+ 1409              		.loc 1 440 5 view .LVU346
+ARM GAS  /tmp/cc41MayP.s 			page 36
+
+
+ 1410 0024 1A07     		lsls	r2, r3, #28
+ 1411 0026 00D4     		bmi	.L109
+ 1412              	.LVL165:
+ 1413              		.loc 1 440 30 is_stmt 1 discriminator 1 view .LVU347
+ 1414              		.loc 1 440 37 is_stmt 0 discriminator 1 view .LVU348
+ 1415 0028 7602     		lsls	r6, r6, #9
+ 1416              	.LVL166:
+ 1417              	.L109:
+ 441:Core/Src/user_diskio_spi.c **** 
+ 442:Core/Src/user_diskio_spi.c **** 	if (count == 1) {	/* Single sector write */
+ 1418              		.loc 1 442 2 is_stmt 1 view .LVU349
+ 1419              		.loc 1 442 5 is_stmt 0 view .LVU350
+ 1420 002a 012C     		cmp	r4, #1
+ 1421 002c 21D0     		beq	.L122
+ 443:Core/Src/user_diskio_spi.c **** 		if ((send_cmd(CMD24, sector) == 0)	/* WRITE_BLOCK */
+ 444:Core/Src/user_diskio_spi.c **** 			&& xmit_datablock(buff, 0xFE)) {
+ 445:Core/Src/user_diskio_spi.c **** 			count = 0;
+ 446:Core/Src/user_diskio_spi.c **** 		}
+ 447:Core/Src/user_diskio_spi.c **** 	}
+ 448:Core/Src/user_diskio_spi.c **** 	else {				/* Multiple sector write */
+ 449:Core/Src/user_diskio_spi.c **** 		if (CardType & CT_SDC) send_cmd(ACMD23, count);	/* Predefine number of sectors */
+ 1422              		.loc 1 449 3 is_stmt 1 view .LVU351
+ 1423              		.loc 1 449 6 is_stmt 0 view .LVU352
+ 1424 002e 0622     		movs	r2, #6
+ 1425 0030 1A42     		tst	r2, r3
+ 1426 0032 2CD1     		bne	.L123
+ 1427              	.LVL167:
+ 1428              	.L112:
+ 450:Core/Src/user_diskio_spi.c **** 		if (send_cmd(CMD25, sector) == 0) {	/* WRITE_MULTIPLE_BLOCK */
+ 1429              		.loc 1 450 3 is_stmt 1 view .LVU353
+ 1430              		.loc 1 450 7 is_stmt 0 view .LVU354
+ 1431 0034 3100     		movs	r1, r6
+ 1432 0036 1920     		movs	r0, #25
+ 1433 0038 FFF7FEFF 		bl	send_cmd
+ 1434              	.LVL168:
+ 1435              		.loc 1 450 6 discriminator 1 view .LVU355
+ 1436 003c 0028     		cmp	r0, #0
+ 1437 003e 12D1     		bne	.L111
+ 1438              	.L114:
+ 451:Core/Src/user_diskio_spi.c **** 			do {
+ 1439              		.loc 1 451 4 is_stmt 1 view .LVU356
+ 452:Core/Src/user_diskio_spi.c **** 				if (!xmit_datablock(buff, 0xFC)) break;
+ 1440              		.loc 1 452 5 view .LVU357
+ 1441              		.loc 1 452 10 is_stmt 0 view .LVU358
+ 1442 0040 FC21     		movs	r1, #252
+ 1443 0042 2800     		movs	r0, r5
+ 1444 0044 FFF7FEFF 		bl	xmit_datablock
+ 1445              	.LVL169:
+ 1446              		.loc 1 452 8 discriminator 1 view .LVU359
+ 1447 0048 0028     		cmp	r0, #0
+ 1448 004a 06D0     		beq	.L113
+ 453:Core/Src/user_diskio_spi.c **** 				buff += 512;
+ 1449              		.loc 1 453 5 is_stmt 1 view .LVU360
+ 1450              		.loc 1 453 10 is_stmt 0 view .LVU361
+ 1451 004c 8023     		movs	r3, #128
+ 1452 004e 9B00     		lsls	r3, r3, #2
+ 1453 0050 9C46     		mov	ip, r3
+ARM GAS  /tmp/cc41MayP.s 			page 37
+
+
+ 1454 0052 6544     		add	r5, r5, ip
+ 1455              	.LVL170:
+ 454:Core/Src/user_diskio_spi.c **** 			} while (--count);
+ 1456              		.loc 1 454 13 is_stmt 1 view .LVU362
+ 1457 0054 013C     		subs	r4, r4, #1
+ 1458              	.LVL171:
+ 1459              		.loc 1 454 13 is_stmt 0 view .LVU363
+ 1460 0056 002C     		cmp	r4, #0
+ 1461 0058 F2D1     		bne	.L114
+ 1462              	.L113:
+ 455:Core/Src/user_diskio_spi.c **** 			if (!xmit_datablock(0, 0xFD)) count = 1;	/* STOP_TRAN token */
+ 1463              		.loc 1 455 4 is_stmt 1 view .LVU364
+ 1464              		.loc 1 455 9 is_stmt 0 view .LVU365
+ 1465 005a FD21     		movs	r1, #253
+ 1466 005c 0020     		movs	r0, #0
+ 1467 005e FFF7FEFF 		bl	xmit_datablock
+ 1468              	.LVL172:
+ 1469              		.loc 1 455 7 discriminator 1 view .LVU366
+ 1470 0062 0028     		cmp	r0, #0
+ 1471 0064 18D0     		beq	.L120
+ 1472              	.LVL173:
+ 1473              	.L111:
+ 456:Core/Src/user_diskio_spi.c **** 		}
+ 457:Core/Src/user_diskio_spi.c **** 	}
+ 458:Core/Src/user_diskio_spi.c **** 	despiselect();
+ 1474              		.loc 1 458 2 is_stmt 1 view .LVU367
+ 1475 0066 FFF7FEFF 		bl	despiselect
+ 1476              	.LVL174:
+ 459:Core/Src/user_diskio_spi.c **** 
+ 460:Core/Src/user_diskio_spi.c **** 	return count ? RES_ERROR : RES_OK;	/* Return result */
+ 1477              		.loc 1 460 2 view .LVU368
+ 1478              		.loc 1 460 27 is_stmt 0 view .LVU369
+ 1479 006a 631E     		subs	r3, r4, #1
+ 1480 006c 9C41     		sbcs	r4, r4, r3
+ 1481              	.LVL175:
+ 1482              		.loc 1 460 27 view .LVU370
+ 1483 006e E0B2     		uxtb	r0, r4
+ 1484              	.LVL176:
+ 1485              	.L108:
+ 461:Core/Src/user_diskio_spi.c **** }
+ 1486              		.loc 1 461 1 view .LVU371
+ 1487              		@ sp needed
+ 1488              	.LVL177:
+ 1489              	.LVL178:
+ 1490              		.loc 1 461 1 view .LVU372
+ 1491 0070 70BD     		pop	{r4, r5, r6, pc}
+ 1492              	.LVL179:
+ 1493              	.L122:
+ 443:Core/Src/user_diskio_spi.c **** 			&& xmit_datablock(buff, 0xFE)) {
+ 1494              		.loc 1 443 3 is_stmt 1 view .LVU373
+ 443:Core/Src/user_diskio_spi.c **** 			&& xmit_datablock(buff, 0xFE)) {
+ 1495              		.loc 1 443 8 is_stmt 0 view .LVU374
+ 1496 0072 3100     		movs	r1, r6
+ 1497              	.LVL180:
+ 443:Core/Src/user_diskio_spi.c **** 			&& xmit_datablock(buff, 0xFE)) {
+ 1498              		.loc 1 443 8 view .LVU375
+ 1499 0074 1820     		movs	r0, #24
+ARM GAS  /tmp/cc41MayP.s 			page 38
+
+
+ 1500              	.LVL181:
+ 443:Core/Src/user_diskio_spi.c **** 			&& xmit_datablock(buff, 0xFE)) {
+ 1501              		.loc 1 443 8 view .LVU376
+ 1502 0076 FFF7FEFF 		bl	send_cmd
+ 1503              	.LVL182:
+ 443:Core/Src/user_diskio_spi.c **** 			&& xmit_datablock(buff, 0xFE)) {
+ 1504              		.loc 1 443 6 discriminator 1 view .LVU377
+ 1505 007a 0028     		cmp	r0, #0
+ 1506 007c F3D1     		bne	.L111
+ 444:Core/Src/user_diskio_spi.c **** 			count = 0;
+ 1507              		.loc 1 444 7 view .LVU378
+ 1508 007e FE21     		movs	r1, #254
+ 1509 0080 2800     		movs	r0, r5
+ 1510 0082 FFF7FEFF 		bl	xmit_datablock
+ 1511              	.LVL183:
+ 444:Core/Src/user_diskio_spi.c **** 			count = 0;
+ 1512              		.loc 1 444 4 discriminator 1 view .LVU379
+ 1513 0086 0028     		cmp	r0, #0
+ 1514 0088 EDD0     		beq	.L111
+ 445:Core/Src/user_diskio_spi.c **** 		}
+ 1515              		.loc 1 445 10 view .LVU380
+ 1516 008a 0024     		movs	r4, #0
+ 1517              	.LVL184:
+ 445:Core/Src/user_diskio_spi.c **** 		}
+ 1518              		.loc 1 445 10 view .LVU381
+ 1519 008c EBE7     		b	.L111
+ 1520              	.LVL185:
+ 1521              	.L123:
+ 449:Core/Src/user_diskio_spi.c **** 		if (send_cmd(CMD25, sector) == 0) {	/* WRITE_MULTIPLE_BLOCK */
+ 1522              		.loc 1 449 26 is_stmt 1 discriminator 1 view .LVU382
+ 1523 008e 2100     		movs	r1, r4
+ 1524              	.LVL186:
+ 449:Core/Src/user_diskio_spi.c **** 		if (send_cmd(CMD25, sector) == 0) {	/* WRITE_MULTIPLE_BLOCK */
+ 1525              		.loc 1 449 26 is_stmt 0 discriminator 1 view .LVU383
+ 1526 0090 9720     		movs	r0, #151
+ 1527              	.LVL187:
+ 449:Core/Src/user_diskio_spi.c **** 		if (send_cmd(CMD25, sector) == 0) {	/* WRITE_MULTIPLE_BLOCK */
+ 1528              		.loc 1 449 26 discriminator 1 view .LVU384
+ 1529 0092 FFF7FEFF 		bl	send_cmd
+ 1530              	.LVL188:
+ 1531 0096 CDE7     		b	.L112
+ 1532              	.L120:
+ 455:Core/Src/user_diskio_spi.c **** 		}
+ 1533              		.loc 1 455 40 discriminator 1 view .LVU385
+ 1534 0098 0124     		movs	r4, #1
+ 1535              	.LVL189:
+ 455:Core/Src/user_diskio_spi.c **** 		}
+ 1536              		.loc 1 455 40 discriminator 1 view .LVU386
+ 1537 009a E4E7     		b	.L111
+ 1538              	.LVL190:
+ 1539              	.L115:
+ 436:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check drive status */
+ 1540              		.loc 1 436 28 discriminator 3 view .LVU387
+ 1541 009c 0420     		movs	r0, #4
+ 1542              	.LVL191:
+ 436:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check drive status */
+ 1543              		.loc 1 436 28 discriminator 3 view .LVU388
+ARM GAS  /tmp/cc41MayP.s 			page 39
+
+
+ 1544 009e E7E7     		b	.L108
+ 1545              	.LVL192:
+ 1546              	.L116:
+ 436:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check drive status */
+ 1547              		.loc 1 436 28 discriminator 3 view .LVU389
+ 1548 00a0 0420     		movs	r0, #4
+ 1549              	.LVL193:
+ 436:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check drive status */
+ 1550              		.loc 1 436 28 discriminator 3 view .LVU390
+ 1551 00a2 E5E7     		b	.L108
+ 1552              	.LVL194:
+ 1553              	.L117:
+ 437:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_PROTECT) return RES_WRPRT;	/* Check write protect */
+ 1554              		.loc 1 437 32 discriminator 1 view .LVU391
+ 1555 00a4 0320     		movs	r0, #3
+ 1556              	.LVL195:
+ 437:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_PROTECT) return RES_WRPRT;	/* Check write protect */
+ 1557              		.loc 1 437 32 discriminator 1 view .LVU392
+ 1558 00a6 E3E7     		b	.L108
+ 1559              	.LVL196:
+ 1560              	.L118:
+ 438:Core/Src/user_diskio_spi.c **** 
+ 1561              		.loc 1 438 33 discriminator 1 view .LVU393
+ 1562 00a8 0220     		movs	r0, #2
+ 1563              	.LVL197:
+ 438:Core/Src/user_diskio_spi.c **** 
+ 1564              		.loc 1 438 33 discriminator 1 view .LVU394
+ 1565 00aa E1E7     		b	.L108
+ 1566              	.L125:
+ 1567              		.align	2
+ 1568              	.L124:
+ 1569 00ac 00000000 		.word	Stat
+ 1570 00b0 00000000 		.word	CardType
+ 1571              		.cfi_endproc
+ 1572              	.LFE507:
+ 1574              		.section	.text.USER_SPI_ioctl,"ax",%progbits
+ 1575              		.align	1
+ 1576              		.global	USER_SPI_ioctl
+ 1577              		.syntax unified
+ 1578              		.code	16
+ 1579              		.thumb_func
+ 1581              	USER_SPI_ioctl:
+ 1582              	.LVL198:
+ 1583              	.LFB508:
+ 462:Core/Src/user_diskio_spi.c **** #endif
+ 463:Core/Src/user_diskio_spi.c **** 
+ 464:Core/Src/user_diskio_spi.c **** 
+ 465:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 466:Core/Src/user_diskio_spi.c **** /* Miscellaneous drive controls other than data read/write               */
+ 467:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
+ 468:Core/Src/user_diskio_spi.c **** 
+ 469:Core/Src/user_diskio_spi.c **** #if _USE_IOCTL
+ 470:Core/Src/user_diskio_spi.c **** inline DRESULT USER_SPI_ioctl (
+ 471:Core/Src/user_diskio_spi.c **** 	BYTE drv,		/* Physical drive number (0) */
+ 472:Core/Src/user_diskio_spi.c **** 	BYTE cmd,		/* Control command code */
+ 473:Core/Src/user_diskio_spi.c **** 	void *buff		/* Pointer to the conrtol data */
+ 474:Core/Src/user_diskio_spi.c **** )
+ARM GAS  /tmp/cc41MayP.s 			page 40
+
+
+ 475:Core/Src/user_diskio_spi.c **** {
+ 1584              		.loc 1 475 1 is_stmt 1 view -0
+ 1585              		.cfi_startproc
+ 1586              		@ args = 0, pretend = 0, frame = 16
+ 1587              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1588              		.loc 1 475 1 is_stmt 0 view .LVU396
+ 1589 0000 70B5     		push	{r4, r5, r6, lr}
+ 1590              	.LCFI16:
+ 1591              		.cfi_def_cfa_offset 16
+ 1592              		.cfi_offset 4, -16
+ 1593              		.cfi_offset 5, -12
+ 1594              		.cfi_offset 6, -8
+ 1595              		.cfi_offset 14, -4
+ 1596 0002 84B0     		sub	sp, sp, #16
+ 1597              	.LCFI17:
+ 1598              		.cfi_def_cfa_offset 32
+ 1599 0004 0C00     		movs	r4, r1
+ 1600 0006 1600     		movs	r6, r2
+ 476:Core/Src/user_diskio_spi.c **** 	DRESULT res;
+ 1601              		.loc 1 476 2 is_stmt 1 view .LVU397
+ 477:Core/Src/user_diskio_spi.c **** 	BYTE n, csd[16];
+ 1602              		.loc 1 477 2 view .LVU398
+ 478:Core/Src/user_diskio_spi.c **** 	DWORD *dp, st, ed, csize;
+ 1603              		.loc 1 478 2 view .LVU399
+ 479:Core/Src/user_diskio_spi.c **** 
+ 480:Core/Src/user_diskio_spi.c **** 
+ 481:Core/Src/user_diskio_spi.c **** 	if (drv) return RES_PARERR;					/* Check parameter */
+ 1604              		.loc 1 481 2 view .LVU400
+ 1605              		.loc 1 481 5 is_stmt 0 view .LVU401
+ 1606 0008 0028     		cmp	r0, #0
+ 1607 000a 00D0     		beq	.LCB1480
+ 1608 000c FEE0     		b	.L141	@long jump
+ 1609              	.LCB1480:
+ 482:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check if drive is ready */
+ 1610              		.loc 1 482 2 is_stmt 1 view .LVU402
+ 1611              		.loc 1 482 11 is_stmt 0 view .LVU403
+ 1612 000e 814B     		ldr	r3, .L167
+ 1613 0010 1B78     		ldrb	r3, [r3]
+ 1614              		.loc 1 482 5 view .LVU404
+ 1615 0012 DB07     		lsls	r3, r3, #31
+ 1616 0014 00D5     		bpl	.LCB1489
+ 1617 0016 FBE0     		b	.L142	@long jump
+ 1618              	.LCB1489:
+ 483:Core/Src/user_diskio_spi.c **** 
+ 484:Core/Src/user_diskio_spi.c **** 	res = RES_ERROR;
+ 1619              		.loc 1 484 2 is_stmt 1 view .LVU405
+ 1620              	.LVL199:
+ 485:Core/Src/user_diskio_spi.c **** 
+ 486:Core/Src/user_diskio_spi.c **** 	switch (cmd) {
+ 1621              		.loc 1 486 2 view .LVU406
+ 1622 0018 0329     		cmp	r1, #3
+ 1623 001a 5CD0     		beq	.L128
+ 1624 001c 11D8     		bhi	.L129
+ 1625 001e 0029     		cmp	r1, #0
+ 1626 0020 1BD0     		beq	.L130
+ 1627 0022 0129     		cmp	r1, #1
+ 1628 0024 0BD1     		bne	.L157
+ARM GAS  /tmp/cc41MayP.s 			page 41
+
+
+ 487:Core/Src/user_diskio_spi.c **** 	case CTRL_SYNC :		/* Wait for end of internal write process of the drive */
+ 488:Core/Src/user_diskio_spi.c **** 		if (spiselect()) res = RES_OK;
+ 489:Core/Src/user_diskio_spi.c **** 		break;
+ 490:Core/Src/user_diskio_spi.c **** 
+ 491:Core/Src/user_diskio_spi.c **** 	case GET_SECTOR_COUNT :	/* Get drive capacity in unit of sector (DWORD) */
+ 492:Core/Src/user_diskio_spi.c **** 		if ((send_cmd(CMD9, 0) == 0) && rcvr_datablock(csd, 16)) {
+ 1629              		.loc 1 492 3 view .LVU407
+ 1630              		.loc 1 492 8 is_stmt 0 view .LVU408
+ 1631 0026 0021     		movs	r1, #0
+ 1632              	.LVL200:
+ 1633              		.loc 1 492 8 view .LVU409
+ 1634 0028 0920     		movs	r0, #9
+ 1635              	.LVL201:
+ 1636              		.loc 1 492 8 view .LVU410
+ 1637 002a FFF7FEFF 		bl	send_cmd
+ 1638              	.LVL202:
+ 1639              		.loc 1 492 8 view .LVU411
+ 1640 002e 051E     		subs	r5, r0, #0
+ 1641              		.loc 1 492 6 discriminator 1 view .LVU412
+ 1642 0030 1AD0     		beq	.L158
+ 484:Core/Src/user_diskio_spi.c **** 
+ 1643              		.loc 1 484 6 view .LVU413
+ 1644 0032 2500     		movs	r5, r4
+ 1645              	.LVL203:
+ 1646              	.L132:
+ 493:Core/Src/user_diskio_spi.c **** 			if ((csd[0] >> 6) == 1) {	/* SDC ver 2.00 */
+ 494:Core/Src/user_diskio_spi.c **** 				csize = csd[9] + ((WORD)csd[8] << 8) + ((DWORD)(csd[7] & 63) << 16) + 1;
+ 495:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << 10;
+ 496:Core/Src/user_diskio_spi.c **** 			} else {					/* SDC ver 1.XX or MMC ver 3 */
+ 497:Core/Src/user_diskio_spi.c **** 				n = (csd[5] & 15) + ((csd[10] & 128) >> 7) + ((csd[9] & 3) << 1) + 2;
+ 498:Core/Src/user_diskio_spi.c **** 				csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
+ 499:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
+ 500:Core/Src/user_diskio_spi.c **** 			}
+ 501:Core/Src/user_diskio_spi.c **** 			res = RES_OK;
+ 502:Core/Src/user_diskio_spi.c **** 		}
+ 503:Core/Src/user_diskio_spi.c **** 		break;
+ 504:Core/Src/user_diskio_spi.c **** 
+ 505:Core/Src/user_diskio_spi.c **** 	case GET_BLOCK_SIZE :	/* Get erase block size in unit of sector (DWORD) */
+ 506:Core/Src/user_diskio_spi.c **** 		if (CardType & CT_SD2) {	/* SDC ver 2.00 */
+ 507:Core/Src/user_diskio_spi.c **** 			if (send_cmd(ACMD13, 0) == 0) {	/* Read SD status */
+ 508:Core/Src/user_diskio_spi.c **** 				xchg_spi(0xFF);
+ 509:Core/Src/user_diskio_spi.c **** 				if (rcvr_datablock(csd, 16)) {				/* Read partial block */
+ 510:Core/Src/user_diskio_spi.c **** 					for (n = 64 - 16; n; n--) xchg_spi(0xFF);	/* Purge trailing data */
+ 511:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = 16UL << (csd[10] >> 4);
+ 512:Core/Src/user_diskio_spi.c **** 					res = RES_OK;
+ 513:Core/Src/user_diskio_spi.c **** 				}
+ 514:Core/Src/user_diskio_spi.c **** 			}
+ 515:Core/Src/user_diskio_spi.c **** 		} else {					/* SDC ver 1.XX or MMC */
+ 516:Core/Src/user_diskio_spi.c **** 			if ((send_cmd(CMD9, 0) == 0) && rcvr_datablock(csd, 16)) {	/* Read CSD */
+ 517:Core/Src/user_diskio_spi.c **** 				if (CardType & CT_SD1) {	/* SDC ver 1.XX */
+ 518:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = (((csd[10] & 63) << 1) + ((WORD)(csd[11] & 128) >> 7) + 1) << ((csd[13] >> 6) 
+ 519:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 520:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = ((WORD)((csd[10] & 124) >> 2) + 1) * (((csd[11] & 3) << 3) + ((csd[11] & 224) 
+ 521:Core/Src/user_diskio_spi.c **** 				}
+ 522:Core/Src/user_diskio_spi.c **** 				res = RES_OK;
+ 523:Core/Src/user_diskio_spi.c **** 			}
+ 524:Core/Src/user_diskio_spi.c **** 		}
+ARM GAS  /tmp/cc41MayP.s 			page 42
+
+
+ 525:Core/Src/user_diskio_spi.c **** 		break;
+ 526:Core/Src/user_diskio_spi.c **** 
+ 527:Core/Src/user_diskio_spi.c **** 	case CTRL_TRIM :	/* Erase a block of sectors (used when _USE_ERASE == 1) */
+ 528:Core/Src/user_diskio_spi.c **** 		if (!(CardType & CT_SDC)) break;				/* Check if the card is SDC */
+ 529:Core/Src/user_diskio_spi.c **** 		if (USER_SPI_ioctl(drv, MMC_GET_CSD, csd)) break;	/* Get CSD */
+ 530:Core/Src/user_diskio_spi.c **** 		if (!(csd[0] >> 6) && !(csd[10] & 0x40)) break;	/* Check if sector erase can be applied to the ca
+ 531:Core/Src/user_diskio_spi.c **** 		dp = buff; st = dp[0]; ed = dp[1];				/* Load sector block */
+ 532:Core/Src/user_diskio_spi.c **** 		if (!(CardType & CT_BLOCK)) {
+ 533:Core/Src/user_diskio_spi.c **** 			st *= 512; ed *= 512;
+ 534:Core/Src/user_diskio_spi.c **** 		}
+ 535:Core/Src/user_diskio_spi.c **** 		if (send_cmd(CMD32, st) == 0 && send_cmd(CMD33, ed) == 0 && send_cmd(CMD38, 0) == 0 && wait_ready
+ 536:Core/Src/user_diskio_spi.c **** 			res = RES_OK;	/* FatFs does not check result of this command */
+ 537:Core/Src/user_diskio_spi.c **** 		}
+ 538:Core/Src/user_diskio_spi.c **** 		break;
+ 539:Core/Src/user_diskio_spi.c **** 
+ 540:Core/Src/user_diskio_spi.c **** 	default:
+ 541:Core/Src/user_diskio_spi.c **** 		res = RES_PARERR;
+ 542:Core/Src/user_diskio_spi.c **** 	}
+ 543:Core/Src/user_diskio_spi.c **** 
+ 544:Core/Src/user_diskio_spi.c **** 	despiselect();
+ 1647              		.loc 1 544 2 is_stmt 1 view .LVU414
+ 1648 0034 FFF7FEFF 		bl	despiselect
+ 1649              	.LVL204:
+ 545:Core/Src/user_diskio_spi.c **** 
+ 546:Core/Src/user_diskio_spi.c **** 	return res;
+ 1650              		.loc 1 546 2 view .LVU415
+ 1651              	.L127:
+ 547:Core/Src/user_diskio_spi.c **** }
+ 1652              		.loc 1 547 1 is_stmt 0 view .LVU416
+ 1653 0038 2800     		movs	r0, r5
+ 1654 003a 04B0     		add	sp, sp, #16
+ 1655              		@ sp needed
+ 1656              	.LVL205:
+ 1657              		.loc 1 547 1 view .LVU417
+ 1658 003c 70BD     		pop	{r4, r5, r6, pc}
+ 1659              	.LVL206:
+ 1660              	.L157:
+ 486:Core/Src/user_diskio_spi.c **** 	case CTRL_SYNC :		/* Wait for end of internal write process of the drive */
+ 1661              		.loc 1 486 2 view .LVU418
+ 1662 003e 0425     		movs	r5, #4
+ 1663 0040 F8E7     		b	.L132
+ 1664              	.L129:
+ 1665 0042 0429     		cmp	r1, #4
+ 1666 0044 07D1     		bne	.L159
+ 528:Core/Src/user_diskio_spi.c **** 		if (USER_SPI_ioctl(drv, MMC_GET_CSD, csd)) break;	/* Get CSD */
+ 1667              		.loc 1 528 3 is_stmt 1 view .LVU419
+ 528:Core/Src/user_diskio_spi.c **** 		if (USER_SPI_ioctl(drv, MMC_GET_CSD, csd)) break;	/* Get CSD */
+ 1668              		.loc 1 528 18 is_stmt 0 view .LVU420
+ 1669 0046 744B     		ldr	r3, .L167+4
+ 1670 0048 1B78     		ldrb	r3, [r3]
+ 528:Core/Src/user_diskio_spi.c **** 		if (USER_SPI_ioctl(drv, MMC_GET_CSD, csd)) break;	/* Get CSD */
+ 1671              		.loc 1 528 6 view .LVU421
+ 1672 004a 0622     		movs	r2, #6
+ 1673              	.LVL207:
+ 528:Core/Src/user_diskio_spi.c **** 		if (USER_SPI_ioctl(drv, MMC_GET_CSD, csd)) break;	/* Get CSD */
+ 1674              		.loc 1 528 6 view .LVU422
+ 1675 004c 1A42     		tst	r2, r3
+ARM GAS  /tmp/cc41MayP.s 			page 43
+
+
+ 1676 004e 00D0     		beq	.LCB1557
+ 1677 0050 9DE0     		b	.L160	@long jump
+ 1678              	.LCB1557:
+ 484:Core/Src/user_diskio_spi.c **** 
+ 1679              		.loc 1 484 6 view .LVU423
+ 1680 0052 0125     		movs	r5, #1
+ 1681 0054 EEE7     		b	.L132
+ 1682              	.LVL208:
+ 1683              	.L159:
+ 486:Core/Src/user_diskio_spi.c **** 	case CTRL_SYNC :		/* Wait for end of internal write process of the drive */
+ 1684              		.loc 1 486 2 view .LVU424
+ 1685 0056 0425     		movs	r5, #4
+ 1686 0058 ECE7     		b	.L132
+ 1687              	.L130:
+ 488:Core/Src/user_diskio_spi.c **** 		break;
+ 1688              		.loc 1 488 3 is_stmt 1 view .LVU425
+ 488:Core/Src/user_diskio_spi.c **** 		break;
+ 1689              		.loc 1 488 7 is_stmt 0 view .LVU426
+ 1690 005a FFF7FEFF 		bl	spiselect
+ 1691              	.LVL209:
+ 488:Core/Src/user_diskio_spi.c **** 		break;
+ 1692              		.loc 1 488 6 discriminator 1 view .LVU427
+ 1693 005e 0028     		cmp	r0, #0
+ 1694 0060 00D0     		beq	.LCB1576
+ 1695 0062 C9E0     		b	.L143	@long jump
+ 1696              	.LCB1576:
+ 484:Core/Src/user_diskio_spi.c **** 
+ 1697              		.loc 1 484 6 view .LVU428
+ 1698 0064 0125     		movs	r5, #1
+ 1699 0066 E5E7     		b	.L132
+ 1700              	.L158:
+ 492:Core/Src/user_diskio_spi.c **** 			if ((csd[0] >> 6) == 1) {	/* SDC ver 2.00 */
+ 1701              		.loc 1 492 35 discriminator 1 view .LVU429
+ 1702 0068 1021     		movs	r1, #16
+ 1703 006a 6846     		mov	r0, sp
+ 1704 006c FFF7FEFF 		bl	rcvr_datablock
+ 1705              	.LVL210:
+ 492:Core/Src/user_diskio_spi.c **** 			if ((csd[0] >> 6) == 1) {	/* SDC ver 2.00 */
+ 1706              		.loc 1 492 32 discriminator 1 view .LVU430
+ 1707 0070 0028     		cmp	r0, #0
+ 1708 0072 00D1     		bne	.LCB1587
+ 1709 0074 C2E0     		b	.L145	@long jump
+ 1710              	.LCB1587:
+ 493:Core/Src/user_diskio_spi.c **** 				csize = csd[9] + ((WORD)csd[8] << 8) + ((DWORD)(csd[7] & 63) << 16) + 1;
+ 1711              		.loc 1 493 4 is_stmt 1 view .LVU431
+ 493:Core/Src/user_diskio_spi.c **** 				csize = csd[9] + ((WORD)csd[8] << 8) + ((DWORD)(csd[7] & 63) << 16) + 1;
+ 1712              		.loc 1 493 12 is_stmt 0 view .LVU432
+ 1713 0076 6B46     		mov	r3, sp
+ 1714 0078 1B78     		ldrb	r3, [r3]
+ 493:Core/Src/user_diskio_spi.c **** 				csize = csd[9] + ((WORD)csd[8] << 8) + ((DWORD)(csd[7] & 63) << 16) + 1;
+ 1715              		.loc 1 493 22 view .LVU433
+ 1716 007a 9B09     		lsrs	r3, r3, #6
+ 493:Core/Src/user_diskio_spi.c **** 				csize = csd[9] + ((WORD)csd[8] << 8) + ((DWORD)(csd[7] & 63) << 16) + 1;
+ 1717              		.loc 1 493 7 view .LVU434
+ 1718 007c 012B     		cmp	r3, #1
+ 1719 007e 1BD0     		beq	.L161
+ 497:Core/Src/user_diskio_spi.c **** 				csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
+ARM GAS  /tmp/cc41MayP.s 			page 44
+
+
+ 1720              		.loc 1 497 5 is_stmt 1 view .LVU435
+ 497:Core/Src/user_diskio_spi.c **** 				csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
+ 1721              		.loc 1 497 13 is_stmt 0 view .LVU436
+ 1722 0080 6A46     		mov	r2, sp
+ 1723 0082 5179     		ldrb	r1, [r2, #5]
+ 497:Core/Src/user_diskio_spi.c **** 				csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
+ 1724              		.loc 1 497 17 view .LVU437
+ 1725 0084 0F23     		movs	r3, #15
+ 1726 0086 0B40     		ands	r3, r1
+ 497:Core/Src/user_diskio_spi.c **** 				csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
+ 1727              		.loc 1 497 30 view .LVU438
+ 1728 0088 917A     		ldrb	r1, [r2, #10]
+ 497:Core/Src/user_diskio_spi.c **** 				csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
+ 1729              		.loc 1 497 42 view .LVU439
+ 1730 008a C909     		lsrs	r1, r1, #7
+ 497:Core/Src/user_diskio_spi.c **** 				csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
+ 1731              		.loc 1 497 23 view .LVU440
+ 1732 008c 5B18     		adds	r3, r3, r1
+ 497:Core/Src/user_diskio_spi.c **** 				csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
+ 1733              		.loc 1 497 55 view .LVU441
+ 1734 008e 507A     		ldrb	r0, [r2, #9]
+ 497:Core/Src/user_diskio_spi.c **** 				csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
+ 1735              		.loc 1 497 64 view .LVU442
+ 1736 0090 4000     		lsls	r0, r0, #1
+ 1737 0092 0621     		movs	r1, #6
+ 1738 0094 0140     		ands	r1, r0
+ 497:Core/Src/user_diskio_spi.c **** 				csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
+ 1739              		.loc 1 497 48 view .LVU443
+ 1740 0096 5918     		adds	r1, r3, r1
+ 1741              	.LVL211:
+ 498:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
+ 1742              		.loc 1 498 5 is_stmt 1 view .LVU444
+ 498:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
+ 1743              		.loc 1 498 17 is_stmt 0 view .LVU445
+ 1744 0098 137A     		ldrb	r3, [r2, #8]
+ 498:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
+ 1745              		.loc 1 498 21 view .LVU446
+ 1746 009a 9B09     		lsrs	r3, r3, #6
+ 498:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
+ 1747              		.loc 1 498 39 view .LVU447
+ 1748 009c D079     		ldrb	r0, [r2, #7]
+ 498:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
+ 1749              		.loc 1 498 43 view .LVU448
+ 1750 009e 8000     		lsls	r0, r0, #2
+ 498:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
+ 1751              		.loc 1 498 27 view .LVU449
+ 1752 00a0 1B18     		adds	r3, r3, r0
+ 498:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
+ 1753              		.loc 1 498 62 view .LVU450
+ 1754 00a2 9279     		ldrb	r2, [r2, #6]
+ 498:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
+ 1755              		.loc 1 498 71 view .LVU451
+ 1756 00a4 9202     		lsls	r2, r2, #10
+ 1757 00a6 C020     		movs	r0, #192
+ 1758 00a8 0001     		lsls	r0, r0, #4
+ 1759 00aa 0240     		ands	r2, r0
+ 498:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
+ARM GAS  /tmp/cc41MayP.s 			page 45
+
+
+ 1760              		.loc 1 498 49 view .LVU452
+ 1761 00ac 9B18     		adds	r3, r3, r2
+ 498:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
+ 1762              		.loc 1 498 78 view .LVU453
+ 1763 00ae 0133     		adds	r3, r3, #1
+ 1764              	.LVL212:
+ 499:Core/Src/user_diskio_spi.c **** 			}
+ 1765              		.loc 1 499 5 is_stmt 1 view .LVU454
+ 499:Core/Src/user_diskio_spi.c **** 			}
+ 1766              		.loc 1 499 33 is_stmt 0 view .LVU455
+ 1767 00b0 0739     		subs	r1, r1, #7
+ 1768              	.LVL213:
+ 499:Core/Src/user_diskio_spi.c **** 			}
+ 1769              		.loc 1 499 27 view .LVU456
+ 1770 00b2 8B40     		lsls	r3, r3, r1
+ 1771              	.LVL214:
+ 499:Core/Src/user_diskio_spi.c **** 			}
+ 1772              		.loc 1 499 19 view .LVU457
+ 1773 00b4 3360     		str	r3, [r6]
+ 1774              	.LVL215:
+ 499:Core/Src/user_diskio_spi.c **** 			}
+ 1775              		.loc 1 499 19 view .LVU458
+ 1776 00b6 BDE7     		b	.L132
+ 1777              	.LVL216:
+ 1778              	.L161:
+ 494:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << 10;
+ 1779              		.loc 1 494 5 is_stmt 1 view .LVU459
+ 494:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << 10;
+ 1780              		.loc 1 494 16 is_stmt 0 view .LVU460
+ 1781 00b8 6A46     		mov	r2, sp
+ 1782 00ba 537A     		ldrb	r3, [r2, #9]
+ 494:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << 10;
+ 1783              		.loc 1 494 32 view .LVU461
+ 1784 00bc 117A     		ldrb	r1, [r2, #8]
+ 494:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << 10;
+ 1785              		.loc 1 494 36 view .LVU462
+ 1786 00be 0902     		lsls	r1, r1, #8
+ 494:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << 10;
+ 1787              		.loc 1 494 20 view .LVU463
+ 1788 00c0 5B18     		adds	r3, r3, r1
+ 494:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << 10;
+ 1789              		.loc 1 494 56 view .LVU464
+ 1790 00c2 D279     		ldrb	r2, [r2, #7]
+ 494:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << 10;
+ 1791              		.loc 1 494 66 view .LVU465
+ 1792 00c4 1204     		lsls	r2, r2, #16
+ 1793 00c6 FC21     		movs	r1, #252
+ 1794 00c8 8903     		lsls	r1, r1, #14
+ 1795 00ca 0A40     		ands	r2, r1
+ 494:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << 10;
+ 1796              		.loc 1 494 42 view .LVU466
+ 1797 00cc 9B18     		adds	r3, r3, r2
+ 494:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << 10;
+ 1798              		.loc 1 494 11 view .LVU467
+ 1799 00ce 0133     		adds	r3, r3, #1
+ 1800              	.LVL217:
+ 495:Core/Src/user_diskio_spi.c **** 			} else {					/* SDC ver 1.XX or MMC ver 3 */
+ARM GAS  /tmp/cc41MayP.s 			page 46
+
+
+ 1801              		.loc 1 495 5 is_stmt 1 view .LVU468
+ 495:Core/Src/user_diskio_spi.c **** 			} else {					/* SDC ver 1.XX or MMC ver 3 */
+ 1802              		.loc 1 495 27 is_stmt 0 view .LVU469
+ 1803 00d0 9B02     		lsls	r3, r3, #10
+ 1804              	.LVL218:
+ 495:Core/Src/user_diskio_spi.c **** 			} else {					/* SDC ver 1.XX or MMC ver 3 */
+ 1805              		.loc 1 495 19 view .LVU470
+ 1806 00d2 3360     		str	r3, [r6]
+ 1807              	.LVL219:
+ 495:Core/Src/user_diskio_spi.c **** 			} else {					/* SDC ver 1.XX or MMC ver 3 */
+ 1808              		.loc 1 495 19 view .LVU471
+ 1809 00d4 AEE7     		b	.L132
+ 1810              	.LVL220:
+ 1811              	.L128:
+ 506:Core/Src/user_diskio_spi.c **** 			if (send_cmd(ACMD13, 0) == 0) {	/* Read SD status */
+ 1812              		.loc 1 506 3 is_stmt 1 view .LVU472
+ 506:Core/Src/user_diskio_spi.c **** 			if (send_cmd(ACMD13, 0) == 0) {	/* Read SD status */
+ 1813              		.loc 1 506 16 is_stmt 0 view .LVU473
+ 1814 00d6 504B     		ldr	r3, .L167+4
+ 1815 00d8 1B78     		ldrb	r3, [r3]
+ 506:Core/Src/user_diskio_spi.c **** 			if (send_cmd(ACMD13, 0) == 0) {	/* Read SD status */
+ 1816              		.loc 1 506 6 view .LVU474
+ 1817 00da 5B07     		lsls	r3, r3, #29
+ 1818 00dc 22D5     		bpl	.L135
+ 507:Core/Src/user_diskio_spi.c **** 				xchg_spi(0xFF);
+ 1819              		.loc 1 507 4 is_stmt 1 view .LVU475
+ 507:Core/Src/user_diskio_spi.c **** 				xchg_spi(0xFF);
+ 1820              		.loc 1 507 8 is_stmt 0 view .LVU476
+ 1821 00de 0021     		movs	r1, #0
+ 1822              	.LVL221:
+ 507:Core/Src/user_diskio_spi.c **** 				xchg_spi(0xFF);
+ 1823              		.loc 1 507 8 view .LVU477
+ 1824 00e0 8D20     		movs	r0, #141
+ 1825              	.LVL222:
+ 507:Core/Src/user_diskio_spi.c **** 				xchg_spi(0xFF);
+ 1826              		.loc 1 507 8 view .LVU478
+ 1827 00e2 FFF7FEFF 		bl	send_cmd
+ 1828              	.LVL223:
+ 507:Core/Src/user_diskio_spi.c **** 				xchg_spi(0xFF);
+ 1829              		.loc 1 507 7 discriminator 1 view .LVU479
+ 1830 00e6 0028     		cmp	r0, #0
+ 1831 00e8 01D0     		beq	.L162
+ 484:Core/Src/user_diskio_spi.c **** 
+ 1832              		.loc 1 484 6 view .LVU480
+ 1833 00ea 0125     		movs	r5, #1
+ 1834 00ec A2E7     		b	.L132
+ 1835              	.L162:
+ 508:Core/Src/user_diskio_spi.c **** 				if (rcvr_datablock(csd, 16)) {				/* Read partial block */
+ 1836              		.loc 1 508 5 is_stmt 1 view .LVU481
+ 1837 00ee FF30     		adds	r0, r0, #255
+ 1838 00f0 FFF7FEFF 		bl	xchg_spi
+ 1839              	.LVL224:
+ 509:Core/Src/user_diskio_spi.c **** 					for (n = 64 - 16; n; n--) xchg_spi(0xFF);	/* Purge trailing data */
+ 1840              		.loc 1 509 5 view .LVU482
+ 509:Core/Src/user_diskio_spi.c **** 					for (n = 64 - 16; n; n--) xchg_spi(0xFF);	/* Purge trailing data */
+ 1841              		.loc 1 509 9 is_stmt 0 view .LVU483
+ 1842 00f4 1021     		movs	r1, #16
+ARM GAS  /tmp/cc41MayP.s 			page 47
+
+
+ 1843 00f6 6846     		mov	r0, sp
+ 1844 00f8 FFF7FEFF 		bl	rcvr_datablock
+ 1845              	.LVL225:
+ 509:Core/Src/user_diskio_spi.c **** 					for (n = 64 - 16; n; n--) xchg_spi(0xFF);	/* Purge trailing data */
+ 1846              		.loc 1 509 8 discriminator 1 view .LVU484
+ 1847 00fc 0028     		cmp	r0, #0
+ 1848 00fe 0FD1     		bne	.L147
+ 484:Core/Src/user_diskio_spi.c **** 
+ 1849              		.loc 1 484 6 view .LVU485
+ 1850 0100 0125     		movs	r5, #1
+ 1851 0102 97E7     		b	.L132
+ 1852              	.LVL226:
+ 1853              	.L137:
+ 510:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = 16UL << (csd[10] >> 4);
+ 1854              		.loc 1 510 32 is_stmt 1 discriminator 3 view .LVU486
+ 1855 0104 FF20     		movs	r0, #255
+ 1856 0106 FFF7FEFF 		bl	xchg_spi
+ 1857              	.LVL227:
+ 510:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = 16UL << (csd[10] >> 4);
+ 1858              		.loc 1 510 28 discriminator 3 view .LVU487
+ 1859 010a 013D     		subs	r5, r5, #1
+ 1860              	.LVL228:
+ 510:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = 16UL << (csd[10] >> 4);
+ 1861              		.loc 1 510 28 is_stmt 0 discriminator 3 view .LVU488
+ 1862 010c EDB2     		uxtb	r5, r5
+ 1863              	.LVL229:
+ 1864              	.L136:
+ 510:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = 16UL << (csd[10] >> 4);
+ 1865              		.loc 1 510 24 is_stmt 1 discriminator 2 view .LVU489
+ 1866 010e 002D     		cmp	r5, #0
+ 1867 0110 F8D1     		bne	.L137
+ 511:Core/Src/user_diskio_spi.c **** 					res = RES_OK;
+ 1868              		.loc 1 511 6 view .LVU490
+ 511:Core/Src/user_diskio_spi.c **** 					res = RES_OK;
+ 1869              		.loc 1 511 34 is_stmt 0 view .LVU491
+ 1870 0112 6B46     		mov	r3, sp
+ 1871 0114 9A7A     		ldrb	r2, [r3, #10]
+ 511:Core/Src/user_diskio_spi.c **** 					res = RES_OK;
+ 1872              		.loc 1 511 39 view .LVU492
+ 1873 0116 1209     		lsrs	r2, r2, #4
+ 511:Core/Src/user_diskio_spi.c **** 					res = RES_OK;
+ 1874              		.loc 1 511 27 view .LVU493
+ 1875 0118 1023     		movs	r3, #16
+ 1876 011a 9340     		lsls	r3, r3, r2
+ 511:Core/Src/user_diskio_spi.c **** 					res = RES_OK;
+ 1877              		.loc 1 511 20 view .LVU494
+ 1878 011c 3360     		str	r3, [r6]
+ 512:Core/Src/user_diskio_spi.c **** 				}
+ 1879              		.loc 1 512 6 is_stmt 1 view .LVU495
+ 1880              	.LVL230:
+ 512:Core/Src/user_diskio_spi.c **** 				}
+ 1881              		.loc 1 512 6 is_stmt 0 view .LVU496
+ 1882 011e 89E7     		b	.L132
+ 1883              	.LVL231:
+ 1884              	.L147:
+ 510:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = 16UL << (csd[10] >> 4);
+ 1885              		.loc 1 510 13 view .LVU497
+ARM GAS  /tmp/cc41MayP.s 			page 48
+
+
+ 1886 0120 3025     		movs	r5, #48
+ 1887 0122 F4E7     		b	.L136
+ 1888              	.LVL232:
+ 1889              	.L135:
+ 516:Core/Src/user_diskio_spi.c **** 				if (CardType & CT_SD1) {	/* SDC ver 1.XX */
+ 1890              		.loc 1 516 4 is_stmt 1 view .LVU498
+ 516:Core/Src/user_diskio_spi.c **** 				if (CardType & CT_SD1) {	/* SDC ver 1.XX */
+ 1891              		.loc 1 516 9 is_stmt 0 view .LVU499
+ 1892 0124 0021     		movs	r1, #0
+ 1893              	.LVL233:
+ 516:Core/Src/user_diskio_spi.c **** 				if (CardType & CT_SD1) {	/* SDC ver 1.XX */
+ 1894              		.loc 1 516 9 view .LVU500
+ 1895 0126 0920     		movs	r0, #9
+ 1896              	.LVL234:
+ 516:Core/Src/user_diskio_spi.c **** 				if (CardType & CT_SD1) {	/* SDC ver 1.XX */
+ 1897              		.loc 1 516 9 view .LVU501
+ 1898 0128 FFF7FEFF 		bl	send_cmd
+ 1899              	.LVL235:
+ 516:Core/Src/user_diskio_spi.c **** 				if (CardType & CT_SD1) {	/* SDC ver 1.XX */
+ 1900              		.loc 1 516 9 view .LVU502
+ 1901 012c 041E     		subs	r4, r0, #0
+ 1902              	.LVL236:
+ 516:Core/Src/user_diskio_spi.c **** 				if (CardType & CT_SD1) {	/* SDC ver 1.XX */
+ 1903              		.loc 1 516 7 discriminator 1 view .LVU503
+ 1904 012e 01D0     		beq	.L163
+ 484:Core/Src/user_diskio_spi.c **** 
+ 1905              		.loc 1 484 6 view .LVU504
+ 1906 0130 0125     		movs	r5, #1
+ 1907 0132 7FE7     		b	.L132
+ 1908              	.L163:
+ 516:Core/Src/user_diskio_spi.c **** 				if (CardType & CT_SD1) {	/* SDC ver 1.XX */
+ 1909              		.loc 1 516 36 discriminator 1 view .LVU505
+ 1910 0134 1021     		movs	r1, #16
+ 1911 0136 6846     		mov	r0, sp
+ 1912 0138 FFF7FEFF 		bl	rcvr_datablock
+ 1913              	.LVL237:
+ 516:Core/Src/user_diskio_spi.c **** 				if (CardType & CT_SD1) {	/* SDC ver 1.XX */
+ 1914              		.loc 1 516 33 discriminator 1 view .LVU506
+ 1915 013c 0028     		cmp	r0, #0
+ 1916 013e 5FD0     		beq	.L149
+ 517:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = (((csd[10] & 63) << 1) + ((WORD)(csd[11] & 128) >> 7) + 1) << ((csd[13] >> 6) 
+ 1917              		.loc 1 517 5 is_stmt 1 view .LVU507
+ 517:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = (((csd[10] & 63) << 1) + ((WORD)(csd[11] & 128) >> 7) + 1) << ((csd[13] >> 6) 
+ 1918              		.loc 1 517 18 is_stmt 0 view .LVU508
+ 1919 0140 354B     		ldr	r3, .L167+4
+ 1920 0142 1B78     		ldrb	r3, [r3]
+ 1921 0144 0222     		movs	r2, #2
+ 1922 0146 1500     		movs	r5, r2
+ 1923 0148 1D40     		ands	r5, r3
+ 517:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = (((csd[10] & 63) << 1) + ((WORD)(csd[11] & 128) >> 7) + 1) << ((csd[13] >> 6) 
+ 1924              		.loc 1 517 8 view .LVU509
+ 1925 014a 1A42     		tst	r2, r3
+ 1926 014c 0FD0     		beq	.L138
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1927              		.loc 1 518 6 is_stmt 1 view .LVU510
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1928              		.loc 1 518 28 is_stmt 0 view .LVU511
+ARM GAS  /tmp/cc41MayP.s 			page 49
+
+
+ 1929 014e 6A46     		mov	r2, sp
+ 1930 0150 917A     		ldrb	r1, [r2, #10]
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1931              		.loc 1 518 39 view .LVU512
+ 1932 0152 4900     		lsls	r1, r1, #1
+ 1933 0154 7E23     		movs	r3, #126
+ 1934 0156 0B40     		ands	r3, r1
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1935              		.loc 1 518 58 view .LVU513
+ 1936 0158 D17A     		ldrb	r1, [r2, #11]
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1937              		.loc 1 518 70 view .LVU514
+ 1938 015a C909     		lsrs	r1, r1, #7
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1939              		.loc 1 518 45 view .LVU515
+ 1940 015c 5B18     		adds	r3, r3, r1
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1941              		.loc 1 518 76 view .LVU516
+ 1942 015e 0133     		adds	r3, r3, #1
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1943              		.loc 1 518 89 view .LVU517
+ 1944 0160 527B     		ldrb	r2, [r2, #13]
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1945              		.loc 1 518 94 view .LVU518
+ 1946 0162 9209     		lsrs	r2, r2, #6
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1947              		.loc 1 518 100 view .LVU519
+ 1948 0164 013A     		subs	r2, r2, #1
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1949              		.loc 1 518 81 view .LVU520
+ 1950 0166 9340     		lsls	r3, r3, r2
+ 518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
+ 1951              		.loc 1 518 20 view .LVU521
+ 1952 0168 3360     		str	r3, [r6]
+ 522:Core/Src/user_diskio_spi.c **** 			}
+ 1953              		.loc 1 522 9 view .LVU522
+ 1954 016a 2500     		movs	r5, r4
+ 1955 016c 62E7     		b	.L132
+ 1956              	.L138:
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1957              		.loc 1 520 6 is_stmt 1 view .LVU523
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1958              		.loc 1 520 34 is_stmt 0 view .LVU524
+ 1959 016e 6946     		mov	r1, sp
+ 1960 0170 8B7A     		ldrb	r3, [r1, #10]
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1961              		.loc 1 520 46 view .LVU525
+ 1962 0172 9B10     		asrs	r3, r3, #2
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1963              		.loc 1 520 23 view .LVU526
+ 1964 0174 1F22     		movs	r2, #31
+ 1965 0176 1A40     		ands	r2, r3
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1966              		.loc 1 520 52 view .LVU527
+ 1967 0178 0132     		adds	r2, r2, #1
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1968              		.loc 1 520 65 view .LVU528
+ARM GAS  /tmp/cc41MayP.s 			page 50
+
+
+ 1969 017a C97A     		ldrb	r1, [r1, #11]
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1970              		.loc 1 520 75 view .LVU529
+ 1971 017c C800     		lsls	r0, r1, #3
+ 1972 017e 1823     		movs	r3, #24
+ 1973 0180 0340     		ands	r3, r0
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1974              		.loc 1 520 100 view .LVU530
+ 1975 0182 4909     		lsrs	r1, r1, #5
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1976              		.loc 1 520 81 view .LVU531
+ 1977 0184 5B18     		adds	r3, r3, r1
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1978              		.loc 1 520 106 view .LVU532
+ 1979 0186 0133     		adds	r3, r3, #1
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1980              		.loc 1 520 57 view .LVU533
+ 1981 0188 5343     		muls	r3, r2
+ 520:Core/Src/user_diskio_spi.c **** 				}
+ 1982              		.loc 1 520 20 view .LVU534
+ 1983 018a 3360     		str	r3, [r6]
+ 1984 018c 52E7     		b	.L132
+ 1985              	.LVL238:
+ 1986              	.L160:
+ 529:Core/Src/user_diskio_spi.c **** 		if (!(csd[0] >> 6) && !(csd[10] & 0x40)) break;	/* Check if sector erase can be applied to the ca
+ 1987              		.loc 1 529 3 is_stmt 1 view .LVU535
+ 529:Core/Src/user_diskio_spi.c **** 		if (!(csd[0] >> 6) && !(csd[10] & 0x40)) break;	/* Check if sector erase can be applied to the ca
+ 1988              		.loc 1 529 7 is_stmt 0 view .LVU536
+ 1989 018e 6A46     		mov	r2, sp
+ 1990 0190 0B21     		movs	r1, #11
+ 1991              	.LVL239:
+ 529:Core/Src/user_diskio_spi.c **** 		if (!(csd[0] >> 6) && !(csd[10] & 0x40)) break;	/* Check if sector erase can be applied to the ca
+ 1992              		.loc 1 529 7 view .LVU537
+ 1993 0192 FFF7FEFF 		bl	USER_SPI_ioctl
+ 1994              	.LVL240:
+ 529:Core/Src/user_diskio_spi.c **** 		if (!(csd[0] >> 6) && !(csd[10] & 0x40)) break;	/* Check if sector erase can be applied to the ca
+ 1995              		.loc 1 529 6 discriminator 1 view .LVU538
+ 1996 0196 0028     		cmp	r0, #0
+ 1997 0198 34D1     		bne	.L151
+ 530:Core/Src/user_diskio_spi.c **** 		dp = buff; st = dp[0]; ed = dp[1];				/* Load sector block */
+ 1998              		.loc 1 530 3 is_stmt 1 view .LVU539
+ 530:Core/Src/user_diskio_spi.c **** 		dp = buff; st = dp[0]; ed = dp[1];				/* Load sector block */
+ 1999              		.loc 1 530 12 is_stmt 0 view .LVU540
+ 2000 019a 6B46     		mov	r3, sp
+ 2001 019c 1B78     		ldrb	r3, [r3]
+ 530:Core/Src/user_diskio_spi.c **** 		dp = buff; st = dp[0]; ed = dp[1];				/* Load sector block */
+ 2002              		.loc 1 530 7 view .LVU541
+ 2003 019e 9B09     		lsrs	r3, r3, #6
+ 530:Core/Src/user_diskio_spi.c **** 		dp = buff; st = dp[0]; ed = dp[1];				/* Load sector block */
+ 2004              		.loc 1 530 6 view .LVU542
+ 2005 01a0 03D1     		bne	.L139
+ 530:Core/Src/user_diskio_spi.c **** 		dp = buff; st = dp[0]; ed = dp[1];				/* Load sector block */
+ 2006              		.loc 1 530 30 discriminator 1 view .LVU543
+ 2007 01a2 6B46     		mov	r3, sp
+ 2008 01a4 9B7A     		ldrb	r3, [r3, #10]
+ 530:Core/Src/user_diskio_spi.c **** 		dp = buff; st = dp[0]; ed = dp[1];				/* Load sector block */
+ 2009              		.loc 1 530 22 discriminator 1 view .LVU544
+ARM GAS  /tmp/cc41MayP.s 			page 51
+
+
+ 2010 01a6 5B06     		lsls	r3, r3, #25
+ 2011 01a8 2ED5     		bpl	.L152
+ 2012              	.L139:
+ 531:Core/Src/user_diskio_spi.c **** 		if (!(CardType & CT_BLOCK)) {
+ 2013              		.loc 1 531 3 is_stmt 1 view .LVU545
+ 2014              	.LVL241:
+ 531:Core/Src/user_diskio_spi.c **** 		if (!(CardType & CT_BLOCK)) {
+ 2015              		.loc 1 531 14 view .LVU546
+ 531:Core/Src/user_diskio_spi.c **** 		if (!(CardType & CT_BLOCK)) {
+ 2016              		.loc 1 531 17 is_stmt 0 view .LVU547
+ 2017 01aa 3168     		ldr	r1, [r6]
+ 2018              	.LVL242:
+ 531:Core/Src/user_diskio_spi.c **** 		if (!(CardType & CT_BLOCK)) {
+ 2019              		.loc 1 531 26 is_stmt 1 view .LVU548
+ 531:Core/Src/user_diskio_spi.c **** 		if (!(CardType & CT_BLOCK)) {
+ 2020              		.loc 1 531 29 is_stmt 0 view .LVU549
+ 2021 01ac 7468     		ldr	r4, [r6, #4]
+ 2022              	.LVL243:
+ 532:Core/Src/user_diskio_spi.c **** 			st *= 512; ed *= 512;
+ 2023              		.loc 1 532 3 is_stmt 1 view .LVU550
+ 532:Core/Src/user_diskio_spi.c **** 			st *= 512; ed *= 512;
+ 2024              		.loc 1 532 18 is_stmt 0 view .LVU551
+ 2025 01ae 1A4B     		ldr	r3, .L167+4
+ 2026 01b0 1B78     		ldrb	r3, [r3]
+ 532:Core/Src/user_diskio_spi.c **** 			st *= 512; ed *= 512;
+ 2027              		.loc 1 532 6 view .LVU552
+ 2028 01b2 1B07     		lsls	r3, r3, #28
+ 2029 01b4 01D4     		bmi	.L140
+ 533:Core/Src/user_diskio_spi.c **** 		}
+ 2030              		.loc 1 533 4 is_stmt 1 view .LVU553
+ 533:Core/Src/user_diskio_spi.c **** 		}
+ 2031              		.loc 1 533 7 is_stmt 0 view .LVU554
+ 2032 01b6 4902     		lsls	r1, r1, #9
+ 2033              	.LVL244:
+ 533:Core/Src/user_diskio_spi.c **** 		}
+ 2034              		.loc 1 533 15 is_stmt 1 view .LVU555
+ 533:Core/Src/user_diskio_spi.c **** 		}
+ 2035              		.loc 1 533 18 is_stmt 0 view .LVU556
+ 2036 01b8 6402     		lsls	r4, r4, #9
+ 2037              	.LVL245:
+ 2038              	.L140:
+ 535:Core/Src/user_diskio_spi.c **** 			res = RES_OK;	/* FatFs does not check result of this command */
+ 2039              		.loc 1 535 3 is_stmt 1 view .LVU557
+ 535:Core/Src/user_diskio_spi.c **** 			res = RES_OK;	/* FatFs does not check result of this command */
+ 2040              		.loc 1 535 7 is_stmt 0 view .LVU558
+ 2041 01ba 2020     		movs	r0, #32
+ 2042 01bc FFF7FEFF 		bl	send_cmd
+ 2043              	.LVL246:
+ 535:Core/Src/user_diskio_spi.c **** 			res = RES_OK;	/* FatFs does not check result of this command */
+ 2044              		.loc 1 535 6 discriminator 1 view .LVU559
+ 2045 01c0 0028     		cmp	r0, #0
+ 2046 01c2 01D0     		beq	.L164
+ 484:Core/Src/user_diskio_spi.c **** 
+ 2047              		.loc 1 484 6 view .LVU560
+ 2048 01c4 0125     		movs	r5, #1
+ 2049 01c6 35E7     		b	.L132
+ 2050              	.L164:
+ARM GAS  /tmp/cc41MayP.s 			page 52
+
+
+ 535:Core/Src/user_diskio_spi.c **** 			res = RES_OK;	/* FatFs does not check result of this command */
+ 2051              		.loc 1 535 35 discriminator 1 view .LVU561
+ 2052 01c8 2100     		movs	r1, r4
+ 2053 01ca 2130     		adds	r0, r0, #33
+ 2054 01cc FFF7FEFF 		bl	send_cmd
+ 2055              	.LVL247:
+ 535:Core/Src/user_diskio_spi.c **** 			res = RES_OK;	/* FatFs does not check result of this command */
+ 2056              		.loc 1 535 32 discriminator 1 view .LVU562
+ 2057 01d0 0028     		cmp	r0, #0
+ 2058 01d2 01D0     		beq	.L165
+ 484:Core/Src/user_diskio_spi.c **** 
+ 2059              		.loc 1 484 6 view .LVU563
+ 2060 01d4 0125     		movs	r5, #1
+ 2061 01d6 2DE7     		b	.L132
+ 2062              	.L165:
+ 535:Core/Src/user_diskio_spi.c **** 			res = RES_OK;	/* FatFs does not check result of this command */
+ 2063              		.loc 1 535 63 discriminator 2 view .LVU564
+ 2064 01d8 0021     		movs	r1, #0
+ 2065 01da 2630     		adds	r0, r0, #38
+ 2066 01dc FFF7FEFF 		bl	send_cmd
+ 2067              	.LVL248:
+ 2068 01e0 051E     		subs	r5, r0, #0
+ 535:Core/Src/user_diskio_spi.c **** 			res = RES_OK;	/* FatFs does not check result of this command */
+ 2069              		.loc 1 535 60 discriminator 1 view .LVU565
+ 2070 01e2 01D0     		beq	.L166
+ 484:Core/Src/user_diskio_spi.c **** 
+ 2071              		.loc 1 484 6 view .LVU566
+ 2072 01e4 0125     		movs	r5, #1
+ 2073 01e6 25E7     		b	.L132
+ 2074              	.L166:
+ 535:Core/Src/user_diskio_spi.c **** 			res = RES_OK;	/* FatFs does not check result of this command */
+ 2075              		.loc 1 535 90 discriminator 3 view .LVU567
+ 2076 01e8 0C48     		ldr	r0, .L167+8
+ 2077 01ea FFF7FEFF 		bl	wait_ready
+ 2078              	.LVL249:
+ 535:Core/Src/user_diskio_spi.c **** 			res = RES_OK;	/* FatFs does not check result of this command */
+ 2079              		.loc 1 535 87 discriminator 1 view .LVU568
+ 2080 01ee 0028     		cmp	r0, #0
+ 2081 01f0 00D0     		beq	.LCB1923
+ 2082 01f2 1FE7     		b	.L132	@long jump
+ 2083              	.LCB1923:
+ 484:Core/Src/user_diskio_spi.c **** 
+ 2084              		.loc 1 484 6 view .LVU569
+ 2085 01f4 0135     		adds	r5, r5, #1
+ 2086 01f6 1DE7     		b	.L132
+ 2087              	.LVL250:
+ 2088              	.L143:
+ 488:Core/Src/user_diskio_spi.c **** 		break;
+ 2089              		.loc 1 488 24 discriminator 1 view .LVU570
+ 2090 01f8 2500     		movs	r5, r4
+ 2091 01fa 1BE7     		b	.L132
+ 2092              	.L145:
+ 484:Core/Src/user_diskio_spi.c **** 
+ 2093              		.loc 1 484 6 view .LVU571
+ 2094 01fc 2500     		movs	r5, r4
+ 2095 01fe 19E7     		b	.L132
+ 2096              	.L149:
+ARM GAS  /tmp/cc41MayP.s 			page 53
+
+
+ 2097 0200 0125     		movs	r5, #1
+ 2098 0202 17E7     		b	.L132
+ 2099              	.L151:
+ 2100 0204 0125     		movs	r5, #1
+ 2101 0206 15E7     		b	.L132
+ 2102              	.L152:
+ 2103 0208 0125     		movs	r5, #1
+ 2104 020a 13E7     		b	.L132
+ 2105              	.LVL251:
+ 2106              	.L141:
+ 481:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check if drive is ready */
+ 2107              		.loc 1 481 18 discriminator 1 view .LVU572
+ 2108 020c 0425     		movs	r5, #4
+ 2109 020e 13E7     		b	.L127
+ 2110              	.L142:
+ 482:Core/Src/user_diskio_spi.c **** 
+ 2111              		.loc 1 482 32 discriminator 1 view .LVU573
+ 2112 0210 0325     		movs	r5, #3
+ 2113 0212 11E7     		b	.L127
+ 2114              	.L168:
+ 2115              		.align	2
+ 2116              	.L167:
+ 2117 0214 00000000 		.word	Stat
+ 2118 0218 00000000 		.word	CardType
+ 2119 021c 30750000 		.word	30000
+ 2120              		.cfi_endproc
+ 2121              	.LFE508:
+ 2123              		.global	spiTimerTickDelay
+ 2124              		.section	.bss.spiTimerTickDelay,"aw",%nobits
+ 2125              		.align	2
+ 2128              	spiTimerTickDelay:
+ 2129 0000 00000000 		.space	4
+ 2130              		.global	spiTimerTickStart
+ 2131              		.section	.bss.spiTimerTickStart,"aw",%nobits
+ 2132              		.align	2
+ 2135              	spiTimerTickStart:
+ 2136 0000 00000000 		.space	4
+ 2137              		.section	.bss.CardType,"aw",%nobits
+ 2140              	CardType:
+ 2141 0000 00       		.space	1
+ 2142              		.section	.data.Stat,"aw"
+ 2145              	Stat:
+ 2146 0000 01       		.byte	1
+ 2147              		.text
+ 2148              	.Letext0:
+ 2149              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 2150              		.file 3 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 2151              		.file 4 "Drivers/CMSIS/Device/ST/STM32G0xx/Include/stm32g0b1xx.h"
+ 2152              		.file 5 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_def.h"
+ 2153              		.file 6 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_gpio.h"
+ 2154              		.file 7 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_dma.h"
+ 2155              		.file 8 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi.h"
+ 2156              		.file 9 "Middlewares/Third_Party/FatFs/src/integer.h"
+ 2157              		.file 10 "Middlewares/Third_Party/FatFs/src/diskio.h"
+ 2158              		.file 11 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
+ 2159              		.file 12 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h"
+ARM GAS  /tmp/cc41MayP.s 			page 54
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 user_diskio_spi.c
+     /tmp/cc41MayP.s:19     .text.xchg_spi:00000000 $t
+     /tmp/cc41MayP.s:24     .text.xchg_spi:00000000 xchg_spi
+     /tmp/cc41MayP.s:68     .text.xchg_spi:00000024 $d
+     /tmp/cc41MayP.s:73     .text.wait_ready:00000000 $t
+     /tmp/cc41MayP.s:78     .text.wait_ready:00000000 wait_ready
+     /tmp/cc41MayP.s:142    .text.rcvr_spi_multi:00000000 $t
+     /tmp/cc41MayP.s:147    .text.rcvr_spi_multi:00000000 rcvr_spi_multi
+     /tmp/cc41MayP.s:204    .text.despiselect:00000000 $t
+     /tmp/cc41MayP.s:209    .text.despiselect:00000000 despiselect
+     /tmp/cc41MayP.s:237    .text.despiselect:00000014 $d
+     /tmp/cc41MayP.s:242    .text.spiselect:00000000 $t
+     /tmp/cc41MayP.s:247    .text.spiselect:00000000 spiselect
+     /tmp/cc41MayP.s:295    .text.spiselect:0000002c $d
+     /tmp/cc41MayP.s:300    .text.send_cmd:00000000 $t
+     /tmp/cc41MayP.s:305    .text.send_cmd:00000000 send_cmd
+     /tmp/cc41MayP.s:475    .text.xmit_spi_multi:00000000 $t
+     /tmp/cc41MayP.s:480    .text.xmit_spi_multi:00000000 xmit_spi_multi
+     /tmp/cc41MayP.s:512    .text.xmit_spi_multi:00000014 $d
+     /tmp/cc41MayP.s:517    .text.xmit_datablock:00000000 $t
+     /tmp/cc41MayP.s:522    .text.xmit_datablock:00000000 xmit_datablock
+     /tmp/cc41MayP.s:613    .text.SPI_Timer_On:00000000 $t
+     /tmp/cc41MayP.s:619    .text.SPI_Timer_On:00000000 SPI_Timer_On
+     /tmp/cc41MayP.s:652    .text.SPI_Timer_On:00000014 $d
+     /tmp/cc41MayP.s:2135   .bss.spiTimerTickStart:00000000 spiTimerTickStart
+     /tmp/cc41MayP.s:2128   .bss.spiTimerTickDelay:00000000 spiTimerTickDelay
+     /tmp/cc41MayP.s:658    .text.SPI_Timer_Status:00000000 $t
+     /tmp/cc41MayP.s:664    .text.SPI_Timer_Status:00000000 SPI_Timer_Status
+     /tmp/cc41MayP.s:695    .text.SPI_Timer_Status:00000018 $d
+     /tmp/cc41MayP.s:701    .text.rcvr_datablock:00000000 $t
+     /tmp/cc41MayP.s:706    .text.rcvr_datablock:00000000 rcvr_datablock
+     /tmp/cc41MayP.s:786    .text.USER_SPI_initialize:00000000 $t
+     /tmp/cc41MayP.s:792    .text.USER_SPI_initialize:00000000 USER_SPI_initialize
+     /tmp/cc41MayP.s:1134   .text.USER_SPI_initialize:00000160 $d
+     /tmp/cc41MayP.s:2145   .data.Stat:00000000 Stat
+     /tmp/cc41MayP.s:2140   .bss.CardType:00000000 CardType
+     /tmp/cc41MayP.s:1141   .text.USER_SPI_status:00000000 $t
+     /tmp/cc41MayP.s:1147   .text.USER_SPI_status:00000000 USER_SPI_status
+     /tmp/cc41MayP.s:1180   .text.USER_SPI_status:00000010 $d
+     /tmp/cc41MayP.s:1185   .text.USER_SPI_read:00000000 $t
+     /tmp/cc41MayP.s:1191   .text.USER_SPI_read:00000000 USER_SPI_read
+     /tmp/cc41MayP.s:1352   .text.USER_SPI_read:00000088 $d
+     /tmp/cc41MayP.s:1358   .text.USER_SPI_write:00000000 $t
+     /tmp/cc41MayP.s:1364   .text.USER_SPI_write:00000000 USER_SPI_write
+     /tmp/cc41MayP.s:1569   .text.USER_SPI_write:000000ac $d
+     /tmp/cc41MayP.s:1575   .text.USER_SPI_ioctl:00000000 $t
+     /tmp/cc41MayP.s:1581   .text.USER_SPI_ioctl:00000000 USER_SPI_ioctl
+     /tmp/cc41MayP.s:2117   .text.USER_SPI_ioctl:00000214 $d
+     /tmp/cc41MayP.s:2125   .bss.spiTimerTickDelay:00000000 $d
+     /tmp/cc41MayP.s:2132   .bss.spiTimerTickStart:00000000 $d
+     /tmp/cc41MayP.s:2141   .bss.CardType:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_SPI_TransmitReceive
+hspi2
+HAL_GetTick
+ARM GAS  /tmp/cc41MayP.s 			page 55
+
+
+HAL_GPIO_WritePin
+HAL_SPI_Transmit
