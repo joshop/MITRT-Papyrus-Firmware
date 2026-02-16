@@ -1734,23 +1734,23 @@ LOAD /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a
  .debug_line    0x00004d15       0x61 /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
  .debug_line    0x00004d76       0x4a /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
 
-.debug_str      0x00000000     0x2664
- .debug_str     0x00000000     0x2664 build/main.o
-                                0xafe (size before relaxing)
- .debug_str     0x00002664      0x1ab build/stm32c0xx_it.o
- .debug_str     0x00002664      0x7af build/stm32c0xx_hal_msp.o
- .debug_str     0x00002664      0x7e9 build/stm32c0xx_hal.o
- .debug_str     0x00002664      0x73c build/stm32c0xx_hal_cortex.o
- .debug_str     0x00002664      0x6c1 build/stm32c0xx_hal_rcc.o
- .debug_str     0x00002664      0x4f1 build/stm32c0xx_hal_rcc_ex.o
- .debug_str     0x00002664      0x3e8 build/stm32c0xx_hal_gpio.o
- .debug_str     0x00002664     0x11f4 build/stm32c0xx_hal_fdcan.o
- .debug_str     0x00002664      0x2b6 build/system_stm32c0xx.o
- .debug_str     0x00002664       0x5d build/startup_stm32c092xx.o
- .debug_str     0x00002664      0x1b8 /usr/lib/gcc/arm-none-eabi/14.2.0/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(libc_a-memset.o)
- .debug_str     0x00002664      0x219 /usr/lib/gcc/arm-none-eabi/14.2.0/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(libc_a-init.o)
- .debug_str     0x00002664       0xb9 /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
- .debug_str     0x00002664       0xba /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+.debug_str      0x00000000     0x2697
+ .debug_str     0x00000000     0x2697 build/main.o
+                                0xb04 (size before relaxing)
+ .debug_str     0x00002697      0x1ab build/stm32c0xx_it.o
+ .debug_str     0x00002697      0x7af build/stm32c0xx_hal_msp.o
+ .debug_str     0x00002697      0x7e9 build/stm32c0xx_hal.o
+ .debug_str     0x00002697      0x73c build/stm32c0xx_hal_cortex.o
+ .debug_str     0x00002697      0x6c1 build/stm32c0xx_hal_rcc.o
+ .debug_str     0x00002697      0x4f1 build/stm32c0xx_hal_rcc_ex.o
+ .debug_str     0x00002697      0x3e8 build/stm32c0xx_hal_gpio.o
+ .debug_str     0x00002697     0x11f4 build/stm32c0xx_hal_fdcan.o
+ .debug_str     0x00002697      0x2b6 build/system_stm32c0xx.o
+ .debug_str     0x00002697       0x5d build/startup_stm32c092xx.o
+ .debug_str     0x00002697      0x1b8 /usr/lib/gcc/arm-none-eabi/14.2.0/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(libc_a-memset.o)
+ .debug_str     0x00002697      0x219 /usr/lib/gcc/arm-none-eabi/14.2.0/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(libc_a-init.o)
+ .debug_str     0x00002697       0xb9 /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+ .debug_str     0x00002697       0xba /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
 
 .debug_frame    0x00000000      0xd8c
  .debug_frame   0x00000000       0xfc build/main.o

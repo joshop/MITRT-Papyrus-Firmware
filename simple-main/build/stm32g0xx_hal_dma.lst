@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc6iDmyd.s 			page 1
+ARM GAS  /tmp/ccgODGCs.s 			page 1
 
 
    1              		.cpu cortex-m0plus
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
   30:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****        necessary). Please refer to the Reference manual for connection between peripherals
   31:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****        and DMA requests.
   32:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
-ARM GAS  /tmp/cc6iDmyd.s 			page 2
+ARM GAS  /tmp/ccgODGCs.s 			page 2
 
 
   33:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****    (#) For a given Channel, program the required configuration through the following parameters:
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
   87:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   */
   88:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
   89:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** /* Includes ------------------------------------------------------------------*/
-ARM GAS  /tmp/cc6iDmyd.s 			page 3
+ARM GAS  /tmp/ccgODGCs.s 			page 3
 
 
   90:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** #include "stm32g0xx_hal.h"
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  144:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  145:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** /**
  146:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   * @brief Initialize the DMA according to the specified
-ARM GAS  /tmp/cc6iDmyd.s 			page 4
+ARM GAS  /tmp/ccgODGCs.s 			page 4
 
 
  147:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   *        parameters in the DMA_InitTypeDef and initialize the associated handle.
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  201:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****                                 hdma->Init.PeriphDataAlignment | hdma->Init.MemDataAlignment | \
  202:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****                                 hdma->Init.Mode                | hdma->Init.Priority));
  203:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
-ARM GAS  /tmp/cc6iDmyd.s 			page 5
+ARM GAS  /tmp/ccgODGCs.s 			page 5
 
 
  204:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   /* Initialize parameters for DMAMUX channel :
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  258:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   */
  259:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *hdma)
  260:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** {
-ARM GAS  /tmp/cc6iDmyd.s 			page 6
+ARM GAS  /tmp/ccgODGCs.s 			page 6
 
 
  261:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   /* Check the DMA handle allocation */
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  315:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     /* Initialize parameters for DMAMUX request generator :
  316:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****        DMAmuxRequestGen, DMAmuxRequestGenStatus and DMAmuxRequestGenStatusMask
  317:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     */
-ARM GAS  /tmp/cc6iDmyd.s 			page 7
+ARM GAS  /tmp/ccgODGCs.s 			page 7
 
 
  318:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     DMA_CalcDMAMUXRequestGenBaseAndMask(hdma);
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  372:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  373:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** /**
  374:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   * @brief Start the DMA Transfer.
-ARM GAS  /tmp/cc6iDmyd.s 			page 8
+ARM GAS  /tmp/ccgODGCs.s 			page 8
 
 
  375:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   * @param hdma Pointer to a DMA_HandleTypeDef structure that contains
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  429:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   * @param DstAddress The destination memory Buffer address
  430:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   * @param DataLength The length of data to be transferred from source to destination
  431:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   * @retval HAL status
-ARM GAS  /tmp/cc6iDmyd.s 			page 9
+ARM GAS  /tmp/ccgODGCs.s 			page 9
 
 
  432:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   */
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  486:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   else
  487:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   {
  488:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     /* Change the error code */
-ARM GAS  /tmp/cc6iDmyd.s 			page 10
+ARM GAS  /tmp/ccgODGCs.s 			page 10
 
 
  489:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->ErrorCode = HAL_DMA_ERROR_BUSY;
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  543:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     /* Clear the DMAMUX synchro overrun flag */
  544:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->DMAmuxChannelStatus->CFR = hdma->DMAmuxChannelStatusMask;
  545:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
-ARM GAS  /tmp/cc6iDmyd.s 			page 11
+ARM GAS  /tmp/ccgODGCs.s 			page 11
 
 
  546:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     if (hdma->DMAmuxRequestGen != 0U)
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  600:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  601:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     /* Clear the DMAMUX synchro overrun flag */
  602:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->DMAmuxChannelStatus->CFR = hdma->DMAmuxChannelStatusMask;
-ARM GAS  /tmp/cc6iDmyd.s 			page 12
+ARM GAS  /tmp/ccgODGCs.s 			page 12
 
 
  603:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  657:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  658:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   /* Get the level transfer complete flag */
  659:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   if (HAL_DMA_FULL_TRANSFER == CompleteLevel)
-ARM GAS  /tmp/cc6iDmyd.s 			page 13
+ARM GAS  /tmp/ccgODGCs.s 			page 13
 
 
  660:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   {
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  714:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     }
  715:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** #endif /* DMA2 */
  716:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     /* Check for the Timeout */
-ARM GAS  /tmp/cc6iDmyd.s 			page 14
+ARM GAS  /tmp/ccgODGCs.s 			page 14
 
 
  717:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     if (Timeout != HAL_MAX_DELAY)
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  771:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     /* Process unlocked */
  772:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     __HAL_UNLOCK(hdma);
  773:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
-ARM GAS  /tmp/cc6iDmyd.s 			page 15
+ARM GAS  /tmp/ccgODGCs.s 			page 15
 
 
  774:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     /* The selected Channelx EN bit is cleared (DMA is disabled and
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  828:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****         hdma->XferHalfCpltCallback(hdma);
  829:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****       }
  830:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   }
-ARM GAS  /tmp/cc6iDmyd.s 			page 16
+ARM GAS  /tmp/ccgODGCs.s 			page 16
 
 
  831:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  885:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   }
  886:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   else
  887:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   {
-ARM GAS  /tmp/cc6iDmyd.s 			page 17
+ARM GAS  /tmp/ccgODGCs.s 			page 17
 
 
  888:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     /* Nothing To Do */
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  942:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  943:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   return status;
  944:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** }
-ARM GAS  /tmp/cc6iDmyd.s 			page 18
+ARM GAS  /tmp/ccgODGCs.s 			page 18
 
 
  945:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  999:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   __HAL_UNLOCK(hdma);
 1000:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
 1001:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   return status;
-ARM GAS  /tmp/cc6iDmyd.s 			page 19
+ARM GAS  /tmp/ccgODGCs.s 			page 19
 
 
 1002:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** }
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
 1056:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   */
 1057:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
 1058:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** /** @addtogroup DMA_Private_Functions
-ARM GAS  /tmp/cc6iDmyd.s 			page 20
+ARM GAS  /tmp/ccgODGCs.s 			page 20
 
 
 1059:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   * @{
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
 1080:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   }
 1081:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
 1082:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   /* Clear all flags */
-ARM GAS  /tmp/cc6iDmyd.s 			page 21
+ARM GAS  /tmp/ccgODGCs.s 			page 21
 
 
 1083:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** #if defined(DMA2)
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
 1106:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
 1107:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     /* Configure DMA Channel destination address */
 1108:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->Instance->CMAR = DstAddress;
-ARM GAS  /tmp/cc6iDmyd.s 			page 22
+ARM GAS  /tmp/ccgODGCs.s 			page 22
 
 
   91              		.loc 1 1108 5 is_stmt 1 view .LVU28
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  130              		.loc 1 1119 1 is_stmt 0 view .LVU39
  131 0000 10B5     		push	{r4, lr}
  132              	.LCFI1:
-ARM GAS  /tmp/cc6iDmyd.s 			page 23
+ARM GAS  /tmp/ccgODGCs.s 			page 23
 
 
  133              		.cfi_def_cfa_offset 8
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
 1135:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     /* DMA2 */
 1136:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     /* Associate a DMA Channel to a DMAMUX channel */
 1137:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->DMAmuxChannel = (DMAMUX1_Channel7 + (hdma->ChannelIndex >> 2U));
-ARM GAS  /tmp/cc6iDmyd.s 			page 24
+ARM GAS  /tmp/ccgODGCs.s 			page 24
 
 
 1138:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
 1137:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  204              		.loc 1 1137 25 view .LVU67
  205 0044 8364     		str	r3, [r0, #72]
-ARM GAS  /tmp/cc6iDmyd.s 			page 25
+ARM GAS  /tmp/ccgODGCs.s 			page 25
 
 
 1140:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   }
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  245              		.loc 1 1166 3 view .LVU75
  246              		.loc 1 1166 33 is_stmt 0 view .LVU76
  247 0000 4268     		ldr	r2, [r0, #4]
-ARM GAS  /tmp/cc6iDmyd.s 			page 26
+ARM GAS  /tmp/ccgODGCs.s 			page 26
 
 
  248              		.loc 1 1166 12 view .LVU77
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  295              	HAL_DMA_Init:
  296              	.LVL18:
  297              	.LFB493:
-ARM GAS  /tmp/cc6iDmyd.s 			page 27
+ARM GAS  /tmp/ccgODGCs.s 			page 27
 
 
  153:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   /* Check the DMA handle allocation */
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  334 0012 E818     		adds	r0, r5, r3
  335              	.LVL19:
  177:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->DmaBaseAddress = DMA1;
-ARM GAS  /tmp/cc6iDmyd.s 			page 28
+ARM GAS  /tmp/ccgODGCs.s 			page 28
 
 
  336              		.loc 1 177 80 view .LVU108
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  380              		.loc 1 209 3 view .LVU118
  209:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   {
  381              		.loc 1 209 17 is_stmt 0 view .LVU119
-ARM GAS  /tmp/cc6iDmyd.s 			page 29
+ARM GAS  /tmp/ccgODGCs.s 			page 29
 
 
  382 0056 A268     		ldr	r2, [r4, #8]
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  237:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->DMAmuxRequestGenStatusMask = 0U;
  419              		.loc 1 237 34 is_stmt 0 view .LVU137
  420 007c A365     		str	r3, [r4, #88]
-ARM GAS  /tmp/cc6iDmyd.s 			page 30
+ARM GAS  /tmp/ccgODGCs.s 			page 30
 
 
  238:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   }
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  183:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->DmaBaseAddress = DMA2;
  459              		.loc 1 183 135 view .LVU154
  460 009c 8000     		lsls	r0, r0, #2
-ARM GAS  /tmp/cc6iDmyd.s 			page 31
+ARM GAS  /tmp/ccgODGCs.s 			page 31
 
 
  183:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->DmaBaseAddress = DMA2;
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  500              	.L25:
  501              		.align	2
  502              	.L24:
-ARM GAS  /tmp/cc6iDmyd.s 			page 32
+ARM GAS  /tmp/ccgODGCs.s 			page 32
 
 
  503 00c4 07040240 		.word	1073873927
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  550 0014 9D42     		cmp	r5, r3
  551 0016 2CD8     		bhi	.L28
  278:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->DmaBaseAddress = DMA1;
-ARM GAS  /tmp/cc6iDmyd.s 			page 33
+ARM GAS  /tmp/ccgODGCs.s 			page 33
 
 
  552              		.loc 1 278 5 is_stmt 1 view .LVU179
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  307:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  591              		.loc 1 307 3 view .LVU195
  307:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
-ARM GAS  /tmp/cc6iDmyd.s 			page 34
+ARM GAS  /tmp/ccgODGCs.s 			page 34
 
 
  592              		.loc 1 307 7 is_stmt 0 view .LVU196
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  627 005e 2363     		str	r3, [r4, #48]
  334:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   hdma->XferAbortCallback = NULL;
  628              		.loc 1 334 3 is_stmt 1 view .LVU216
-ARM GAS  /tmp/cc6iDmyd.s 			page 35
+ARM GAS  /tmp/ccgODGCs.s 			page 35
 
 
  334:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   hdma->XferAbortCallback = NULL;
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  284:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->DmaBaseAddress = DMA2;
  666              		.loc 1 284 135 view .LVU234
  667 007c 8000     		lsls	r0, r0, #2
-ARM GAS  /tmp/cc6iDmyd.s 			page 36
+ARM GAS  /tmp/ccgODGCs.s 			page 36
 
 
  284:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     hdma->DmaBaseAddress = DMA2;
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  709              		.cfi_endproc
  710              	.LFE494:
  712              		.section	.text.HAL_DMA_Start,"ax",%progbits
-ARM GAS  /tmp/cc6iDmyd.s 			page 37
+ARM GAS  /tmp/ccgODGCs.s 			page 37
 
 
  713              		.align	1
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  756 0016 0128     		cmp	r0, #1
  757 0018 06D0     		beq	.L39
  412:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
-ARM GAS  /tmp/cc6iDmyd.s 			page 38
+ARM GAS  /tmp/ccgODGCs.s 			page 38
 
 
  758              		.loc 1 412 5 is_stmt 1 view .LVU260
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  797 0036 013D     		subs	r5, r5, #1
  798 0038 A843     		bics	r0, r5
  799 003a 3060     		str	r0, [r6]
-ARM GAS  /tmp/cc6iDmyd.s 			page 39
+ARM GAS  /tmp/ccgODGCs.s 			page 39
 
 
  404:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  442:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  847              		.loc 1 442 3 view .LVU285
  848 0004 2420     		movs	r0, #36
-ARM GAS  /tmp/cc6iDmyd.s 			page 40
+ARM GAS  /tmp/ccgODGCs.s 			page 40
 
 
  849              	.LVL53:
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  887              		@ sp needed
  888              	.LVL58:
  499:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
-ARM GAS  /tmp/cc6iDmyd.s 			page 41
+ARM GAS  /tmp/ccgODGCs.s 			page 41
 
 
  889              		.loc 1 499 1 view .LVU302
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  470:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     {
  930              		.loc 1 470 8 view .LVU316
  931 0056 DB03     		lsls	r3, r3, #15
-ARM GAS  /tmp/cc6iDmyd.s 			page 42
+ARM GAS  /tmp/ccgODGCs.s 			page 42
 
 
  932 0058 04D5     		bpl	.L45
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  973              		.loc 1 466 7 view .LVU329
  974 008c 2268     		ldr	r2, [r4]
  975 008e 1368     		ldr	r3, [r2]
-ARM GAS  /tmp/cc6iDmyd.s 			page 43
+ARM GAS  /tmp/ccgODGCs.s 			page 43
 
 
  976 0090 0631     		adds	r1, r1, #6
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1021 0012 0022     		movs	r2, #0
  1022 0014 C254     		strb	r2, [r0, r3]
  521:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
-ARM GAS  /tmp/cc6iDmyd.s 			page 44
+ARM GAS  /tmp/ccgODGCs.s 			page 44
 
 
  1023              		.loc 1 521 5 view .LVU341
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1063              		.loc 1 538 48 view .LVU355
  1064 0040 9340     		lsls	r3, r3, r2
  538:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** #else
-ARM GAS  /tmp/cc6iDmyd.s 			page 45
+ARM GAS  /tmp/ccgODGCs.s 			page 45
 
 
  1065              		.loc 1 538 32 view .LVU356
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1101              		.loc 1 560 5 view .LVU374
  1102 0064 013B     		subs	r3, r3, #1
  1103 0066 0022     		movs	r2, #0
-ARM GAS  /tmp/cc6iDmyd.s 			page 46
+ARM GAS  /tmp/ccgODGCs.s 			page 46
 
 
  1104 0068 C254     		strb	r2, [r0, r3]
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1149              		.loc 1 576 11 is_stmt 0 view .LVU385
  1150 0002 2523     		movs	r3, #37
  1151 0004 C35C     		ldrb	r3, [r0, r3]
-ARM GAS  /tmp/cc6iDmyd.s 			page 47
+ARM GAS  /tmp/ccgODGCs.s 			page 47
 
 
  576:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   {
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1192              		.loc 1 596 5 is_stmt 1 view .LVU399
  596:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** #else
  1193              		.loc 1 596 56 is_stmt 0 view .LVU400
-ARM GAS  /tmp/cc6iDmyd.s 			page 48
+ARM GAS  /tmp/ccgODGCs.s 			page 48
 
 
  1194 0030 416C     		ldr	r1, [r0, #68]
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1230              	.L60:
  615:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  1231              		.loc 1 615 5 is_stmt 1 view .LVU419
-ARM GAS  /tmp/cc6iDmyd.s 			page 49
+ARM GAS  /tmp/ccgODGCs.s 			page 49
 
 
  615:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1277              	.LFB499:
  639:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   uint32_t temp;
  1278              		.loc 1 639 1 is_stmt 1 view -0
-ARM GAS  /tmp/cc6iDmyd.s 			page 50
+ARM GAS  /tmp/ccgODGCs.s 			page 50
 
 
  1279              		.cfi_startproc
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1319              		.loc 1 648 12 is_stmt 0 view .LVU445
  1320 001c 0120     		movs	r0, #1
  1321              	.LVL78:
-ARM GAS  /tmp/cc6iDmyd.s 			page 51
+ARM GAS  /tmp/ccgODGCs.s 			page 51
 
 
  1322              	.L66:
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1361              		.loc 1 671 15 view .LVU460
  1362 003c 0190     		str	r0, [sp, #4]
  1363              	.LVL86:
-ARM GAS  /tmp/cc6iDmyd.s 			page 52
+ARM GAS  /tmp/ccgODGCs.s 			page 52
 
 
  674:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   {
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1401 0064 01D8     		bhi	.L73
  719:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****       {
  1402              		.loc 1 719 51 discriminator 1 view .LVU478
-ARM GAS  /tmp/cc6iDmyd.s 			page 53
+ARM GAS  /tmp/ccgODGCs.s 			page 53
 
 
  1403 0066 002F     		cmp	r7, #0
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1441              		.loc 1 667 33 is_stmt 0 view .LVU494
  1442 0088 426C     		ldr	r2, [r0, #68]
  1443              	.LVL91:
-ARM GAS  /tmp/cc6iDmyd.s 			page 54
+ARM GAS  /tmp/ccgODGCs.s 			page 54
 
 
  667:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   }
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1481              		.loc 1 736 6 view .LVU511
  1482 00ae 002B     		cmp	r3, #0
  1483 00b0 11D0     		beq	.L75
-ARM GAS  /tmp/cc6iDmyd.s 			page 55
+ARM GAS  /tmp/ccgODGCs.s 			page 55
 
 
  739:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****     {
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  753:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   {
  1521              		.loc 1 753 33 view .LVU529
  1522 00d8 1968     		ldr	r1, [r3]
-ARM GAS  /tmp/cc6iDmyd.s 			page 56
+ARM GAS  /tmp/ccgODGCs.s 			page 56
 
 
  753:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****   {
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1560 0100 0022     		movs	r2, #0
  1561 0102 F254     		strb	r2, [r6, r3]
  772:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
-ARM GAS  /tmp/cc6iDmyd.s 			page 57
+ARM GAS  /tmp/ccgODGCs.s 			page 57
 
 
  1562              		.loc 1 772 5 view .LVU547
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1606 0000 70B5     		push	{r4, r5, r6, lr}
  1607              	.LCFI9:
  1608              		.cfi_def_cfa_offset 16
-ARM GAS  /tmp/cc6iDmyd.s 			page 58
+ARM GAS  /tmp/ccgODGCs.s 			page 58
 
 
  1609              		.cfi_offset 4, -16
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1647 0022 2368     		ldr	r3, [r4]
  1648 0024 0422     		movs	r2, #4
  1649 0026 9343     		bics	r3, r2
-ARM GAS  /tmp/cc6iDmyd.s 			page 59
+ARM GAS  /tmp/ccgODGCs.s 			page 59
 
 
  1650 0028 2360     		str	r3, [r4]
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1689 004a AA07     		lsls	r2, r5, #30
  1690 004c 24D5     		bpl	.L86
  835:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****       {
-ARM GAS  /tmp/cc6iDmyd.s 			page 60
+ARM GAS  /tmp/ccgODGCs.s 			page 60
 
 
  1691              		.loc 1 835 7 is_stmt 1 view .LVU591
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1732 0080 002B     		cmp	r3, #0
  1733 0082 DDD0     		beq	.L82
  852:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c ****       }
-ARM GAS  /tmp/cc6iDmyd.s 			page 61
+ARM GAS  /tmp/ccgODGCs.s 			page 61
 
 
  1734              		.loc 1 852 9 is_stmt 1 view .LVU605
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1776              		.loc 1 866 48 view .LVU617
  1777 00b4 0123     		movs	r3, #1
  1778 00b6 1C00     		movs	r4, r3
-ARM GAS  /tmp/cc6iDmyd.s 			page 62
+ARM GAS  /tmp/ccgODGCs.s 			page 62
 
 
  1779 00b8 9440     		lsls	r4, r4, r2
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1820              		.code	16
  1821              		.thumb_func
  1823              	HAL_DMA_RegisterCallback:
-ARM GAS  /tmp/cc6iDmyd.s 			page 63
+ARM GAS  /tmp/ccgODGCs.s 			page 63
 
 
  1824              	.LVL104:
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  941:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  1865              		.loc 1 941 3 view .LVU645
  1866 001e 2422     		movs	r2, #36
-ARM GAS  /tmp/cc6iDmyd.s 			page 64
+ARM GAS  /tmp/ccgODGCs.s 			page 64
 
 
  1867              	.LVL108:
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  905:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  1906              		.loc 1 905 21 is_stmt 0 view .LVU661
  1907 0040 0020     		movs	r0, #0
-ARM GAS  /tmp/cc6iDmyd.s 			page 65
+ARM GAS  /tmp/ccgODGCs.s 			page 65
 
 
  928:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1950              		.loc 1 955 1 is_stmt 0 view .LVU675
  1951 0000 0300     		movs	r3, r0
  956:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
-ARM GAS  /tmp/cc6iDmyd.s 			page 66
+ARM GAS  /tmp/ccgODGCs.s 			page 66
 
 
  1952              		.loc 1 956 3 is_stmt 1 view .LVU676
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  1991              		@ sp needed
  1992 0022 7047     		bx	lr
  1993              	.LVL118:
-ARM GAS  /tmp/cc6iDmyd.s 			page 67
+ARM GAS  /tmp/ccgODGCs.s 			page 67
 
 
  1994              	.L119:
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  2035 0042 5A63     		str	r2, [r3, #52]
  975:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
  2036              		.loc 1 975 9 is_stmt 1 view .LVU705
-ARM GAS  /tmp/cc6iDmyd.s 			page 68
+ARM GAS  /tmp/ccgODGCs.s 			page 68
 
 
  956:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  2072              		.loc 1 959 3 discriminator 1 view .LVU724
  2073 005e 0220     		movs	r0, #2
  2074              	.LVL120:
-ARM GAS  /tmp/cc6iDmyd.s 			page 69
+ARM GAS  /tmp/ccgODGCs.s 			page 69
 
 
  959:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** 
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  2126              		@ link register save eliminated.
 1047:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** }
  2127              		.loc 1 1047 3 view .LVU732
-ARM GAS  /tmp/cc6iDmyd.s 			page 70
+ARM GAS  /tmp/ccgODGCs.s 			page 70
 
 
 1047:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c **** }
@@ -4160,50 +4160,50 @@ ARM GAS  /tmp/cc6iDmyd.s 			page 1
  2143              		.file 6 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_dma.h"
  2144              		.file 7 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
  2145              		.file 8 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h"
-ARM GAS  /tmp/cc6iDmyd.s 			page 71
+ARM GAS  /tmp/ccgODGCs.s 			page 71
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32g0xx_hal_dma.c
-     /tmp/cc6iDmyd.s:19     .text.DMA_SetConfig:00000000 $t
-     /tmp/cc6iDmyd.s:24     .text.DMA_SetConfig:00000000 DMA_SetConfig
-     /tmp/cc6iDmyd.s:118    .text.DMA_CalcDMAMUXChannelBaseAndMask:00000000 $t
-     /tmp/cc6iDmyd.s:123    .text.DMA_CalcDMAMUXChannelBaseAndMask:00000000 DMA_CalcDMAMUXChannelBaseAndMask
-     /tmp/cc6iDmyd.s:224    .text.DMA_CalcDMAMUXChannelBaseAndMask:00000058 $d
-     /tmp/cc6iDmyd.s:232    .text.DMA_CalcDMAMUXRequestGenBaseAndMask:00000000 $t
-     /tmp/cc6iDmyd.s:237    .text.DMA_CalcDMAMUXRequestGenBaseAndMask:00000000 DMA_CalcDMAMUXRequestGenBaseAndMask
-     /tmp/cc6iDmyd.s:283    .text.DMA_CalcDMAMUXRequestGenBaseAndMask:00000020 $d
-     /tmp/cc6iDmyd.s:289    .text.HAL_DMA_Init:00000000 $t
-     /tmp/cc6iDmyd.s:295    .text.HAL_DMA_Init:00000000 HAL_DMA_Init
-     /tmp/cc6iDmyd.s:503    .text.HAL_DMA_Init:000000c4 $d
-     /tmp/cc6iDmyd.s:513    .text.HAL_DMA_DeInit:00000000 $t
-     /tmp/cc6iDmyd.s:519    .text.HAL_DMA_DeInit:00000000 HAL_DMA_DeInit
-     /tmp/cc6iDmyd.s:704    .text.HAL_DMA_DeInit:000000a0 $d
-     /tmp/cc6iDmyd.s:713    .text.HAL_DMA_Start:00000000 $t
-     /tmp/cc6iDmyd.s:719    .text.HAL_DMA_Start:00000000 HAL_DMA_Start
-     /tmp/cc6iDmyd.s:821    .text.HAL_DMA_Start_IT:00000000 $t
-     /tmp/cc6iDmyd.s:827    .text.HAL_DMA_Start_IT:00000000 HAL_DMA_Start_IT
-     /tmp/cc6iDmyd.s:989    .text.HAL_DMA_Abort:00000000 $t
-     /tmp/cc6iDmyd.s:995    .text.HAL_DMA_Abort:00000000 HAL_DMA_Abort
-     /tmp/cc6iDmyd.s:1122   .text.HAL_DMA_Abort:00000074 $d
-     /tmp/cc6iDmyd.s:1127   .text.HAL_DMA_Abort_IT:00000000 $t
-     /tmp/cc6iDmyd.s:1133   .text.HAL_DMA_Abort_IT:00000000 HAL_DMA_Abort_IT
-     /tmp/cc6iDmyd.s:1264   .text.HAL_DMA_Abort_IT:00000070 $d
-     /tmp/cc6iDmyd.s:1269   .text.HAL_DMA_PollForTransfer:00000000 $t
-     /tmp/cc6iDmyd.s:1275   .text.HAL_DMA_PollForTransfer:00000000 HAL_DMA_PollForTransfer
-     /tmp/cc6iDmyd.s:1592   .text.HAL_DMA_IRQHandler:00000000 $t
-     /tmp/cc6iDmyd.s:1598   .text.HAL_DMA_IRQHandler:00000000 HAL_DMA_IRQHandler
-     /tmp/cc6iDmyd.s:1810   .text.HAL_DMA_IRQHandler:000000d4 $d
-     /tmp/cc6iDmyd.s:1817   .text.HAL_DMA_RegisterCallback:00000000 $t
-     /tmp/cc6iDmyd.s:1823   .text.HAL_DMA_RegisterCallback:00000000 HAL_DMA_RegisterCallback
-     /tmp/cc6iDmyd.s:1936   .text.HAL_DMA_UnRegisterCallback:00000000 $t
-     /tmp/cc6iDmyd.s:1942   .text.HAL_DMA_UnRegisterCallback:00000000 HAL_DMA_UnRegisterCallback
-     /tmp/cc6iDmyd.s:2003   .rodata.HAL_DMA_UnRegisterCallback:00000000 $d
-     /tmp/cc6iDmyd.s:2080   .text.HAL_DMA_UnRegisterCallback:00000064 $d
-     /tmp/cc6iDmyd.s:2085   .text.HAL_DMA_GetState:00000000 $t
-     /tmp/cc6iDmyd.s:2091   .text.HAL_DMA_GetState:00000000 HAL_DMA_GetState
-     /tmp/cc6iDmyd.s:2113   .text.HAL_DMA_GetError:00000000 $t
-     /tmp/cc6iDmyd.s:2119   .text.HAL_DMA_GetError:00000000 HAL_DMA_GetError
+     /tmp/ccgODGCs.s:19     .text.DMA_SetConfig:00000000 $t
+     /tmp/ccgODGCs.s:24     .text.DMA_SetConfig:00000000 DMA_SetConfig
+     /tmp/ccgODGCs.s:118    .text.DMA_CalcDMAMUXChannelBaseAndMask:00000000 $t
+     /tmp/ccgODGCs.s:123    .text.DMA_CalcDMAMUXChannelBaseAndMask:00000000 DMA_CalcDMAMUXChannelBaseAndMask
+     /tmp/ccgODGCs.s:224    .text.DMA_CalcDMAMUXChannelBaseAndMask:00000058 $d
+     /tmp/ccgODGCs.s:232    .text.DMA_CalcDMAMUXRequestGenBaseAndMask:00000000 $t
+     /tmp/ccgODGCs.s:237    .text.DMA_CalcDMAMUXRequestGenBaseAndMask:00000000 DMA_CalcDMAMUXRequestGenBaseAndMask
+     /tmp/ccgODGCs.s:283    .text.DMA_CalcDMAMUXRequestGenBaseAndMask:00000020 $d
+     /tmp/ccgODGCs.s:289    .text.HAL_DMA_Init:00000000 $t
+     /tmp/ccgODGCs.s:295    .text.HAL_DMA_Init:00000000 HAL_DMA_Init
+     /tmp/ccgODGCs.s:503    .text.HAL_DMA_Init:000000c4 $d
+     /tmp/ccgODGCs.s:513    .text.HAL_DMA_DeInit:00000000 $t
+     /tmp/ccgODGCs.s:519    .text.HAL_DMA_DeInit:00000000 HAL_DMA_DeInit
+     /tmp/ccgODGCs.s:704    .text.HAL_DMA_DeInit:000000a0 $d
+     /tmp/ccgODGCs.s:713    .text.HAL_DMA_Start:00000000 $t
+     /tmp/ccgODGCs.s:719    .text.HAL_DMA_Start:00000000 HAL_DMA_Start
+     /tmp/ccgODGCs.s:821    .text.HAL_DMA_Start_IT:00000000 $t
+     /tmp/ccgODGCs.s:827    .text.HAL_DMA_Start_IT:00000000 HAL_DMA_Start_IT
+     /tmp/ccgODGCs.s:989    .text.HAL_DMA_Abort:00000000 $t
+     /tmp/ccgODGCs.s:995    .text.HAL_DMA_Abort:00000000 HAL_DMA_Abort
+     /tmp/ccgODGCs.s:1122   .text.HAL_DMA_Abort:00000074 $d
+     /tmp/ccgODGCs.s:1127   .text.HAL_DMA_Abort_IT:00000000 $t
+     /tmp/ccgODGCs.s:1133   .text.HAL_DMA_Abort_IT:00000000 HAL_DMA_Abort_IT
+     /tmp/ccgODGCs.s:1264   .text.HAL_DMA_Abort_IT:00000070 $d
+     /tmp/ccgODGCs.s:1269   .text.HAL_DMA_PollForTransfer:00000000 $t
+     /tmp/ccgODGCs.s:1275   .text.HAL_DMA_PollForTransfer:00000000 HAL_DMA_PollForTransfer
+     /tmp/ccgODGCs.s:1592   .text.HAL_DMA_IRQHandler:00000000 $t
+     /tmp/ccgODGCs.s:1598   .text.HAL_DMA_IRQHandler:00000000 HAL_DMA_IRQHandler
+     /tmp/ccgODGCs.s:1810   .text.HAL_DMA_IRQHandler:000000d4 $d
+     /tmp/ccgODGCs.s:1817   .text.HAL_DMA_RegisterCallback:00000000 $t
+     /tmp/ccgODGCs.s:1823   .text.HAL_DMA_RegisterCallback:00000000 HAL_DMA_RegisterCallback
+     /tmp/ccgODGCs.s:1936   .text.HAL_DMA_UnRegisterCallback:00000000 $t
+     /tmp/ccgODGCs.s:1942   .text.HAL_DMA_UnRegisterCallback:00000000 HAL_DMA_UnRegisterCallback
+     /tmp/ccgODGCs.s:2003   .rodata.HAL_DMA_UnRegisterCallback:00000000 $d
+     /tmp/ccgODGCs.s:2080   .text.HAL_DMA_UnRegisterCallback:00000064 $d
+     /tmp/ccgODGCs.s:2085   .text.HAL_DMA_GetState:00000000 $t
+     /tmp/ccgODGCs.s:2091   .text.HAL_DMA_GetState:00000000 HAL_DMA_GetState
+     /tmp/ccgODGCs.s:2113   .text.HAL_DMA_GetError:00000000 $t
+     /tmp/ccgODGCs.s:2119   .text.HAL_DMA_GetError:00000000 HAL_DMA_GetError
 
 UNDEFINED SYMBOLS
 __aeabi_uidiv

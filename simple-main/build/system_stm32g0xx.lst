@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc47n8x9.s 			page 1
+ARM GAS  /tmp/ccNZx6Ex.s 			page 1
 
 
    1              		.cpu cortex-m0plus
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc47n8x9.s 			page 1
   30:Core/Src/system_stm32g0xx.c ****   *        SYSCLK(Hz)                             | 16000000
   31:Core/Src/system_stm32g0xx.c ****   *-----------------------------------------------------------------------------
   32:Core/Src/system_stm32g0xx.c ****   *        HCLK(Hz)                               | 16000000
-ARM GAS  /tmp/cc47n8x9.s 			page 2
+ARM GAS  /tmp/ccNZx6Ex.s 			page 2
 
 
   33:Core/Src/system_stm32g0xx.c ****   *-----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc47n8x9.s 			page 1
   87:Core/Src/system_stm32g0xx.c **** #if !defined  (LSI_VALUE)
   88:Core/Src/system_stm32g0xx.c ****  #define LSI_VALUE   (32000UL)     /*!< Value of LSI in Hz*/
   89:Core/Src/system_stm32g0xx.c **** #endif /* LSI_VALUE */
-ARM GAS  /tmp/cc47n8x9.s 			page 3
+ARM GAS  /tmp/ccNZx6Ex.s 			page 3
 
 
   90:Core/Src/system_stm32g0xx.c **** 
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc47n8x9.s 			page 1
  144:Core/Src/system_stm32g0xx.c **** /**
  145:Core/Src/system_stm32g0xx.c ****   * @}
  146:Core/Src/system_stm32g0xx.c ****   */
-ARM GAS  /tmp/cc47n8x9.s 			page 4
+ARM GAS  /tmp/ccNZx6Ex.s 			page 4
 
 
  147:Core/Src/system_stm32g0xx.c **** 
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc47n8x9.s 			page 1
   36              	.LFE493:
   38              		.section	.text.SystemCoreClockUpdate,"ax",%progbits
   39              		.align	1
-ARM GAS  /tmp/cc47n8x9.s 			page 5
+ARM GAS  /tmp/ccNZx6Ex.s 			page 5
 
 
   40              		.global	SystemCoreClockUpdate
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc47n8x9.s 			page 1
   52              	.LCFI0:
   53              		.cfi_def_cfa_offset 8
   54              		.cfi_offset 4, -8
-ARM GAS  /tmp/cc47n8x9.s 			page 6
+ARM GAS  /tmp/ccNZx6Ex.s 			page 6
 
 
   55              		.cfi_offset 14, -4
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc47n8x9.s 			page 1
   82 001c 0323     		movs	r3, #3
   83 001e 0B40     		ands	r3, r1
   84              	.LVL0:
-ARM GAS  /tmp/cc47n8x9.s 			page 7
+ARM GAS  /tmp/ccNZx6Ex.s 			page 7
 
 
  262:Core/Src/system_stm32g0xx.c ****       pllm = ((RCC->PLLCFGR & RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1UL;
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc47n8x9.s 			page 1
  125              		.loc 1 275 31 is_stmt 0 view .LVU33
  126 0046 FFF7FEFF 		bl	__aeabi_uidiv
  127              	.LVL5:
-ARM GAS  /tmp/cc47n8x9.s 			page 8
+ARM GAS  /tmp/ccNZx6Ex.s 			page 8
 
 
  128              		.loc 1 275 23 view .LVU34
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc47n8x9.s 			page 1
  164 0070 9B00     		lsls	r3, r3, #2
  165 0072 9958     		ldr	r1, [r3, r2]
  166              	.LVL7:
-ARM GAS  /tmp/cc47n8x9.s 			page 9
+ARM GAS  /tmp/ccNZx6Ex.s 			page 9
 
 
  287:Core/Src/system_stm32g0xx.c ****   /* HCLK clock frequency */
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc47n8x9.s 			page 1
  207              		.loc 1 281 35 is_stmt 0 view .LVU60
  208 009a 034B     		ldr	r3, .L13+4
  209 009c D340     		lsrs	r3, r3, r2
-ARM GAS  /tmp/cc47n8x9.s 			page 10
+ARM GAS  /tmp/ccNZx6Ex.s 			page 10
 
 
  281:Core/Src/system_stm32g0xx.c ****       break;
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc47n8x9.s 			page 1
  266              		.align	2
  269              	SystemCoreClock:
  270 0000 0024F400 		.word	16000000
-ARM GAS  /tmp/cc47n8x9.s 			page 11
+ARM GAS  /tmp/ccNZx6Ex.s 			page 11
 
 
  271              		.text
@@ -608,22 +608,22 @@ ARM GAS  /tmp/cc47n8x9.s 			page 1
  275              		.file 4 "Drivers/CMSIS/Device/ST/STM32G0xx/Include/system_stm32g0xx.h"
  276              		.file 5 "Drivers/CMSIS/Device/ST/STM32G0xx/Include/stm32g0b1xx.h"
  277              		.file 6 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
-ARM GAS  /tmp/cc47n8x9.s 			page 12
+ARM GAS  /tmp/ccNZx6Ex.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 system_stm32g0xx.c
-     /tmp/cc47n8x9.s:19     .text.SystemInit:00000000 $t
-     /tmp/cc47n8x9.s:25     .text.SystemInit:00000000 SystemInit
-     /tmp/cc47n8x9.s:39     .text.SystemCoreClockUpdate:00000000 $t
-     /tmp/cc47n8x9.s:45     .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
-     /tmp/cc47n8x9.s:220    .text.SystemCoreClockUpdate:000000a4 $d
-     /tmp/cc47n8x9.s:269    .data.SystemCoreClock:00000000 SystemCoreClock
-     /tmp/cc47n8x9.s:247    .rodata.AHBPrescTable:00000000 AHBPrescTable
-     /tmp/cc47n8x9.s:233    .rodata.APBPrescTable:00000000 APBPrescTable
-     /tmp/cc47n8x9.s:230    .rodata.APBPrescTable:00000000 $d
-     /tmp/cc47n8x9.s:244    .rodata.AHBPrescTable:00000000 $d
-     /tmp/cc47n8x9.s:266    .data.SystemCoreClock:00000000 $d
+     /tmp/ccNZx6Ex.s:19     .text.SystemInit:00000000 $t
+     /tmp/ccNZx6Ex.s:25     .text.SystemInit:00000000 SystemInit
+     /tmp/ccNZx6Ex.s:39     .text.SystemCoreClockUpdate:00000000 $t
+     /tmp/ccNZx6Ex.s:45     .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
+     /tmp/ccNZx6Ex.s:220    .text.SystemCoreClockUpdate:000000a4 $d
+     /tmp/ccNZx6Ex.s:269    .data.SystemCoreClock:00000000 SystemCoreClock
+     /tmp/ccNZx6Ex.s:247    .rodata.AHBPrescTable:00000000 AHBPrescTable
+     /tmp/ccNZx6Ex.s:233    .rodata.APBPrescTable:00000000 APBPrescTable
+     /tmp/ccNZx6Ex.s:230    .rodata.APBPrescTable:00000000 $d
+     /tmp/ccNZx6Ex.s:244    .rodata.AHBPrescTable:00000000 $d
+     /tmp/ccNZx6Ex.s:266    .data.SystemCoreClock:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_uidiv

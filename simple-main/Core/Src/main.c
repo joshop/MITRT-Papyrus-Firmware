@@ -50,12 +50,11 @@ FDCAN_HandleTypeDef hfdcan1;
 
 I2C_HandleTypeDef hi2c1;
 
-UART_HandleTypeDef hlpuart2;
-UART_HandleTypeDef huart1;
-UART_HandleTypeDef huart2;
-
 SPI_HandleTypeDef hspi1;
 SPI_HandleTypeDef hspi2;
+
+UART_HandleTypeDef huart1;
+UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 
@@ -71,7 +70,6 @@ static void MX_SPI1_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
-static void MX_LPUART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 void CAN_Send(uint8_t cmd);
 void UART_Print(char *s);
@@ -83,6 +81,54 @@ void Process_UART_Command(char *cmd);
 /* USER CODE BEGIN 0 */
 int next_can_id;
 uint8_t lastRxData[8];
+
+int __io_putchar(int ch)
+{
+  // Use the HAL function to transmit a character via your configured UART
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
+  return ch;
+}
+
+int __io_getchar(void)
+{
+  uint8_t ch = 0;
+  // Wait for character reception
+  HAL_UART_Receive(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
+  return ch;
+}
+
+uint16_t ADC_Read_VREFINT(void)
+{
+  ADC_ChannelConfTypeDef sConfig = {0};
+
+  sConfig.Channel = ADC_CHANNEL_VREFINT;
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLINGTIME_COMMON_1;
+
+  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+
+  HAL_ADC_Start(&hadc1);
+  HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+  HAL_ADC_GetValue(&hadc1);
+
+  HAL_ADC_Start(&hadc1);
+  HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+  uint16_t raw = HAL_ADC_GetValue(&hadc1);
+  HAL_ADC_Stop(&hadc1);
+
+  return raw;
+}
+uint32_t ADC_Get_VDDA_mV(void)
+{
+  uint16_t vrefint_raw = ADC_Read_VREFINT();
+  uint16_t vrefint_cal = *VREFINT_CAL_ADDR;
+
+  // VDDA = 3.0V * VREFINT_CAL / VREFINT_DATA
+  // 3000 mV is the calibration reference voltage
+  uint32_t vdda = 3000UL * vrefint_cal / vrefint_raw;
+
+  return vdda;
+}
 
 void CAN_Rx_Default(FDCAN_RxHeaderTypeDef rxHeader) {
 
@@ -103,9 +149,15 @@ void CAN_Rx_TC(FDCAN_RxHeaderTypeDef rxHeader) {
 void CAN_Rx_PT(FDCAN_RxHeaderTypeDef rxHeader) {
   char buff[64];
   int16_t pt_p = *(int16_t*)(lastRxData+1);
-  float pt_v = 3000.0f * ((float)pt_p - 500.0f) / 4000.0f;
+  float pt_v = 1000.0f * ((float)pt_p - 500.0f) / 4000.0f;
   sprintf(buff, "P = %.2f psi\r\n", pt_v);
   UART2_Print(buff);
+}
+float last_pt_v;
+void CAN_Rx_PT_Quiet(FDCAN_RxHeaderTypeDef rxHeader) {
+  int16_t pt_p = *(int16_t*)(lastRxData+1);
+  // 0.57965/1.68179 * (PT2 + 359.67442) - 151.83194
+  last_pt_v = 1000.0f * ((float)pt_p - 500.0f) / 4000.0f;
 }
 void CAN_Rx_TCStat(FDCAN_RxHeaderTypeDef rxHeader) {
   char buff[64];
@@ -167,10 +219,34 @@ void CAN_Send_Long(uint8_t *buf, uint8_t len) {
 
 
 
+
+int muted = 0;
+void UART_Print(char *s)
+{
+  if (muted) return;
+  //HAL_UART_Transmit(&hlpuart2, (uint8_t *)s, strlen(s), HAL_MAX_DELAY);
+}
+void UART2_Print_Int(int a) {
+  char buf[8];
+  if (muted) return;
+  sprintf(buf, "%d", a);
+  UART2_Print(buf);
+}
+
+void UART2_Print(char *s)
+{
+  if (muted) return;
+  HAL_UART_Transmit(&huart2, (uint8_t *)s, strlen(s), HAL_MAX_DELAY);
+}
 void CAN_Send(uint8_t cmd)
 {
   FDCAN_TxHeaderTypeDef txHeader = {0};
   FDCAN_RxHeaderTypeDef rxHeader;
+  // UART2_Print("Sending ");
+  // UART2_Print_Int(cmd);
+  // UART2_Print(" to ");
+  // UART2_Print_Int(next_can_id);
+  // UART2_Print("\r\n");
   uint8_t txData[8] = {cmd};
 
   txHeader.Identifier = next_can_id;
@@ -185,25 +261,6 @@ void CAN_Send(uint8_t cmd)
   /* Wait for response */
 
   CAN_Decode();
-}
-
-int muted = 0;
-void UART_Print(char *s)
-{
-  if (muted) return;
-  HAL_UART_Transmit(&hlpuart2, (uint8_t *)s, strlen(s), HAL_MAX_DELAY);
-}
-void UART2_Print_Int(int a) {
-  char buf[8];
-  if (muted) return;
-  sprintf(buf, "%d", a);
-  UART2_Print(buf);
-}
-
-void UART2_Print(char *s)
-{
-  if (muted) return;
-  HAL_UART_Transmit(&huart2, (uint8_t *)s, strlen(s), HAL_MAX_DELAY);
 }
 
 typedef struct ServoCfg {
@@ -336,7 +393,65 @@ int all_numeric(char *s) {
 int cmd_invalid = 0;
 void command_help(char *rest) {
   cmd_invalid = 1;
-  UART2_Print("Todo\r\n");
+  UART2_Print("List of commands:\r\n"
+    "!reset: reset STM32 remotely\r\n"
+    "name - name CAN devices\r\n"
+    "  name <can id> <name> [<index>]: name a device\r\n"
+    "  name clear <can id>: clear names\r\n"
+    "  name list <can id>: list names\r\n"
+    "bus - CAN bus operations\r\n"
+    "  bus reset: reset whole CAN bus\r\n"
+    "  bus list: list all devices on bus\r\n"
+    "sd - SD card setup\r\n"
+    "  sd init: initialize microSD\r\n"
+    "  sd free: print microSD free space\r\n"
+    "  sd deinit: deinitalize microSD\r\n"
+    "file - file operations\r\n"
+    "  file run <file>: runs a file as commands\r\n"
+    "  file program <file>: programs a file. Typed commands are written to the end of the file\r\n"
+    "  file endp: stop programming and write commands to file\r\n"
+    "  file read <file>: reads all lines in a file\r\n"
+    "  file delete <file>: deletes a file\r\n"
+    "  file delline <file> <line>: deletes a single line of a file\r\n"
+    "  file list: lists files in root directory\r\n"
+    "relay - control relays\r\n"
+    "  relay off <device>: turns off a relay, supports entire boards\r\n"
+    "  relay on <device>: turns on a relay\r\n"
+    "  relay reset <device>: reset relay boards\r\n"
+    "servo - control servos\r\n"
+    "  servo off <device>: disengage servo\r\n"
+    "  servo on <device>: engage servo\r\n"
+    "  servo set <device> <angle>: set servo to angle\r\n"
+    "  servo reset <device>: reset servo boards\r\n"
+    "tc - control thermocouples\r\n"
+    "  tc get <device>: reads TC temperature\r\n"
+    "  tc status <device>: reads TC status flags\r\n"
+    "  tc reset <device>: resets TC boards\r\n"
+    "pt - control pressure transducers\r\n"
+    "  pt get <device>: reads PT pressure\r\n"
+    "  pt reset <device>: resets PT boards\r\n"
+    "time - timer functions\r\n"
+    "  time stamp: get current timestamp\r\n"
+    "  time mark: set mark, time stamp shows time since mark\r\n"
+    "  time sleep <ms>: sleep for a time in ms\r\n"
+    "  time delay <ms> <command...>: run the command after a time in ms\r\n"
+    "  time every <ms> <command...>: run the command every interval in ms\r\n"
+    "  time list: list timers running\r\n"
+    "  time delete [<id>]: delete that timer, default is last added\r\n"
+    "  time quiet [<id>]: silence/unsilence messages from that timer\r\n"
+    "msg - message functions\r\n"
+    "  msg echo <message...>: prints the message out\r\n"
+    "log - data logging functions\r\n"
+    "  log open <file>: opens file for data logging, append to end\r\n"
+    "  log close: close open log file\r\n"
+    "  log sync: write new changes back to log file\r\n"
+    "  log line <format...>: write a line of data to the log file; specifiers separated by spaces:\r\n"
+    "   t -> time stamp in ms\r\n"
+    "   m -> time since mark in ms\r\n"
+    "   '<TEXT> -> that text\r\n"
+    "   P<PT name> -> pressure in psi\r\n"
+    "On startup or reset, startup.scr is run automatically.\r\n"
+  );
 }
 void command_bus(char *rest) {
   char word[32];
@@ -346,6 +461,10 @@ void command_bus(char *rest) {
     NVIC_SystemReset();
   } else if (!strcmp(word, "list")) {
     bus_list_function();
+  } else if (!strcmp(word, "vdd")) {
+    char buffer[256];
+    sprintf(buffer, "VDD = %d mV\r\n", ADC_Get_VDDA_mV());
+    UART2_Print(buffer);
   } else if (!*word) {
     cmd_invalid = 1;
     UART2_Print("Option needed for \"bus\".\r\n");
@@ -526,13 +645,37 @@ uint16_t servo_get_us(char *label, uint16_t angle) {
   }
   if (!servo->initialized) {
     servo->initialized = 1;
-    servo->min_us = 1000;
-    servo->max_us = 2000;
+    servo->min_us = 500;
+    servo->max_us = 2500;
     servo->min_angle = 0;
     servo->max_angle = 180;
   }
   if (angle < servo->min_angle) return 0;
   if (angle > servo->max_angle) return 0;
+  uint16_t delta = angle - servo->min_angle;
+  return servo->min_us + ((uint32_t)(delta) * (servo->max_us - servo->min_us)) / (servo->max_angle - servo->min_angle);
+}
+uint16_t servo_get_us_clamp(int id, uint16_t angle) {
+  ServoCfg *servo = NULL;
+  ServoCfg def = {0};
+  for (int i = 0; i < num_maps; i++) {
+    if (name_maps[i].can_id == id) {
+      servo = &name_maps[i].cfg.servo;
+      break;
+    }
+  }
+  if (servo == NULL) {
+    servo = &def;
+  }
+  if (!servo->initialized) {
+    servo->initialized = 1;
+    servo->min_us = 500;
+    servo->max_us = 2500;
+    servo->min_angle = 0;
+    servo->max_angle = 180;
+  }
+  if (angle < servo->min_angle) angle = servo->min_angle;
+  if (angle > servo->max_angle) angle = servo->max_angle;
   uint16_t delta = angle - servo->min_angle;
   return servo->min_us + ((uint32_t)(delta) * (servo->max_us - servo->min_us)) / (servo->max_angle - servo->min_angle);
 }
@@ -858,6 +1001,26 @@ void command_file(char *rest) {
       UART2_Print("\r\n");
     }
     f_close(&fil);
+  } else if (!strcmp(word, "readslow")) {
+    char cmdbuf[320];
+    fres = f_open(&fil, rest, FA_READ);
+    if (fres != FR_OK) {
+      UART2_Print("Unable to open file.\r\n");
+      return;
+    }
+    UART2_Print("File contents:\r\n");
+    char lnbuf[8];
+    for (int i = 0; ;i++) {
+      TCHAR *rres = f_gets((TCHAR*)cmdbuf, 320, &fil);
+      if (cmdbuf[strlen(cmdbuf)-1] == '\n') cmdbuf[strlen(cmdbuf)-1] = 0;
+      if (rres == 0) break;
+      sprintf(lnbuf, "%04d|", i+1);
+      UART2_Print(lnbuf);
+      UART2_Print(cmdbuf);
+      UART2_Print("\r\n");
+      HAL_Delay(20);
+    }
+    f_close(&fil);
   } else if (!strcmp(word, "delline")) {
     next_word(word, &rest);
     int delline = atoi(rest);
@@ -950,6 +1113,7 @@ struct TimeEntry {
   char cmdbuf[320];
   int reload;
   int timeout;
+  int quiet;
   struct TimeEntry *next;
 };
 typedef struct TimeEntry TimeEntry;
@@ -965,6 +1129,7 @@ void add_time_entry(char *cmd, int reload, int timeout) {
   (*t)->reload = reload;
   (*t)->timeout = timeout;
   (*t)->next = NULL;
+  (*t)->quiet = 0;
 }
 
 int time_mark = 0;
@@ -1072,6 +1237,33 @@ void command_time(char *rest) {
     } else {
       UART2_Print("Timer deleted.\r\n");
     }
+  } else if (!strcmp(word, "quiet")) {
+    int idx = atoi(rest);
+    if (idx == 0 && *rest) {
+      UART2_Print("Format: time quiet <index>\r\n");
+      return;
+    }
+    if (root == NULL) {
+      UART2_Print("No timers active.\r\n");
+      return;
+    }
+    TimeEntry *t = root;
+    TimeEntry **last = &root;
+    int i = 0;
+    while (t != NULL) {
+      i++;
+      if (i == idx || (!idx && t->next == NULL)) {
+        t->quiet ^= 1;
+        break;
+      }
+      last = &(t->next);
+      t = t->next;
+    }
+    if (t == NULL) {
+      UART2_Print("No timer with that index.\r\n");
+    } else {
+      UART2_Print(t->quiet ? "Timer silenced.\r\n" : "Timer unsilenced.\r\n");
+    }
   } else if (!*word) {
     cmd_invalid = 1;
     UART2_Print("Option needed for \"time\".\r\n");
@@ -1082,7 +1274,343 @@ void command_time(char *rest) {
     UART2_Print("\r\n");
   }
 }
+float control_last_rd;
+float control_last_err;
+float control_last_eff;
+int control_last_ts = 0;
+FIL logfile;
+int islogopen = 0;
+void command_log(char *rest) {
+  FRESULT fres;
+  char word[32];
+  next_word(word, &rest);
+  if (!strcmp(word, "open")) {
+    if (islogopen) {
+      UART2_Print("Log file already open.\r\n");
+      return;
+    }
+    if (!*rest) {
+      UART2_Print("Format: log open <filename>.\r\n");
+      return;
+    }
+    fres = f_open(&logfile, rest, FA_WRITE | FA_OPEN_APPEND);
+    if (fres != FR_OK) {
+      UART2_Print("Unable to open log file.\r\n");
+      return;
+    }
+    islogopen = 1;
+  } else if (!strcmp(word, "close")) {
+    if (!islogopen) {
+      UART2_Print("Log file is not open.\r\n");
+      return;
+    }
+    islogopen = 0;
+    fres = f_sync(&logfile);
+    if (fres != FR_OK) {
+      UART2_Print("Unable to sync log file.\r\n");
+      f_close(&logfile);
+      return;
+    }
+    fres = f_close(&logfile);
+    if (fres != FR_OK) {
+      UART2_Print("Unable to close log file.\r\n");
+      return;
+    }
+  } else if (!strcmp(word, "sync")) {
+    if (!islogopen) {
+      UART2_Print("Log file is not open.\r\n");
+      return;
+    }
+    fres = f_sync(&logfile);
+    if (fres != FR_OK) {
+      UART2_Print("Unable to sync log file.\r\n");
+      return;
+    }
+  } else if (!strcmp(word, "line")) {
+    if (!islogopen) {
+      UART2_Print("Log file is not open.\r\n");
+      return;
+    }
+    char buffer[1024];
+    char *bufp = buffer;
+    while (*rest) {
+      next_word(word, &rest);
+      if (word[0] == '\'') {
+        strcpy(bufp, word+1);
+      } else if (word[0] == 't') {
+        sprintf(bufp, "%d", HAL_GetTick());
+      } else if (word[0] == 'm') {
+        sprintf(bufp, "%d", HAL_GetTick() - time_mark);
+      } else if (word[0] == 'P') {
+        int id = retrieve_id(word+1);
+        if (id == 0) {
+          UART2_Print("Invalid PT name: ");
+          UART2_Print(word + 1);
+          UART2_Print("\r\n");
+          return;
+        }
+        if (last_index < 1 || last_index > 3) {
+          UART2_Print("Need to specify individual PT.\r\n");
+          return;
+        }
+        next_can_id = id;
+        last_pt_v = 0;
+        CAN_Rx_Func = CAN_Rx_PT_Quiet;
+        CAN_Send(last_index);
+        sprintf(bufp, "%.2f", last_pt_v);
+      } else if (word[0] == 'c') {
+        if (word[1] == 's') sprintf(bufp, "%.3f", control_last_rd);
+        if (word[1] == 'e') sprintf(bufp, "%.3f", control_last_err);
+        if (word[1] == 'a') sprintf(bufp, "%.3f", control_last_eff);
+        if (word[1] == 't') sprintf(bufp, "%d", control_last_ts);
+      } else {
+        UART2_Print("Invalid line specifier: ");
+        UART2_Print(word);
+        return;
+      }
+      int ilen = strlen(bufp);
+      bufp[ilen] = *rest ? ',' : '\n';
+      bufp[ilen + 1] = 0;
+      bufp += ilen + 1;
+    }
+    f_puts(buffer, &logfile);
+    UART2_Print("Log line: ");
+    UART2_Print(buffer);
+  } else if (!*word) {
+    cmd_invalid = 1;
+    UART2_Print("Option needed for \"log\".\r\n");
+  } else {
+    cmd_invalid = 1;
+    UART2_Print("Unknown option for \"log\": ");
+    UART2_Print(word);
+    UART2_Print("\r\n");
+  }
+}
+float control_p;
+float control_i;
+float control_d;
+int control_stype;
+int control_sid = 0;
+int control_sidx = 0;
+int control_atype;
+int control_aid = 0;
+int control_aidx = 0;
+float control_setp;
+float control_int;
+float control_mina;
+float control_maxa;
+float control_read() {
+  if (control_stype == 0) {
+    // UART2_Print_Int(control_sid);
+    // UART2_Print(" ");
+    // UART2_Print_Int(control_sidx);
+    // UART2_Print("\r\n");
+    next_can_id = control_sid;
+    last_pt_v = 0;
+    CAN_Rx_Func = CAN_Rx_PT_Quiet;
+    CAN_Send(control_sidx);
+    return last_pt_v;
+  } else if (control_stype == 1) {
+    next_can_id = control_sid;
+    last_pt_v = 0;
+    CAN_Rx_Func = CAN_Rx_PT_Quiet;
+    CAN_Send(control_sidx);
+    float pt1 = last_pt_v;
+    CAN_Rx_Func = CAN_Rx_PT_Quiet;
+    CAN_Send(control_sidx+1);
+    return pt1 - last_pt_v;
+  } else {
+    return 0;
+  }
+}
+void control_write(float f) {
+  if (control_atype == 0) {
+    char buf[3];
+    /*next_word(word, &rest);
+     i nt id = retrieve_id(w*ord);
+     if (id == 0) {
+       UART2_Print("Invalid ID or device name.\r\n");
+       return;
+  }
+  uint16_t angle = atoi(rest);
+  if (angle == 0 && *rest != '0') {
+    UART2_Print("Invalid angle.\r\n");
+    return;
+  }
+  uint16_t serv_us = servo_get_us(word, angle);
+  if (serv_us == 0) {
+    UART2_Print("Angle out of range.\r\n");
+    return;
+  }
+  char buf[3];
+  if (last_index < 1 || last_index > 4) {
+    UART2_Print("Need to specify individual servo.\r\n");
+    return;
+  }
+  UART2_Print(rest);
+  UART2_Print(": Setting servo -> ");
+  UART2_Print_Int(angle);
+  UART2_Print(" deg (");
+  UART2_Print_Int(serv_us);
+  UART2_Print(" us).\r\n");
+  buf[0] = 0x10 + last_index;
+  *(uint16_t*)&buf[1] = serv_us;
+  CAN_Send_Long(buf, 3);
+     *
+     *
+     */
+    uint16_t serv_us = servo_get_us_clamp(control_aid, f);
+    buf[0] = 0x10 + control_aidx;
+    *(uint16_t*)&buf[1] = serv_us;
+    next_can_id = control_aid;
+    CAN_Send_Long(buf, 3);
+  }
+}
+void command_loop(char *rest) {
+  char buffer[256];
+  char word[32];
+  next_word(word, &rest);
+  if (!strcmp(word, "p")) {
+    if (*rest) {
+      float val = atof(rest);
+      sprintf(buffer, "New P = %f\r\n", val);
+      control_p = val;
+    } else {
+      sprintf(buffer, "Current P = %f\r\n", control_p);
+    }
+    UART2_Print(buffer);
+  } else if (!strcmp(word, "i")) {
+    if (*rest) {
+      float val = atof(rest);
+      sprintf(buffer, "New I = %f\r\n", val);
+      control_i = val;
+    } else {
+      sprintf(buffer, "Current I = %f\r\n", control_i);
+    }
+    UART2_Print(buffer);
+  } else if (!strcmp(word, "d")) {
+    if (*rest) {
+      float val = atof(rest);
+      sprintf(buffer, "New D = %f\r\n", val);
+      control_d = val;
+    } else {
+      sprintf(buffer, "Current D = %f\r\n", control_d);
+    }
+    UART2_Print(buffer);
+  } else if (!strcmp(word, "min")) {
+    if (*rest) {
+      float val = atof(rest);
+      sprintf(buffer, "New min = %f\r\n", val);
+      control_mina = val;
+    } else {
+      sprintf(buffer, "Current min = %f\r\n", control_mina);
+    }
+    UART2_Print(buffer);
+  } else if (!strcmp(word, "max")) {
+    if (*rest) {
+      float val = atof(rest);
+      sprintf(buffer, "New max = %f\r\n", val);
+      control_maxa = val;
+    } else {
+      sprintf(buffer, "Current max = %f\r\n", control_maxa);
+    }
+    UART2_Print(buffer);
+  } else if (!strcmp(word, "sensor")) {
+    next_word(word, &rest);
+    if (!strcmp(word, "pt")) {
+      control_stype = 0;
+    } else if (!strcmp(word, "dpt")) {
+      control_stype = 1;
+    } else {
+      UART2_Print("Invalid sensor type: ");
+      UART2_Print(word);
+      UART2_Print("\r\n");
+      return;
+    }
+    int id = retrieve_id(rest);
+    if (id == 0) {
+      UART2_Print("Invalid sensor name: ");
+      UART2_Print(rest);
+      UART2_Print("\r\n");
+      return;
+    }
+    control_sid = id;
+    control_sidx = last_index;
+    UART2_Print("Now reading from ");
+    UART2_Print(rest);
+    UART2_Print("\r\n");
+
+  } else if (!strcmp(word, "act")) {
+    next_word(word, &rest);
+    if (!strcmp(word, "servo")) {
+      control_atype = 0;
+    } else {
+      UART2_Print("Invalid actuator type: ");
+      UART2_Print(word);
+      UART2_Print("\r\n");
+      return;
+    }
+    int id = retrieve_id(rest);
+    if (id == 0) {
+      UART2_Print("Invalid actuator name: ");
+      UART2_Print(rest);
+      UART2_Print("\r\n");
+      return;
+    }
+    control_aid = id;
+    control_aidx = last_index;
+    UART2_Print("Now writing to ");
+    UART2_Print(rest);
+    UART2_Print("\r\n");
+  } else if (!strcmp(word, "setp")) {
+    if (*rest) {
+      float val = atof(rest);
+      sprintf(buffer, "New setpoint = %f\r\n", val);
+      control_setp = val;
+    } else {
+      sprintf(buffer, "Current setpoint = %f\r\n", control_setp);
+    }
+    UART2_Print(buffer);
+  } else if (!strcmp(word, "run")) {
+    if (!control_sid) {
+      UART2_Print("Control source not configured.\r\n");
+      return;
+    }
+    if (!control_aid) {
+      UART2_Print("Control actuator not configured.\r\n");
+      return;
+    }
+    float dt = 0.001f;
+    control_last_ts = HAL_GetTick();
+    control_last_rd = control_read();
+    float prev = control_last_err;
+    control_last_err = control_last_rd - control_setp; // sus
+    control_int += control_last_err * dt;
+    control_last_eff = control_p * control_last_err
+                     + control_i * control_int
+                     + control_d * (control_last_err - prev) / dt;
+    if (control_last_eff < control_mina) control_last_eff = control_mina;
+    if (control_last_eff > control_maxa) control_last_eff = control_maxa;
+    control_write(control_last_eff);
+  } else if (!strcmp(word, "stat")) {
+    if (!control_last_ts) {
+      UART2_Print("Loop hasn't been run.\r\n");
+      return;
+    }
+    sprintf(buffer, "Last run at %dms, S=%f Err=%f A=%f\r\n", control_last_ts, control_last_rd, control_last_err, control_last_eff);
+    UART2_Print(buffer);
+  } else if (!*word) {
+    cmd_invalid = 1;
+    UART2_Print("Option needed for \"loop\".\r\n");
+  } else {
+    cmd_invalid = 1;
+    UART2_Print("Unknown option for \"loop\": ");
+    UART2_Print(word);
+    UART2_Print("\r\n");
+  }
+}
 int prog_lines = 0;
+int adventuremain();
 void process_command(char *buf) {
   char word[32];
   FRESULT fres;
@@ -1137,6 +1665,12 @@ void process_command(char *buf) {
     command_msg(buf);
   } else if (!strcmp(word, "pt")) {
     command_pt(buf);
+  } else if (!strcmp(word, "log")) {
+    command_log(buf);
+  } else if (!strcmp(word, "loop")) {
+    command_loop(buf);
+  } else if (!strcmp(word, "adventure")) {
+    //adventuremain();
   } else if (!*word) {
     cmd_invalid = 1;
     UART2_Print("Enter a command.\r\n");
@@ -1223,7 +1757,6 @@ int main(void)
   MX_SPI2_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
-  //MX_LPUART2_UART_Init();
   if (MX_FATFS_Init() != APP_OK) {
     Error_Handler();
   }
@@ -1243,6 +1776,7 @@ int main(void)
   char rxChar;
   char cmdBuf[320];
   uint8_t idx = 0;
+  setvbuf(stdin, NULL, _IONBF, 0);
   UART2_Print("Papyrus reset\r\n");
   muted = 1;
   process_command("file run startup.scr");
@@ -1279,7 +1813,9 @@ int main(void)
     TimeEntry **last = &root;
     while (t != NULL) {
       if (t->timeout <= 0) {
+        if (t->quiet) muted = 1;
         process_command(t->cmdbuf);
+        muted = 0;
         if (t->reload) {
           t->timeout = t->reload;
         } else {
@@ -1316,7 +1852,13 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;
+  RCC_OscInitStruct.PLL.PLLN = 8;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
+  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -1326,11 +1868,11 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -1371,7 +1913,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc1.Init.DMAContinuousRequests = DISABLE;
   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_1CYCLE_5;
+  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_79CYCLES_5;
   hadc1.Init.SamplingTimeCommon2 = ADC_SAMPLETIME_1CYCLE_5;
   hadc1.Init.OversamplingMode = DISABLE;
   hadc1.Init.TriggerFrequencyMode = ADC_TRIGGER_FREQ_HIGH;
@@ -1390,7 +1932,13 @@ static void MX_ADC1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN ADC1_Init 2 */
-
+  sConfig.Channel = ADC_CHANNEL_VREFINT;
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLINGTIME_COMMON_1;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE END ADC1_Init 2 */
 
 }
@@ -1496,50 +2044,82 @@ static void MX_I2C1_Init(void)
 }
 
 /**
-  * @brief LPUART2 Initialization Function
+  * @brief SPI1 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_LPUART2_UART_Init(void)
+static void MX_SPI1_Init(void)
 {
 
-  /* USER CODE BEGIN LPUART2_Init 0 */
+  /* USER CODE BEGIN SPI1_Init 0 */
 
-  /* USER CODE END LPUART2_Init 0 */
+  /* USER CODE END SPI1_Init 0 */
 
-  /* USER CODE BEGIN LPUART2_Init 1 */
+  /* USER CODE BEGIN SPI1_Init 1 */
 
-  /* USER CODE END LPUART2_Init 1 */
-  hlpuart2.Instance = LPUART2;
-  hlpuart2.Init.BaudRate = 115200;
-  hlpuart2.Init.WordLength = UART_WORDLENGTH_8B;
-  hlpuart2.Init.StopBits = UART_STOPBITS_1;
-  hlpuart2.Init.Parity = UART_PARITY_NONE;
-  hlpuart2.Init.Mode = UART_MODE_TX_RX;
-  hlpuart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  hlpuart2.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  hlpuart2.Init.ClockPrescaler = UART_PRESCALER_DIV1;
-  hlpuart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  hlpuart2.FifoMode = UART_FIFOMODE_DISABLE;
-  if (HAL_UART_Init(&hlpuart2) != HAL_OK)
+  /* USER CODE END SPI1_Init 1 */
+  /* SPI1 parameter configuration*/
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_4BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 7;
+  hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+  hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
   {
     Error_Handler();
   }
-  if (HAL_UARTEx_SetTxFifoThreshold(&hlpuart2, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetRxFifoThreshold(&hlpuart2, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_DisableFifoMode(&hlpuart2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN LPUART2_Init 2 */
+  /* USER CODE BEGIN SPI1_Init 2 */
 
-  /* USER CODE END LPUART2_Init 2 */
+  /* USER CODE END SPI1_Init 2 */
+
+}
+
+/**
+  * @brief SPI2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI2_Init(void)
+{
+
+  /* USER CODE BEGIN SPI2_Init 0 */
+
+  /* USER CODE END SPI2_Init 0 */
+
+  /* USER CODE BEGIN SPI2_Init 1 */
+
+  /* USER CODE END SPI2_Init 1 */
+  /* SPI2 parameter configuration*/
+  hspi2.Instance = SPI2;
+  hspi2.Init.Mode = SPI_MODE_MASTER;
+  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi2.Init.NSS = SPI_NSS_SOFT;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128;
+  hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi2.Init.CRCPolynomial = 7;
+  hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+  hspi2.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+  if (HAL_SPI_Init(&hspi2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI2_Init 2 */
+
+  /* USER CODE END SPI2_Init 2 */
 
 }
 
@@ -1640,86 +2220,6 @@ static void MX_USART2_UART_Init(void)
 }
 
 /**
-  * @brief SPI1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SPI1_Init(void)
-{
-
-  /* USER CODE BEGIN SPI1_Init 0 */
-
-  /* USER CODE END SPI1_Init 0 */
-
-  /* USER CODE BEGIN SPI1_Init 1 */
-
-  /* USER CODE END SPI1_Init 1 */
-  /* SPI1 parameter configuration*/
-  hspi1.Instance = SPI1;
-  hspi1.Init.Mode = SPI_MODE_MASTER;
-  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi1.Init.DataSize = SPI_DATASIZE_4BIT;
-  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
-  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi1.Init.CRCPolynomial = 7;
-  hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
-  hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
-  if (HAL_SPI_Init(&hspi1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI1_Init 2 */
-
-  /* USER CODE END SPI1_Init 2 */
-
-}
-
-/**
-  * @brief SPI2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SPI2_Init(void)
-{
-
-  /* USER CODE BEGIN SPI2_Init 0 */
-
-  /* USER CODE END SPI2_Init 0 */
-
-  /* USER CODE BEGIN SPI2_Init 1 */
-
-  /* USER CODE END SPI2_Init 1 */
-  /* SPI2 parameter configuration*/
-  hspi2.Instance = SPI2;
-  hspi2.Init.Mode = SPI_MODE_MASTER;
-  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128;
-  hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi2.Init.CRCPolynomial = 7;
-  hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
-  hspi2.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
-  if (HAL_SPI_Init(&hspi2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI2_Init 2 */
-
-  /* USER CODE END SPI2_Init 2 */
-
-}
-
-/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -1758,6 +2258,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PA13 PA14 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Alternate = GPIO_AF10_LPUART2;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PD0 PD1 PD2 PD3 */
   GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3;

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc41MayP.s 			page 1
+ARM GAS  /tmp/ccOsVLCD.s 			page 1
 
 
    1              		.cpu cortex-m0plus
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
   30:Core/Src/user_diskio_spi.c **** //Make sure you set #define SD_SPI_HANDLE as some hspix in main.h
   31:Core/Src/user_diskio_spi.c **** //Make sure you set #define SD_CS_GPIO_Port as some GPIO port in main.h
   32:Core/Src/user_diskio_spi.c **** //Make sure you set #define SD_CS_Pin as some GPIO pin in main.h
-ARM GAS  /tmp/cc41MayP.s 			page 2
+ARM GAS  /tmp/ccOsVLCD.s 			page 2
 
 
   33:Core/Src/user_diskio_spi.c **** extern SPI_HandleTypeDef SD_SPI_HANDLE;
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
   87:Core/Src/user_diskio_spi.c **** uint32_t spiTimerTickDelay;
   88:Core/Src/user_diskio_spi.c **** 
   89:Core/Src/user_diskio_spi.c **** void SPI_Timer_On(uint32_t waitTicks) {
-ARM GAS  /tmp/cc41MayP.s 			page 3
+ARM GAS  /tmp/ccOsVLCD.s 			page 3
 
 
   90:Core/Src/user_diskio_spi.c ****     spiTimerTickStart = HAL_GetTick();
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
   60 001c 2078     		ldrb	r0, [r4]
  111:Core/Src/user_diskio_spi.c **** }
   61              		.loc 1 111 1 view .LVU8
-ARM GAS  /tmp/cc41MayP.s 			page 4
+ARM GAS  /tmp/ccOsVLCD.s 			page 4
 
 
   62 001e 06B0     		add	sp, sp, #24
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
   81              		.loc 1 148 1 is_stmt 1 view -0
   82              		.cfi_startproc
   83              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/cc41MayP.s 			page 5
+ARM GAS  /tmp/ccOsVLCD.s 			page 5
 
 
   84              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  161:Core/Src/user_diskio_spi.c **** 
  162:Core/Src/user_diskio_spi.c **** 	return (d == 0xFF) ? 1 : 0;
  126              		.loc 1 162 2 is_stmt 1 view .LVU25
-ARM GAS  /tmp/cc41MayP.s 			page 6
+ARM GAS  /tmp/ccOsVLCD.s 			page 6
 
 
  127              		.loc 1 162 25 is_stmt 0 view .LVU26
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  122:Core/Src/user_diskio_spi.c **** 	}
  176              		.loc 1 122 3 is_stmt 1 view .LVU35
  122:Core/Src/user_diskio_spi.c **** 	}
-ARM GAS  /tmp/cc41MayP.s 			page 7
+ARM GAS  /tmp/ccOsVLCD.s 			page 7
 
 
  177              		.loc 1 122 9 is_stmt 0 view .LVU36
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  217              		.cfi_def_cfa_offset 8
  218              		.cfi_offset 4, -8
  219              		.cfi_offset 14, -4
-ARM GAS  /tmp/cc41MayP.s 			page 8
+ARM GAS  /tmp/ccOsVLCD.s 			page 8
 
 
  174:Core/Src/user_diskio_spi.c **** 	CS_HIGH();		/* Set CS# high */
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  261 0006 0948     		ldr	r0, .L17
  262 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
  263              	.LVL22:
-ARM GAS  /tmp/cc41MayP.s 			page 9
+ARM GAS  /tmp/ccOsVLCD.s 			page 9
 
 
  264              		.loc 1 188 10 discriminator 1 view .LVU50
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  198:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
  199:Core/Src/user_diskio_spi.c **** /* Receive a data packet from the MMC                                    */
  200:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
-ARM GAS  /tmp/cc41MayP.s 			page 10
+ARM GAS  /tmp/ccOsVLCD.s 			page 10
 
 
  201:Core/Src/user_diskio_spi.c **** 
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  255:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
  256:Core/Src/user_diskio_spi.c **** /* Send a command packet to the MMC                                      */
  257:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
-ARM GAS  /tmp/cc41MayP.s 			page 11
+ARM GAS  /tmp/ccOsVLCD.s 			page 11
 
 
  258:Core/Src/user_diskio_spi.c **** 
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  342              		.loc 1 277 6 discriminator 1 view .LVU71
  343 0018 0028     		cmp	r0, #0
  344 001a 3AD0     		beq	.L26
-ARM GAS  /tmp/cc41MayP.s 			page 12
+ARM GAS  /tmp/ccOsVLCD.s 			page 12
 
 
  345              	.L22:
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  387              		.loc 1 269 3 is_stmt 1 view .LVU86
  269:Core/Src/user_diskio_spi.c **** 		res = send_cmd(CMD55, 0);
  388              		.loc 1 269 7 is_stmt 0 view .LVU87
-ARM GAS  /tmp/cc41MayP.s 			page 13
+ARM GAS  /tmp/ccOsVLCD.s 			page 13
 
 
  389 004e 7F23     		movs	r3, #127
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  429 0070 FFF7FEFF 		bl	xchg_spi
  430              	.LVL44:
  431 0074 0200     		movs	r2, r0
-ARM GAS  /tmp/cc41MayP.s 			page 14
+ARM GAS  /tmp/ccOsVLCD.s 			page 14
 
 
  432              	.LVL45:
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  481              	.LVL55:
  482              	.LFB497:
  134:Core/Src/user_diskio_spi.c **** 	HAL_SPI_Transmit(&SD_SPI_HANDLE, buff, btx, HAL_MAX_DELAY);
-ARM GAS  /tmp/cc41MayP.s 			page 15
+ARM GAS  /tmp/ccOsVLCD.s 			page 15
 
 
  483              		.loc 1 134 1 is_stmt 1 view -0
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  532              		.cfi_def_cfa_offset 16
  533              		.cfi_offset 4, -16
  534              		.cfi_offset 5, -12
-ARM GAS  /tmp/cc41MayP.s 			page 16
+ARM GAS  /tmp/ccOsVLCD.s 			page 16
 
 
  535              		.cfi_offset 6, -8
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  577              	.LVL66:
  245:Core/Src/user_diskio_spi.c **** 
  578              		.loc 1 245 3 view .LVU130
-ARM GAS  /tmp/cc41MayP.s 			page 17
+ARM GAS  /tmp/ccOsVLCD.s 			page 17
 
 
  579 002c FF20     		movs	r0, #255
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  625              		@ frame_needed = 0, uses_anonymous_args = 0
   89:Core/Src/user_diskio_spi.c ****     spiTimerTickStart = HAL_GetTick();
  626              		.loc 1 89 39 is_stmt 0 view .LVU141
-ARM GAS  /tmp/cc41MayP.s 			page 18
+ARM GAS  /tmp/ccOsVLCD.s 			page 18
 
 
  627 0000 10B5     		push	{r4, lr}
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
   95:Core/Src/user_diskio_spi.c **** }
  675              		.loc 1 95 5 view .LVU150
   95:Core/Src/user_diskio_spi.c **** }
-ARM GAS  /tmp/cc41MayP.s 			page 19
+ARM GAS  /tmp/ccOsVLCD.s 			page 19
 
 
  676              		.loc 1 95 14 is_stmt 0 view .LVU151
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  725 0006 C820     		movs	r0, #200
  726              	.LVL78:
  211:Core/Src/user_diskio_spi.c **** 	do {							/* Wait for DataStart token in timeout of 200ms */
-ARM GAS  /tmp/cc41MayP.s 			page 20
+ARM GAS  /tmp/ccOsVLCD.s 			page 20
 
 
  727              		.loc 1 211 2 is_stmt 0 view .LVU159
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  769              	.LVL87:
  219:Core/Src/user_diskio_spi.c **** 
  770              		.loc 1 219 2 view .LVU172
-ARM GAS  /tmp/cc41MayP.s 			page 21
+ARM GAS  /tmp/ccOsVLCD.s 			page 21
 
 
  771 0030 FF20     		movs	r0, #255
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  801              	.LCFI12:
  802              		.cfi_def_cfa_offset 16
  803              		.cfi_offset 4, -16
-ARM GAS  /tmp/cc41MayP.s 			page 22
+ARM GAS  /tmp/ccOsVLCD.s 			page 22
 
 
  804              		.cfi_offset 5, -12
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  849              	.LVL94:
  850              		.loc 1 331 19 is_stmt 0 discriminator 3 view .LVU191
  851 0030 E4B2     		uxtb	r4, r4
-ARM GAS  /tmp/cc41MayP.s 			page 23
+ARM GAS  /tmp/ccOsVLCD.s 			page 23
 
 
  852              	.LVL95:
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  352:Core/Src/user_diskio_spi.c **** 			if (!SPI_Timer_Status() || send_cmd(CMD16, 512) != 0)	/* Set block length: 512 */
  353:Core/Src/user_diskio_spi.c **** 				ty = 0;
  354:Core/Src/user_diskio_spi.c **** 		}
-ARM GAS  /tmp/cc41MayP.s 			page 24
+ARM GAS  /tmp/ccOsVLCD.s 			page 24
 
 
  355:Core/Src/user_diskio_spi.c **** 	}
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  923 007c 70BD     		pop	{r4, r5, r6, pc}
  924              	.LVL103:
  925              	.L80:
-ARM GAS  /tmp/cc41MayP.s 			page 25
+ARM GAS  /tmp/ccOsVLCD.s 			page 25
 
 
  335:Core/Src/user_diskio_spi.c **** 		if (send_cmd(CMD8, 0x1AA) == 1) {	/* SDv2? */
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  967 00ac 9B78     		ldrb	r3, [r3, #2]
  338:Core/Src/user_diskio_spi.c **** 				while (SPI_Timer_Status() && send_cmd(ACMD41, 1UL << 30)) ;	/* Wait for end of initialization w
  968              		.loc 1 338 7 view .LVU226
-ARM GAS  /tmp/cc41MayP.s 			page 26
+ARM GAS  /tmp/ccOsVLCD.s 			page 26
 
 
  969 00ae 012B     		cmp	r3, #1
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1011 00e4 051E     		subs	r5, r0, #0
  1012              	.LVL114:
  340:Core/Src/user_diskio_spi.c **** 					for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);
-ARM GAS  /tmp/cc41MayP.s 			page 27
+ARM GAS  /tmp/ccOsVLCD.s 			page 27
 
 
  1013              		.loc 1 340 28 discriminator 1 view .LVU239
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1054              		.loc 1 346 7 discriminator 1 view .LVU252
  1055 0110 0128     		cmp	r0, #1
  1056 0112 0FD9     		bls	.L83
-ARM GAS  /tmp/cc41MayP.s 			page 28
+ARM GAS  /tmp/ccOsVLCD.s 			page 28
 
 
  1057              	.LVL121:
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1098 013c 8900     		lsls	r1, r1, #2
  1099 013e 1020     		movs	r0, #16
  1100 0140 FFF7FEFF 		bl	send_cmd
-ARM GAS  /tmp/cc41MayP.s 			page 29
+ARM GAS  /tmp/ccOsVLCD.s 			page 29
 
 
  1101              	.LVL128:
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  368:Core/Src/user_diskio_spi.c **** 
  369:Core/Src/user_diskio_spi.c **** 
  370:Core/Src/user_diskio_spi.c **** 
-ARM GAS  /tmp/cc41MayP.s 			page 30
+ARM GAS  /tmp/ccOsVLCD.s 			page 30
 
 
  371:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1192              	.LVL138:
  1193              	.LFB506:
  383:Core/Src/user_diskio_spi.c **** 
-ARM GAS  /tmp/cc41MayP.s 			page 31
+ARM GAS  /tmp/ccOsVLCD.s 			page 31
 
 
  384:Core/Src/user_diskio_spi.c **** 
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1231              		.loc 1 400 5 view .LVU294
  1232 001c 1B07     		lsls	r3, r3, #28
  1233 001e 00D4     		bmi	.L94
-ARM GAS  /tmp/cc41MayP.s 			page 32
+ARM GAS  /tmp/ccOsVLCD.s 			page 32
 
 
  1234              		.loc 1 400 30 is_stmt 1 discriminator 1 view .LVU295
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1275              		.loc 1 413 13 is_stmt 0 view .LVU310
  1276 0048 002C     		cmp	r4, #0
  1277 004a F1D1     		bne	.L98
-ARM GAS  /tmp/cc41MayP.s 			page 33
+ARM GAS  /tmp/ccOsVLCD.s 			page 33
 
 
  1278              	.L97:
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  404:Core/Src/user_diskio_spi.c **** 			count = 0;
  1320              		.loc 1 404 4 discriminator 1 view .LVU323
  1321 0074 0028     		cmp	r0, #0
-ARM GAS  /tmp/cc41MayP.s 			page 34
+ARM GAS  /tmp/ccOsVLCD.s 			page 34
 
 
  1322 0076 EDD0     		beq	.L96
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  424:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
  425:Core/Src/user_diskio_spi.c **** /* Write sector(s)                                                       */
  426:Core/Src/user_diskio_spi.c **** /*-----------------------------------------------------------------------*/
-ARM GAS  /tmp/cc41MayP.s 			page 35
+ARM GAS  /tmp/ccOsVLCD.s 			page 35
 
 
  427:Core/Src/user_diskio_spi.c **** 
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1407 0020 234B     		ldr	r3, .L124+4
  1408 0022 1B78     		ldrb	r3, [r3]
  1409              		.loc 1 440 5 view .LVU346
-ARM GAS  /tmp/cc41MayP.s 			page 36
+ARM GAS  /tmp/ccOsVLCD.s 			page 36
 
 
  1410 0024 1A07     		lsls	r2, r3, #28
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1451 004c 8023     		movs	r3, #128
  1452 004e 9B00     		lsls	r3, r3, #2
  1453 0050 9C46     		mov	ip, r3
-ARM GAS  /tmp/cc41MayP.s 			page 37
+ARM GAS  /tmp/ccOsVLCD.s 			page 37
 
 
  1454 0052 6544     		add	r5, r5, ip
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  443:Core/Src/user_diskio_spi.c **** 			&& xmit_datablock(buff, 0xFE)) {
  1498              		.loc 1 443 8 view .LVU375
  1499 0074 1820     		movs	r0, #24
-ARM GAS  /tmp/cc41MayP.s 			page 38
+ARM GAS  /tmp/ccOsVLCD.s 			page 38
 
 
  1500              	.LVL181:
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1542              	.LVL191:
  436:Core/Src/user_diskio_spi.c **** 	if (Stat & STA_NOINIT) return RES_NOTRDY;	/* Check drive status */
  1543              		.loc 1 436 28 discriminator 3 view .LVU388
-ARM GAS  /tmp/cc41MayP.s 			page 39
+ARM GAS  /tmp/ccOsVLCD.s 			page 39
 
 
  1544 009e E7E7     		b	.L108
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  472:Core/Src/user_diskio_spi.c **** 	BYTE cmd,		/* Control command code */
  473:Core/Src/user_diskio_spi.c **** 	void *buff		/* Pointer to the conrtol data */
  474:Core/Src/user_diskio_spi.c **** )
-ARM GAS  /tmp/cc41MayP.s 			page 40
+ARM GAS  /tmp/ccOsVLCD.s 			page 40
 
 
  475:Core/Src/user_diskio_spi.c **** {
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1626 0020 1BD0     		beq	.L130
  1627 0022 0129     		cmp	r1, #1
  1628 0024 0BD1     		bne	.L157
-ARM GAS  /tmp/cc41MayP.s 			page 41
+ARM GAS  /tmp/ccOsVLCD.s 			page 41
 
 
  487:Core/Src/user_diskio_spi.c **** 	case CTRL_SYNC :		/* Wait for end of internal write process of the drive */
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  522:Core/Src/user_diskio_spi.c **** 				res = RES_OK;
  523:Core/Src/user_diskio_spi.c **** 			}
  524:Core/Src/user_diskio_spi.c **** 		}
-ARM GAS  /tmp/cc41MayP.s 			page 42
+ARM GAS  /tmp/ccOsVLCD.s 			page 42
 
 
  525:Core/Src/user_diskio_spi.c **** 		break;
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  528:Core/Src/user_diskio_spi.c **** 		if (USER_SPI_ioctl(drv, MMC_GET_CSD, csd)) break;	/* Get CSD */
  1674              		.loc 1 528 6 view .LVU422
  1675 004c 1A42     		tst	r2, r3
-ARM GAS  /tmp/cc41MayP.s 			page 43
+ARM GAS  /tmp/ccOsVLCD.s 			page 43
 
 
  1676 004e 00D0     		beq	.LCB1557
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1718 007c 012B     		cmp	r3, #1
  1719 007e 1BD0     		beq	.L161
  497:Core/Src/user_diskio_spi.c **** 				csize = (csd[8] >> 6) + ((WORD)csd[7] << 2) + ((WORD)(csd[6] & 3) << 10) + 1;
-ARM GAS  /tmp/cc41MayP.s 			page 44
+ARM GAS  /tmp/ccOsVLCD.s 			page 44
 
 
  1720              		.loc 1 497 5 is_stmt 1 view .LVU435
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1758 00a8 0001     		lsls	r0, r0, #4
  1759 00aa 0240     		ands	r2, r0
  498:Core/Src/user_diskio_spi.c **** 				*(DWORD*)buff = csize << (n - 9);
-ARM GAS  /tmp/cc41MayP.s 			page 45
+ARM GAS  /tmp/ccOsVLCD.s 			page 45
 
 
  1760              		.loc 1 498 49 view .LVU452
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1799 00ce 0133     		adds	r3, r3, #1
  1800              	.LVL217:
  495:Core/Src/user_diskio_spi.c **** 			} else {					/* SDC ver 1.XX or MMC ver 3 */
-ARM GAS  /tmp/cc41MayP.s 			page 46
+ARM GAS  /tmp/ccOsVLCD.s 			page 46
 
 
  1801              		.loc 1 495 5 is_stmt 1 view .LVU468
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  509:Core/Src/user_diskio_spi.c **** 					for (n = 64 - 16; n; n--) xchg_spi(0xFF);	/* Purge trailing data */
  1841              		.loc 1 509 9 is_stmt 0 view .LVU483
  1842 00f4 1021     		movs	r1, #16
-ARM GAS  /tmp/cc41MayP.s 			page 47
+ARM GAS  /tmp/ccOsVLCD.s 			page 47
 
 
  1843 00f6 6846     		mov	r0, sp
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1884              	.L147:
  510:Core/Src/user_diskio_spi.c **** 					*(DWORD*)buff = 16UL << (csd[10] >> 4);
  1885              		.loc 1 510 13 view .LVU497
-ARM GAS  /tmp/cc41MayP.s 			page 48
+ARM GAS  /tmp/ccOsVLCD.s 			page 48
 
 
  1886 0120 3025     		movs	r5, #48
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1927              		.loc 1 518 6 is_stmt 1 view .LVU510
  518:Core/Src/user_diskio_spi.c **** 				} else {					/* MMC */
  1928              		.loc 1 518 28 is_stmt 0 view .LVU511
-ARM GAS  /tmp/cc41MayP.s 			page 49
+ARM GAS  /tmp/ccOsVLCD.s 			page 49
 
 
  1929 014e 6A46     		mov	r2, sp
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  1967 0178 0132     		adds	r2, r2, #1
  520:Core/Src/user_diskio_spi.c **** 				}
  1968              		.loc 1 520 65 view .LVU528
-ARM GAS  /tmp/cc41MayP.s 			page 50
+ARM GAS  /tmp/ccOsVLCD.s 			page 50
 
 
  1969 017a C97A     		ldrb	r1, [r1, #11]
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  2008 01a4 9B7A     		ldrb	r3, [r3, #10]
  530:Core/Src/user_diskio_spi.c **** 		dp = buff; st = dp[0]; ed = dp[1];				/* Load sector block */
  2009              		.loc 1 530 22 discriminator 1 view .LVU544
-ARM GAS  /tmp/cc41MayP.s 			page 51
+ARM GAS  /tmp/ccOsVLCD.s 			page 51
 
 
  2010 01a6 5B06     		lsls	r3, r3, #25
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  2048 01c4 0125     		movs	r5, #1
  2049 01c6 35E7     		b	.L132
  2050              	.L164:
-ARM GAS  /tmp/cc41MayP.s 			page 52
+ARM GAS  /tmp/ccOsVLCD.s 			page 52
 
 
  535:Core/Src/user_diskio_spi.c **** 			res = RES_OK;	/* FatFs does not check result of this command */
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  2094 01fc 2500     		movs	r5, r4
  2095 01fe 19E7     		b	.L132
  2096              	.L149:
-ARM GAS  /tmp/cc41MayP.s 			page 53
+ARM GAS  /tmp/ccOsVLCD.s 			page 53
 
 
  2097 0200 0125     		movs	r5, #1
@@ -3177,67 +3177,67 @@ ARM GAS  /tmp/cc41MayP.s 			page 1
  2157              		.file 10 "Middlewares/Third_Party/FatFs/src/diskio.h"
  2158              		.file 11 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
  2159              		.file 12 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h"
-ARM GAS  /tmp/cc41MayP.s 			page 54
+ARM GAS  /tmp/ccOsVLCD.s 			page 54
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 user_diskio_spi.c
-     /tmp/cc41MayP.s:19     .text.xchg_spi:00000000 $t
-     /tmp/cc41MayP.s:24     .text.xchg_spi:00000000 xchg_spi
-     /tmp/cc41MayP.s:68     .text.xchg_spi:00000024 $d
-     /tmp/cc41MayP.s:73     .text.wait_ready:00000000 $t
-     /tmp/cc41MayP.s:78     .text.wait_ready:00000000 wait_ready
-     /tmp/cc41MayP.s:142    .text.rcvr_spi_multi:00000000 $t
-     /tmp/cc41MayP.s:147    .text.rcvr_spi_multi:00000000 rcvr_spi_multi
-     /tmp/cc41MayP.s:204    .text.despiselect:00000000 $t
-     /tmp/cc41MayP.s:209    .text.despiselect:00000000 despiselect
-     /tmp/cc41MayP.s:237    .text.despiselect:00000014 $d
-     /tmp/cc41MayP.s:242    .text.spiselect:00000000 $t
-     /tmp/cc41MayP.s:247    .text.spiselect:00000000 spiselect
-     /tmp/cc41MayP.s:295    .text.spiselect:0000002c $d
-     /tmp/cc41MayP.s:300    .text.send_cmd:00000000 $t
-     /tmp/cc41MayP.s:305    .text.send_cmd:00000000 send_cmd
-     /tmp/cc41MayP.s:475    .text.xmit_spi_multi:00000000 $t
-     /tmp/cc41MayP.s:480    .text.xmit_spi_multi:00000000 xmit_spi_multi
-     /tmp/cc41MayP.s:512    .text.xmit_spi_multi:00000014 $d
-     /tmp/cc41MayP.s:517    .text.xmit_datablock:00000000 $t
-     /tmp/cc41MayP.s:522    .text.xmit_datablock:00000000 xmit_datablock
-     /tmp/cc41MayP.s:613    .text.SPI_Timer_On:00000000 $t
-     /tmp/cc41MayP.s:619    .text.SPI_Timer_On:00000000 SPI_Timer_On
-     /tmp/cc41MayP.s:652    .text.SPI_Timer_On:00000014 $d
-     /tmp/cc41MayP.s:2135   .bss.spiTimerTickStart:00000000 spiTimerTickStart
-     /tmp/cc41MayP.s:2128   .bss.spiTimerTickDelay:00000000 spiTimerTickDelay
-     /tmp/cc41MayP.s:658    .text.SPI_Timer_Status:00000000 $t
-     /tmp/cc41MayP.s:664    .text.SPI_Timer_Status:00000000 SPI_Timer_Status
-     /tmp/cc41MayP.s:695    .text.SPI_Timer_Status:00000018 $d
-     /tmp/cc41MayP.s:701    .text.rcvr_datablock:00000000 $t
-     /tmp/cc41MayP.s:706    .text.rcvr_datablock:00000000 rcvr_datablock
-     /tmp/cc41MayP.s:786    .text.USER_SPI_initialize:00000000 $t
-     /tmp/cc41MayP.s:792    .text.USER_SPI_initialize:00000000 USER_SPI_initialize
-     /tmp/cc41MayP.s:1134   .text.USER_SPI_initialize:00000160 $d
-     /tmp/cc41MayP.s:2145   .data.Stat:00000000 Stat
-     /tmp/cc41MayP.s:2140   .bss.CardType:00000000 CardType
-     /tmp/cc41MayP.s:1141   .text.USER_SPI_status:00000000 $t
-     /tmp/cc41MayP.s:1147   .text.USER_SPI_status:00000000 USER_SPI_status
-     /tmp/cc41MayP.s:1180   .text.USER_SPI_status:00000010 $d
-     /tmp/cc41MayP.s:1185   .text.USER_SPI_read:00000000 $t
-     /tmp/cc41MayP.s:1191   .text.USER_SPI_read:00000000 USER_SPI_read
-     /tmp/cc41MayP.s:1352   .text.USER_SPI_read:00000088 $d
-     /tmp/cc41MayP.s:1358   .text.USER_SPI_write:00000000 $t
-     /tmp/cc41MayP.s:1364   .text.USER_SPI_write:00000000 USER_SPI_write
-     /tmp/cc41MayP.s:1569   .text.USER_SPI_write:000000ac $d
-     /tmp/cc41MayP.s:1575   .text.USER_SPI_ioctl:00000000 $t
-     /tmp/cc41MayP.s:1581   .text.USER_SPI_ioctl:00000000 USER_SPI_ioctl
-     /tmp/cc41MayP.s:2117   .text.USER_SPI_ioctl:00000214 $d
-     /tmp/cc41MayP.s:2125   .bss.spiTimerTickDelay:00000000 $d
-     /tmp/cc41MayP.s:2132   .bss.spiTimerTickStart:00000000 $d
-     /tmp/cc41MayP.s:2141   .bss.CardType:00000000 $d
+     /tmp/ccOsVLCD.s:19     .text.xchg_spi:00000000 $t
+     /tmp/ccOsVLCD.s:24     .text.xchg_spi:00000000 xchg_spi
+     /tmp/ccOsVLCD.s:68     .text.xchg_spi:00000024 $d
+     /tmp/ccOsVLCD.s:73     .text.wait_ready:00000000 $t
+     /tmp/ccOsVLCD.s:78     .text.wait_ready:00000000 wait_ready
+     /tmp/ccOsVLCD.s:142    .text.rcvr_spi_multi:00000000 $t
+     /tmp/ccOsVLCD.s:147    .text.rcvr_spi_multi:00000000 rcvr_spi_multi
+     /tmp/ccOsVLCD.s:204    .text.despiselect:00000000 $t
+     /tmp/ccOsVLCD.s:209    .text.despiselect:00000000 despiselect
+     /tmp/ccOsVLCD.s:237    .text.despiselect:00000014 $d
+     /tmp/ccOsVLCD.s:242    .text.spiselect:00000000 $t
+     /tmp/ccOsVLCD.s:247    .text.spiselect:00000000 spiselect
+     /tmp/ccOsVLCD.s:295    .text.spiselect:0000002c $d
+     /tmp/ccOsVLCD.s:300    .text.send_cmd:00000000 $t
+     /tmp/ccOsVLCD.s:305    .text.send_cmd:00000000 send_cmd
+     /tmp/ccOsVLCD.s:475    .text.xmit_spi_multi:00000000 $t
+     /tmp/ccOsVLCD.s:480    .text.xmit_spi_multi:00000000 xmit_spi_multi
+     /tmp/ccOsVLCD.s:512    .text.xmit_spi_multi:00000014 $d
+     /tmp/ccOsVLCD.s:517    .text.xmit_datablock:00000000 $t
+     /tmp/ccOsVLCD.s:522    .text.xmit_datablock:00000000 xmit_datablock
+     /tmp/ccOsVLCD.s:613    .text.SPI_Timer_On:00000000 $t
+     /tmp/ccOsVLCD.s:619    .text.SPI_Timer_On:00000000 SPI_Timer_On
+     /tmp/ccOsVLCD.s:652    .text.SPI_Timer_On:00000014 $d
+     /tmp/ccOsVLCD.s:2135   .bss.spiTimerTickStart:00000000 spiTimerTickStart
+     /tmp/ccOsVLCD.s:2128   .bss.spiTimerTickDelay:00000000 spiTimerTickDelay
+     /tmp/ccOsVLCD.s:658    .text.SPI_Timer_Status:00000000 $t
+     /tmp/ccOsVLCD.s:664    .text.SPI_Timer_Status:00000000 SPI_Timer_Status
+     /tmp/ccOsVLCD.s:695    .text.SPI_Timer_Status:00000018 $d
+     /tmp/ccOsVLCD.s:701    .text.rcvr_datablock:00000000 $t
+     /tmp/ccOsVLCD.s:706    .text.rcvr_datablock:00000000 rcvr_datablock
+     /tmp/ccOsVLCD.s:786    .text.USER_SPI_initialize:00000000 $t
+     /tmp/ccOsVLCD.s:792    .text.USER_SPI_initialize:00000000 USER_SPI_initialize
+     /tmp/ccOsVLCD.s:1134   .text.USER_SPI_initialize:00000160 $d
+     /tmp/ccOsVLCD.s:2145   .data.Stat:00000000 Stat
+     /tmp/ccOsVLCD.s:2140   .bss.CardType:00000000 CardType
+     /tmp/ccOsVLCD.s:1141   .text.USER_SPI_status:00000000 $t
+     /tmp/ccOsVLCD.s:1147   .text.USER_SPI_status:00000000 USER_SPI_status
+     /tmp/ccOsVLCD.s:1180   .text.USER_SPI_status:00000010 $d
+     /tmp/ccOsVLCD.s:1185   .text.USER_SPI_read:00000000 $t
+     /tmp/ccOsVLCD.s:1191   .text.USER_SPI_read:00000000 USER_SPI_read
+     /tmp/ccOsVLCD.s:1352   .text.USER_SPI_read:00000088 $d
+     /tmp/ccOsVLCD.s:1358   .text.USER_SPI_write:00000000 $t
+     /tmp/ccOsVLCD.s:1364   .text.USER_SPI_write:00000000 USER_SPI_write
+     /tmp/ccOsVLCD.s:1569   .text.USER_SPI_write:000000ac $d
+     /tmp/ccOsVLCD.s:1575   .text.USER_SPI_ioctl:00000000 $t
+     /tmp/ccOsVLCD.s:1581   .text.USER_SPI_ioctl:00000000 USER_SPI_ioctl
+     /tmp/ccOsVLCD.s:2117   .text.USER_SPI_ioctl:00000214 $d
+     /tmp/ccOsVLCD.s:2125   .bss.spiTimerTickDelay:00000000 $d
+     /tmp/ccOsVLCD.s:2132   .bss.spiTimerTickStart:00000000 $d
+     /tmp/ccOsVLCD.s:2141   .bss.CardType:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_SPI_TransmitReceive
 hspi2
 HAL_GetTick
-ARM GAS  /tmp/cc41MayP.s 			page 55
+ARM GAS  /tmp/ccOsVLCD.s 			page 55
 
 
 HAL_GPIO_WritePin
