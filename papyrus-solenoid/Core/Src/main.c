@@ -33,7 +33,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
-#define CAN_CMD_ID     101
+#define CAN_CMD_ID     103
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -162,6 +162,11 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    // txData[0] = 0x00;
+    // txData[1] ^= 1; // OK
+    // CAN_SendAck(txData, 2);
+    // HAL_Delay(500);
+
     if (HAL_FDCAN_GetRxFifoFillLevel(&hfdcan1, FDCAN_RX_FIFO0) > 0)
     {
       HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO0, &rxHeader, rxData);

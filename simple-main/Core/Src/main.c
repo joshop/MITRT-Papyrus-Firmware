@@ -45,6 +45,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
 
 FDCAN_HandleTypeDef hfdcan1;
 
@@ -52,6 +53,8 @@ I2C_HandleTypeDef hi2c1;
 
 SPI_HandleTypeDef hspi1;
 SPI_HandleTypeDef hspi2;
+
+TIM_HandleTypeDef htim2;
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
@@ -63,6 +66,7 @@ UART_HandleTypeDef huart2;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_FDCAN1_Init(void);
 static void MX_I2C1_Init(void);
@@ -70,6 +74,7 @@ static void MX_SPI1_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 void CAN_Send(uint8_t cmd);
 void UART_Print(char *s);
@@ -129,7 +134,14 @@ uint32_t ADC_Get_VDDA_mV(void)
 
   return vdda;
 }
-
+volatile uint16_t vref_raw = 1;
+uint16_t vref_mV;
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
+  if (hadc->Instance == ADC1) {
+    uint32_t vrefint_cal = *VREFINT_CAL_ADDR;
+    vref_mV = (VREFINT_CAL_VREF * vrefint_cal) / vref_raw;
+  }
+}
 void CAN_Rx_Default(FDCAN_RxHeaderTypeDef rxHeader) {
 
   UART2_Print("OK\r\n");
@@ -463,7 +475,7 @@ void command_bus(char *rest) {
     bus_list_function();
   } else if (!strcmp(word, "vdd")) {
     char buffer[256];
-    sprintf(buffer, "VDD = %d mV\r\n", ADC_Get_VDDA_mV());
+    sprintf(buffer, "VDD = %d mV\r\n", vref_mV);
     UART2_Print(buffer);
   } else if (!*word) {
     cmd_invalid = 1;
@@ -1099,6 +1111,10 @@ void command_msg(char *rest) {
   if (!strcmp(word, "echo")) {
     UART2_Print(rest);
     UART2_Print("\r\n");
+  } else if (!strcmp(word, "quiet")) {
+    muted |= 2;
+  } else if (!strcmp(word, "unquiet")) {
+    muted &= ~2;
   } else if (!*word) {
     cmd_invalid = 1;
     UART2_Print("Option needed for \"msg\".\r\n");
@@ -1750,6 +1766,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_FDCAN1_Init();
   MX_I2C1_Init();
@@ -1760,9 +1777,26 @@ int main(void)
   if (MX_FATFS_Init() != APP_OK) {
     Error_Handler();
   }
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
+  HAL_Delay(500);
+  LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(ADC1),
+                                 LL_ADC_PATH_INTERNAL_VREFINT);
 
+  HAL_ADCEx_Calibration_Start(&hadc1);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&vref_raw, 1);
+  HAL_TIM_Base_Start(&htim2);
   HAL_FDCAN_Start(&hfdcan1);
+
+  HAL_ADC_Stop_DMA(&hadc1);
+
+  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  HAL_ADC_Init(&hadc1);
+
+  HAL_ADC_Start(&hadc1);
+  HAL_ADC_PollForConversion(&hadc1, 100);
+  volatile uint16_t v = HAL_ADC_GetValue(&hadc1);
 
   HAL_Delay(400); //a short delay is important to let the SD card settle
 
@@ -1778,9 +1812,9 @@ int main(void)
   uint8_t idx = 0;
   setvbuf(stdin, NULL, _IONBF, 0);
   UART2_Print("Papyrus reset\r\n");
-  muted = 1;
+  muted |= 1;
   process_command("file run startup.scr");
-  muted = 0;
+  muted &= ~1;
 
   /* USER CODE END 2 */
 
@@ -1813,9 +1847,9 @@ int main(void)
     TimeEntry **last = &root;
     while (t != NULL) {
       if (t->timeout <= 0) {
-        if (t->quiet) muted = 1;
+        if (t->quiet) muted |= 1;
         process_command(t->cmdbuf);
-        muted = 0;
+        muted &= ~1;
         if (t->reload) {
           t->timeout = t->reload;
         } else {
@@ -1899,22 +1933,21 @@ static void MX_ADC1_Init(void)
   /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
-  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+  hadc1.Init.ScanConvMode = ADC_SCAN_SEQ_FIXED;
+  hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;
   hadc1.Init.LowPowerAutoWait = DISABLE;
   hadc1.Init.LowPowerAutoPowerOff = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.NbrOfConversion = 1;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
-  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
-  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
-  hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_79CYCLES_5;
-  hadc1.Init.SamplingTimeCommon2 = ADC_SAMPLETIME_1CYCLE_5;
+  hadc1.Init.ExternalTrigConv = ADC_EXTERNALTRIG_T2_TRGO;
+  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_RISING;
+  hadc1.Init.DMAContinuousRequests = ENABLE;
+  hadc1.Init.Overrun = ADC_OVR_DATA_OVERWRITTEN;
+  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_160CYCLES_5;
   hadc1.Init.OversamplingMode = DISABLE;
   hadc1.Init.TriggerFrequencyMode = ADC_TRIGGER_FREQ_HIGH;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
@@ -1924,21 +1957,13 @@ static void MX_ADC1_Init(void)
 
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_0;
-  sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLINGTIME_COMMON_1;
+  sConfig.Channel = ADC_CHANNEL_VREFINT;
+  sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
   /* USER CODE BEGIN ADC1_Init 2 */
-  sConfig.Channel = ADC_CHANNEL_VREFINT;
-  sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLINGTIME_COMMON_1;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE END ADC1_Init 2 */
 
 }
@@ -2124,6 +2149,52 @@ static void MX_SPI2_Init(void)
 }
 
 /**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_SlaveConfigTypeDef sSlaveConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 25;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 49999;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sSlaveConfig.SlaveMode = TIM_SLAVEMODE_DISABLE;
+  sSlaveConfig.InputTrigger = TIM_TS_ITR0;
+  if (HAL_TIM_SlaveConfigSynchro(&htim2, &sSlaveConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+
+}
+
+/**
   * @brief USART1 Initialization Function
   * @param None
   * @retval None
@@ -2196,7 +2267,8 @@ static void MX_USART2_UART_Init(void)
   huart2.Init.OverSampling = UART_OVERSAMPLING_16;
   huart2.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
   huart2.Init.ClockPrescaler = UART_PRESCALER_DIV1;
-  huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_RXOVERRUNDISABLE_INIT;
+  huart2.AdvancedInit.OverrunDisable = UART_ADVFEATURE_OVERRUN_DISABLE;
   if (HAL_UART_Init(&huart2) != HAL_OK)
   {
     Error_Handler();
@@ -2209,13 +2281,29 @@ static void MX_USART2_UART_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_UARTEx_DisableFifoMode(&huart2) != HAL_OK)
+  if (HAL_UARTEx_EnableFifoMode(&huart2) != HAL_OK)
   {
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
 
   /* USER CODE END USART2_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 
 }
 
@@ -2258,14 +2346,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PA13 PA14 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF10_LPUART2;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PD0 PD1 PD2 PD3 */
   GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3;

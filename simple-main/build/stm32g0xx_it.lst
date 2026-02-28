@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccB8ohT2.s 			page 1
+ARM GAS  /tmp/cclTF98V.s 			page 1
 
 
    1              		.cpu cortex-m0plus
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccB8ohT2.s 			page 1
   30:Core/Src/stm32g0xx_it.c **** /* USER CODE END TD */
   31:Core/Src/stm32g0xx_it.c **** 
   32:Core/Src/stm32g0xx_it.c **** /* Private define ------------------------------------------------------------*/
-ARM GAS  /tmp/ccB8ohT2.s 			page 2
+ARM GAS  /tmp/cclTF98V.s 			page 2
 
 
   33:Core/Src/stm32g0xx_it.c **** /* USER CODE BEGIN PD */
@@ -86,7 +86,7 @@ ARM GAS  /tmp/ccB8ohT2.s 			page 1
   55:Core/Src/stm32g0xx_it.c **** /* USER CODE END 0 */
   56:Core/Src/stm32g0xx_it.c **** 
   57:Core/Src/stm32g0xx_it.c **** /* External variables --------------------------------------------------------*/
-  58:Core/Src/stm32g0xx_it.c **** 
+  58:Core/Src/stm32g0xx_it.c **** extern DMA_HandleTypeDef hdma_adc1;
   59:Core/Src/stm32g0xx_it.c **** /* USER CODE BEGIN EV */
   60:Core/Src/stm32g0xx_it.c **** 
   61:Core/Src/stm32g0xx_it.c **** /* USER CODE END EV */
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccB8ohT2.s 			page 1
   75:Core/Src/stm32g0xx_it.c ****   {
   36              		.loc 1 75 10 view .LVU3
   37 0000 FEE7     		b	.L2
-ARM GAS  /tmp/ccB8ohT2.s 			page 3
+ARM GAS  /tmp/cclTF98V.s 			page 3
 
 
   38              		.cfi_endproc
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccB8ohT2.s 			page 1
  100:Core/Src/stm32g0xx_it.c **** {
   73              		.loc 1 100 1 view -0
   74              		.cfi_startproc
-ARM GAS  /tmp/ccB8ohT2.s 			page 4
+ARM GAS  /tmp/cclTF98V.s 			page 4
 
 
   75              		@ args = 0, pretend = 0, frame = 0
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccB8ohT2.s 			page 1
  121:Core/Src/stm32g0xx_it.c **** 
  122:Core/Src/stm32g0xx_it.c **** /**
  123:Core/Src/stm32g0xx_it.c ****   * @brief This function handles System tick timer.
-ARM GAS  /tmp/ccB8ohT2.s 			page 5
+ARM GAS  /tmp/cclTF98V.s 			page 5
 
 
  124:Core/Src/stm32g0xx_it.c ****   */
@@ -272,29 +272,91 @@ ARM GAS  /tmp/ccB8ohT2.s 			page 1
  130 000a 10BD     		pop	{r4, pc}
  131              		.cfi_endproc
  132              	.LFE497:
- 134              		.text
- 135              	.Letext0:
- 136              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
- 137              		.file 3 "/usr/arm-none-eabi/include/sys/_stdint.h"
- 138              		.file 4 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
- 139              		.file 5 "Core/Inc/main.h"
- 140              		.file 6 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h"
-ARM GAS  /tmp/ccB8ohT2.s 			page 6
+ 134              		.section	.text.DMA1_Channel1_IRQHandler,"ax",%progbits
+ 135              		.align	1
+ 136              		.global	DMA1_Channel1_IRQHandler
+ 137              		.syntax unified
+ 138              		.code	16
+ 139              		.thumb_func
+ 141              	DMA1_Channel1_IRQHandler:
+ 142              	.LFB498:
+ 135:Core/Src/stm32g0xx_it.c **** 
+ 136:Core/Src/stm32g0xx_it.c **** /******************************************************************************/
+ 137:Core/Src/stm32g0xx_it.c **** /* STM32G0xx Peripheral Interrupt Handlers                                    */
+ 138:Core/Src/stm32g0xx_it.c **** /* Add here the Interrupt Handlers for the used peripherals.                  */
+ 139:Core/Src/stm32g0xx_it.c **** /* For the available peripheral interrupt handler names,                      */
+ 140:Core/Src/stm32g0xx_it.c **** /* please refer to the startup file (startup_stm32g0xx.s).                    */
+ 141:Core/Src/stm32g0xx_it.c **** /******************************************************************************/
+ 142:Core/Src/stm32g0xx_it.c **** 
+ 143:Core/Src/stm32g0xx_it.c **** /**
+ 144:Core/Src/stm32g0xx_it.c ****   * @brief This function handles DMA1 channel 1 interrupt.
+ 145:Core/Src/stm32g0xx_it.c ****   */
+ 146:Core/Src/stm32g0xx_it.c **** void DMA1_Channel1_IRQHandler(void)
+ 147:Core/Src/stm32g0xx_it.c **** {
+ 143              		.loc 1 147 1 is_stmt 1 view -0
+ 144              		.cfi_startproc
+ 145              		@ args = 0, pretend = 0, frame = 0
+ 146              		@ frame_needed = 0, uses_anonymous_args = 0
+ 147 0000 10B5     		push	{r4, lr}
+ARM GAS  /tmp/cclTF98V.s 			page 6
+
+
+ 148              	.LCFI1:
+ 149              		.cfi_def_cfa_offset 8
+ 150              		.cfi_offset 4, -8
+ 151              		.cfi_offset 14, -4
+ 148:Core/Src/stm32g0xx_it.c ****   /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
+ 149:Core/Src/stm32g0xx_it.c **** 
+ 150:Core/Src/stm32g0xx_it.c ****   /* USER CODE END DMA1_Channel1_IRQn 0 */
+ 151:Core/Src/stm32g0xx_it.c ****   HAL_DMA_IRQHandler(&hdma_adc1);
+ 152              		.loc 1 151 3 view .LVU17
+ 153 0002 0248     		ldr	r0, .L9
+ 154 0004 FFF7FEFF 		bl	HAL_DMA_IRQHandler
+ 155              	.LVL2:
+ 152:Core/Src/stm32g0xx_it.c ****   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
+ 153:Core/Src/stm32g0xx_it.c **** 
+ 154:Core/Src/stm32g0xx_it.c ****   /* USER CODE END DMA1_Channel1_IRQn 1 */
+ 155:Core/Src/stm32g0xx_it.c **** }
+ 156              		.loc 1 155 1 is_stmt 0 view .LVU18
+ 157              		@ sp needed
+ 158 0008 10BD     		pop	{r4, pc}
+ 159              	.L10:
+ 160 000a C046     		.align	2
+ 161              	.L9:
+ 162 000c 00000000 		.word	hdma_adc1
+ 163              		.cfi_endproc
+ 164              	.LFE498:
+ 166              		.text
+ 167              	.Letext0:
+ 168              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 169              		.file 3 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 170              		.file 4 "Drivers/CMSIS/Device/ST/STM32G0xx/Include/stm32g0b1xx.h"
+ 171              		.file 5 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_def.h"
+ 172              		.file 6 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_dma.h"
+ 173              		.file 7 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
+ 174              		.file 8 "Core/Inc/main.h"
+ 175              		.file 9 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h"
+ARM GAS  /tmp/cclTF98V.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32g0xx_it.c
-     /tmp/ccB8ohT2.s:19     .text.NMI_Handler:00000000 $t
-     /tmp/ccB8ohT2.s:25     .text.NMI_Handler:00000000 NMI_Handler
-     /tmp/ccB8ohT2.s:42     .text.HardFault_Handler:00000000 $t
-     /tmp/ccB8ohT2.s:48     .text.HardFault_Handler:00000000 HardFault_Handler
-     /tmp/ccB8ohT2.s:65     .text.SVC_Handler:00000000 $t
-     /tmp/ccB8ohT2.s:71     .text.SVC_Handler:00000000 SVC_Handler
-     /tmp/ccB8ohT2.s:85     .text.PendSV_Handler:00000000 $t
-     /tmp/ccB8ohT2.s:91     .text.PendSV_Handler:00000000 PendSV_Handler
-     /tmp/ccB8ohT2.s:105    .text.SysTick_Handler:00000000 $t
-     /tmp/ccB8ohT2.s:111    .text.SysTick_Handler:00000000 SysTick_Handler
+     /tmp/cclTF98V.s:19     .text.NMI_Handler:00000000 $t
+     /tmp/cclTF98V.s:25     .text.NMI_Handler:00000000 NMI_Handler
+     /tmp/cclTF98V.s:42     .text.HardFault_Handler:00000000 $t
+     /tmp/cclTF98V.s:48     .text.HardFault_Handler:00000000 HardFault_Handler
+     /tmp/cclTF98V.s:65     .text.SVC_Handler:00000000 $t
+     /tmp/cclTF98V.s:71     .text.SVC_Handler:00000000 SVC_Handler
+     /tmp/cclTF98V.s:85     .text.PendSV_Handler:00000000 $t
+     /tmp/cclTF98V.s:91     .text.PendSV_Handler:00000000 PendSV_Handler
+     /tmp/cclTF98V.s:105    .text.SysTick_Handler:00000000 $t
+     /tmp/cclTF98V.s:111    .text.SysTick_Handler:00000000 SysTick_Handler
+     /tmp/cclTF98V.s:135    .text.DMA1_Channel1_IRQHandler:00000000 $t
+     /tmp/cclTF98V.s:141    .text.DMA1_Channel1_IRQHandler:00000000 DMA1_Channel1_IRQHandler
+     /tmp/cclTF98V.s:162    .text.DMA1_Channel1_IRQHandler:0000000c $d
 
 UNDEFINED SYMBOLS
 HAL_IncTick
 main_tick
+HAL_DMA_IRQHandler
+hdma_adc1

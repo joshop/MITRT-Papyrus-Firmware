@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccvnhHTK.s 			page 1
+ARM GAS  /tmp/ccvuHxIO.s 			page 1
 
 
    1              		.cpu cortex-m0plus
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
   29:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
   30:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /** @addtogroup STM32G0xx_LL_Driver
   31:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @{
-ARM GAS  /tmp/ccvnhHTK.s 			page 2
+ARM GAS  /tmp/ccvuHxIO.s 			page 2
 
 
   32:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
   86:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define ADC_REG_TRIG_EDGE_MASK             (((LL_ADC_REG_TRIG_SOFTWARE & ADC_CFGR1_EXTEN) << (4U * 
   87:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                             ((ADC_REG_TRIG_EXT_EDGE_DEFAULT)              << (4U * 
   88:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                             ((ADC_REG_TRIG_EXT_EDGE_DEFAULT)              << (4U * 
-ARM GAS  /tmp/ccvnhHTK.s 			page 3
+ARM GAS  /tmp/ccvuHxIO.s 			page 3
 
 
   89:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                             ((ADC_REG_TRIG_EXT_EDGE_DEFAULT)              << (4U * 
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  143:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
  144:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /* Definition of channels ID bitfield information to be inserted into         */
  145:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /* channels literals definition.                                              */
-ARM GAS  /tmp/ccvnhHTK.s 			page 4
+ARM GAS  /tmp/ccvuHxIO.s 			page 4
 
 
  146:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define ADC_CHANNEL_0_BITFIELD             (ADC_CHSELR_CHSEL0)
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  200:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define ADC_AWD_CR1_CHANNEL_MASK           (ADC_CFGR1_AWD1CH | ADC_CFGR1_AWD1EN | ADC_CFGR1_AWD1SGL
  201:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define ADC_AWD_CR23_CHANNEL_MASK          (ADC_AWD2CR_AWD2CH)
  202:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define ADC_AWD_CR_ALL_CHANNEL_MASK        (ADC_AWD_CR1_CHANNEL_MASK | ADC_AWD_CR23_CHANNEL_MASK)
-ARM GAS  /tmp/ccvnhHTK.s 			page 5
+ARM GAS  /tmp/ccvuHxIO.s 			page 5
 
 
  203:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  257:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
  258:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
  259:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /* ADC internal channels related definitions */
-ARM GAS  /tmp/ccvnhHTK.s 			page 6
+ARM GAS  /tmp/ccvuHxIO.s 			page 6
 
 
  260:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /* Internal voltage reference VrefInt */
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  314:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
  315:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
  316:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /**
-ARM GAS  /tmp/ccvnhHTK.s 			page 7
+ARM GAS  /tmp/ccvuHxIO.s 			page 7
 
 
  317:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @brief  Structure definition of some features of ADC common parameters
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  371:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   uint32_t DataAlignment;               /*!< Set ADC conversion data alignment.
  372:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                              This parameter can be a value of @ref ADC_LL_EC_DATA_A
  373:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                              This feature can be modified afterwards using unitary 
-ARM GAS  /tmp/ccvnhHTK.s 			page 8
+ARM GAS  /tmp/ccvuHxIO.s 			page 8
 
 
  374:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                              @ref LL_ADC_SetDataAlignment(). */
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  428:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                                    enabled (depending on the sequencer mode: scan l
  429:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                                    more, or several ADC channels enabled in group r
  430:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                                    Refer to function @ref LL_ADC_REG_SetSequencerCo
-ARM GAS  /tmp/ccvnhHTK.s 			page 9
+ARM GAS  /tmp/ccvuHxIO.s 			page 9
 
 
  431:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                              This feature can be modified afterwards using unitary 
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  485:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @}
  486:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
  487:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
-ARM GAS  /tmp/ccvnhHTK.s 			page 10
+ARM GAS  /tmp/ccvuHxIO.s 			page 10
 
 
  488:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /** @defgroup ADC_LL_EC_IT ADC interruptions for configuration (interruption enable or disable)
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  542:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            prescaler division by 8. Setting common to ADC instances
  543:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            group, applied ADC instance wise to each instance clock 
  544:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            asynchronous (refer to function @ref LL_ADC_SetClock() )
-ARM GAS  /tmp/ccvnhHTK.s 			page 11
+ARM GAS  /tmp/ccvuHxIO.s 			page 11
 
 
  545:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_CLOCK_ASYNC_DIV10           (ADC_CCR_PRESC_2 | ADC_CCR_PRESC_0) /*!< ADC asynchronou
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  599:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_PATH_INTERNAL_VREFINT       (ADC_CCR_VREFEN)     /*!< ADC measurement path to intern
  600:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_PATH_INTERNAL_TEMPSENSOR    (ADC_CCR_TSEN)       /*!< ADC measurement path to intern
  601:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                                                      temperature sensor */
-ARM GAS  /tmp/ccvnhHTK.s 			page 12
+ARM GAS  /tmp/ccvuHxIO.s 			page 12
 
 
  602:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_PATH_INTERNAL_VBAT          (ADC_CCR_VBATEN)     /*!< ADC measurement path to intern
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  656:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            and start of sampling). See description with function
  657:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            @ref LL_ADC_SetLowPowerMode(). */
  658:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_LP_AUTOWAIT_AUTOPOWEROFF    (ADC_CFGR1_WAIT | ADC_CFGR1_AUTOFF) /*!< ADC low power m
-ARM GAS  /tmp/ccvnhHTK.s 			page 13
+ARM GAS  /tmp/ccvuHxIO.s 			page 13
 
 
  659:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** and auto power-off combined. See description with function @ref LL_ADC_SetLowPowerMode(). */
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  713:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                             | ADC_CHANNEL_3_BITFIELD ) /*!< ADC channel ADCx_IN3  *
  714:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_CHANNEL_4                   (ADC_CHANNEL_4_NUMBER \
  715:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                             | ADC_CHANNEL_4_BITFIELD ) /*!< ADC channel ADCx_IN4  *
-ARM GAS  /tmp/ccvnhHTK.s 			page 14
+ARM GAS  /tmp/ccvuHxIO.s 			page 14
 
 
  716:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_CHANNEL_5                   (ADC_CHANNEL_5_NUMBER \
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  770:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            conversion trigger from external peripheral: TIM2 TRGO.
  771:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            Trigger edge set to rising edge (default setting). */
  772:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #endif /* TIM2 */
-ARM GAS  /tmp/ccvnhHTK.s 			page 15
+ARM GAS  /tmp/ccvuHxIO.s 			page 15
 
 
  773:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_REG_TRIG_EXT_TIM3_TRGO      (ADC_CFGR1_EXTSEL_1 | ADC_CFGR1_EXTSEL_0 | \
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  827:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /** @defgroup ADC_LL_EC_REG_DMA_TRANSFER  ADC group regular - DMA transfer of ADC conversion data
  828:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @{
  829:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
-ARM GAS  /tmp/ccvnhHTK.s 			page 16
+ARM GAS  /tmp/ccvuHxIO.s 			page 16
 
 
  830:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_REG_DMA_TRANSFER_NONE       (0x00000000UL)     /*!< ADC conversions are not transfer
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  884:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            with 7 ranks in the sequence */
  885:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_REG_SEQ_SCAN_ENABLE_8RANKS  (0x00000000UL)                 /*!< ADC group regular se
  886:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            with 8 ranks in the sequence */
-ARM GAS  /tmp/ccvnhHTK.s 			page 17
+ARM GAS  /tmp/ccvuHxIO.s 			page 17
 
 
  887:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /**
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  941:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_SAMPLINGTIME_3CYCLES_5      (ADC_SMPR_SMP1_0)  /*!< Sampling time 3.5 ADC clock cycl
  942:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_SAMPLINGTIME_7CYCLES_5      (ADC_SMPR_SMP1_1)  /*!< Sampling time 7.5 ADC clock cycl
  943:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_SAMPLINGTIME_12CYCLES_5     (ADC_SMPR_SMP1_1 \
-ARM GAS  /tmp/ccvnhHTK.s 			page 18
+ARM GAS  /tmp/ccvuHxIO.s 			page 18
 
 
  944:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                             | ADC_SMPR_SMP1_0) /*!< Sampling time 12.5 ADC clock cy
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  998:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            of ADC channel ADCx_IN6, converted by group regular only
  999:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_AWD_CHANNEL_7_REG           ((LL_ADC_CHANNEL_7  & ADC_CHANNEL_ID_MASK) \
 1000:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                             | ADC_CFGR1_AWD1EN | ADC_CFGR1_AWD1SGL)  /*!< ADC analo
-ARM GAS  /tmp/ccvnhHTK.s 			page 19
+ARM GAS  /tmp/ccvuHxIO.s 			page 19
 
 
 1001:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            of ADC channel ADCx_IN7, converted by group regular only
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1055:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_AWD_THRESHOLD_HIGH          (ADC_AWD1TR_HT1)   /*!< ADC analog watchdog threshold hi
 1056:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_AWD_THRESHOLD_LOW           (ADC_AWD1TR_LT1)   /*!< ADC analog watchdog threshold lo
 1057:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define LL_ADC_AWD_THRESHOLDS_HIGH_LOW     (ADC_AWD1TR_HT1 \
-ARM GAS  /tmp/ccvnhHTK.s 			page 20
+ARM GAS  /tmp/ccvuHxIO.s 			page 20
 
 
 1058:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                             | ADC_AWD1TR_LT1)  /*!< ADC analog watchdog both thresh
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1112:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                             | ADC_CFGR2_OVSR_0)                   /*!< ADC oversamp
 1113:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            (sum of conversions data computed to result as oversampl
 1114:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                            (before potential shift) */
-ARM GAS  /tmp/ccvnhHTK.s 			page 21
+ARM GAS  /tmp/ccvuHxIO.s 			page 21
 
 
 1115:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /**
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1169:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         For details on delays values, refer to descriptions in source code
 1170:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         above each literal definition.
 1171:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @{
-ARM GAS  /tmp/ccvnhHTK.s 			page 22
+ARM GAS  /tmp/ccvuHxIO.s 			page 22
 
 
 1172:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1226:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
 1227:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /**
 1228:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @}
-ARM GAS  /tmp/ccvnhHTK.s 			page 23
+ARM GAS  /tmp/ccvuHxIO.s 			page 23
 
 
 1229:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1283:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_4
 1284:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_5
 1285:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_6
-ARM GAS  /tmp/ccvnhHTK.s 			page 24
+ARM GAS  /tmp/ccvuHxIO.s 			page 24
 
 
 1286:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_7
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1340:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  __DECIMAL_NB__ Value between Min_Data=0 and Max_Data=18
 1341:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval Returned value can be one of the following values:
 1342:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_0
-ARM GAS  /tmp/ccvnhHTK.s 			page 25
+ARM GAS  /tmp/ccvuHxIO.s 			page 25
 
 
 1343:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_1
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1397:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_3
 1398:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_4
 1399:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_5
-ARM GAS  /tmp/ccvnhHTK.s 			page 26
+ARM GAS  /tmp/ccvuHxIO.s 			page 26
 
 
 1400:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_6
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1454:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_13
 1455:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_14
 1456:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_15         (1)
-ARM GAS  /tmp/ccvnhHTK.s 			page 27
+ARM GAS  /tmp/ccvuHxIO.s 			page 27
 
 
 1457:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_16         (1)
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1511:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
 1512:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define __LL_ADC_IS_CHANNEL_INTERNAL_AVAILABLE(__ADC_INSTANCE__, __CHANNEL__)  \
 1513:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   (((__CHANNEL__) == LL_ADC_CHANNEL_VREFINT)    ||                             \
-ARM GAS  /tmp/ccvnhHTK.s 			page 28
+ARM GAS  /tmp/ccvuHxIO.s 			page 28
 
 
 1514:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****    ((__CHANNEL__) == LL_ADC_CHANNEL_TEMPSENSOR) ||                             \
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1568:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_AWD_CHANNEL_7_REG
 1569:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_AWD_CHANNEL_8_REG
 1570:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_AWD_CHANNEL_9_REG
-ARM GAS  /tmp/ccvnhHTK.s 			page 29
+ARM GAS  /tmp/ccvuHxIO.s 			page 29
 
 
 1571:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_AWD_CHANNEL_10_REG
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1625:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_RESOLUTION_6B
 1626:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  __AWD_THRESHOLD_12_BITS__ Value between Min_Data=0x000 and Max_Data=0xFFF
 1627:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval Value between Min_Data=0x000 and Max_Data=0xFFF
-ARM GAS  /tmp/ccvnhHTK.s 			page 30
+ARM GAS  /tmp/ccvuHxIO.s 			page 30
 
 
 1628:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1682:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @brief  Helper macro to define the ADC conversion data full-scale digital
 1683:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         value corresponding to the selected ADC resolution.
 1684:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   ADC conversion data full-scale corresponds to voltage range
-ARM GAS  /tmp/ccvnhHTK.s 			page 31
+ARM GAS  /tmp/ccvuHxIO.s 			page 31
 
 
 1685:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         determined by analog voltage references Vref+ and Vref-
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1739:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** #define __LL_ADC_CALC_DATA_TO_VOLTAGE(__VREFANALOG_VOLTAGE__,\
 1740:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                       __ADC_DATA__,\
 1741:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                       __ADC_RESOLUTION__)                    \
-ARM GAS  /tmp/ccvnhHTK.s 			page 32
+ARM GAS  /tmp/ccvuHxIO.s 			page 32
 
 
 1742:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** ((__ADC_DATA__) * (__VREFANALOG_VOLTAGE__)                                   \
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1796:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *                  parameters are correct (address and data).
 1797:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *                  To calculate temperature using temperature sensor
 1798:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *                  datasheet typical values (generic values less, therefore
-ARM GAS  /tmp/ccvnhHTK.s 			page 33
+ARM GAS  /tmp/ccvuHxIO.s 			page 33
 
 
 1799:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *                  less accurate than calibrated values),
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1853:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *                Avg_Slope        = temperature sensor slope
 1854:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *                                   (unit: uV/Degree Celsius)
 1855:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *                TS_TYP_CALx_VOLT = temperature sensor digital value at
-ARM GAS  /tmp/ccvnhHTK.s 			page 34
+ARM GAS  /tmp/ccvuHxIO.s 			page 34
 
 
 1856:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *                                   temperature CALx_TEMP (unit: mV)
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1910:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
 1911:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /**
 1912:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @}
-ARM GAS  /tmp/ccvnhHTK.s 			page 35
+ARM GAS  /tmp/ccvuHxIO.s 			page 35
 
 
 1913:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1967:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           ADC instances
 1968:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @{
 1969:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
-ARM GAS  /tmp/ccvnhHTK.s 			page 36
+ARM GAS  /tmp/ccvuHxIO.s 			page 36
 
 
 1970:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2024:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CLOCK_ASYNC_DIV256 (1)
 2025:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *
 2026:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         (1) ADC common clock asynchronous prescaler is applied to
-ARM GAS  /tmp/ccvnhHTK.s 			page 37
+ARM GAS  /tmp/ccvuHxIO.s 			page 37
 
 
 2027:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *             each ADC instance if the corresponding ADC instance clock
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2081:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   Stabilization time of measurement path to internal channel:
 2082:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         After enabling internal paths, before starting ADC conversion,
 2083:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         a delay is required for internal voltage reference and
-ARM GAS  /tmp/ccvnhHTK.s 			page 38
+ARM GAS  /tmp/ccvuHxIO.s 			page 38
 
 
 2084:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         temperature sensor stabilization time.
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2138:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         This check can be done with function @ref LL_ADC_IsEnabled() for each
 2139:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         ADC instance or by using helper macro helper macro
 2140:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @ref __LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE().
-ARM GAS  /tmp/ccvnhHTK.s 			page 39
+ARM GAS  /tmp/ccvuHxIO.s 			page 39
 
 
 2141:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @rmtoll CCR      VREFEN         LL_ADC_SetCommonPathInternalChAdd\n
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2195:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         CCR      TSEN           LL_ADC_GetCommonPathInternalCh\n
 2196:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         CCR      VBATEN         LL_ADC_GetCommonPathInternalCh
 2197:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  ADCxy_COMMON ADC common instance
-ARM GAS  /tmp/ccvnhHTK.s 			page 40
+ARM GAS  /tmp/ccvuHxIO.s 			page 40
 
 
 2198:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         (can be set directly from CMSIS definition or by using helper macro @ref __LL_ADC_COMMO
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2252:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CLOCK_SYNC_PCLK_DIV2
 2253:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CLOCK_SYNC_PCLK_DIV1 (2)
 2254:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CLOCK_ASYNC (1)
-ARM GAS  /tmp/ccvnhHTK.s 			page 41
+ARM GAS  /tmp/ccvuHxIO.s 			page 41
 
 
 2255:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2309:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         dependencies to ADC resolutions.
 2310:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   On this STM32 series, setting of this feature is conditioned to
 2311:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         ADC state:
-ARM GAS  /tmp/ccvnhHTK.s 			page 42
+ARM GAS  /tmp/ccvuHxIO.s 			page 42
 
 
 2312:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         ADC must be disabled.
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2366:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         dependencies to ADC resolutions.
 2367:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @rmtoll CFGR1    ALIGN          LL_ADC_GetDataAlignment
 2368:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  ADCx ADC instance
-ARM GAS  /tmp/ccvnhHTK.s 			page 43
+ARM GAS  /tmp/ccvuHxIO.s 			page 43
 
 
 2369:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval Returned value can be one of the following values:
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2423:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  LowPowerMode This parameter can be one of the following values:
 2424:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_LP_MODE_NONE
 2425:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_LP_AUTOWAIT
-ARM GAS  /tmp/ccvnhHTK.s 			page 44
+ARM GAS  /tmp/ccvuHxIO.s 			page 44
 
 
 2426:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_LP_AUTOPOWEROFF
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2480:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_LP_AUTOPOWEROFF
 2481:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_LP_AUTOWAIT_AUTOPOWEROFF
 2482:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
-ARM GAS  /tmp/ccvnhHTK.s 			page 45
+ARM GAS  /tmp/ccvuHxIO.s 			page 45
 
 
 2483:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** __STATIC_INLINE uint32_t LL_ADC_GetLowPowerMode(const ADC_TypeDef *ADCx)
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2537:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   In case of internal channel (VrefInt, TempSensor, ...) to be
 2538:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         converted:
 2539:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         sampling time constraints must be respected (sampling time can be
-ARM GAS  /tmp/ccvnhHTK.s 			page 46
+ARM GAS  /tmp/ccvuHxIO.s 			page 46
 
 
 2540:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         adjusted in function of ADC clock frequency and sampling time
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2594:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  ADCx ADC instance
 2595:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  SamplingTimeY This parameter can be one of the following values:
 2596:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_SAMPLINGTIME_COMMON_1
-ARM GAS  /tmp/ccvnhHTK.s 			page 47
+ARM GAS  /tmp/ccvuHxIO.s 			page 47
 
 
 2597:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_SAMPLINGTIME_COMMON_2
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2651:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_TRIG_EXT_TIM15_TRGO  (1)
 2652:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_TRIG_EXT_EXTI_LINE11
 2653:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *
-ARM GAS  /tmp/ccvnhHTK.s 			page 48
+ARM GAS  /tmp/ccvuHxIO.s 			page 48
 
 
 2654:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         (1) On STM32G0, parameter not available on all devices
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2708:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   In case of group regular trigger source set to external trigger,
 2709:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         to determine which peripheral is selected as external trigger,
 2710:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         use function @ref LL_ADC_REG_GetTriggerSource().
-ARM GAS  /tmp/ccvnhHTK.s 			page 49
+ARM GAS  /tmp/ccvuHxIO.s 			page 49
 
 
 2711:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @rmtoll CFGR1    EXTEN          LL_ADC_REG_IsTriggerSourceSWStart
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2765:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         - sequencer configured to not fully configurable:
 2766:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           sequencer length and each rank affectation to a channel
 2767:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           are fixed by channel HW number.
-ARM GAS  /tmp/ccvnhHTK.s 			page 50
+ARM GAS  /tmp/ccvuHxIO.s 			page 50
 
 
 2768:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           Refer to description of function
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2822:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           (function "LL_ADC_REG_SetSequencerRanks()" available):
 2823:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           sequencer length and each rank affectation to a channel
 2824:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           are configurable.
-ARM GAS  /tmp/ccvnhHTK.s 			page 51
+ARM GAS  /tmp/ccvuHxIO.s 			page 51
 
 
 2825:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           This function performs configuration of:
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2879:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_SEQ_SCAN_ENABLE_5RANKS
 2880:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_SEQ_SCAN_ENABLE_6RANKS
 2881:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_SEQ_SCAN_ENABLE_7RANKS
-ARM GAS  /tmp/ccvnhHTK.s 			page 52
+ARM GAS  /tmp/ccvuHxIO.s 			page 52
 
 
 2882:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_SEQ_SCAN_ENABLE_8RANKS
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2936:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS
 2937:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_SEQ_SCAN_ENABLE_3RANKS
 2938:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_SEQ_SCAN_ENABLE_4RANKS
-ARM GAS  /tmp/ccvnhHTK.s 			page 53
+ARM GAS  /tmp/ccvuHxIO.s 			page 53
 
 
 2939:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_SEQ_SCAN_ENABLE_5RANKS
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2993:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** __STATIC_INLINE void LL_ADC_REG_SetSequencerScanDirection(ADC_TypeDef *ADCx, uint32_t ScanDirection
 2994:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** {
 2995:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   MODIFY_REG(ADCx->CFGR1, ADC_CFGR1_SCANDIR, ScanDirection);
-ARM GAS  /tmp/ccvnhHTK.s 			page 54
+ARM GAS  /tmp/ccvuHxIO.s 			page 54
 
 
 2996:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** }
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3050:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** }
 3051:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
 3052:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /**
-ARM GAS  /tmp/ccvnhHTK.s 			page 55
+ARM GAS  /tmp/ccvuHxIO.s 			page 55
 
 
 3053:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @brief  Set ADC group regular sequence: channel on the selected
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3107:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_8
 3108:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_9
 3109:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_10
-ARM GAS  /tmp/ccvnhHTK.s 			page 56
+ARM GAS  /tmp/ccvuHxIO.s 			page 56
 
 
 3110:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_11
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3164:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         CHSELR   SQ6            LL_ADC_REG_GetSequencerRanks\n
 3165:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         CHSELR   SQ7            LL_ADC_REG_GetSequencerRanks\n
 3166:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         CHSELR   SQ8            LL_ADC_REG_GetSequencerRanks
-ARM GAS  /tmp/ccvnhHTK.s 			page 57
+ARM GAS  /tmp/ccvuHxIO.s 			page 57
 
 
 3167:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  ADCx ADC instance
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3221:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         - Channels ordering into each rank of scan sequence:
 3222:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           rank of each channel is fixed by channel HW number
 3223:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           (channel 0 fixed on rank 0, channel 1 fixed on rank1, ...).
-ARM GAS  /tmp/ccvnhHTK.s 			page 58
+ARM GAS  /tmp/ccvuHxIO.s 			page 58
 
 
 3224:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         - Set channels selected by overwriting the current sequencer
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3278:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_4
 3279:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_5
 3280:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_6
-ARM GAS  /tmp/ccvnhHTK.s 			page 59
+ARM GAS  /tmp/ccvuHxIO.s 			page 59
 
 
 3281:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_CHANNEL_7
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3335:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   On this STM32 series, to measure internal channels (VrefInt,
 3336:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         TempSensor, ...), measurement paths to internal channels must be
 3337:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         enabled separately.
-ARM GAS  /tmp/ccvnhHTK.s 			page 60
+ARM GAS  /tmp/ccvuHxIO.s 			page 60
 
 
 3338:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         This can be done using function @ref LL_ADC_SetCommonPathInternalCh().
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3392:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval None
 3393:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
 3394:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** __STATIC_INLINE void LL_ADC_REG_SetSequencerChAdd(ADC_TypeDef *ADCx, uint32_t Channel)
-ARM GAS  /tmp/ccvnhHTK.s 			page 61
+ARM GAS  /tmp/ccvuHxIO.s 			page 61
 
 
 3395:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** {
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3449:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         CHSELR   CHSEL12        LL_ADC_REG_SetSequencerChRem\n
 3450:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         CHSELR   CHSEL13        LL_ADC_REG_SetSequencerChRem\n
 3451:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         CHSELR   CHSEL14        LL_ADC_REG_SetSequencerChRem\n
-ARM GAS  /tmp/ccvnhHTK.s 			page 62
+ARM GAS  /tmp/ccvuHxIO.s 			page 62
 
 
 3452:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         CHSELR   CHSEL15        LL_ADC_REG_SetSequencerChRem\n
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3506:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         and @ref LL_ADC_REG_SetSequencerLength().
 3507:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   Depending on devices and packages, some channels may not be available.
 3508:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         Refer to device datasheet for channels availability.
-ARM GAS  /tmp/ccvnhHTK.s 			page 63
+ARM GAS  /tmp/ccvuHxIO.s 			page 63
 
 
 3509:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   On this STM32 series, to measure internal channels (VrefInt,
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3563:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         (1) On STM32G0, parameter can be set in ADC group sequencer
 3564:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *             only if sequencer is set in mode "not fully configurable",
 3565:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *             refer to function @ref LL_ADC_REG_SetSequencerConfigurable().
-ARM GAS  /tmp/ccvnhHTK.s 			page 64
+ARM GAS  /tmp/ccvuHxIO.s 			page 64
 
 
 3566:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3620:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   Description of ADC continuous conversion mode:
 3621:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         - single mode: one conversion per trigger
 3622:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         - continuous mode: after the first trigger, following
-ARM GAS  /tmp/ccvnhHTK.s 			page 65
+ARM GAS  /tmp/ccvuHxIO.s 			page 65
 
 
 3623:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           conversions launched successively automatically.
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3677:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         - Limited mode (One shot mode): DMA transfer requests are stopped
 3678:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           when number of DMA data transfers (number of
 3679:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           ADC conversions) is reached.
-ARM GAS  /tmp/ccvnhHTK.s 			page 66
+ARM GAS  /tmp/ccvuHxIO.s 			page 66
 
 
 3680:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *           This ADC mode is intended to be used with DMA mode non-circular.
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3734:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval Returned value can be one of the following values:
 3735:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_OVR_DATA_PRESERVED
 3736:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_REG_OVR_DATA_OVERWRITTEN
-ARM GAS  /tmp/ccvnhHTK.s 			page 67
+ARM GAS  /tmp/ccvuHxIO.s 			page 67
 
 
 3737:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3791:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         SMPR     SMPSEL17       LL_ADC_SetChannelSamplingTime\n
 3792:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         SMPR     SMPSEL18       LL_ADC_SetChannelSamplingTime
 3793:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  ADCx ADC instance
-ARM GAS  /tmp/ccvnhHTK.s 			page 68
+ARM GAS  /tmp/ccvuHxIO.s 			page 68
 
 
 3794:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  Channel This parameter can be a combination of the following values:
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3848:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         SMPR     SMPSEL4        LL_ADC_GetChannelSamplingTime\n
 3849:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         SMPR     SMPSEL5        LL_ADC_GetChannelSamplingTime\n
 3850:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         SMPR     SMPSEL6        LL_ADC_GetChannelSamplingTime\n
-ARM GAS  /tmp/ccvnhHTK.s 			page 69
+ARM GAS  /tmp/ccvuHxIO.s 			page 69
 
 
 3851:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         SMPR     SMPSEL7        LL_ADC_GetChannelSamplingTime\n
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3905:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
 3906:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   /* Select sampling time bitfield depending on sampling time bit value 0 or 1.  */
 3907:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   return ((~(smp_channel_posbit0) * LL_ADC_SAMPLINGTIME_COMMON_1)
-ARM GAS  /tmp/ccvnhHTK.s 			page 70
+ARM GAS  /tmp/ccvuHxIO.s 			page 70
 
 
 3908:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****           | (smp_channel_posbit0 * LL_ADC_SAMPLINGTIME_COMMON_2));
@@ -4198,7 +4198,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 3962:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_AWD_DISABLE
 3963:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_AWD_ALL_CHANNELS_REG
 3964:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_AWD_CHANNEL_0_REG
-ARM GAS  /tmp/ccvnhHTK.s 			page 71
+ARM GAS  /tmp/ccvuHxIO.s 			page 71
 
 
 3965:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_AWD_CHANNEL_1_REG
@@ -4258,7 +4258,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4000:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   else
 4001:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   {
 4002:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****     preg = __ADC_PTR_REG_OFFSET(ADCx->AWD2CR,
-ARM GAS  /tmp/ccvnhHTK.s 			page 72
+ARM GAS  /tmp/ccvuHxIO.s 			page 72
 
 
   47              		.loc 2 4002 5 is_stmt 1 view .LVU6
@@ -4318,7 +4318,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
   92              		.thumb_func
   94              	LL_ADC_ConfigAnalogWDThresholds:
   95              	.LVL7:
-ARM GAS  /tmp/ccvnhHTK.s 			page 73
+ARM GAS  /tmp/ccvuHxIO.s 			page 73
 
 
   96              	.LFB415:
@@ -4378,7 +4378,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4063:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *             This function cannot retrieve monitored channel if
 4064:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *             multiple channels are programmed simultaneously
 4065:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *             by bitfield.
-ARM GAS  /tmp/ccvnhHTK.s 			page 74
+ARM GAS  /tmp/ccvuHxIO.s 			page 74
 
 
 4066:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval Returned value can be one of the following values:
@@ -4438,7 +4438,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4120:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****                                    );
 4121:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****       }
 4122:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****     }
-ARM GAS  /tmp/ccvnhHTK.s 			page 75
+ARM GAS  /tmp/ccvuHxIO.s 			page 75
 
 
 4123:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****     else
@@ -4498,7 +4498,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4177:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         oversampling final computation (after ratio and shift application):
 4178:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         ADC data register bitfield [15:4] (12 most significant bits).
 4179:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         Examples:
-ARM GAS  /tmp/ccvnhHTK.s 			page 76
+ARM GAS  /tmp/ccvuHxIO.s 			page 76
 
 
 4180:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         - Oversampling ratio and shift selected to have ADC conversion data
@@ -4558,7 +4558,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  114 0006 0C0D     		lsrs	r4, r1, #20
  115 0008 0321     		movs	r1, #3
  116              	.LVL9:
-ARM GAS  /tmp/ccvnhHTK.s 			page 77
+ARM GAS  /tmp/ccvuHxIO.s 			page 77
 
 
  117              		.loc 2 4216 25 view .LVU20
@@ -4618,7 +4618,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
    6:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *          functionalities of the Analog to Digital Converter (ADC)
    7:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *          peripheral:
    8:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *           + Initialization and de-initialization functions
-ARM GAS  /tmp/ccvnhHTK.s 			page 78
+ARM GAS  /tmp/ccvuHxIO.s 			page 78
 
 
    9:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *           + Peripheral Control functions
@@ -4678,7 +4678,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
   63:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****      [..]
   64:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
   65:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     (#) Enable the ADC interface
-ARM GAS  /tmp/ccvnhHTK.s 			page 79
+ARM GAS  /tmp/ccvuHxIO.s 			page 79
 
 
   66:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         (++) As prerequisite, ADC clock must be configured at RCC top level.
@@ -4738,7 +4738,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  120:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         using function HAL_ADC_ConfigChannel().
  121:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  122:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     (#) Optionally, configure the analog watchdog parameters (channels
-ARM GAS  /tmp/ccvnhHTK.s 			page 80
+ARM GAS  /tmp/ccvuHxIO.s 			page 80
 
 
  123:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         monitored, thresholds, ...)
@@ -4798,7 +4798,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  177:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****      *** Deinitialization of ADC ***
  178:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****      ============================================================
  179:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****      [..]
-ARM GAS  /tmp/ccvnhHTK.s 			page 81
+ARM GAS  /tmp/ccvuHxIO.s 			page 81
 
 
  180:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -4858,7 +4858,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  234:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****      Use function HAL_ADC_UnRegisterCallback to reset a callback to the default
  235:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****      weak function.
  236:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     [..]
-ARM GAS  /tmp/ccvnhHTK.s 			page 82
+ARM GAS  /tmp/ccvuHxIO.s 			page 82
 
 
  237:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -4918,7 +4918,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  291:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @brief ADC HAL module driver
  292:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @{
  293:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   */
-ARM GAS  /tmp/ccvnhHTK.s 			page 83
+ARM GAS  /tmp/ccvuHxIO.s 			page 83
 
 
  294:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -4978,7 +4978,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  348:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****               ##### Initialization and de-initialization functions #####
  349:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****  ===============================================================================
  350:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     [..]  This section provides functions allowing to:
-ARM GAS  /tmp/ccvnhHTK.s 			page 84
+ARM GAS  /tmp/ccvuHxIO.s 			page 84
 
 
  351:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       (+) Initialize and configure the ADC.
@@ -5038,7 +5038,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  405:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   assert_param(IS_FUNCTIONAL_STATE(hadc->Init.LowPowerAutoWait));
  406:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   assert_param(IS_FUNCTIONAL_STATE(hadc->Init.LowPowerAutoPowerOff));
  407:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   assert_param(IS_ADC_SAMPLE_TIME(hadc->Init.SamplingTimeCommon1));
-ARM GAS  /tmp/ccvnhHTK.s 			page 85
+ARM GAS  /tmp/ccvuHxIO.s 			page 85
 
 
  408:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   assert_param(IS_ADC_SAMPLE_TIME(hadc->Init.SamplingTimeCommon2));
@@ -5098,7 +5098,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  462:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     hadc->Lock = HAL_UNLOCKED;
  463:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   }
  464:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
-ARM GAS  /tmp/ccvnhHTK.s 			page 86
+ARM GAS  /tmp/ccvuHxIO.s 			page 86
 
 
  465:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   if (LL_ADC_IsInternalRegulatorEnabled(hadc->Instance) == 0UL)
@@ -5158,7 +5158,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  519:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /*  - discontinuous mode                                                  */
  520:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /*  - LowPowerAutoWait mode                                               */
  521:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /*  - LowPowerAutoPowerOff mode                                           */
-ARM GAS  /tmp/ccvnhHTK.s 			page 87
+ARM GAS  /tmp/ccvuHxIO.s 			page 87
 
 
  522:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /*  - continuous conversion mode                                          */
@@ -5218,7 +5218,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  576:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /* start.                                                                 */
  577:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /* Note: This configuration keeps the hardware feature of parameter       */
  578:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /*       ExternalTrigConvEdge "trigger edge none" equivalent to           */
-ARM GAS  /tmp/ccvnhHTK.s 			page 88
+ARM GAS  /tmp/ccvuHxIO.s 			page 88
 
 
  579:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /*       software start.                                                  */
@@ -5278,7 +5278,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  633:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                    hadc->Init.ClockPrescaler & ADC_CCR_PRESC);
  634:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       }
  635:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     }
-ARM GAS  /tmp/ccvnhHTK.s 			page 89
+ARM GAS  /tmp/ccvuHxIO.s 			page 89
 
 
  636:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -5338,7 +5338,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  690:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                         HAL_ADC_STATE_BUSY_INTERNAL,
  691:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                         HAL_ADC_STATE_READY);
  692:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     }
-ARM GAS  /tmp/ccvnhHTK.s 			page 90
+ARM GAS  /tmp/ccvuHxIO.s 			page 90
 
 
  693:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     else
@@ -5398,7 +5398,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  747:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   SET_BIT(hadc->State, HAL_ADC_STATE_BUSY_INTERNAL);
  748:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  749:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   /* Stop potential conversion on going, on regular group */
-ARM GAS  /tmp/ccvnhHTK.s 			page 91
+ARM GAS  /tmp/ccvuHxIO.s 			page 91
 
 
  750:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   tmp_hal_status = ADC_ConversionStop(hadc);
@@ -5458,7 +5458,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  804:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  805:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   /* Reset register DR */
  806:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   /* bits in access mode read only, no direct reset applicable */
-ARM GAS  /tmp/ccvnhHTK.s 			page 92
+ARM GAS  /tmp/ccvuHxIO.s 			page 92
 
 
  807:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -5518,7 +5518,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  861:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   */
  862:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** __weak void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc)
  863:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** {
-ARM GAS  /tmp/ccvnhHTK.s 			page 93
+ARM GAS  /tmp/ccvuHxIO.s 			page 93
 
 
  158              		.loc 1 863 1 is_stmt 1 view -0
@@ -5578,7 +5578,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  200              		.loc 1 385 3 view .LVU34
  385:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  201              		.loc 1 385 17 is_stmt 0 view .LVU35
-ARM GAS  /tmp/ccvnhHTK.s 			page 94
+ARM GAS  /tmp/ccvuHxIO.s 			page 94
 
 
  202 0006 0023     		movs	r3, #0
@@ -5638,7 +5638,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  420:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  232              		.loc 1 420 5 view .LVU60
  422:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     {
-ARM GAS  /tmp/ccvnhHTK.s 			page 95
+ARM GAS  /tmp/ccvuHxIO.s 			page 95
 
 
  233              		.loc 1 422 5 view .LVU61
@@ -5698,7 +5698,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4257:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         impacted: the comparison of analog watchdog thresholds is done on
 4258:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         oversampling final computation (after ratio and shift application):
 4259:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         ADC data register bitfield [15:4] (12 most significant bits).
-ARM GAS  /tmp/ccvnhHTK.s 			page 96
+ARM GAS  /tmp/ccvuHxIO.s 			page 96
 
 
 4260:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         Examples:
@@ -5758,7 +5758,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4314:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   If raw data with ADC thresholds high and low is retrieved,
 4315:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         the data of each threshold high or low can be isolated
 4316:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         using helper macro:
-ARM GAS  /tmp/ccvnhHTK.s 			page 97
+ARM GAS  /tmp/ccvuHxIO.s 			page 97
 
 
 4317:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @ref __LL_ADC_ANALOGWD_THRESHOLDS_HIGH_LOW().
@@ -5818,7 +5818,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4371:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @rmtoll CFGR2    OVSE           LL_ADC_SetOverSamplingScope
 4372:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  ADCx ADC instance
 4373:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  OvsScope This parameter can be one of the following values:
-ARM GAS  /tmp/ccvnhHTK.s 			page 98
+ARM GAS  /tmp/ccvuHxIO.s 			page 98
 
 
 4374:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_OVS_DISABLE
@@ -5878,7 +5878,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4428:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  ADCx ADC instance
 4429:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval Returned value can be one of the following values:
 4430:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_OVS_REG_CONT
-ARM GAS  /tmp/ccvnhHTK.s 			page 99
+ARM GAS  /tmp/ccvuHxIO.s 			page 99
 
 
 4431:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_OVS_REG_DISCONT
@@ -5938,7 +5938,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4485:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_OVS_RATIO_64
 4486:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_OVS_RATIO_128
 4487:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         @arg @ref LL_ADC_OVS_RATIO_256
-ARM GAS  /tmp/ccvnhHTK.s 			page 100
+ARM GAS  /tmp/ccvuHxIO.s 			page 100
 
 
 4488:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
@@ -5998,7 +5998,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4542:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval None
 4543:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
 4544:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** __STATIC_INLINE void LL_ADC_EnableInternalRegulator(ADC_TypeDef *ADCx)
-ARM GAS  /tmp/ccvnhHTK.s 			page 101
+ARM GAS  /tmp/ccvuHxIO.s 			page 101
 
 
 4545:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** {
@@ -6058,7 +6058,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  269 0020 804A     		ldr	r2, .L41
  270 0022 1140     		ands	r1, r2
  271 0024 8022     		movs	r2, #128
-ARM GAS  /tmp/ccvnhHTK.s 			page 102
+ARM GAS  /tmp/ccvuHxIO.s 			page 102
 
 
  272 0026 5205     		lsls	r2, r2, #21
@@ -6118,7 +6118,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  312 004e 013B     		subs	r3, r3, #1
  313 0050 0193     		str	r3, [sp, #4]
  314              	.L15:
-ARM GAS  /tmp/ccvnhHTK.s 			page 103
+ARM GAS  /tmp/ccvuHxIO.s 			page 103
 
 
  476:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     {
@@ -6178,7 +6178,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4578:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
 4579:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /**
 4580:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @brief  Enable the selected ADC instance.
-ARM GAS  /tmp/ccvnhHTK.s 			page 104
+ARM GAS  /tmp/ccvuHxIO.s 			page 104
 
 
 4581:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   On this STM32 series, after ADC enable, a delay for
@@ -6238,7 +6238,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4635:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** {
 4636:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   return ((READ_BIT(ADCx->CR, ADC_CR_ADEN) == (ADC_CR_ADEN)) ? 1UL : 0UL);
 4637:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** }
-ARM GAS  /tmp/ccvnhHTK.s 			page 105
+ARM GAS  /tmp/ccvuHxIO.s 			page 105
 
 
 4638:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
@@ -6298,7 +6298,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4692:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval 0: calibration complete, 1: calibration in progress.
 4693:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
 4694:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** __STATIC_INLINE uint32_t LL_ADC_IsCalibrationOnGoing(const ADC_TypeDef *ADCx)
-ARM GAS  /tmp/ccvnhHTK.s 			page 106
+ARM GAS  /tmp/ccvuHxIO.s 			page 106
 
 
 4695:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** {
@@ -6358,7 +6358,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4749:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   /*       to not interfere with bits with HW property "rs".                  */
 4750:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   MODIFY_REG(ADCx->CR,
 4751:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****              ADC_CR_BITS_PROPERTY_RS,
-ARM GAS  /tmp/ccvnhHTK.s 			page 107
+ARM GAS  /tmp/ccvuHxIO.s 			page 107
 
 
 4752:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****              ADC_CR_ADSTP);
@@ -6418,7 +6418,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  396 009a 0A43     		orrs	r2, r1
  397 009c A265     		str	r2, [r4, #88]
  534:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     {
-ARM GAS  /tmp/ccvnhHTK.s 			page 108
+ARM GAS  /tmp/ccvuHxIO.s 			page 108
 
 
  398              		.loc 1 534 5 view .LVU115
@@ -6478,7 +6478,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  437 00bc 01D0     		beq	.L21
  548:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                     hadc->Init.DataAlign                                           |
  438              		.loc 1 548 21 discriminator 1 view .LVU131
-ARM GAS  /tmp/ccvnhHTK.s 			page 109
+ARM GAS  /tmp/ccvuHxIO.s 			page 109
 
 
  439 00be 8021     		movs	r1, #128
@@ -6538,7 +6538,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  582:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                       hadc->Init.ExternalTrigConvEdge);
  479              		.loc 1 582 9 is_stmt 1 view .LVU146
  582:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                       hadc->Init.ExternalTrigConvEdge);
-ARM GAS  /tmp/ccvnhHTK.s 			page 110
+ARM GAS  /tmp/ccvuHxIO.s 			page 110
 
 
  480              		.loc 1 582 52 is_stmt 0 view .LVU147
@@ -6598,7 +6598,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  520              		.loc 1 616 7 is_stmt 1 view .LVU161
  521 0112 2168     		ldr	r1, [r4]
  522 0114 0B69     		ldr	r3, [r1, #16]
-ARM GAS  /tmp/ccvnhHTK.s 			page 111
+ARM GAS  /tmp/ccvuHxIO.s 			page 111
 
 
  523 0116 484D     		ldr	r5, .L41+20
@@ -6658,7 +6658,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  567              		.loc 2 2578 3 view .LVU171
  568 014e 4A69     		ldr	r2, [r1, #20]
  569 0150 0725     		movs	r5, #7
-ARM GAS  /tmp/ccvnhHTK.s 			page 112
+ARM GAS  /tmp/ccvuHxIO.s 			page 112
 
 
  570 0152 AA43     		bics	r2, r5
@@ -6718,7 +6718,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  678:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  613              		.loc 1 678 5 view .LVU183
  682:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         == hadc->Init.SamplingTimeCommon1)
-ARM GAS  /tmp/ccvnhHTK.s 			page 113
+ARM GAS  /tmp/ccvuHxIO.s 			page 113
 
 
  614              		.loc 1 682 5 view .LVU184
@@ -6778,7 +6778,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  656              	.L31:
  381:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   uint32_t tmp_cfgr1 = 0UL;
  657              		.loc 1 381 21 view .LVU197
-ARM GAS  /tmp/ccvnhHTK.s 			page 114
+ARM GAS  /tmp/ccvuHxIO.s 			page 114
 
 
  658 019e 0020     		movs	r0, #0
@@ -6838,7 +6838,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  700 01ca 616C     		ldr	r1, [r4, #68]
  610:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                       hadc->Init.Oversampling.RightBitShift |
  701              		.loc 1 610 61 view .LVU210
-ARM GAS  /tmp/ccvnhHTK.s 			page 115
+ARM GAS  /tmp/ccvuHxIO.s 			page 115
 
 
  702 01cc 0B43     		orrs	r3, r1
@@ -6898,7 +6898,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  747 020c A365     		str	r3, [r4, #88]
  748 020e 04E0     		b	.L12
  749              	.LVL55:
-ARM GAS  /tmp/ccvnhHTK.s 			page 116
+ARM GAS  /tmp/ccvuHxIO.s 			page 116
 
 
  750              	.L19:
@@ -6958,7 +6958,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  871:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  872:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** /**
  873:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @brief  DeInitialize the ADC MSP.
-ARM GAS  /tmp/ccvnhHTK.s 			page 117
+ARM GAS  /tmp/ccvuHxIO.s 			page 117
 
 
  874:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @param hadc ADC handle
@@ -7018,7 +7018,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  908:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @param  pCallback pointer to the Callback function
  909:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @retval HAL status
  910:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   */
-ARM GAS  /tmp/ccvnhHTK.s 			page 118
+ARM GAS  /tmp/ccvuHxIO.s 			page 118
 
 
  911:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** HAL_StatusTypeDef HAL_ADC_RegisterCallback(ADC_HandleTypeDef *hadc, HAL_ADC_CallbackIDTypeDef Callb
@@ -7078,7 +7078,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  965:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         /* Update the error code */
  966:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         hadc->ErrorCode |= HAL_ADC_ERROR_INVALID_CALLBACK;
  967:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
-ARM GAS  /tmp/ccvnhHTK.s 			page 119
+ARM GAS  /tmp/ccvuHxIO.s 			page 119
 
 
  968:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         /* Return error status */
@@ -7138,7 +7138,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1022:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *          @arg @ref HAL_ADC_MSPINIT_CB_ID MspInit callback ID
 1023:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *          @arg @ref HAL_ADC_MSPDEINIT_CB_ID MspDeInit callback ID
 1024:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @retval HAL status
-ARM GAS  /tmp/ccvnhHTK.s 			page 120
+ARM GAS  /tmp/ccvuHxIO.s 			page 120
 
 
 1025:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   */
@@ -7198,7 +7198,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1079:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   else if (HAL_ADC_STATE_RESET == hadc->State)
 1080:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   {
 1081:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     switch (CallbackID)
-ARM GAS  /tmp/ccvnhHTK.s 			page 121
+ARM GAS  /tmp/ccvuHxIO.s 			page 121
 
 
 1082:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     {
@@ -7258,7 +7258,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1136:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** @endverbatim
 1137:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @{
 1138:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   */
-ARM GAS  /tmp/ccvnhHTK.s 			page 122
+ARM GAS  /tmp/ccvuHxIO.s 			page 122
 
 
 1139:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -7318,7 +7318,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1193:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       __HAL_UNLOCK(hadc);
 1194:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     }
 1195:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   }
-ARM GAS  /tmp/ccvnhHTK.s 			page 123
+ARM GAS  /tmp/ccvuHxIO.s 			page 123
 
 
 1196:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   else
@@ -7378,7 +7378,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1250:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *         if low power feature "LowPowerAutoWait" is enabled, flags are
 1251:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *         not cleared to not interfere with this feature until data register
 1252:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *         is read using function HAL_ADC_GetValue().
-ARM GAS  /tmp/ccvnhHTK.s 			page 124
+ARM GAS  /tmp/ccvuHxIO.s 			page 124
 
 
 1253:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @note   This function cannot be used in a particular setup: ADC configured
@@ -7438,7 +7438,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1282:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /* Particular case is ADC configured in DMA mode and ADC sequencer with   */
 1283:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /* several ranks and polling for end of each conversion.                  */
 1284:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /* For code simplicity sake, this particular case is generalized to       */
-ARM GAS  /tmp/ccvnhHTK.s 			page 125
+ARM GAS  /tmp/ccvuHxIO.s 			page 125
 
 
 1285:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /* ADC configured in DMA mode and and polling for end of each conversion. */
@@ -7498,7 +7498,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  878 0026 F9D0     		beq	.L48
 1307:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     {
 1308:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0UL))
-ARM GAS  /tmp/ccvnhHTK.s 			page 126
+ARM GAS  /tmp/ccvuHxIO.s 			page 126
 
 
  879              		.loc 1 1308 7 is_stmt 1 view .LVU253
@@ -7558,7 +7558,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1291:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     }
  922              		.loc 1 1291 7 view .LVU269
 1291:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     }
-ARM GAS  /tmp/ccvnhHTK.s 			page 127
+ARM GAS  /tmp/ccvuHxIO.s 			page 127
 
 
  923              		.loc 1 1291 14 is_stmt 0 view .LVU270
@@ -7618,7 +7618,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1331:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****      )
 1332:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   {
 1333:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /* Check whether end of sequence is reached */
-ARM GAS  /tmp/ccvnhHTK.s 			page 128
+ARM GAS  /tmp/ccvuHxIO.s 			page 128
 
 
 1334:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     if (__HAL_ADC_GET_FLAG(hadc, ADC_FLAG_EOS))
@@ -7678,7 +7678,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1351:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       else
 1352:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       {
 1353:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         /* Change ADC state to error state */
-ARM GAS  /tmp/ccvnhHTK.s 			page 129
+ARM GAS  /tmp/ccvuHxIO.s 			page 129
 
 
 1354:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         SET_BIT(hadc->State, HAL_ADC_STATE_ERROR_CONFIG);
@@ -7738,7 +7738,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1372:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** }
  1027              		.loc 1 1372 10 is_stmt 0 view .LVU300
  1028 00b8 0020     		movs	r0, #0
-ARM GAS  /tmp/ccvnhHTK.s 			page 130
+ARM GAS  /tmp/ccvuHxIO.s 			page 130
 
 
  1029 00ba F3E7     		b	.L46
@@ -7798,7 +7798,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1060              		.cfi_offset 14, -4
  1061 0002 0500     		movs	r5, r0
  1062 0004 0C00     		movs	r4, r1
-ARM GAS  /tmp/ccvnhHTK.s 			page 131
+ARM GAS  /tmp/ccvuHxIO.s 			page 131
 
 
  1063 0006 1600     		movs	r6, r2
@@ -7858,7 +7858,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1415:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       {
 1416:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         /* New check to avoid false timeout detection in case of preemption */
 1417:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         if (__HAL_ADC_GET_FLAG(hadc, EventType) == 0UL)
-ARM GAS  /tmp/ccvnhHTK.s 			page 132
+ARM GAS  /tmp/ccvuHxIO.s 			page 132
 
 
  1101              		.loc 1 1417 9 is_stmt 1 view .LVU320
@@ -7918,7 +7918,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1438:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       __HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_EOSMP);
 1439:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
 1440:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       break;
-ARM GAS  /tmp/ccvnhHTK.s 			page 133
+ARM GAS  /tmp/ccvuHxIO.s 			page 133
 
 
 1441:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -7978,7 +7978,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1485:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /* (cf ref manual "Managing conversions without using the DMA and without */
 1486:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /* overrun ")                                                             */
 1487:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       if (hadc->Init.Overrun == ADC_OVR_DATA_PRESERVED)
-ARM GAS  /tmp/ccvnhHTK.s 			page 134
+ARM GAS  /tmp/ccvuHxIO.s 			page 134
 
 
 1488:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       {
@@ -8038,7 +8038,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1173 0088 8023     		movs	r3, #128
  1174 008a 1B01     		lsls	r3, r3, #4
  1175 008c 1343     		orrs	r3, r2
-ARM GAS  /tmp/ccvnhHTK.s 			page 135
+ARM GAS  /tmp/ccvuHxIO.s 			page 135
 
 
  1176 008e AB65     		str	r3, [r5, #88]
@@ -8098,7 +8098,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1218 00b4 8023     		movs	r3, #128
  1219 00b6 DB00     		lsls	r3, r3, #3
  1220 00b8 1343     		orrs	r3, r2
-ARM GAS  /tmp/ccvnhHTK.s 			page 136
+ARM GAS  /tmp/ccvuHxIO.s 			page 136
 
 
  1221 00ba AB65     		str	r3, [r5, #88]
@@ -8158,7 +8158,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1531:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   /* Check the parameters */
 1532:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   assert_param(IS_ADC_ALL_INSTANCE(hadc->Instance));
 1533:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
-ARM GAS  /tmp/ccvnhHTK.s 			page 137
+ARM GAS  /tmp/ccvuHxIO.s 			page 137
 
 
 1534:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   /* Perform ADC enable and conversion start if no conversion is on going */
@@ -8218,7 +8218,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1588:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       }
 1589:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
 1590:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /* Enable conversion of regular group.                                  */
-ARM GAS  /tmp/ccvnhHTK.s 			page 138
+ARM GAS  /tmp/ccvuHxIO.s 			page 138
 
 
 1591:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /* If software start has been selected, conversion starts immediately.  */
@@ -8278,7 +8278,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1645:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                         HAL_ADC_STATE_REG_BUSY,
 1646:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                         HAL_ADC_STATE_READY);
 1647:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     }
-ARM GAS  /tmp/ccvnhHTK.s 			page 139
+ARM GAS  /tmp/ccvuHxIO.s 			page 139
 
 
 1648:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   }
@@ -8338,7 +8338,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1702:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                         HAL_ADC_STATE_READY | HAL_ADC_STATE_REG_EOC | HAL_ADC_STATE_REG_OVR | HAL_A
 1703:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                         HAL_ADC_STATE_REG_BUSY);
 1704:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
-ARM GAS  /tmp/ccvnhHTK.s 			page 140
+ARM GAS  /tmp/ccvuHxIO.s 			page 140
 
 
 1705:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /* Set ADC error code */
@@ -8398,7 +8398,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1759:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @retval HAL status.
 1760:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   */
 1761:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** HAL_StatusTypeDef HAL_ADC_Stop_DMA(ADC_HandleTypeDef *hadc)
-ARM GAS  /tmp/ccvnhHTK.s 			page 141
+ARM GAS  /tmp/ccvuHxIO.s 			page 141
 
 
 1762:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** {
@@ -8458,7 +8458,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1816:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   }
 1817:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
 1818:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   __HAL_UNLOCK(hadc);
-ARM GAS  /tmp/ccvnhHTK.s 			page 142
+ARM GAS  /tmp/ccvuHxIO.s 			page 142
 
 
 1819:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -8518,7 +8518,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1271              		.syntax unified
  1272              		.code	16
  1273              		.thumb_func
-ARM GAS  /tmp/ccvnhHTK.s 			page 143
+ARM GAS  /tmp/ccvuHxIO.s 			page 143
 
 
  1275              	HAL_ADC_ConvCpltCallback:
@@ -8578,7 +8578,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1904:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     if ((LL_ADC_REG_IsTriggerSourceSWStart(hadc->Instance) != 0UL)
 1905:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         && (hadc->Init.ContinuousConvMode == DISABLE)
 1906:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****        )
-ARM GAS  /tmp/ccvnhHTK.s 			page 144
+ARM GAS  /tmp/ccvuHxIO.s 			page 144
 
 
 1907:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     {
@@ -8638,7 +8638,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1961:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
 1962:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /* Level out of window 1 callback */
 1963:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** #if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
-ARM GAS  /tmp/ccvnhHTK.s 			page 145
+ARM GAS  /tmp/ccvuHxIO.s 			page 145
 
 
 1964:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     hadc->LevelOutOfWindowCallback(hadc);
@@ -8698,7 +8698,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2018:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       overrun_error = 1UL;
 2019:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     }
 2020:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     else
-ARM GAS  /tmp/ccvnhHTK.s 			page 146
+ARM GAS  /tmp/ccvuHxIO.s 			page 146
 
 
 2021:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     {
@@ -8758,7 +8758,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1282              		@ link register save eliminated.
 2071:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   /* Prevent unused argument(s) compilation warning */
 2072:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   UNUSED(hadc);
-ARM GAS  /tmp/ccvnhHTK.s 			page 147
+ARM GAS  /tmp/ccvuHxIO.s 			page 147
 
 
  1283              		.loc 1 2072 3 view .LVU367
@@ -8818,7 +8818,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2093:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
 2094:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** /**
 2095:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @brief  Analog watchdog 1 callback in non-blocking mode.
-ARM GAS  /tmp/ccvnhHTK.s 			page 148
+ARM GAS  /tmp/ccvuHxIO.s 			page 148
 
 
 2096:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @param hadc ADC handle
@@ -8878,7 +8878,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2150:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** /**
 2151:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @brief  Configure a channel to be assigned to ADC group regular.
 2152:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @note   In case of usage of internal measurement channels:
-ARM GAS  /tmp/ccvnhHTK.s 			page 149
+ARM GAS  /tmp/ccvuHxIO.s 			page 149
 
 
 2153:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *         Vbat/VrefInt/TempSensor.
@@ -8938,7 +8938,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2207:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     if (pConfig->Rank != ADC_RANK_NONE)
 2208:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     {
 2209:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /* Regular sequence configuration */
-ARM GAS  /tmp/ccvnhHTK.s 			page 150
+ARM GAS  /tmp/ccvuHxIO.s 			page 150
 
 
 2210:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /* Note: ADC channel configuration requires few ADC clock cycles        */
@@ -8998,7 +8998,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2264:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           /* Wait loop initialization and execution */
 2265:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           /* Note: Variable divided by 2 to compensate partially              */
 2266:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           /*       CPU processing cycles, scaling in us split to not          */
-ARM GAS  /tmp/ccvnhHTK.s 			page 151
+ARM GAS  /tmp/ccvuHxIO.s 			page 151
 
 
 2267:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           /*       exceed 32 bits register capacity and handle low frequency. */
@@ -9058,7 +9058,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2321:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(hadc->Instance),
 2322:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                                          ~LL_ADC_PATH_INTERNAL_VBAT & tmp_config_internal_channel);
 2323:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         }
-ARM GAS  /tmp/ccvnhHTK.s 			page 152
+ARM GAS  /tmp/ccvuHxIO.s 			page 152
 
 
 2324:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         else if (pConfig->Channel == ADC_CHANNEL_VREFINT)
@@ -9118,7 +9118,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2378:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   uint32_t tmp_awd_high_threshold_shifted;
 2379:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   uint32_t tmp_awd_low_threshold_shifted;
 2380:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   uint32_t backup_setting_adc_enable_state = 0UL;
-ARM GAS  /tmp/ccvnhHTK.s 			page 153
+ARM GAS  /tmp/ccvuHxIO.s 			page 153
 
 
 2381:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -9178,7 +9178,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2435:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                                           __LL_ADC_ANALOGWD_CHANNEL_GROUP(pAnalogWDGConfig->Channel
 2436:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                                                                           LL_ADC_GROUP_REGULAR));
 2437:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           break;
-ARM GAS  /tmp/ccvnhHTK.s 			page 154
+ARM GAS  /tmp/ccvuHxIO.s 			page 154
 
 
 2438:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -9238,7 +9238,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2492:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
 2493:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         case ADC_ANALOGWATCHDOG_ALL_REG:
 2494:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           LL_ADC_SetAnalogWDMonitChannels(hadc->Instance,
-ARM GAS  /tmp/ccvnhHTK.s 			page 155
+ARM GAS  /tmp/ccvuHxIO.s 			page 155
 
 
 2495:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                                           pAnalogWDGConfig->WatchdogNumber,
@@ -9298,7 +9298,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2549:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   }
 2550:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
 2551:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   /* Analog watchdog thresholds configuration */
-ARM GAS  /tmp/ccvnhHTK.s 			page 156
+ARM GAS  /tmp/ccvuHxIO.s 			page 156
 
 
 2552:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   if (pAnalogWDGConfig->WatchdogNumber == ADC_ANALOGWATCHDOG_1)
@@ -9358,7 +9358,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2606:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *           " if ((HAL_ADC_GetState(hadc1) & HAL_ADC_STATE_REG_BUSY) != 0UL) "
 2607:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   *           " if ((HAL_ADC_GetState(hadc1) & HAL_ADC_STATE_AWD1) != 0UL) "
 2608:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @param hadc ADC handle
-ARM GAS  /tmp/ccvnhHTK.s 			page 157
+ARM GAS  /tmp/ccvuHxIO.s 			page 157
 
 
 2609:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   * @retval ADC handle state (bitfield on 32 bits)
@@ -9418,7 +9418,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2663:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /* Stop potential conversion on going on regular group */
 2664:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     /* Software is allowed to set ADSTP only when ADSTART=1 and ADDIS=0 */
 2665:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     if (LL_ADC_IsDisableOngoing(hadc->Instance) == 0UL)
-ARM GAS  /tmp/ccvnhHTK.s 			page 158
+ARM GAS  /tmp/ccvuHxIO.s 			page 158
 
 
 2666:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     {
@@ -9478,7 +9478,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2720:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /* Update ADC state machine to error */
 2721:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       SET_BIT(hadc->State, HAL_ADC_STATE_ERROR_INTERNAL);
 2722:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
-ARM GAS  /tmp/ccvnhHTK.s 			page 159
+ARM GAS  /tmp/ccvuHxIO.s 			page 159
 
 
 2723:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       /* Set ADC error code to ADC peripheral internal error */
@@ -9538,7 +9538,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2777:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
 2778:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****             /* Set ADC error code to ADC peripheral internal error */
 2779:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****             SET_BIT(hadc->ErrorCode, HAL_ADC_ERROR_INTERNAL);
-ARM GAS  /tmp/ccvnhHTK.s 			page 160
+ARM GAS  /tmp/ccvuHxIO.s 			page 160
 
 
 2780:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -9598,7 +9598,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2834:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     {
 2835:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       if ((HAL_GetTick() - tickstart) > ADC_DISABLE_TIMEOUT)
 2836:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       {
-ARM GAS  /tmp/ccvnhHTK.s 			page 161
+ARM GAS  /tmp/ccvuHxIO.s 			page 161
 
 
 2837:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         /* New check to avoid false timeout detection in case of preemption */
@@ -9658,7 +9658,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2891:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
 2892:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           /* Set ADC state */
 2893:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           ADC_STATE_CLR_SET(hadc->State,
-ARM GAS  /tmp/ccvnhHTK.s 			page 162
+ARM GAS  /tmp/ccvuHxIO.s 			page 162
 
 
 2894:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                             HAL_ADC_STATE_REG_BUSY,
@@ -9718,7 +9718,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1328              		.cfi_def_cfa_offset 8
  1329              		.cfi_offset 4, -8
  1330              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccvnhHTK.s 			page 163
+ARM GAS  /tmp/ccvuHxIO.s 			page 163
 
 
 2941:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   /* Retrieve ADC handle corresponding to current DMA handle */
@@ -9778,7 +9778,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2122:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   /* Prevent unused argument(s) compilation warning */
  1376              		.loc 1 2122 1 is_stmt 1 view -0
  1377              		.cfi_startproc
-ARM GAS  /tmp/ccvnhHTK.s 			page 164
+ARM GAS  /tmp/ccvuHxIO.s 			page 164
 
 
  1378              		@ args = 0, pretend = 0, frame = 0
@@ -9838,7 +9838,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1416              		.loc 1 2966 3 view .LVU389
  1417 000c C36D     		ldr	r3, [r0, #92]
  1418 000e 3C3A     		subs	r2, r2, #60
-ARM GAS  /tmp/ccvnhHTK.s 			page 165
+ARM GAS  /tmp/ccvuHxIO.s 			page 165
 
 
  1419 0010 1343     		orrs	r3, r2
@@ -9898,7 +9898,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1459              		.loc 1 2867 6 view .LVU399
  1460 000a 1142     		tst	r1, r2
  1461 000c 2AD1     		bne	.L84
-ARM GAS  /tmp/ccvnhHTK.s 			page 166
+ARM GAS  /tmp/ccvuHxIO.s 			page 166
 
 
 2870:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -9958,7 +9958,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1501              		.loc 1 2884 9 is_stmt 1 view .LVU414
  1502              	.LVL104:
  1503              	.LBB148:
-ARM GAS  /tmp/ccvnhHTK.s 			page 167
+ARM GAS  /tmp/ccvuHxIO.s 			page 167
 
 
  1504              	.LBI148:
@@ -10018,7 +10018,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1551              	.LVL108:
  1552              	.L84:
 2917:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     {
-ARM GAS  /tmp/ccvnhHTK.s 			page 168
+ARM GAS  /tmp/ccvuHxIO.s 			page 168
 
 
  1553              		.loc 1 2917 5 view .LVU426
@@ -10078,7 +10078,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1598              		@ args = 0, pretend = 0, frame = 0
  1599              		@ frame_needed = 0, uses_anonymous_args = 0
 1860:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   uint32_t overrun_error = 0UL; /* flag set if overrun occurrence has to be considered as an error 
-ARM GAS  /tmp/ccvnhHTK.s 			page 169
+ARM GAS  /tmp/ccvuHxIO.s 			page 169
 
 
  1600              		.loc 1 1860 1 is_stmt 0 view .LVU438
@@ -10138,7 +10138,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1639 001c 1B01     		lsls	r3, r3, #4
  1640 001e 1343     		orrs	r3, r2
  1641 0020 8365     		str	r3, [r0, #88]
-ARM GAS  /tmp/ccvnhHTK.s 			page 170
+ARM GAS  /tmp/ccvuHxIO.s 			page 170
 
 
  1642              	.L95:
@@ -10198,7 +10198,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1904:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         && (hadc->Init.ContinuousConvMode == DISABLE)
  1683              		.loc 1 1904 48 is_stmt 0 view .LVU467
  1684 004e 2368     		ldr	r3, [r4]
-ARM GAS  /tmp/ccvnhHTK.s 			page 171
+ARM GAS  /tmp/ccvuHxIO.s 			page 171
 
 
  1685              	.LVL119:
@@ -10258,7 +10258,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1727              	.LBE153:
  1728              	.LBE152:
 1919:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
-ARM GAS  /tmp/ccvnhHTK.s 			page 172
+ARM GAS  /tmp/ccvuHxIO.s 			page 172
 
 
  1729              		.loc 1 1919 11 is_stmt 1 view .LVU484
@@ -10318,7 +10318,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1991:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   {
  1772              		.loc 1 1991 52 discriminator 1 view .LVU496
  1773 00a2 B305     		lsls	r3, r6, #22
-ARM GAS  /tmp/ccvnhHTK.s 			page 173
+ARM GAS  /tmp/ccvuHxIO.s 			page 173
 
 
  1774 00a4 40D4     		bmi	.L131
@@ -10378,7 +10378,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1814 00c4 A365     		str	r3, [r4, #88]
 2035:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  1815              		.loc 1 2035 7 view .LVU511
-ARM GAS  /tmp/ccvnhHTK.s 			page 174
+ARM GAS  /tmp/ccvuHxIO.s 			page 174
 
 
  1816 00c6 E36D     		ldr	r3, [r4, #92]
@@ -10438,7 +10438,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1860 00f6 A26D     		ldr	r2, [r4, #88]
  1861 00f8 8023     		movs	r3, #128
  1862 00fa 5B02     		lsls	r3, r3, #9
-ARM GAS  /tmp/ccvnhHTK.s 			page 175
+ARM GAS  /tmp/ccvuHxIO.s 			page 175
 
 
  1863 00fc 1343     		orrs	r3, r2
@@ -10498,7 +10498,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1909              	.L132:
 2057:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  1910              		.loc 1 2057 5 view .LVU530
-ARM GAS  /tmp/ccvnhHTK.s 			page 176
+ARM GAS  /tmp/ccvuHxIO.s 			page 176
 
 
  1911 0142 2000     		movs	r0, r4
@@ -10558,7 +10558,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  1959              		.loc 1 2171 17 is_stmt 0 view .LVU538
  1960 0006 0023     		movs	r3, #0
  1961 0008 0193     		str	r3, [sp, #4]
-ARM GAS  /tmp/ccvnhHTK.s 			page 177
+ARM GAS  /tmp/ccvuHxIO.s 			page 177
 
 
 2174:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   assert_param(IS_ADC_CHANNEL(pConfig->Channel));
@@ -10618,7 +10618,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2001              	.LVL140:
  2002              		.loc 2 4763 74 view .LVU557
  2003              	.LBE157:
-ARM GAS  /tmp/ccvnhHTK.s 			page 178
+ARM GAS  /tmp/ccvuHxIO.s 			page 178
 
 
  2004              	.LBE156:
@@ -10678,7 +10678,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2044 0048 1206     		lsls	r2, r2, #24
  2045 004a 9542     		cmp	r5, r2
  2046 004c 25D0     		beq	.L140
-ARM GAS  /tmp/ccvnhHTK.s 			page 179
+ARM GAS  /tmp/ccvuHxIO.s 			page 179
 
 
 2215:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           (hadc->Init.ScanConvMode == ADC_SCAN_SEQ_FIXED_BACKWARD))
@@ -10738,7 +10738,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2088              		.loc 2 3127 22 is_stmt 1 view .LVU584
  2089              	.LBB159:
 3133:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****              ADC_CHSELR_SQ1 << (Rank & ADC_REG_RANK_ID_SQRX_MASK),
-ARM GAS  /tmp/ccvnhHTK.s 			page 180
+ARM GAS  /tmp/ccvuHxIO.s 			page 180
 
 
  2090              		.loc 2 3133 3 view .LVU585
@@ -10798,7 +10798,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2134              	.LBE160:
 2243:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  2135              		.loc 1 2243 7 is_stmt 1 view .LVU596
-ARM GAS  /tmp/ccvnhHTK.s 			page 181
+ARM GAS  /tmp/ccvuHxIO.s 			page 181
 
 
  2136 00a6 2068     		ldr	r0, [r4]
@@ -10858,7 +10858,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2177 00ca 9D07     		lsls	r5, r3, #30
  2178 00cc 27D4     		bmi	.L154
 2228:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                    ADC_CHSELR_SQ1 << (pConfig->Rank & 0x1FUL),
-ARM GAS  /tmp/ccvnhHTK.s 			page 182
+ARM GAS  /tmp/ccvuHxIO.s 			page 182
 
 
  2179              		.loc 1 2228 9 discriminator 6 view .LVU610
@@ -10918,7 +10918,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2220 0104 27D4     		bmi	.L168
 2228:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                    ADC_CHSELR_SQ1 << (pConfig->Rank & 0x1FUL),
  2221              		.loc 1 2228 9 discriminator 34 view .LVU624
-ARM GAS  /tmp/ccvnhHTK.s 			page 183
+ARM GAS  /tmp/ccvuHxIO.s 			page 183
 
 
  2222 0106 DD03     		lsls	r5, r3, #15
@@ -10978,7 +10978,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2228:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                    ADC_CHSELR_SQ1 << (pConfig->Rank & 0x1FUL),
  2266              		.loc 1 2228 9 discriminator 21 view .LVU635
  2267 013a 0826     		movs	r6, #8
-ARM GAS  /tmp/ccvnhHTK.s 			page 184
+ARM GAS  /tmp/ccvuHxIO.s 			page 184
 
 
  2268 013c 96E7     		b	.L144
@@ -11038,7 +11038,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2311              	.LBB165:
 2207:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** }
  2312              		.loc 2 2207 3 view .LVU647
-ARM GAS  /tmp/ccvnhHTK.s 			page 185
+ARM GAS  /tmp/ccvuHxIO.s 			page 185
 
 
 2207:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** }
@@ -11098,7 +11098,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2355              	.LBI166:
 2111:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** {
  2356              		.loc 2 2111 22 view .LVU660
-ARM GAS  /tmp/ccvnhHTK.s 			page 186
+ARM GAS  /tmp/ccvuHxIO.s 			page 186
 
 
  2357              	.LBB167:
@@ -11158,7 +11158,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2398 01b4 019B     		ldr	r3, [sp, #4]
  2399 01b6 002B     		cmp	r3, #0
  2400 01b8 F9D1     		bne	.L147
-ARM GAS  /tmp/ccvnhHTK.s 			page 187
+ARM GAS  /tmp/ccvuHxIO.s 			page 187
 
 
 2169:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   uint32_t tmp_config_internal_channel;
@@ -11218,7 +11218,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2280:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****                  ((tmp_config_internal_channel & LL_ADC_PATH_INTERNAL_VREFINT) == 0UL))
  2444              		.loc 1 2280 60 discriminator 1 view .LVU685
  2445 01d8 4902     		lsls	r1, r1, #9
-ARM GAS  /tmp/ccvnhHTK.s 			page 188
+ARM GAS  /tmp/ccvuHxIO.s 			page 188
 
 
  2446 01da 4AD4     		bmi	.L173
@@ -11278,7 +11278,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2488              		.loc 1 2299 65 discriminator 1 view .LVU697
  2489 01fa 204B     		ldr	r3, .L187
  2490 01fc 9D42     		cmp	r5, r3
-ARM GAS  /tmp/ccvnhHTK.s 			page 189
+ARM GAS  /tmp/ccvuHxIO.s 			page 189
 
 
  2491 01fe 05D1     		bne	.L150
@@ -11338,7 +11338,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2531              		.loc 2 2207 21 is_stmt 0 view .LVU711
  2532 0216 1B4A     		ldr	r2, .L187+8
  2533 0218 1268     		ldr	r2, [r2]
-ARM GAS  /tmp/ccvnhHTK.s 			page 190
+ARM GAS  /tmp/ccvuHxIO.s 			page 190
 
 
  2534              	.LVL180:
@@ -11398,7 +11398,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2575              		.loc 2 2113 3 is_stmt 0 view .LVU724
  2576 0240 0A60     		str	r2, [r1]
  2577              	.LVL184:
-ARM GAS  /tmp/ccvnhHTK.s 			page 191
+ARM GAS  /tmp/ccvuHxIO.s 			page 191
 
 
 2113:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** }
@@ -11458,7 +11458,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2621              	.L186:
 2114:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
  2622              		.loc 2 2114 1 view .LVU736
-ARM GAS  /tmp/ccvnhHTK.s 			page 192
+ARM GAS  /tmp/ccvuHxIO.s 			page 192
 
 
  2623              	.LBE186:
@@ -11518,7 +11518,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2666              		.loc 1 2190 3 discriminator 1 view .LVU747
  2667 0278 DFE6     		b	.L136
  2668              	.L188:
-ARM GAS  /tmp/ccvnhHTK.s 			page 193
+ARM GAS  /tmp/ccvuHxIO.s 			page 193
 
 
  2669 027a C046     		.align	2
@@ -11578,7 +11578,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2721              		@ args = 0, pretend = 0, frame = 0
  2722              		@ frame_needed = 0, uses_anonymous_args = 0
  2723              		@ link register save eliminated.
-ARM GAS  /tmp/ccvnhHTK.s 			page 194
+ARM GAS  /tmp/ccvuHxIO.s 			page 194
 
 
 2628:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -11638,7 +11638,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2769              		.loc 2 4763 12 is_stmt 0 view .LVU766
  2770 0006 9368     		ldr	r3, [r2, #8]
  2771              		.loc 2 4763 74 view .LVU767
-ARM GAS  /tmp/ccvnhHTK.s 			page 195
+ARM GAS  /tmp/ccvuHxIO.s 			page 195
 
 
  2772 0008 5B07     		lsls	r3, r3, #29
@@ -11698,7 +11698,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2673:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  2814              		.loc 1 2673 17 view .LVU781
  2815 0022 0500     		movs	r5, r0
-ARM GAS  /tmp/ccvnhHTK.s 			page 196
+ARM GAS  /tmp/ccvuHxIO.s 			page 196
 
 
  2816              	.LVL206:
@@ -11758,7 +11758,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2854              		.loc 1 2688 11 view .LVU797
 2688:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         }
  2855              		.loc 1 2688 18 is_stmt 0 view .LVU798
-ARM GAS  /tmp/ccvnhHTK.s 			page 197
+ARM GAS  /tmp/ccvuHxIO.s 			page 197
 
 
  2856 004e 0120     		movs	r0, #1
@@ -11818,7 +11818,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2905              		.loc 1 2708 3 is_stmt 1 view .LVU805
 2709:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  2906              		.loc 1 2709 3 view .LVU806
-ARM GAS  /tmp/ccvnhHTK.s 			page 198
+ARM GAS  /tmp/ccvuHxIO.s 			page 198
 
 
 2709:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -11878,7 +11878,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2946 0020 0121     		movs	r1, #1
  2947 0022 0A43     		orrs	r2, r1
  2948 0024 9A60     		str	r2, [r3, #8]
-ARM GAS  /tmp/ccvnhHTK.s 			page 199
+ARM GAS  /tmp/ccvuHxIO.s 			page 199
 
 
  2949              	.LVL215:
@@ -11938,7 +11938,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  2988 003e 836D     		ldr	r3, [r0, #88]
  2989 0040 1022     		movs	r2, #16
  2990 0042 1343     		orrs	r3, r2
-ARM GAS  /tmp/ccvnhHTK.s 			page 200
+ARM GAS  /tmp/ccvuHxIO.s 			page 200
 
 
  2991 0044 8365     		str	r3, [r0, #88]
@@ -11998,7 +11998,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3031              		.loc 1 2755 7 is_stmt 1 view .LVU850
  3032              	.L208:
 2755:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       {
-ARM GAS  /tmp/ccvnhHTK.s 			page 201
+ARM GAS  /tmp/ccvuHxIO.s 			page 201
 
 
  3033              		.loc 1 2755 53 view .LVU851
@@ -12058,7 +12058,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2770:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         {
  3074              		.loc 1 2770 14 is_stmt 0 view .LVU865
  3075 0088 FFF7FEFF 		bl	HAL_GetTick
-ARM GAS  /tmp/ccvnhHTK.s 			page 202
+ARM GAS  /tmp/ccvuHxIO.s 			page 202
 
 
  3076              	.LVL226:
@@ -12118,7 +12118,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3117              		.loc 1 2790 1 view .LVU878
  3118 00b6 30BD     		pop	{r4, r5, pc}
  3119              	.L220:
-ARM GAS  /tmp/ccvnhHTK.s 			page 203
+ARM GAS  /tmp/ccvuHxIO.s 			page 203
 
 
  3120              		.align	2
@@ -12178,7 +12178,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3169              		.loc 2 4763 74 view .LVU889
  3170              	.LBE209:
  3171              	.LBE208:
-ARM GAS  /tmp/ccvnhHTK.s 			page 204
+ARM GAS  /tmp/ccvuHxIO.s 			page 204
 
 
 1156:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -12238,7 +12238,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3211              		.loc 1 1189 7 view .LVU904
  3212 003e 2268     		ldr	r2, [r4]
  3213              	.LVL235:
-ARM GAS  /tmp/ccvnhHTK.s 			page 205
+ARM GAS  /tmp/ccvuHxIO.s 			page 205
 
 
  3214              	.LBB210:
@@ -12298,7 +12298,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3258 0060 FEF0FFFF 		.word	-3842
  3259 0064 E8FFFF7F 		.word	2147483624
  3260              		.cfi_endproc
-ARM GAS  /tmp/ccvnhHTK.s 			page 206
+ARM GAS  /tmp/ccvuHxIO.s 			page 206
 
 
  3261              	.LFE497:
@@ -12358,7 +12358,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3308 000e C35C     		ldrb	r3, [r0, r3]
  3309 0010 012B     		cmp	r3, #1
  3310 0012 3CD0     		beq	.L235
-ARM GAS  /tmp/ccvnhHTK.s 			page 207
+ARM GAS  /tmp/ccvuHxIO.s 			page 207
 
 
 1537:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -12418,7 +12418,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3350              		.loc 1 1570 25 is_stmt 0 view .LVU942
  3351 0046 6369     		ldr	r3, [r4, #20]
 1570:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       {
-ARM GAS  /tmp/ccvnhHTK.s 			page 208
+ARM GAS  /tmp/ccvuHxIO.s 			page 208
 
 
  3352              		.loc 1 1570 7 view .LVU943
@@ -12478,7 +12478,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3395              	.LBE215:
  3396              	.LBE214:
 1573:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           break;
-ARM GAS  /tmp/ccvnhHTK.s 			page 209
+ARM GAS  /tmp/ccvuHxIO.s 			page 209
 
 
  3397              		.loc 1 1573 11 is_stmt 1 view .LVU955
@@ -12538,7 +12538,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3445              	HAL_ADC_Start_DMA:
  3446              	.LVL254:
  3447              	.LFB503:
-ARM GAS  /tmp/ccvnhHTK.s 			page 210
+ARM GAS  /tmp/ccvuHxIO.s 			page 210
 
 
 1666:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   HAL_StatusTypeDef tmp_hal_status;
@@ -12598,7 +12598,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3492              	.LVL257:
 1675:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  3493              		.loc 1 1675 5 is_stmt 0 discriminator 2 view .LVU978
-ARM GAS  /tmp/ccvnhHTK.s 			page 211
+ARM GAS  /tmp/ccvuHxIO.s 			page 211
 
 
  3494 001c 4354     		strb	r3, [r0, r1]
@@ -12658,7 +12658,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3534              	.LBE220:
 1689:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     }
  3535              		.loc 1 1689 7 is_stmt 1 view .LVU993
-ARM GAS  /tmp/ccvnhHTK.s 			page 212
+ARM GAS  /tmp/ccvuHxIO.s 			page 212
 
 
 1689:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     }
@@ -12718,7 +12718,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3575 0062 226D     		ldr	r2, [r4, #80]
 1713:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  3576              		.loc 1 1713 46 view .LVU1009
-ARM GAS  /tmp/ccvnhHTK.s 			page 213
+ARM GAS  /tmp/ccvuHxIO.s 			page 213
 
 
  3577 0064 1349     		ldr	r1, .L246+12
@@ -12778,7 +12778,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3617              	.LBI222:
 4725:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** {
  3618              		.loc 2 4725 22 view .LVU1024
-ARM GAS  /tmp/ccvnhHTK.s 			page 214
+ARM GAS  /tmp/ccvuHxIO.s 			page 214
 
 
  3619              	.LBB223:
@@ -12838,7 +12838,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3666              		.global	ADC_Disable
  3667              		.syntax unified
  3668              		.code	16
-ARM GAS  /tmp/ccvnhHTK.s 			page 215
+ARM GAS  /tmp/ccvuHxIO.s 			page 215
 
 
  3669              		.thumb_func
@@ -12898,7 +12898,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3712              	.LBE225:
  3713              	.LBE224:
 2807:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       && (tmp_adc_is_disable_on_going == 0UL)
-ARM GAS  /tmp/ccvnhHTK.s 			page 216
+ARM GAS  /tmp/ccvuHxIO.s 			page 216
 
 
  3714              		.loc 1 2807 3 is_stmt 1 view .LVU1045
@@ -12958,7 +12958,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3754              	.LVL279:
 2826:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****     }
  3755              		.loc 1 2826 14 view .LVU1060
-ARM GAS  /tmp/ccvnhHTK.s 			page 217
+ARM GAS  /tmp/ccvuHxIO.s 			page 217
 
 
  3756 003a 25E0     		b	.L250
@@ -13018,7 +13018,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3796              		.loc 1 2835 7 is_stmt 1 view .LVU1074
 2835:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       {
  3797              		.loc 1 2835 12 is_stmt 0 view .LVU1075
-ARM GAS  /tmp/ccvnhHTK.s 			page 218
+ARM GAS  /tmp/ccvuHxIO.s 			page 218
 
 
  3798 005c FFF7FEFF 		bl	HAL_GetTick
@@ -13078,7 +13078,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3839              	.LVL287:
 2854:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  3840              		.loc 1 2854 1 view .LVU1089
-ARM GAS  /tmp/ccvnhHTK.s 			page 219
+ARM GAS  /tmp/ccvuHxIO.s 			page 219
 
 
  3841 0088 70BD     		pop	{r4, r5, r6, pc}
@@ -13138,7 +13138,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3888 000c 8365     		str	r3, [r0, #88]
  750:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  3889              		.loc 1 750 3 view .LVU1099
-ARM GAS  /tmp/ccvnhHTK.s 			page 220
+ARM GAS  /tmp/ccvuHxIO.s 			page 220
 
 
  750:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -13198,7 +13198,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3929              		.loc 1 803 3 is_stmt 1 view .LVU1114
  803:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  3930              		.loc 1 803 7 is_stmt 0 view .LVU1115
-ARM GAS  /tmp/ccvnhHTK.s 			page 221
+ARM GAS  /tmp/ccvuHxIO.s 			page 221
 
 
  3931 003a 2368     		ldr	r3, [r4]
@@ -13258,7 +13258,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  3967              		.loc 1 818 25 view .LVU1133
  3968 0060 9B00     		lsls	r3, r3, #2
  3969 0062 9B08     		lsrs	r3, r3, #2
-ARM GAS  /tmp/ccvnhHTK.s 			page 222
+ARM GAS  /tmp/ccvuHxIO.s 			page 222
 
 
  3970 0064 1361     		str	r3, [r2, #16]
@@ -13318,7 +13318,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  756:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  4008              		.loc 1 756 22 is_stmt 0 view .LVU1150
  4009 0084 2000     		movs	r0, r4
-ARM GAS  /tmp/ccvnhHTK.s 			page 223
+ARM GAS  /tmp/ccvuHxIO.s 			page 223
 
 
  4010              	.LVL298:
@@ -13378,7 +13378,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4053 00b0 00F000F0 		.word	-268374016
  4054 00b4 08270140 		.word	1073817352
  4055 00b8 FFFF03FE 		.word	-33292289
-ARM GAS  /tmp/ccvnhHTK.s 			page 224
+ARM GAS  /tmp/ccvuHxIO.s 			page 224
 
 
  4056 00bc E8FFFF6F 		.word	1879048168
@@ -13438,7 +13438,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4100 0016 0028     		cmp	r0, #0
  4101 0018 03D0     		beq	.L273
  4102              	.LVL306:
-ARM GAS  /tmp/ccvnhHTK.s 			page 225
+ARM GAS  /tmp/ccvuHxIO.s 			page 225
 
 
  4103              	.L271:
@@ -13498,7 +13498,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4144              	.LVL313:
 1220:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  4145              		.loc 1 1220 3 discriminator 1 view .LVU1187
-ARM GAS  /tmp/ccvnhHTK.s 			page 226
+ARM GAS  /tmp/ccvuHxIO.s 			page 226
 
 
  4146 003e EFE7     		b	.L270
@@ -13558,7 +13558,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1631:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   {
  4192              		.loc 1 1631 3 is_stmt 1 view .LVU1198
 1631:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   {
-ARM GAS  /tmp/ccvnhHTK.s 			page 227
+ARM GAS  /tmp/ccvuHxIO.s 			page 227
 
 
  4193              		.loc 1 1631 6 is_stmt 0 view .LVU1199
@@ -13618,7 +13618,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4234 003a 1340     		ands	r3, r2
  4235 003c 0432     		adds	r2, r2, #4
  4236 003e FF32     		adds	r2, r2, #255
-ARM GAS  /tmp/ccvnhHTK.s 			page 228
+ARM GAS  /tmp/ccvuHxIO.s 			page 228
 
 
  4237 0040 1343     		orrs	r3, r2
@@ -13678,7 +13678,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 1768:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
  4285              		.loc 1 1768 3 discriminator 2 view .LVU1221
  4286 000c 5423     		movs	r3, #84
-ARM GAS  /tmp/ccvnhHTK.s 			page 229
+ARM GAS  /tmp/ccvuHxIO.s 			page 229
 
 
  4287 000e 0122     		movs	r2, #1
@@ -13738,7 +13738,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4326              	.LVL329:
  4327 0038 0500     		movs	r5, r0
  4328              	.LVL330:
-ARM GAS  /tmp/ccvnhHTK.s 			page 230
+ARM GAS  /tmp/ccvuHxIO.s 			page 230
 
 
  4329              	.L288:
@@ -13798,7 +13798,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4371              	.LVL335:
  4372 0064 051E     		subs	r5, r0, #0
  4373              	.LVL336:
-ARM GAS  /tmp/ccvnhHTK.s 			page 231
+ARM GAS  /tmp/ccvuHxIO.s 			page 231
 
 
 1783:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       {
@@ -13858,7 +13858,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4422              		.cfi_offset 4, -20
  4423              		.cfi_offset 5, -16
  4424              		.cfi_offset 6, -12
-ARM GAS  /tmp/ccvnhHTK.s 			page 232
+ARM GAS  /tmp/ccvuHxIO.s 			page 232
 
 
  4425              		.cfi_offset 7, -8
@@ -13918,7 +13918,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2415:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   {
  4459              		.loc 1 2415 42 is_stmt 0 view .LVU1277
  4460 0016 0068     		ldr	r0, [r0]
-ARM GAS  /tmp/ccvnhHTK.s 			page 233
+ARM GAS  /tmp/ccvuHxIO.s 			page 233
 
 
  4461              	.LVL342:
@@ -13978,7 +13978,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4506 0042 5ED0     		beq	.L359
 2489:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           }
  4507              		.loc 1 2489 13 is_stmt 1 view .LVU1291
-ARM GAS  /tmp/ccvnhHTK.s 			page 234
+ARM GAS  /tmp/ccvuHxIO.s 			page 234
 
 
  4508 0044 A423     		movs	r3, #164
@@ -14038,7 +14038,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4551              	.LVL347:
  4552 0072 0600     		movs	r6, r0
  4553              	.LVL348:
-ARM GAS  /tmp/ccvnhHTK.s 			page 235
+ARM GAS  /tmp/ccvuHxIO.s 			page 235
 
 
 2424:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         tmp_hal_status = ADC_Disable(hadc);
@@ -14098,7 +14098,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4596              	.LVL352:
 4006:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****              (AWDy & ADC_AWD_CR_ALL_CHANNEL_MASK),
  4597              		.loc 2 4006 3 view .LVU1315
-ARM GAS  /tmp/ccvnhHTK.s 			page 236
+ARM GAS  /tmp/ccvuHxIO.s 			page 236
 
 
  4598              	.LBE237:
@@ -14158,7 +14158,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4793:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         ADC resolution 12 bits.
 4794:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @note   For devices with feature oversampling: Oversampling
 4795:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         can increase data width, function for extended range
-ARM GAS  /tmp/ccvnhHTK.s 			page 237
+ARM GAS  /tmp/ccvuHxIO.s 			page 237
 
 
 4796:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   *         may be needed: @ref LL_ADC_REG_ReadConversionData32.
@@ -14218,7 +14218,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4850:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
 4851:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /**
 4852:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @}
-ARM GAS  /tmp/ccvnhHTK.s 			page 238
+ARM GAS  /tmp/ccvuHxIO.s 			page 238
 
 
 4853:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
@@ -14278,7 +14278,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4907:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** {
 4908:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   return ((READ_BIT(ADCx->ISR, ADC_ISR_EOC) == (ADC_ISR_EOC)) ? 1UL : 0UL);
 4909:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** }
-ARM GAS  /tmp/ccvnhHTK.s 			page 239
+ARM GAS  /tmp/ccvuHxIO.s 			page 239
 
 
 4910:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
@@ -14338,7 +14338,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 4964:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** }
 4965:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
 4966:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /**
-ARM GAS  /tmp/ccvnhHTK.s 			page 240
+ARM GAS  /tmp/ccvuHxIO.s 			page 240
 
 
 4967:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @brief  Get flag ADC analog watchdog 3.
@@ -14398,7 +14398,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 5021:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   WRITE_REG(ADCx->ISR, LL_ADC_FLAG_EOC);
 5022:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** }
 5023:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
-ARM GAS  /tmp/ccvnhHTK.s 			page 241
+ARM GAS  /tmp/ccvuHxIO.s 			page 241
 
 
 5024:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /**
@@ -14458,7 +14458,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4628              		.loc 1 2466 27 is_stmt 0 view .LVU1325
  4629 00b4 2B7B     		ldrb	r3, [r5, #12]
 2466:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****       {
-ARM GAS  /tmp/ccvnhHTK.s 			page 242
+ARM GAS  /tmp/ccvuHxIO.s 			page 242
 
 
  4630              		.loc 1 2466 10 view .LVU1326
@@ -14518,7 +14518,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 5111:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @rmtoll IER      ADRDYIE        LL_ADC_EnableIT_ADRDY
 5112:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  ADCx ADC instance
 5113:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval None
-ARM GAS  /tmp/ccvnhHTK.s 			page 243
+ARM GAS  /tmp/ccvuHxIO.s 			page 243
 
 
 5114:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
@@ -14578,7 +14578,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 5168:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval None
 5169:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   */
 5170:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** __STATIC_INLINE void LL_ADC_EnableIT_EOSMP(ADC_TypeDef *ADCx)
-ARM GAS  /tmp/ccvnhHTK.s 			page 244
+ARM GAS  /tmp/ccvuHxIO.s 			page 244
 
 
 5171:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** {
@@ -14638,7 +14638,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 5225:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** __STATIC_INLINE void LL_ADC_DisableIT_ADRDY(ADC_TypeDef *ADCx)
 5226:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** {
 5227:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   CLEAR_BIT(ADCx->IER, LL_ADC_IT_ADRDY);
-ARM GAS  /tmp/ccvnhHTK.s 			page 245
+ARM GAS  /tmp/ccvuHxIO.s 			page 245
 
 
 5228:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** }
@@ -14698,7 +14698,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 5282:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   CLEAR_BIT(ADCx->IER, LL_ADC_IT_EOSMP);
 5283:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** }
 5284:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** 
-ARM GAS  /tmp/ccvnhHTK.s 			page 246
+ARM GAS  /tmp/ccvuHxIO.s 			page 246
 
 
 5285:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h **** /**
@@ -14758,7 +14758,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4675 00d8 C360     		str	r3, [r0, #12]
  4676              	.LVL361:
 4006:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****              (AWDy & ADC_AWD_CR_ALL_CHANNEL_MASK),
-ARM GAS  /tmp/ccvnhHTK.s 			page 247
+ARM GAS  /tmp/ccvuHxIO.s 			page 247
 
 
  4677              		.loc 2 4006 3 is_stmt 0 view .LVU1339
@@ -14818,7 +14818,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4717              		.loc 1 2450 9 is_stmt 1 view .LVU1353
 2450:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         {
  4718              		.loc 1 2450 12 is_stmt 0 view .LVU1354
-ARM GAS  /tmp/ccvnhHTK.s 			page 248
+ARM GAS  /tmp/ccvuHxIO.s 			page 248
 
 
  4719 00e8 002E     		cmp	r6, #0
@@ -14878,7 +14878,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4762 0110 1940     		ands	r1, r3
  4763 0112 0132     		adds	r2, r2, #1
  4764 0114 8A40     		lsls	r2, r2, r1
-ARM GAS  /tmp/ccvnhHTK.s 			page 249
+ARM GAS  /tmp/ccvuHxIO.s 			page 249
 
 
  4765              	.L308:
@@ -14938,7 +14938,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4806 014a 1A05     		lsls	r2, r3, #20
  4807 014c 29D4     		bmi	.L331
 2485:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           }
-ARM GAS  /tmp/ccvnhHTK.s 			page 250
+ARM GAS  /tmp/ccvuHxIO.s 			page 250
 
 
  4808              		.loc 1 2485 13 discriminator 26 view .LVU1379
@@ -14998,7 +14998,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4850              		.loc 1 2485 13 discriminator 13 view .LVU1391
  4851 0180 1022     		movs	r2, #16
  4852 0182 C8E7     		b	.L308
-ARM GAS  /tmp/ccvnhHTK.s 			page 251
+ARM GAS  /tmp/ccvuHxIO.s 			page 251
 
 
  4853              	.L325:
@@ -15058,7 +15058,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4897 01b4 8022     		movs	r2, #128
  4898 01b6 D201     		lsls	r2, r2, #7
  4899 01b8 ADE7     		b	.L308
-ARM GAS  /tmp/ccvnhHTK.s 			page 252
+ARM GAS  /tmp/ccvuHxIO.s 			page 252
 
 
  4900              	.L335:
@@ -15118,7 +15118,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  4942 01ec 1A06     		lsls	r2, r3, #24
  4943 01ee 26D4     		bmi	.L346
 2489:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           }
-ARM GAS  /tmp/ccvnhHTK.s 			page 253
+ARM GAS  /tmp/ccvuHxIO.s 			page 253
 
 
  4944              		.loc 1 2489 13 discriminator 18 view .LVU1414
@@ -15178,7 +15178,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2489:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           }
  4986              		.loc 1 2489 13 discriminator 7 view .LVU1427
  4987 0226 0222     		movs	r2, #2
-ARM GAS  /tmp/ccvnhHTK.s 			page 254
+ARM GAS  /tmp/ccvuHxIO.s 			page 254
 
 
  4988 0228 17E7     		b	.L311
@@ -15238,7 +15238,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  5032 0258 FFE6     		b	.L311
  5033              	.L351:
 2489:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****           }
-ARM GAS  /tmp/ccvnhHTK.s 			page 255
+ARM GAS  /tmp/ccvuHxIO.s 			page 255
 
 
  5034              		.loc 1 2489 13 discriminator 29 view .LVU1438
@@ -15298,7 +15298,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  5077              		.loc 1 2504 10 view .LVU1449
  5078 028a 164B     		ldr	r3, .L366+4
  5079 028c 9A42     		cmp	r2, r3
-ARM GAS  /tmp/ccvnhHTK.s 			page 256
+ARM GAS  /tmp/ccvuHxIO.s 			page 256
 
 
  5080 028e 15D0     		beq	.L362
@@ -15358,7 +15358,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 5308:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @brief  Disable interruption ADC analog watchdog 3.
 5309:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @rmtoll IER      AWD3IE         LL_ADC_DisableIT_AWD3
 5310:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @param  ADCx ADC instance
-ARM GAS  /tmp/ccvnhHTK.s 			page 257
+ARM GAS  /tmp/ccvuHxIO.s 			page 257
 
 
 5311:Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_adc.h ****   * @retval None
@@ -15418,7 +15418,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  5153 02c6 8022     		movs	r2, #128
  5154 02c8 5200     		lsls	r2, r2, #1
  5155 02ca 1A60     		str	r2, [r3]
-ARM GAS  /tmp/ccvnhHTK.s 			page 258
+ARM GAS  /tmp/ccvuHxIO.s 			page 258
 
 
  5156              	.LVL377:
@@ -15478,7 +15478,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  5200              	.L364:
  5201              	.LBE262:
  5202              	.LBE263:
-ARM GAS  /tmp/ccvnhHTK.s 			page 259
+ARM GAS  /tmp/ccvuHxIO.s 			page 259
 
 
 2518:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****         }
@@ -15538,7 +15538,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
 2377:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c ****   uint32_t tmp_awd_high_threshold_shifted;
  5246              		.loc 1 2377 21 view .LVU1492
  5247 031e 0026     		movs	r6, #0
-ARM GAS  /tmp/ccvnhHTK.s 			page 260
+ARM GAS  /tmp/ccvuHxIO.s 			page 260
 
 
  5248              	.LBB271:
@@ -15598,7 +15598,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  5287              		.loc 1 2576 3 view .LVU1507
  5288              	.LVL389:
  5289              	.L295:
-ARM GAS  /tmp/ccvnhHTK.s 			page 261
+ARM GAS  /tmp/ccvuHxIO.s 			page 261
 
 
 2577:Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c **** 
@@ -15658,7 +15658,7 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  5333              		.cfi_endproc
  5334              	.LFE512:
  5336              		.text
-ARM GAS  /tmp/ccvnhHTK.s 			page 262
+ARM GAS  /tmp/ccvuHxIO.s 			page 262
 
 
  5337              	.Letext0:
@@ -15673,94 +15673,94 @@ ARM GAS  /tmp/ccvnhHTK.s 			page 1
  5346              		.file 11 "Drivers/CMSIS/Device/ST/STM32G0xx/Include/system_stm32g0xx.h"
  5347              		.file 12 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
  5348              		.file 13 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h"
-ARM GAS  /tmp/ccvnhHTK.s 			page 263
+ARM GAS  /tmp/ccvuHxIO.s 			page 263
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32g0xx_hal_adc.c
-     /tmp/ccvnhHTK.s:19     .text.LL_ADC_SetAnalogWDMonitChannels:00000000 $t
-     /tmp/ccvnhHTK.s:24     .text.LL_ADC_SetAnalogWDMonitChannels:00000000 LL_ADC_SetAnalogWDMonitChannels
-     /tmp/ccvnhHTK.s:83     .text.LL_ADC_SetAnalogWDMonitChannels:0000002c $d
-     /tmp/ccvnhHTK.s:89     .text.LL_ADC_ConfigAnalogWDThresholds:00000000 $t
-     /tmp/ccvnhHTK.s:94     .text.LL_ADC_ConfigAnalogWDThresholds:00000000 LL_ADC_ConfigAnalogWDThresholds
-     /tmp/ccvnhHTK.s:144    .text.LL_ADC_ConfigAnalogWDThresholds:00000028 $d
-     /tmp/ccvnhHTK.s:149    .text.HAL_ADC_MspInit:00000000 $t
-     /tmp/ccvnhHTK.s:155    .text.HAL_ADC_MspInit:00000000 HAL_ADC_MspInit
-     /tmp/ccvnhHTK.s:171    .text.HAL_ADC_Init:00000000 $t
-     /tmp/ccvnhHTK.s:177    .text.HAL_ADC_Init:00000000 HAL_ADC_Init
-     /tmp/ccvnhHTK.s:778    .text.HAL_ADC_Init:00000224 $d
-     /tmp/ccvnhHTK.s:790    .text.HAL_ADC_MspDeInit:00000000 $t
-     /tmp/ccvnhHTK.s:796    .text.HAL_ADC_MspDeInit:00000000 HAL_ADC_MspDeInit
-     /tmp/ccvnhHTK.s:812    .text.HAL_ADC_PollForConversion:00000000 $t
-     /tmp/ccvnhHTK.s:818    .text.HAL_ADC_PollForConversion:00000000 HAL_ADC_PollForConversion
-     /tmp/ccvnhHTK.s:1033   .text.HAL_ADC_PollForConversion:000000bc $d
-     /tmp/ccvnhHTK.s:1038   .text.HAL_ADC_PollForEvent:00000000 $t
-     /tmp/ccvnhHTK.s:1044   .text.HAL_ADC_PollForEvent:00000000 HAL_ADC_PollForEvent
-     /tmp/ccvnhHTK.s:1241   .text.HAL_ADC_GetValue:00000000 $t
-     /tmp/ccvnhHTK.s:1247   .text.HAL_ADC_GetValue:00000000 HAL_ADC_GetValue
-     /tmp/ccvnhHTK.s:1269   .text.HAL_ADC_ConvCpltCallback:00000000 $t
-     /tmp/ccvnhHTK.s:1275   .text.HAL_ADC_ConvCpltCallback:00000000 HAL_ADC_ConvCpltCallback
-     /tmp/ccvnhHTK.s:1291   .text.HAL_ADC_ConvHalfCpltCallback:00000000 $t
-     /tmp/ccvnhHTK.s:1297   .text.HAL_ADC_ConvHalfCpltCallback:00000000 HAL_ADC_ConvHalfCpltCallback
-     /tmp/ccvnhHTK.s:1313   .text.ADC_DMAHalfConvCplt:00000000 $t
-     /tmp/ccvnhHTK.s:1318   .text.ADC_DMAHalfConvCplt:00000000 ADC_DMAHalfConvCplt
-     /tmp/ccvnhHTK.s:1345   .text.HAL_ADC_LevelOutOfWindowCallback:00000000 $t
-     /tmp/ccvnhHTK.s:1351   .text.HAL_ADC_LevelOutOfWindowCallback:00000000 HAL_ADC_LevelOutOfWindowCallback
-     /tmp/ccvnhHTK.s:1367   .text.HAL_ADC_ErrorCallback:00000000 $t
-     /tmp/ccvnhHTK.s:1373   .text.HAL_ADC_ErrorCallback:00000000 HAL_ADC_ErrorCallback
-     /tmp/ccvnhHTK.s:1389   .text.ADC_DMAError:00000000 $t
-     /tmp/ccvnhHTK.s:1394   .text.ADC_DMAError:00000000 ADC_DMAError
-     /tmp/ccvnhHTK.s:1431   .text.ADC_DMAConvCplt:00000000 $t
-     /tmp/ccvnhHTK.s:1436   .text.ADC_DMAConvCplt:00000000 ADC_DMAConvCplt
-     /tmp/ccvnhHTK.s:1582   .text.ADC_DMAConvCplt:0000007c $d
-     /tmp/ccvnhHTK.s:1587   .text.HAL_ADC_IRQHandler:00000000 $t
-     /tmp/ccvnhHTK.s:1593   .text.HAL_ADC_IRQHandler:00000000 HAL_ADC_IRQHandler
-     /tmp/ccvnhHTK.s:1924   .text.HAL_ADC_IRQHandler:00000154 $d
-     /tmp/ccvnhHTK.s:1929   .text.HAL_ADC_ConfigChannel:00000000 $t
-     /tmp/ccvnhHTK.s:1935   .text.HAL_ADC_ConfigChannel:00000000 HAL_ADC_ConfigChannel
-     /tmp/ccvnhHTK.s:2671   .text.HAL_ADC_ConfigChannel:0000027c $d
-     /tmp/ccvnhHTK.s:2684   .text.HAL_ADC_GetState:00000000 $t
-     /tmp/ccvnhHTK.s:2690   .text.HAL_ADC_GetState:00000000 HAL_ADC_GetState
-     /tmp/ccvnhHTK.s:2710   .text.HAL_ADC_GetError:00000000 $t
-     /tmp/ccvnhHTK.s:2716   .text.HAL_ADC_GetError:00000000 HAL_ADC_GetError
-     /tmp/ccvnhHTK.s:2736   .text.ADC_ConversionStop:00000000 $t
-     /tmp/ccvnhHTK.s:2742   .text.ADC_ConversionStop:00000000 ADC_ConversionStop
-     /tmp/ccvnhHTK.s:2876   .text.ADC_ConversionStop:0000005c $d
-     /tmp/ccvnhHTK.s:2881   .text.ADC_Enable:00000000 $t
-     /tmp/ccvnhHTK.s:2887   .text.ADC_Enable:00000000 ADC_Enable
-     /tmp/ccvnhHTK.s:3122   .text.ADC_Enable:000000b8 $d
-     /tmp/ccvnhHTK.s:3131   .text.HAL_ADC_Start:00000000 $t
-     /tmp/ccvnhHTK.s:3137   .text.HAL_ADC_Start:00000000 HAL_ADC_Start
-     /tmp/ccvnhHTK.s:3258   .text.HAL_ADC_Start:00000060 $d
-     /tmp/ccvnhHTK.s:3264   .text.HAL_ADC_Start_IT:00000000 $t
-ARM GAS  /tmp/ccvnhHTK.s 			page 264
+     /tmp/ccvuHxIO.s:19     .text.LL_ADC_SetAnalogWDMonitChannels:00000000 $t
+     /tmp/ccvuHxIO.s:24     .text.LL_ADC_SetAnalogWDMonitChannels:00000000 LL_ADC_SetAnalogWDMonitChannels
+     /tmp/ccvuHxIO.s:83     .text.LL_ADC_SetAnalogWDMonitChannels:0000002c $d
+     /tmp/ccvuHxIO.s:89     .text.LL_ADC_ConfigAnalogWDThresholds:00000000 $t
+     /tmp/ccvuHxIO.s:94     .text.LL_ADC_ConfigAnalogWDThresholds:00000000 LL_ADC_ConfigAnalogWDThresholds
+     /tmp/ccvuHxIO.s:144    .text.LL_ADC_ConfigAnalogWDThresholds:00000028 $d
+     /tmp/ccvuHxIO.s:149    .text.HAL_ADC_MspInit:00000000 $t
+     /tmp/ccvuHxIO.s:155    .text.HAL_ADC_MspInit:00000000 HAL_ADC_MspInit
+     /tmp/ccvuHxIO.s:171    .text.HAL_ADC_Init:00000000 $t
+     /tmp/ccvuHxIO.s:177    .text.HAL_ADC_Init:00000000 HAL_ADC_Init
+     /tmp/ccvuHxIO.s:778    .text.HAL_ADC_Init:00000224 $d
+     /tmp/ccvuHxIO.s:790    .text.HAL_ADC_MspDeInit:00000000 $t
+     /tmp/ccvuHxIO.s:796    .text.HAL_ADC_MspDeInit:00000000 HAL_ADC_MspDeInit
+     /tmp/ccvuHxIO.s:812    .text.HAL_ADC_PollForConversion:00000000 $t
+     /tmp/ccvuHxIO.s:818    .text.HAL_ADC_PollForConversion:00000000 HAL_ADC_PollForConversion
+     /tmp/ccvuHxIO.s:1033   .text.HAL_ADC_PollForConversion:000000bc $d
+     /tmp/ccvuHxIO.s:1038   .text.HAL_ADC_PollForEvent:00000000 $t
+     /tmp/ccvuHxIO.s:1044   .text.HAL_ADC_PollForEvent:00000000 HAL_ADC_PollForEvent
+     /tmp/ccvuHxIO.s:1241   .text.HAL_ADC_GetValue:00000000 $t
+     /tmp/ccvuHxIO.s:1247   .text.HAL_ADC_GetValue:00000000 HAL_ADC_GetValue
+     /tmp/ccvuHxIO.s:1269   .text.HAL_ADC_ConvCpltCallback:00000000 $t
+     /tmp/ccvuHxIO.s:1275   .text.HAL_ADC_ConvCpltCallback:00000000 HAL_ADC_ConvCpltCallback
+     /tmp/ccvuHxIO.s:1291   .text.HAL_ADC_ConvHalfCpltCallback:00000000 $t
+     /tmp/ccvuHxIO.s:1297   .text.HAL_ADC_ConvHalfCpltCallback:00000000 HAL_ADC_ConvHalfCpltCallback
+     /tmp/ccvuHxIO.s:1313   .text.ADC_DMAHalfConvCplt:00000000 $t
+     /tmp/ccvuHxIO.s:1318   .text.ADC_DMAHalfConvCplt:00000000 ADC_DMAHalfConvCplt
+     /tmp/ccvuHxIO.s:1345   .text.HAL_ADC_LevelOutOfWindowCallback:00000000 $t
+     /tmp/ccvuHxIO.s:1351   .text.HAL_ADC_LevelOutOfWindowCallback:00000000 HAL_ADC_LevelOutOfWindowCallback
+     /tmp/ccvuHxIO.s:1367   .text.HAL_ADC_ErrorCallback:00000000 $t
+     /tmp/ccvuHxIO.s:1373   .text.HAL_ADC_ErrorCallback:00000000 HAL_ADC_ErrorCallback
+     /tmp/ccvuHxIO.s:1389   .text.ADC_DMAError:00000000 $t
+     /tmp/ccvuHxIO.s:1394   .text.ADC_DMAError:00000000 ADC_DMAError
+     /tmp/ccvuHxIO.s:1431   .text.ADC_DMAConvCplt:00000000 $t
+     /tmp/ccvuHxIO.s:1436   .text.ADC_DMAConvCplt:00000000 ADC_DMAConvCplt
+     /tmp/ccvuHxIO.s:1582   .text.ADC_DMAConvCplt:0000007c $d
+     /tmp/ccvuHxIO.s:1587   .text.HAL_ADC_IRQHandler:00000000 $t
+     /tmp/ccvuHxIO.s:1593   .text.HAL_ADC_IRQHandler:00000000 HAL_ADC_IRQHandler
+     /tmp/ccvuHxIO.s:1924   .text.HAL_ADC_IRQHandler:00000154 $d
+     /tmp/ccvuHxIO.s:1929   .text.HAL_ADC_ConfigChannel:00000000 $t
+     /tmp/ccvuHxIO.s:1935   .text.HAL_ADC_ConfigChannel:00000000 HAL_ADC_ConfigChannel
+     /tmp/ccvuHxIO.s:2671   .text.HAL_ADC_ConfigChannel:0000027c $d
+     /tmp/ccvuHxIO.s:2684   .text.HAL_ADC_GetState:00000000 $t
+     /tmp/ccvuHxIO.s:2690   .text.HAL_ADC_GetState:00000000 HAL_ADC_GetState
+     /tmp/ccvuHxIO.s:2710   .text.HAL_ADC_GetError:00000000 $t
+     /tmp/ccvuHxIO.s:2716   .text.HAL_ADC_GetError:00000000 HAL_ADC_GetError
+     /tmp/ccvuHxIO.s:2736   .text.ADC_ConversionStop:00000000 $t
+     /tmp/ccvuHxIO.s:2742   .text.ADC_ConversionStop:00000000 ADC_ConversionStop
+     /tmp/ccvuHxIO.s:2876   .text.ADC_ConversionStop:0000005c $d
+     /tmp/ccvuHxIO.s:2881   .text.ADC_Enable:00000000 $t
+     /tmp/ccvuHxIO.s:2887   .text.ADC_Enable:00000000 ADC_Enable
+     /tmp/ccvuHxIO.s:3122   .text.ADC_Enable:000000b8 $d
+     /tmp/ccvuHxIO.s:3131   .text.HAL_ADC_Start:00000000 $t
+     /tmp/ccvuHxIO.s:3137   .text.HAL_ADC_Start:00000000 HAL_ADC_Start
+     /tmp/ccvuHxIO.s:3258   .text.HAL_ADC_Start:00000060 $d
+     /tmp/ccvuHxIO.s:3264   .text.HAL_ADC_Start_IT:00000000 $t
+ARM GAS  /tmp/ccvuHxIO.s 			page 264
 
 
-     /tmp/ccvnhHTK.s:3270   .text.HAL_ADC_Start_IT:00000000 HAL_ADC_Start_IT
-     /tmp/ccvnhHTK.s:3433   .text.HAL_ADC_Start_IT:00000094 $d
-     /tmp/ccvnhHTK.s:3439   .text.HAL_ADC_Start_DMA:00000000 $t
-     /tmp/ccvnhHTK.s:3445   .text.HAL_ADC_Start_DMA:00000000 HAL_ADC_Start_DMA
-     /tmp/ccvnhHTK.s:3656   .text.HAL_ADC_Start_DMA:000000a8 $d
-     /tmp/ccvnhHTK.s:3665   .text.ADC_Disable:00000000 $t
-     /tmp/ccvnhHTK.s:3671   .text.ADC_Disable:00000000 ADC_Disable
-     /tmp/ccvnhHTK.s:3852   .text.ADC_Disable:00000090 $d
-     /tmp/ccvnhHTK.s:3857   .text.HAL_ADC_DeInit:00000000 $t
-     /tmp/ccvnhHTK.s:3863   .text.HAL_ADC_DeInit:00000000 HAL_ADC_DeInit
-     /tmp/ccvnhHTK.s:4050   .text.HAL_ADC_DeInit:000000a4 $d
-     /tmp/ccvnhHTK.s:4061   .text.HAL_ADC_Stop:00000000 $t
-     /tmp/ccvnhHTK.s:4067   .text.HAL_ADC_Stop:00000000 HAL_ADC_Stop
-     /tmp/ccvnhHTK.s:4150   .text.HAL_ADC_Stop:00000040 $d
-     /tmp/ccvnhHTK.s:4155   .text.HAL_ADC_Stop_IT:00000000 $t
-     /tmp/ccvnhHTK.s:4161   .text.HAL_ADC_Stop_IT:00000000 HAL_ADC_Stop_IT
-     /tmp/ccvnhHTK.s:4250   .text.HAL_ADC_Stop_IT:0000004c $d
-     /tmp/ccvnhHTK.s:4255   .text.HAL_ADC_Stop_DMA:00000000 $t
-     /tmp/ccvnhHTK.s:4261   .text.HAL_ADC_Stop_DMA:00000000 HAL_ADC_Stop_DMA
-     /tmp/ccvnhHTK.s:4399   .text.HAL_ADC_Stop_DMA:00000080 $d
-     /tmp/ccvnhHTK.s:4404   .text.HAL_ADC_AnalogWDGConfig:00000000 $t
-     /tmp/ccvnhHTK.s:4410   .text.HAL_ADC_AnalogWDGConfig:00000000 HAL_ADC_AnalogWDGConfig
-     /tmp/ccvnhHTK.s:5191   .text.HAL_ADC_AnalogWDGConfig:000002e0 $d
-     /tmp/ccvnhHTK.s:5204   .text.HAL_ADC_AnalogWDGConfig:00000304 $t
-     /tmp/ccvnhHTK.s:5332   .text.HAL_ADC_AnalogWDGConfig:00000364 $d
+     /tmp/ccvuHxIO.s:3270   .text.HAL_ADC_Start_IT:00000000 HAL_ADC_Start_IT
+     /tmp/ccvuHxIO.s:3433   .text.HAL_ADC_Start_IT:00000094 $d
+     /tmp/ccvuHxIO.s:3439   .text.HAL_ADC_Start_DMA:00000000 $t
+     /tmp/ccvuHxIO.s:3445   .text.HAL_ADC_Start_DMA:00000000 HAL_ADC_Start_DMA
+     /tmp/ccvuHxIO.s:3656   .text.HAL_ADC_Start_DMA:000000a8 $d
+     /tmp/ccvuHxIO.s:3665   .text.ADC_Disable:00000000 $t
+     /tmp/ccvuHxIO.s:3671   .text.ADC_Disable:00000000 ADC_Disable
+     /tmp/ccvuHxIO.s:3852   .text.ADC_Disable:00000090 $d
+     /tmp/ccvuHxIO.s:3857   .text.HAL_ADC_DeInit:00000000 $t
+     /tmp/ccvuHxIO.s:3863   .text.HAL_ADC_DeInit:00000000 HAL_ADC_DeInit
+     /tmp/ccvuHxIO.s:4050   .text.HAL_ADC_DeInit:000000a4 $d
+     /tmp/ccvuHxIO.s:4061   .text.HAL_ADC_Stop:00000000 $t
+     /tmp/ccvuHxIO.s:4067   .text.HAL_ADC_Stop:00000000 HAL_ADC_Stop
+     /tmp/ccvuHxIO.s:4150   .text.HAL_ADC_Stop:00000040 $d
+     /tmp/ccvuHxIO.s:4155   .text.HAL_ADC_Stop_IT:00000000 $t
+     /tmp/ccvuHxIO.s:4161   .text.HAL_ADC_Stop_IT:00000000 HAL_ADC_Stop_IT
+     /tmp/ccvuHxIO.s:4250   .text.HAL_ADC_Stop_IT:0000004c $d
+     /tmp/ccvuHxIO.s:4255   .text.HAL_ADC_Stop_DMA:00000000 $t
+     /tmp/ccvuHxIO.s:4261   .text.HAL_ADC_Stop_DMA:00000000 HAL_ADC_Stop_DMA
+     /tmp/ccvuHxIO.s:4399   .text.HAL_ADC_Stop_DMA:00000080 $d
+     /tmp/ccvuHxIO.s:4404   .text.HAL_ADC_AnalogWDGConfig:00000000 $t
+     /tmp/ccvuHxIO.s:4410   .text.HAL_ADC_AnalogWDGConfig:00000000 HAL_ADC_AnalogWDGConfig
+     /tmp/ccvuHxIO.s:5191   .text.HAL_ADC_AnalogWDGConfig:000002e0 $d
+     /tmp/ccvuHxIO.s:5204   .text.HAL_ADC_AnalogWDGConfig:00000304 $t
+     /tmp/ccvuHxIO.s:5332   .text.HAL_ADC_AnalogWDGConfig:00000364 $d
 
 UNDEFINED SYMBOLS
 __aeabi_uidiv

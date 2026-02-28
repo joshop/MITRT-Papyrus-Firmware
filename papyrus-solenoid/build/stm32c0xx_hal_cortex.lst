@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc8szCPq.s 			page 1
+ARM GAS  /tmp/ccKA0fb9.s 			page 1
 
 
    1              		.cpu cortex-m0plus
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
   29:Drivers/CMSIS/Include/core_cm0plus.h **** #endif
   30:Drivers/CMSIS/Include/core_cm0plus.h **** 
   31:Drivers/CMSIS/Include/core_cm0plus.h **** #ifndef __CORE_CM0PLUS_H_GENERIC
-ARM GAS  /tmp/cc8szCPq.s 			page 2
+ARM GAS  /tmp/ccKA0fb9.s 			page 2
 
 
   32:Drivers/CMSIS/Include/core_cm0plus.h **** #define __CORE_CM0PLUS_H_GENERIC
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
   86:Drivers/CMSIS/Include/core_cm0plus.h ****   #endif
   87:Drivers/CMSIS/Include/core_cm0plus.h **** 
   88:Drivers/CMSIS/Include/core_cm0plus.h **** #elif defined ( __GNUC__ )
-ARM GAS  /tmp/cc8szCPq.s 			page 3
+ARM GAS  /tmp/ccKA0fb9.s 			page 3
 
 
   89:Drivers/CMSIS/Include/core_cm0plus.h ****   #if defined (__VFP_FP__) && !defined(__SOFTFP__)
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  143:Drivers/CMSIS/Include/core_cm0plus.h ****   #endif
  144:Drivers/CMSIS/Include/core_cm0plus.h **** 
  145:Drivers/CMSIS/Include/core_cm0plus.h ****   #ifndef __VTOR_PRESENT
-ARM GAS  /tmp/cc8szCPq.s 			page 4
+ARM GAS  /tmp/ccKA0fb9.s 			page 4
 
 
  146:Drivers/CMSIS/Include/core_cm0plus.h ****     #define __VTOR_PRESENT            0U
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  200:Drivers/CMSIS/Include/core_cm0plus.h **** /**
  201:Drivers/CMSIS/Include/core_cm0plus.h ****   \ingroup    CMSIS_core_register
  202:Drivers/CMSIS/Include/core_cm0plus.h ****   \defgroup   CMSIS_CORE  Status and Control Registers
-ARM GAS  /tmp/cc8szCPq.s 			page 5
+ARM GAS  /tmp/ccKA0fb9.s 			page 5
 
 
  203:Drivers/CMSIS/Include/core_cm0plus.h ****   \brief      Core Register type definitions.
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  257:Drivers/CMSIS/Include/core_cm0plus.h ****  */
  258:Drivers/CMSIS/Include/core_cm0plus.h **** typedef union
  259:Drivers/CMSIS/Include/core_cm0plus.h **** {
-ARM GAS  /tmp/cc8szCPq.s 			page 6
+ARM GAS  /tmp/ccKA0fb9.s 			page 6
 
 
  260:Drivers/CMSIS/Include/core_cm0plus.h ****   struct
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  314:Drivers/CMSIS/Include/core_cm0plus.h **** 
  315:Drivers/CMSIS/Include/core_cm0plus.h **** /*@} end of group CMSIS_CORE */
  316:Drivers/CMSIS/Include/core_cm0plus.h **** 
-ARM GAS  /tmp/cc8szCPq.s 			page 7
+ARM GAS  /tmp/ccKA0fb9.s 			page 7
 
 
  317:Drivers/CMSIS/Include/core_cm0plus.h **** 
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  371:Drivers/CMSIS/Include/core_cm0plus.h **** 
  372:Drivers/CMSIS/Include/core_cm0plus.h **** /* SCB CPUID Register Definitions */
  373:Drivers/CMSIS/Include/core_cm0plus.h **** #define SCB_CPUID_IMPLEMENTER_Pos          24U                                            /*!< SCB 
-ARM GAS  /tmp/cc8szCPq.s 			page 8
+ARM GAS  /tmp/ccKA0fb9.s 			page 8
 
 
  374:Drivers/CMSIS/Include/core_cm0plus.h **** #define SCB_CPUID_IMPLEMENTER_Msk          (0xFFUL << SCB_CPUID_IMPLEMENTER_Pos)          /*!< SCB 
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  428:Drivers/CMSIS/Include/core_cm0plus.h **** 
  429:Drivers/CMSIS/Include/core_cm0plus.h **** #define SCB_AIRCR_ENDIANESS_Pos            15U                                            /*!< SCB 
  430:Drivers/CMSIS/Include/core_cm0plus.h **** #define SCB_AIRCR_ENDIANESS_Msk            (1UL << SCB_AIRCR_ENDIANESS_Pos)               /*!< SCB 
-ARM GAS  /tmp/cc8szCPq.s 			page 9
+ARM GAS  /tmp/ccKA0fb9.s 			page 9
 
 
  431:Drivers/CMSIS/Include/core_cm0plus.h **** 
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  485:Drivers/CMSIS/Include/core_cm0plus.h **** #define SysTick_CTRL_CLKSOURCE_Msk         (1UL << SysTick_CTRL_CLKSOURCE_Pos)            /*!< SysT
  486:Drivers/CMSIS/Include/core_cm0plus.h **** 
  487:Drivers/CMSIS/Include/core_cm0plus.h **** #define SysTick_CTRL_TICKINT_Pos            1U                                            /*!< SysT
-ARM GAS  /tmp/cc8szCPq.s 			page 10
+ARM GAS  /tmp/ccKA0fb9.s 			page 10
 
 
  488:Drivers/CMSIS/Include/core_cm0plus.h **** #define SysTick_CTRL_TICKINT_Msk           (1UL << SysTick_CTRL_TICKINT_Pos)              /*!< SysT
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  542:Drivers/CMSIS/Include/core_cm0plus.h **** #define MPU_TYPE_SEPARATE_Pos               0U                                            /*!< MPU 
  543:Drivers/CMSIS/Include/core_cm0plus.h **** #define MPU_TYPE_SEPARATE_Msk              (1UL /*<< MPU_TYPE_SEPARATE_Pos*/)             /*!< MPU 
  544:Drivers/CMSIS/Include/core_cm0plus.h **** 
-ARM GAS  /tmp/cc8szCPq.s 			page 11
+ARM GAS  /tmp/ccKA0fb9.s 			page 11
 
 
  545:Drivers/CMSIS/Include/core_cm0plus.h **** /* MPU Control Register Definitions */
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  599:Drivers/CMSIS/Include/core_cm0plus.h **** 
  600:Drivers/CMSIS/Include/core_cm0plus.h **** /*@} end of group CMSIS_MPU */
  601:Drivers/CMSIS/Include/core_cm0plus.h **** #endif
-ARM GAS  /tmp/cc8szCPq.s 			page 12
+ARM GAS  /tmp/ccKA0fb9.s 			page 12
 
 
  602:Drivers/CMSIS/Include/core_cm0plus.h **** 
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  656:Drivers/CMSIS/Include/core_cm0plus.h **** 
  657:Drivers/CMSIS/Include/core_cm0plus.h **** #if defined (__MPU_PRESENT) && (__MPU_PRESENT == 1U)
  658:Drivers/CMSIS/Include/core_cm0plus.h ****   #define MPU_BASE          (SCS_BASE +  0x0D90UL)                    /*!< Memory Protection Unit *
-ARM GAS  /tmp/cc8szCPq.s 			page 13
+ARM GAS  /tmp/ccKA0fb9.s 			page 13
 
 
  659:Drivers/CMSIS/Include/core_cm0plus.h ****   #define MPU               ((MPU_Type       *)     MPU_BASE      )   /*!< Memory Protection Unit *
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  713:Drivers/CMSIS/Include/core_cm0plus.h ****   #define NVIC_SetVector              __NVIC_SetVector
  714:Drivers/CMSIS/Include/core_cm0plus.h ****   #define NVIC_GetVector              __NVIC_GetVector
  715:Drivers/CMSIS/Include/core_cm0plus.h **** #endif  /* (CMSIS_VECTAB_VIRTUAL) */
-ARM GAS  /tmp/cc8szCPq.s 			page 14
+ARM GAS  /tmp/ccKA0fb9.s 			page 14
 
 
  716:Drivers/CMSIS/Include/core_cm0plus.h **** 
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  770:Drivers/CMSIS/Include/core_cm0plus.h **** }
  771:Drivers/CMSIS/Include/core_cm0plus.h **** 
  772:Drivers/CMSIS/Include/core_cm0plus.h **** 
-ARM GAS  /tmp/cc8szCPq.s 			page 15
+ARM GAS  /tmp/ccKA0fb9.s 			page 15
 
 
  773:Drivers/CMSIS/Include/core_cm0plus.h **** /**
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  827:Drivers/CMSIS/Include/core_cm0plus.h ****   \brief   Clear Pending Interrupt
  828:Drivers/CMSIS/Include/core_cm0plus.h ****   \details Clears the pending bit of a device specific interrupt in the NVIC pending register.
  829:Drivers/CMSIS/Include/core_cm0plus.h ****   \param [in]      IRQn  Device specific interrupt number.
-ARM GAS  /tmp/cc8szCPq.s 			page 16
+ARM GAS  /tmp/ccKA0fb9.s 			page 16
 
 
  830:Drivers/CMSIS/Include/core_cm0plus.h ****   \note    IRQn must not be negative.
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
   57 0014 C000     		lsls	r0, r0, #3
   58              		.loc 2 854 80 view .LVU9
   59 0016 FC32     		adds	r2, r2, #252
-ARM GAS  /tmp/cc8szCPq.s 			page 17
+ARM GAS  /tmp/ccKA0fb9.s 			page 17
 
 
   60 0018 1600     		movs	r6, r2
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
   99 0042 C000     		lsls	r0, r0, #3
  859:Drivers/CMSIS/Include/core_cm0plus.h ****        (((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL) << _BIT_SHIFT(IRQn)));
  100              		.loc 2 859 80 view .LVU22
-ARM GAS  /tmp/cc8szCPq.s 			page 18
+ARM GAS  /tmp/ccKA0fb9.s 			page 18
 
 
  101 0044 FC32     		adds	r2, r2, #252
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  138              		@ args = 0, pretend = 0, frame = 0
  139              		@ frame_needed = 0, uses_anonymous_args = 0
  140              		@ link register save eliminated.
-ARM GAS  /tmp/cc8szCPq.s 			page 19
+ARM GAS  /tmp/ccKA0fb9.s 			page 19
 
 
  876:Drivers/CMSIS/Include/core_cm0plus.h **** 
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  182 002e 6344     		add	r3, r3, ip
  183 0030 5B68     		ldr	r3, [r3, #4]
  883:Drivers/CMSIS/Include/core_cm0plus.h ****   }
-ARM GAS  /tmp/cc8szCPq.s 			page 20
+ARM GAS  /tmp/ccKA0fb9.s 			page 20
 
 
  184              		.loc 2 883 53 view .LVU44
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  910:Drivers/CMSIS/Include/core_cm0plus.h ****            ((SubPriority     & (uint32_t)((1UL << (SubPriorityBits    )) - 1UL)))
  911:Drivers/CMSIS/Include/core_cm0plus.h ****          );
  912:Drivers/CMSIS/Include/core_cm0plus.h **** }
-ARM GAS  /tmp/cc8szCPq.s 			page 21
+ARM GAS  /tmp/ccKA0fb9.s 			page 21
 
 
  913:Drivers/CMSIS/Include/core_cm0plus.h **** 
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  967:Drivers/CMSIS/Include/core_cm0plus.h ****            or negative to specify a processor exception.
  968:Drivers/CMSIS/Include/core_cm0plus.h ****   \param [in]   IRQn      Interrupt number.
  969:Drivers/CMSIS/Include/core_cm0plus.h ****   \return                 Address of interrupt handler function
-ARM GAS  /tmp/cc8szCPq.s 			page 22
+ARM GAS  /tmp/ccKA0fb9.s 			page 22
 
 
  970:Drivers/CMSIS/Include/core_cm0plus.h ****  */
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
   25:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
   26:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
   27:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/cc8szCPq.s 			page 23
+ARM GAS  /tmp/ccKA0fb9.s 			page 23
 
 
   28:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
   82:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
   83:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
   84:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_WRITE(addr, val)    (void)((((struct T_UINT16_WRITE *)(void *)(addr))-
-ARM GAS  /tmp/cc8szCPq.s 			page 24
+ARM GAS  /tmp/ccKA0fb9.s 			page 24
 
 
   85:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  139:Drivers/CMSIS/Include/cmsis_gcc.h ****   } __copy_table_t;
  140:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  141:Drivers/CMSIS/Include/cmsis_gcc.h ****   typedef struct {
-ARM GAS  /tmp/cc8szCPq.s 			page 25
+ARM GAS  /tmp/ccKA0fb9.s 			page 25
 
 
  142:Drivers/CMSIS/Include/cmsis_gcc.h ****     uint32_t* dest;
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  196:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
  197:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  198:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/cc8szCPq.s 			page 26
+ARM GAS  /tmp/ccKA0fb9.s 			page 26
 
 
  199:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  253:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Instruction Synchronization Barrier
  254:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Instruction Synchronization Barrier flushes the pipeline in the processor,
  255:Drivers/CMSIS/Include/cmsis_gcc.h ****            so that all instructions following the ISB are fetched from cache or memory,
-ARM GAS  /tmp/cc8szCPq.s 			page 27
+ARM GAS  /tmp/ccKA0fb9.s 			page 27
 
 
  256:Drivers/CMSIS/Include/cmsis_gcc.h ****            after the instruction has been completed.
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  254              		.loc 2 995 3 view .LVU57
  996:Drivers/CMSIS/Include/core_cm0plus.h ****   {
  997:Drivers/CMSIS/Include/core_cm0plus.h ****     __NOP();
-ARM GAS  /tmp/cc8szCPq.s 			page 28
+ARM GAS  /tmp/ccKA0fb9.s 			page 28
 
 
  255              		.loc 2 997 5 discriminator 1 view .LVU58
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
 1027:Drivers/CMSIS/Include/core_cm0plus.h **** __STATIC_INLINE uint32_t SCB_GetFPUType(void)
 1028:Drivers/CMSIS/Include/core_cm0plus.h **** {
 1029:Drivers/CMSIS/Include/core_cm0plus.h ****     return 0U;           /* No FPU */
-ARM GAS  /tmp/cc8szCPq.s 			page 29
+ARM GAS  /tmp/ccKA0fb9.s 			page 29
 
 
 1030:Drivers/CMSIS/Include/core_cm0plus.h **** }
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
 1066:Drivers/CMSIS/Include/core_cm0plus.h ****   NVIC_SetPriority (SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); /* set Priority for Systick Int
  299              		.loc 2 1066 3 is_stmt 1 view .LVU66
  300              	.LVL12:
-ARM GAS  /tmp/cc8szCPq.s 			page 30
+ARM GAS  /tmp/ccKA0fb9.s 			page 30
 
 
  301              	.LBB36:
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  340              	.L17:
 1062:Drivers/CMSIS/Include/core_cm0plus.h ****   }
  341              		.loc 2 1062 12 view .LVU83
-ARM GAS  /tmp/cc8szCPq.s 			page 31
+ARM GAS  /tmp/ccKA0fb9.s 			page 31
 
 
  342 002a 0120     		movs	r0, #1
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
   37:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****             (#@) Lowest priority.
   38:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****             (#@) Lowest hardware priority (IRQn position).
   39:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c **** 
-ARM GAS  /tmp/cc8szCPq.s 			page 32
+ARM GAS  /tmp/ccKA0fb9.s 			page 32
 
 
   40:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****       (#)  Configure the priority of the selected IRQ Channels using HAL_NVIC_SetPriority()
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
   94:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c **** /* Private constants ---------------------------------------------------------*/
   95:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c **** /* Private macros ------------------------------------------------------------*/
   96:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c **** /* Private function prototypes -----------------------------------------------*/
-ARM GAS  /tmp/cc8szCPq.s 			page 33
+ARM GAS  /tmp/ccKA0fb9.s 			page 33
 
 
   97:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c **** /* Exported functions --------------------------------------------------------*/
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  374              		.loc 1 138 3 view .LVU88
  375 0002 FFF7FEFF 		bl	__NVIC_SetPriority
  376              	.LVL16:
-ARM GAS  /tmp/cc8szCPq.s 			page 34
+ARM GAS  /tmp/ccKA0fb9.s 			page 34
 
 
  139:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c **** }
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  410              		.loc 2 746 58 is_stmt 0 view .LVU98
  411 0004 1F22     		movs	r2, #31
  412 0006 0240     		ands	r2, r0
-ARM GAS  /tmp/cc8szCPq.s 			page 35
+ARM GAS  /tmp/ccKA0fb9.s 			page 35
 
 
  746:Drivers/CMSIS/Include/core_cm0plus.h ****     __COMPILER_BARRIER();
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  170:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c **** 
  171:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   /* Disable interrupt */
  172:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   NVIC_DisableIRQ(IRQn);
-ARM GAS  /tmp/cc8szCPq.s 			page 36
+ARM GAS  /tmp/ccKA0fb9.s 			page 36
 
 
  451              		.loc 1 172 3 view .LVU106
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  493 0016 BFF36F8F 		isb 0xF
  494              	@ 0 "" 2
  495              	.LVL20:
-ARM GAS  /tmp/cc8szCPq.s 			page 37
+ARM GAS  /tmp/ccKA0fb9.s 			page 37
 
 
  496              		.thumb
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  542              		.syntax unified
  543              		.code	16
  544              		.thumb_func
-ARM GAS  /tmp/cc8szCPq.s 			page 38
+ARM GAS  /tmp/ccKA0fb9.s 			page 38
 
 
  546              	HAL_SYSTICK_Config:
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  206:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   ==============================================================================
  207:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****     [..]
  208:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****       This subsection provides a set of functions allowing to control the CORTEX
-ARM GAS  /tmp/cc8szCPq.s 			page 39
+ARM GAS  /tmp/ccKA0fb9.s 			page 39
 
 
  209:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****       (NVIC, SYSTICK, MPU) functionalities.
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  235:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   *         CMSIS device file (stm32c0xxxx.h))
  236:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   * @retval None
  237:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   */
-ARM GAS  /tmp/cc8szCPq.s 			page 40
+ARM GAS  /tmp/ccKA0fb9.s 			page 40
 
 
  238:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c **** void HAL_NVIC_SetPendingIRQ(IRQn_Type IRQn)
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  647 0018 00E100E0 		.word	-536813312
  648              		.cfi_endproc
  649              	.LFE236:
-ARM GAS  /tmp/cc8szCPq.s 			page 41
+ARM GAS  /tmp/ccKA0fb9.s 			page 41
 
 
  651              		.section	.text.HAL_NVIC_GetPendingIRQ,"ax",%progbits
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  682              		.loc 2 802 68 view .LVU154
  683 000c 1F22     		movs	r2, #31
  684 000e 0240     		ands	r2, r0
-ARM GAS  /tmp/cc8szCPq.s 			page 42
+ARM GAS  /tmp/ccKA0fb9.s 			page 42
 
 
  802:Drivers/CMSIS/Include/core_cm0plus.h ****   }
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  269:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   *         This parameter can be an enumerator of IRQn_Type enumeration
  270:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   *         (For the complete STM32 Devices IRQ Channels list, please refer to the appropriate
  271:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   *         CMSIS device file (stm32c0xxxx.h))
-ARM GAS  /tmp/cc8szCPq.s 			page 43
+ARM GAS  /tmp/ccKA0fb9.s 			page 43
 
 
  272:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   * @retval None
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  765 0016 C046     		.align	2
  766              	.L43:
  767 0018 00E100E0 		.word	-536813312
-ARM GAS  /tmp/cc8szCPq.s 			page 44
+ARM GAS  /tmp/ccKA0fb9.s 			page 44
 
 
  768              		.cfi_endproc
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  802 000e 7047     		bx	lr
  803              	.L48:
  297:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   }
-ARM GAS  /tmp/cc8szCPq.s 			page 45
+ARM GAS  /tmp/ccKA0fb9.s 			page 45
 
 
  804              		.loc 1 297 5 is_stmt 1 view .LVU183
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  838              	.LFE241:
  840              		.section	.text.HAL_SYSTICK_IRQHandler,"ax",%progbits
  841              		.align	1
-ARM GAS  /tmp/cc8szCPq.s 			page 46
+ARM GAS  /tmp/ccKA0fb9.s 			page 46
 
 
  842              		.global	HAL_SYSTICK_IRQHandler
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  881              		@ link register save eliminated.
  339:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   /* Enable the MPU */
  340:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   MPU->CTRL = (MPU_Control | MPU_CTRL_ENABLE_Msk);
-ARM GAS  /tmp/cc8szCPq.s 			page 47
+ARM GAS  /tmp/ccKA0fb9.s 			page 47
 
 
  882              		.loc 1 340 3 view .LVU192
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  929              		.align	1
  930              		.global	HAL_MPU_Disable
  931              		.syntax unified
-ARM GAS  /tmp/cc8szCPq.s 			page 48
+ARM GAS  /tmp/ccKA0fb9.s 			page 48
 
 
  932              		.code	16
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  963 000a 7047     		bx	lr
  964              	.L58:
  965              		.align	2
-ARM GAS  /tmp/cc8szCPq.s 			page 49
+ARM GAS  /tmp/ccKA0fb9.s 			page 49
 
 
  966              	.L57:
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  1007              		.align	1
  1008              		.global	HAL_MPU_DisableRegion
  1009              		.syntax unified
-ARM GAS  /tmp/cc8szCPq.s 			page 50
+ARM GAS  /tmp/ccKA0fb9.s 			page 50
 
 
  1010              		.code	16
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  391:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c **** 
  392:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c **** /**
  393:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   * @brief  Initialize and configure the Region and the memory to be protected.
-ARM GAS  /tmp/cc8szCPq.s 			page 51
+ARM GAS  /tmp/ccKA0fb9.s 			page 51
 
 
  394:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   * @param MPU_Init Pointer to a MPU_Region_InitTypeDef structure that contains
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  1079 000e 4368     		ldr	r3, [r0, #4]
  1080              		.loc 1 419 13 view .LVU238
  1081 0010 D360     		str	r3, [r2, #12]
-ARM GAS  /tmp/cc8szCPq.s 			page 52
+ARM GAS  /tmp/ccKA0fb9.s 			page 52
 
 
  420:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****   MPU->RASR = ((uint32_t)MPU_Init->DisableExec             << MPU_RASR_XN_Pos)   |
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  427:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.c ****               ((uint32_t)MPU_Init->Size                    << MPU_RASR_SIZE_Pos) |
  1123              		.loc 1 427 34 view .LVU260
  1124 003a 017A     		ldrb	r1, [r0, #8]
-ARM GAS  /tmp/cc8szCPq.s 			page 53
+ARM GAS  /tmp/ccKA0fb9.s 			page 53
 
 
  1125              		.loc 1 427 60 view .LVU261
@@ -3151,70 +3151,70 @@ ARM GAS  /tmp/cc8szCPq.s 			page 1
  1148              		.file 5 "/usr/arm-none-eabi/include/machine/_default_types.h"
  1149              		.file 6 "/usr/arm-none-eabi/include/sys/_stdint.h"
  1150              		.file 7 "Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_cortex.h"
-ARM GAS  /tmp/cc8szCPq.s 			page 54
+ARM GAS  /tmp/ccKA0fb9.s 			page 54
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32c0xx_hal_cortex.c
-     /tmp/cc8szCPq.s:19     .text.__NVIC_SetPriority:00000000 $t
-     /tmp/cc8szCPq.s:24     .text.__NVIC_SetPriority:00000000 __NVIC_SetPriority
-     /tmp/cc8szCPq.s:122    .text.__NVIC_SetPriority:00000058 $d
-     /tmp/cc8szCPq.s:128    .text.__NVIC_GetPriority:00000000 $t
-     /tmp/cc8szCPq.s:133    .text.__NVIC_GetPriority:00000000 __NVIC_GetPriority
-     /tmp/cc8szCPq.s:200    .text.__NVIC_GetPriority:00000044 $d
-     /tmp/cc8szCPq.s:206    .text.__NVIC_SystemReset:00000000 $t
-     /tmp/cc8szCPq.s:211    .text.__NVIC_SystemReset:00000000 __NVIC_SystemReset
-     /tmp/cc8szCPq.s:267    .text.__NVIC_SystemReset:00000014 $d
-     /tmp/cc8szCPq.s:273    .text.SysTick_Config:00000000 $t
-     /tmp/cc8szCPq.s:278    .text.SysTick_Config:00000000 SysTick_Config
-     /tmp/cc8szCPq.s:347    .text.SysTick_Config:00000030 $d
-     /tmp/cc8szCPq.s:353    .text.HAL_NVIC_SetPriority:00000000 $t
-     /tmp/cc8szCPq.s:359    .text.HAL_NVIC_SetPriority:00000000 HAL_NVIC_SetPriority
-     /tmp/cc8szCPq.s:384    .text.HAL_NVIC_EnableIRQ:00000000 $t
-     /tmp/cc8szCPq.s:390    .text.HAL_NVIC_EnableIRQ:00000000 HAL_NVIC_EnableIRQ
-     /tmp/cc8szCPq.s:431    .text.HAL_NVIC_EnableIRQ:00000014 $d
-     /tmp/cc8szCPq.s:436    .text.HAL_NVIC_DisableIRQ:00000000 $t
-     /tmp/cc8szCPq.s:442    .text.HAL_NVIC_DisableIRQ:00000000 HAL_NVIC_DisableIRQ
-     /tmp/cc8szCPq.s:510    .text.HAL_NVIC_DisableIRQ:0000001c $d
-     /tmp/cc8szCPq.s:515    .text.HAL_NVIC_SystemReset:00000000 $t
-     /tmp/cc8szCPq.s:521    .text.HAL_NVIC_SystemReset:00000000 HAL_NVIC_SystemReset
-     /tmp/cc8szCPq.s:540    .text.HAL_SYSTICK_Config:00000000 $t
-     /tmp/cc8szCPq.s:546    .text.HAL_SYSTICK_Config:00000000 HAL_SYSTICK_Config
-     /tmp/cc8szCPq.s:570    .text.HAL_NVIC_GetPriority:00000000 $t
-     /tmp/cc8szCPq.s:576    .text.HAL_NVIC_GetPriority:00000000 HAL_NVIC_GetPriority
-     /tmp/cc8szCPq.s:600    .text.HAL_NVIC_SetPendingIRQ:00000000 $t
-     /tmp/cc8szCPq.s:606    .text.HAL_NVIC_SetPendingIRQ:00000000 HAL_NVIC_SetPendingIRQ
-     /tmp/cc8szCPq.s:647    .text.HAL_NVIC_SetPendingIRQ:00000018 $d
-     /tmp/cc8szCPq.s:652    .text.HAL_NVIC_GetPendingIRQ:00000000 $t
-     /tmp/cc8szCPq.s:658    .text.HAL_NVIC_GetPendingIRQ:00000000 HAL_NVIC_GetPendingIRQ
-     /tmp/cc8szCPq.s:715    .text.HAL_NVIC_GetPendingIRQ:0000001c $d
-     /tmp/cc8szCPq.s:720    .text.HAL_NVIC_ClearPendingIRQ:00000000 $t
-     /tmp/cc8szCPq.s:726    .text.HAL_NVIC_ClearPendingIRQ:00000000 HAL_NVIC_ClearPendingIRQ
-     /tmp/cc8szCPq.s:767    .text.HAL_NVIC_ClearPendingIRQ:00000018 $d
-     /tmp/cc8szCPq.s:772    .text.HAL_SYSTICK_CLKSourceConfig:00000000 $t
-     /tmp/cc8szCPq.s:778    .text.HAL_SYSTICK_CLKSourceConfig:00000000 HAL_SYSTICK_CLKSourceConfig
-     /tmp/cc8szCPq.s:816    .text.HAL_SYSTICK_CLKSourceConfig:0000001c $d
-     /tmp/cc8szCPq.s:821    .text.HAL_SYSTICK_Callback:00000000 $t
-     /tmp/cc8szCPq.s:827    .text.HAL_SYSTICK_Callback:00000000 HAL_SYSTICK_Callback
-     /tmp/cc8szCPq.s:841    .text.HAL_SYSTICK_IRQHandler:00000000 $t
-     /tmp/cc8szCPq.s:847    .text.HAL_SYSTICK_IRQHandler:00000000 HAL_SYSTICK_IRQHandler
-     /tmp/cc8szCPq.s:868    .text.HAL_MPU_Enable:00000000 $t
-     /tmp/cc8szCPq.s:874    .text.HAL_MPU_Enable:00000000 HAL_MPU_Enable
-     /tmp/cc8szCPq.s:924    .text.HAL_MPU_Enable:00000014 $d
-     /tmp/cc8szCPq.s:929    .text.HAL_MPU_Disable:00000000 $t
-     /tmp/cc8szCPq.s:935    .text.HAL_MPU_Disable:00000000 HAL_MPU_Disable
-     /tmp/cc8szCPq.s:967    .text.HAL_MPU_Disable:0000000c $d
-     /tmp/cc8szCPq.s:972    .text.HAL_MPU_EnableRegion:00000000 $t
-     /tmp/cc8szCPq.s:978    .text.HAL_MPU_EnableRegion:00000000 HAL_MPU_EnableRegion
-     /tmp/cc8szCPq.s:1002   .text.HAL_MPU_EnableRegion:00000010 $d
-     /tmp/cc8szCPq.s:1007   .text.HAL_MPU_DisableRegion:00000000 $t
-     /tmp/cc8szCPq.s:1013   .text.HAL_MPU_DisableRegion:00000000 HAL_MPU_DisableRegion
-     /tmp/cc8szCPq.s:1037   .text.HAL_MPU_DisableRegion:00000010 $d
-     /tmp/cc8szCPq.s:1042   .text.HAL_MPU_ConfigRegion:00000000 $t
-ARM GAS  /tmp/cc8szCPq.s 			page 55
+     /tmp/ccKA0fb9.s:19     .text.__NVIC_SetPriority:00000000 $t
+     /tmp/ccKA0fb9.s:24     .text.__NVIC_SetPriority:00000000 __NVIC_SetPriority
+     /tmp/ccKA0fb9.s:122    .text.__NVIC_SetPriority:00000058 $d
+     /tmp/ccKA0fb9.s:128    .text.__NVIC_GetPriority:00000000 $t
+     /tmp/ccKA0fb9.s:133    .text.__NVIC_GetPriority:00000000 __NVIC_GetPriority
+     /tmp/ccKA0fb9.s:200    .text.__NVIC_GetPriority:00000044 $d
+     /tmp/ccKA0fb9.s:206    .text.__NVIC_SystemReset:00000000 $t
+     /tmp/ccKA0fb9.s:211    .text.__NVIC_SystemReset:00000000 __NVIC_SystemReset
+     /tmp/ccKA0fb9.s:267    .text.__NVIC_SystemReset:00000014 $d
+     /tmp/ccKA0fb9.s:273    .text.SysTick_Config:00000000 $t
+     /tmp/ccKA0fb9.s:278    .text.SysTick_Config:00000000 SysTick_Config
+     /tmp/ccKA0fb9.s:347    .text.SysTick_Config:00000030 $d
+     /tmp/ccKA0fb9.s:353    .text.HAL_NVIC_SetPriority:00000000 $t
+     /tmp/ccKA0fb9.s:359    .text.HAL_NVIC_SetPriority:00000000 HAL_NVIC_SetPriority
+     /tmp/ccKA0fb9.s:384    .text.HAL_NVIC_EnableIRQ:00000000 $t
+     /tmp/ccKA0fb9.s:390    .text.HAL_NVIC_EnableIRQ:00000000 HAL_NVIC_EnableIRQ
+     /tmp/ccKA0fb9.s:431    .text.HAL_NVIC_EnableIRQ:00000014 $d
+     /tmp/ccKA0fb9.s:436    .text.HAL_NVIC_DisableIRQ:00000000 $t
+     /tmp/ccKA0fb9.s:442    .text.HAL_NVIC_DisableIRQ:00000000 HAL_NVIC_DisableIRQ
+     /tmp/ccKA0fb9.s:510    .text.HAL_NVIC_DisableIRQ:0000001c $d
+     /tmp/ccKA0fb9.s:515    .text.HAL_NVIC_SystemReset:00000000 $t
+     /tmp/ccKA0fb9.s:521    .text.HAL_NVIC_SystemReset:00000000 HAL_NVIC_SystemReset
+     /tmp/ccKA0fb9.s:540    .text.HAL_SYSTICK_Config:00000000 $t
+     /tmp/ccKA0fb9.s:546    .text.HAL_SYSTICK_Config:00000000 HAL_SYSTICK_Config
+     /tmp/ccKA0fb9.s:570    .text.HAL_NVIC_GetPriority:00000000 $t
+     /tmp/ccKA0fb9.s:576    .text.HAL_NVIC_GetPriority:00000000 HAL_NVIC_GetPriority
+     /tmp/ccKA0fb9.s:600    .text.HAL_NVIC_SetPendingIRQ:00000000 $t
+     /tmp/ccKA0fb9.s:606    .text.HAL_NVIC_SetPendingIRQ:00000000 HAL_NVIC_SetPendingIRQ
+     /tmp/ccKA0fb9.s:647    .text.HAL_NVIC_SetPendingIRQ:00000018 $d
+     /tmp/ccKA0fb9.s:652    .text.HAL_NVIC_GetPendingIRQ:00000000 $t
+     /tmp/ccKA0fb9.s:658    .text.HAL_NVIC_GetPendingIRQ:00000000 HAL_NVIC_GetPendingIRQ
+     /tmp/ccKA0fb9.s:715    .text.HAL_NVIC_GetPendingIRQ:0000001c $d
+     /tmp/ccKA0fb9.s:720    .text.HAL_NVIC_ClearPendingIRQ:00000000 $t
+     /tmp/ccKA0fb9.s:726    .text.HAL_NVIC_ClearPendingIRQ:00000000 HAL_NVIC_ClearPendingIRQ
+     /tmp/ccKA0fb9.s:767    .text.HAL_NVIC_ClearPendingIRQ:00000018 $d
+     /tmp/ccKA0fb9.s:772    .text.HAL_SYSTICK_CLKSourceConfig:00000000 $t
+     /tmp/ccKA0fb9.s:778    .text.HAL_SYSTICK_CLKSourceConfig:00000000 HAL_SYSTICK_CLKSourceConfig
+     /tmp/ccKA0fb9.s:816    .text.HAL_SYSTICK_CLKSourceConfig:0000001c $d
+     /tmp/ccKA0fb9.s:821    .text.HAL_SYSTICK_Callback:00000000 $t
+     /tmp/ccKA0fb9.s:827    .text.HAL_SYSTICK_Callback:00000000 HAL_SYSTICK_Callback
+     /tmp/ccKA0fb9.s:841    .text.HAL_SYSTICK_IRQHandler:00000000 $t
+     /tmp/ccKA0fb9.s:847    .text.HAL_SYSTICK_IRQHandler:00000000 HAL_SYSTICK_IRQHandler
+     /tmp/ccKA0fb9.s:868    .text.HAL_MPU_Enable:00000000 $t
+     /tmp/ccKA0fb9.s:874    .text.HAL_MPU_Enable:00000000 HAL_MPU_Enable
+     /tmp/ccKA0fb9.s:924    .text.HAL_MPU_Enable:00000014 $d
+     /tmp/ccKA0fb9.s:929    .text.HAL_MPU_Disable:00000000 $t
+     /tmp/ccKA0fb9.s:935    .text.HAL_MPU_Disable:00000000 HAL_MPU_Disable
+     /tmp/ccKA0fb9.s:967    .text.HAL_MPU_Disable:0000000c $d
+     /tmp/ccKA0fb9.s:972    .text.HAL_MPU_EnableRegion:00000000 $t
+     /tmp/ccKA0fb9.s:978    .text.HAL_MPU_EnableRegion:00000000 HAL_MPU_EnableRegion
+     /tmp/ccKA0fb9.s:1002   .text.HAL_MPU_EnableRegion:00000010 $d
+     /tmp/ccKA0fb9.s:1007   .text.HAL_MPU_DisableRegion:00000000 $t
+     /tmp/ccKA0fb9.s:1013   .text.HAL_MPU_DisableRegion:00000000 HAL_MPU_DisableRegion
+     /tmp/ccKA0fb9.s:1037   .text.HAL_MPU_DisableRegion:00000010 $d
+     /tmp/ccKA0fb9.s:1042   .text.HAL_MPU_ConfigRegion:00000000 $t
+ARM GAS  /tmp/ccKA0fb9.s 			page 55
 
 
-     /tmp/cc8szCPq.s:1048   .text.HAL_MPU_ConfigRegion:00000000 HAL_MPU_ConfigRegion
-     /tmp/cc8szCPq.s:1141   .text.HAL_MPU_ConfigRegion:00000048 $d
+     /tmp/ccKA0fb9.s:1048   .text.HAL_MPU_ConfigRegion:00000000 HAL_MPU_ConfigRegion
+     /tmp/ccKA0fb9.s:1141   .text.HAL_MPU_ConfigRegion:00000048 $d
 
 NO UNDEFINED SYMBOLS

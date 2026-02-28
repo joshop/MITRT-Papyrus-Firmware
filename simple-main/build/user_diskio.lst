@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc1TQ7ze.s 			page 1
+ARM GAS  /tmp/ccKKLCFK.s 			page 1
 
 
    1              		.cpu cortex-m0plus
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc1TQ7ze.s 			page 1
   29:FATFS/Target/user_diskio.c **** /* USER CODE BEGIN 0 */
   30:FATFS/Target/user_diskio.c **** /* USER CODE END 0 */
   31:FATFS/Target/user_diskio.c **** #endif
-ARM GAS  /tmp/cc1TQ7ze.s 			page 2
+ARM GAS  /tmp/ccKKLCFK.s 			page 2
 
 
   32:FATFS/Target/user_diskio.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc1TQ7ze.s 			page 1
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/cc1TQ7ze.s 			page 3
+ARM GAS  /tmp/ccKKLCFK.s 			page 3
 
 
   32              		.loc 1 84 1 is_stmt 0 view .LVU1
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc1TQ7ze.s 			page 1
  101:FATFS/Target/user_diskio.c ****   /* USER CODE END STATUS */
  102:FATFS/Target/user_diskio.c **** }
   72              		.loc 1 102 1 view .LVU9
-ARM GAS  /tmp/cc1TQ7ze.s 			page 4
+ARM GAS  /tmp/ccKKLCFK.s 			page 4
 
 
   73              		@ sp needed
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc1TQ7ze.s 			page 1
  110              		.global	USER_write
  111              		.syntax unified
  112              		.code	16
-ARM GAS  /tmp/cc1TQ7ze.s 			page 5
+ARM GAS  /tmp/ccKKLCFK.s 			page 5
 
 
  113              		.thumb_func
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc1TQ7ze.s 			page 1
  145:FATFS/Target/user_diskio.c **** #endif /* _USE_WRITE == 1 */
  146:FATFS/Target/user_diskio.c **** 
  147:FATFS/Target/user_diskio.c **** /**
-ARM GAS  /tmp/cc1TQ7ze.s 			page 6
+ARM GAS  /tmp/ccKKLCFK.s 			page 6
 
 
  148:FATFS/Target/user_diskio.c ****   * @brief  I/O control operation
@@ -358,27 +358,27 @@ ARM GAS  /tmp/cc1TQ7ze.s 			page 1
  190              		.file 6 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.h"
  191              		.file 7 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
  192              		.file 8 "Core/Inc/user_diskio_spi.h"
-ARM GAS  /tmp/cc1TQ7ze.s 			page 7
+ARM GAS  /tmp/ccKKLCFK.s 			page 7
 
 
-ARM GAS  /tmp/cc1TQ7ze.s 			page 8
+ARM GAS  /tmp/ccKKLCFK.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 user_diskio.c
-     /tmp/cc1TQ7ze.s:19     .text.USER_initialize:00000000 $t
-     /tmp/cc1TQ7ze.s:25     .text.USER_initialize:00000000 USER_initialize
-     /tmp/cc1TQ7ze.s:49     .text.USER_status:00000000 $t
-     /tmp/cc1TQ7ze.s:55     .text.USER_status:00000000 USER_status
-     /tmp/cc1TQ7ze.s:79     .text.USER_read:00000000 $t
-     /tmp/cc1TQ7ze.s:85     .text.USER_read:00000000 USER_read
-     /tmp/cc1TQ7ze.s:109    .text.USER_write:00000000 $t
-     /tmp/cc1TQ7ze.s:115    .text.USER_write:00000000 USER_write
-     /tmp/cc1TQ7ze.s:139    .text.USER_ioctl:00000000 $t
-     /tmp/cc1TQ7ze.s:145    .text.USER_ioctl:00000000 USER_ioctl
-     /tmp/cc1TQ7ze.s:173    .data.USER_Driver:00000000 USER_Driver
-     /tmp/cc1TQ7ze.s:170    .data.USER_Driver:00000000 $d
-     /tmp/cc1TQ7ze.s:182    .data.Stat:00000000 Stat
+     /tmp/ccKKLCFK.s:19     .text.USER_initialize:00000000 $t
+     /tmp/ccKKLCFK.s:25     .text.USER_initialize:00000000 USER_initialize
+     /tmp/ccKKLCFK.s:49     .text.USER_status:00000000 $t
+     /tmp/ccKKLCFK.s:55     .text.USER_status:00000000 USER_status
+     /tmp/ccKKLCFK.s:79     .text.USER_read:00000000 $t
+     /tmp/ccKKLCFK.s:85     .text.USER_read:00000000 USER_read
+     /tmp/ccKKLCFK.s:109    .text.USER_write:00000000 $t
+     /tmp/ccKKLCFK.s:115    .text.USER_write:00000000 USER_write
+     /tmp/ccKKLCFK.s:139    .text.USER_ioctl:00000000 $t
+     /tmp/ccKKLCFK.s:145    .text.USER_ioctl:00000000 USER_ioctl
+     /tmp/ccKKLCFK.s:173    .data.USER_Driver:00000000 USER_Driver
+     /tmp/ccKKLCFK.s:170    .data.USER_Driver:00000000 $d
+     /tmp/ccKKLCFK.s:182    .data.Stat:00000000 Stat
 
 UNDEFINED SYMBOLS
 USER_SPI_initialize
