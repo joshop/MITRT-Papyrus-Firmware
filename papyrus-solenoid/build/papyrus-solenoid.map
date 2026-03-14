@@ -1717,22 +1717,22 @@ LOAD /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a
  .debug_ranges  0x000005a8       0x18 build/system_stm32c0xx.o
  .debug_ranges  0x000005c0       0x20 build/startup_stm32c092xx.o
 
-.debug_line     0x00000000     0x4dc3
- .debug_line    0x00000000      0x726 build/main.o
- .debug_line    0x00000726       0xdf build/stm32c0xx_it.o
- .debug_line    0x00000805      0x2ac build/stm32c0xx_hal_msp.o
- .debug_line    0x00000ab1      0x590 build/stm32c0xx_hal.o
- .debug_line    0x00001041      0x64d build/stm32c0xx_hal_cortex.o
- .debug_line    0x0000168e      0xadb build/stm32c0xx_hal_rcc.o
- .debug_line    0x00002169      0x618 build/stm32c0xx_hal_rcc_ex.o
- .debug_line    0x00002781      0x6ae build/stm32c0xx_hal_gpio.o
- .debug_line    0x00002e2f     0x1a79 build/stm32c0xx_hal_fdcan.o
- .debug_line    0x000048a8      0x1c4 build/system_stm32c0xx.o
- .debug_line    0x00004a6c       0x76 build/startup_stm32c092xx.o
- .debug_line    0x00004ae2      0x11d /usr/lib/gcc/arm-none-eabi/14.2.0/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(libc_a-memset.o)
- .debug_line    0x00004bff      0x119 /usr/lib/gcc/arm-none-eabi/14.2.0/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(libc_a-init.o)
- .debug_line    0x00004d18       0x61 /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
- .debug_line    0x00004d79       0x4a /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+.debug_line     0x00000000     0x4dc5
+ .debug_line    0x00000000      0x728 build/main.o
+ .debug_line    0x00000728       0xdf build/stm32c0xx_it.o
+ .debug_line    0x00000807      0x2ac build/stm32c0xx_hal_msp.o
+ .debug_line    0x00000ab3      0x590 build/stm32c0xx_hal.o
+ .debug_line    0x00001043      0x64d build/stm32c0xx_hal_cortex.o
+ .debug_line    0x00001690      0xadb build/stm32c0xx_hal_rcc.o
+ .debug_line    0x0000216b      0x618 build/stm32c0xx_hal_rcc_ex.o
+ .debug_line    0x00002783      0x6ae build/stm32c0xx_hal_gpio.o
+ .debug_line    0x00002e31     0x1a79 build/stm32c0xx_hal_fdcan.o
+ .debug_line    0x000048aa      0x1c4 build/system_stm32c0xx.o
+ .debug_line    0x00004a6e       0x76 build/startup_stm32c092xx.o
+ .debug_line    0x00004ae4      0x11d /usr/lib/gcc/arm-none-eabi/14.2.0/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(libc_a-memset.o)
+ .debug_line    0x00004c01      0x119 /usr/lib/gcc/arm-none-eabi/14.2.0/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(libc_a-init.o)
+ .debug_line    0x00004d1a       0x61 /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+ .debug_line    0x00004d7b       0x4a /usr/lib/gcc/arm-none-eabi/14.2.0/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
 
 .debug_str      0x00000000     0x266a
  .debug_str     0x00000000     0x266a build/main.o

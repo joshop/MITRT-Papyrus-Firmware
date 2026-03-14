@@ -33,7 +33,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
-#define CAN_CMD_ID     103
+#define CAN_CMD_ID     106
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -152,6 +152,19 @@ int main(void)
   uint8_t rxData[8];
   uint8_t txData[8];
 
+  // while(1){
+  // HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+  // HAL_Delay(500);
+  // HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+  // HAL_Delay(500);
+  // HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+  // HAL_Delay(1000);
+  // HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
+  // HAL_Delay(500);
+  // HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+  // HAL_Delay(500);
+  // HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+  // }
 
   /* USER CODE END 2 */
 

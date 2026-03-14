@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccXiwYkc.s 			page 1
+ARM GAS  /tmp/ccJvELnL.s 			page 1
 
 
    1              		.cpu cortex-m0plus
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccXiwYkc.s 			page 1
   29:Middlewares/Third_Party/FatFs/src/diskio.c **** /* Private functions ---------------------------------------------------------*/
   30:Middlewares/Third_Party/FatFs/src/diskio.c **** 
   31:Middlewares/Third_Party/FatFs/src/diskio.c **** /**
-ARM GAS  /tmp/ccXiwYkc.s 			page 2
+ARM GAS  /tmp/ccJvELnL.s 			page 2
 
 
   32:Middlewares/Third_Party/FatFs/src/diskio.c ****   * @brief  Gets Disk Status
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccXiwYkc.s 			page 1
   70              		.thumb_func
   72              	disk_initialize:
   73              	.LVL3:
-ARM GAS  /tmp/ccXiwYkc.s 			page 3
+ARM GAS  /tmp/ccJvELnL.s 			page 3
 
 
   74              	.LFB494:
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccXiwYkc.s 			page 1
  112              	.LVL6:
  113              	.L5:
   61:Middlewares/Third_Party/FatFs/src/diskio.c ****   }
-ARM GAS  /tmp/ccXiwYkc.s 			page 4
+ARM GAS  /tmp/ccJvELnL.s 			page 4
 
 
   62:Middlewares/Third_Party/FatFs/src/diskio.c ****   return stat;
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccXiwYkc.s 			page 1
  150              		.cfi_offset 4, -16
  151              		.cfi_offset 5, -12
  152              		.cfi_offset 6, -8
-ARM GAS  /tmp/ccXiwYkc.s 			page 5
+ARM GAS  /tmp/ccJvELnL.s 			page 5
 
 
  153              		.cfi_offset 14, -4
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccXiwYkc.s 			page 1
   98:Middlewares/Third_Party/FatFs/src/diskio.c **** 	DWORD sector,		/* Sector address in LBA */
   99:Middlewares/Third_Party/FatFs/src/diskio.c **** 	UINT count        	/* Number of sectors to write */
  100:Middlewares/Third_Party/FatFs/src/diskio.c **** )
-ARM GAS  /tmp/ccXiwYkc.s 			page 6
+ARM GAS  /tmp/ccJvELnL.s 			page 6
 
 
  101:Middlewares/Third_Party/FatFs/src/diskio.c **** {
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccXiwYkc.s 			page 1
  108:Middlewares/Third_Party/FatFs/src/diskio.c **** 
  109:Middlewares/Third_Party/FatFs/src/diskio.c **** /**
  110:Middlewares/Third_Party/FatFs/src/diskio.c ****   * @brief  I/O control operation
-ARM GAS  /tmp/ccXiwYkc.s 			page 7
+ARM GAS  /tmp/ccJvELnL.s 			page 7
 
 
  111:Middlewares/Third_Party/FatFs/src/diskio.c ****   * @param  pdrv: Physical drive number (0..)
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccXiwYkc.s 			page 1
  278              		.align	1
  279              		.weak	get_fattime
  280              		.syntax unified
-ARM GAS  /tmp/ccXiwYkc.s 			page 8
+ARM GAS  /tmp/ccJvELnL.s 			page 8
 
 
  281              		.code	16
@@ -456,28 +456,28 @@ ARM GAS  /tmp/ccXiwYkc.s 			page 1
  304              		.file 5 "/usr/arm-none-eabi/include/sys/_stdint.h"
  305              		.file 6 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.h"
  306              		.file 7 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
-ARM GAS  /tmp/ccXiwYkc.s 			page 9
+ARM GAS  /tmp/ccJvELnL.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 diskio.c
-     /tmp/ccXiwYkc.s:19     .text.disk_status:00000000 $t
-     /tmp/ccXiwYkc.s:25     .text.disk_status:00000000 disk_status
-     /tmp/ccXiwYkc.s:61     .text.disk_status:00000014 $d
-     /tmp/ccXiwYkc.s:66     .text.disk_initialize:00000000 $t
-     /tmp/ccXiwYkc.s:72     .text.disk_initialize:00000000 disk_initialize
-     /tmp/ccXiwYkc.s:128    .text.disk_initialize:00000024 $d
-     /tmp/ccXiwYkc.s:133    .text.disk_read:00000000 $t
-     /tmp/ccXiwYkc.s:139    .text.disk_read:00000000 disk_read
-     /tmp/ccXiwYkc.s:177    .text.disk_read:00000014 $d
-     /tmp/ccXiwYkc.s:182    .text.disk_write:00000000 $t
-     /tmp/ccXiwYkc.s:188    .text.disk_write:00000000 disk_write
-     /tmp/ccXiwYkc.s:226    .text.disk_write:00000014 $d
-     /tmp/ccXiwYkc.s:231    .text.disk_ioctl:00000000 $t
-     /tmp/ccXiwYkc.s:237    .text.disk_ioctl:00000000 disk_ioctl
-     /tmp/ccXiwYkc.s:273    .text.disk_ioctl:00000014 $d
-     /tmp/ccXiwYkc.s:278    .text.get_fattime:00000000 $t
-     /tmp/ccXiwYkc.s:284    .text.get_fattime:00000000 get_fattime
+     /tmp/ccJvELnL.s:19     .text.disk_status:00000000 $t
+     /tmp/ccJvELnL.s:25     .text.disk_status:00000000 disk_status
+     /tmp/ccJvELnL.s:61     .text.disk_status:00000014 $d
+     /tmp/ccJvELnL.s:66     .text.disk_initialize:00000000 $t
+     /tmp/ccJvELnL.s:72     .text.disk_initialize:00000000 disk_initialize
+     /tmp/ccJvELnL.s:128    .text.disk_initialize:00000024 $d
+     /tmp/ccJvELnL.s:133    .text.disk_read:00000000 $t
+     /tmp/ccJvELnL.s:139    .text.disk_read:00000000 disk_read
+     /tmp/ccJvELnL.s:177    .text.disk_read:00000014 $d
+     /tmp/ccJvELnL.s:182    .text.disk_write:00000000 $t
+     /tmp/ccJvELnL.s:188    .text.disk_write:00000000 disk_write
+     /tmp/ccJvELnL.s:226    .text.disk_write:00000014 $d
+     /tmp/ccJvELnL.s:231    .text.disk_ioctl:00000000 $t
+     /tmp/ccJvELnL.s:237    .text.disk_ioctl:00000000 disk_ioctl
+     /tmp/ccJvELnL.s:273    .text.disk_ioctl:00000014 $d
+     /tmp/ccJvELnL.s:278    .text.get_fattime:00000000 $t
+     /tmp/ccJvELnL.s:284    .text.get_fattime:00000000 get_fattime
 
 UNDEFINED SYMBOLS
 disk

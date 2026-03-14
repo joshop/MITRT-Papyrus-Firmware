@@ -27,7 +27,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define CAN_CMD_ID 400
+#define CAN_CMD_ID 401
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -229,17 +229,19 @@ uint32_t ADC1_ReadInput_mV(uint8_t input)
 
     return (raw * vdda) / 4095U;
 }
-uint16_t adc_raw[3];
+uint16_t adc_raw[4];
 uint16_t vref_mV;
 uint16_t ch2_mV;
 uint16_t ch3_mV;
+uint16_t ch4_mV;
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
   if (hadc->Instance == ADC1)
   {
-    uint32_t vref_raw = adc_raw[2];
+    uint32_t vref_raw = adc_raw[3];
     uint32_t ch2_raw  = adc_raw[0];
     uint32_t ch3_raw  = adc_raw[1];
+    uint32_t ch4_raw  = adc_raw[2];
 
     uint32_t vrefint_cal = *VREFINT_CAL_ADDR;
 
@@ -249,6 +251,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     // Convert channels to mV
     ch2_mV = (ch2_raw * vref_mV) / 4095;
     ch3_mV = (ch3_raw * vref_mV) / 4095;
+    ch4_mV = (ch4_raw * vref_mV) / 4095;
   }
 }
 /* USER CODE END 0 */
@@ -290,7 +293,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_FDCAN_Start(&hfdcan1);
   HAL_ADCEx_Calibration_Start(&hadc1);
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_raw, 3);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_raw, 4);
   HAL_TIM_Base_Start(&htim2);
 
   FDCAN_RxHeaderTypeDef rxHeader;
@@ -317,11 +320,15 @@ int main(void)
         case 0x00:
           txData[1] = 0x04; break;
         case 0x01:
-          *(uint16_t*)(txData+1) = ch2_mV;
+          *(uint16_t*)(txData+1) = (ch2_mV*2500)/1500;
           CAN_SendAck(txData, 3);
           continue;
         case 0x02:
-          *(uint16_t*)(txData+1) = ch3_mV;
+          *(uint16_t*)(txData+1) = (ch3_mV*2500)/1500;
+          CAN_SendAck(txData, 3);
+          continue;
+        case 0x03:
+          *(uint16_t*)(txData+1) = (ch4_mV*2500)/1500;
           CAN_SendAck(txData, 3);
           continue;
 
@@ -435,6 +442,14 @@ static void MX_ADC1_Init(void)
   /** Configure Regular Channel
   */
   sConfig.Channel = ADC_CHANNEL_3;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_4;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();

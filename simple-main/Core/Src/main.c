@@ -36,6 +36,9 @@
 /* USER CODE BEGIN PD */
 
 #define CAN_CMD_ID     0x124
+
+#define FLASH_USER_PAGE_ADDR  0x0801F800   // Example: last page of 64KB flash
+#define FLASH_PAGE_SIZE       2048
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -101,6 +104,86 @@ int __io_getchar(void)
   HAL_UART_Receive(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
   return ch;
 }
+HAL_StatusTypeDef Flash_SaveArray(uint32_t pageAddress, uint8_t *data, uint32_t length)
+{
+  HAL_StatusTypeDef status;
+  uint32_t pageError = 0;
+
+  FLASH_EraseInitTypeDef eraseInit;
+
+  if(length > FLASH_PAGE_SIZE)
+    return HAL_ERROR;
+
+  HAL_FLASH_Unlock();
+
+  eraseInit.TypeErase = FLASH_TYPEERASE_PAGES;
+  eraseInit.Page = (pageAddress - FLASH_BASE) / FLASH_PAGE_SIZE;
+  eraseInit.NbPages = 1;
+
+  status = HAL_FLASHEx_Erase(&eraseInit, &pageError);
+  if(status != HAL_OK)
+  {
+    HAL_FLASH_Lock();
+    return status;
+  }
+
+  uint32_t addr = pageAddress;
+  uint64_t writeData;
+
+  for(uint32_t i = 0; i < length; i += 8)
+  {
+    writeData = 0xFFFFFFFFFFFFFFFF;
+
+    memcpy(&writeData, &data[i], (length - i >= 8) ? 8 : (length - i));
+
+    status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, addr, writeData);
+
+    if(status != HAL_OK)
+    {
+      HAL_FLASH_Lock();
+      return status;
+    }
+
+    addr += 8;
+  }
+
+  HAL_FLASH_Lock();
+  return HAL_OK;
+}
+
+void UART2_Print_Int(int a);
+void CAN_Send(uint8_t x);
+void Flash_LoadArray(uint32_t pageAddress, uint8_t *buffer, uint32_t length)
+{
+  memcpy(buffer, (uint8_t*)pageAddress, length);
+}
+uint8_t emergency_solenoid[18];
+int need_restore = 1;
+void update_solenoid() {
+  UART2_Print("Updating flash record: ");
+  for (int i = 0; i < 18; i++) {
+    UART2_Print_Int(emergency_solenoid[i]);
+    UART2_Print(i == 17 ? "\r\n" : ",");
+  }
+  Flash_SaveArray(FLASH_USER_PAGE_ADDR, emergency_solenoid, 18);
+}
+void restore_solenoid() {
+  Flash_LoadArray(FLASH_USER_PAGE_ADDR, emergency_solenoid, 18);
+  if (!need_restore) return;
+  for (int i = 0; i < 18; i++) {
+    next_can_id = 105 + i / 3;
+    UART2_Print("Restoring ");
+    UART2_Print_Int(next_can_id);
+    UART2_Print(":");
+    UART2_Print_Int(i % 3 + 1);
+    UART2_Print("=");
+    int command = 1 + (i % 3) * 2 + (emergency_solenoid[i] ? 1 : 0);
+    UART2_Print_Int(command);
+    UART2_Print("\r\n");
+    CAN_Send(command);
+    HAL_Delay(250);
+  }
+}
 
 uint16_t ADC_Read_VREFINT(void)
 {
@@ -134,8 +217,13 @@ uint32_t ADC_Get_VDDA_mV(void)
 
   return vdda;
 }
+int terse = 0;
 volatile uint16_t vref_raw = 1;
 uint16_t vref_mV;
+int just_set_solenoid = 0;
+int just_set_id;
+int just_set_val;
+int just_set_idx;
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
   if (hadc->Instance == ADC1) {
     uint32_t vrefint_cal = *VREFINT_CAL_ADDR;
@@ -143,48 +231,67 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
   }
 }
 void CAN_Rx_Default(FDCAN_RxHeaderTypeDef rxHeader) {
-
+  if(just_set_solenoid) {
+    emergency_solenoid[(just_set_id - 105) * 3 + just_set_idx - 1] = just_set_val;
+    update_solenoid();
+  }
   UART2_Print("OK\r\n");
+  just_set_solenoid = 0;
 }
+
 
 void CAN_Rx_TC(FDCAN_RxHeaderTypeDef rxHeader) {
   char buff[64];
   int16_t tc_t = *(int16_t*)(lastRxData+1);
   float tc_tf = ((float)tc_t) / 4.0;
   if (lastRxData[1] == 0xFF && lastRxData[2] == 0xFF) {
-    sprintf(buff, "TC Fault\r\n");
+    sprintf(buff, terse ? "\r\nErr" : "TC Fault\r\n");
   } else {
-    sprintf(buff, "T = %.2f C\r\n", tc_tf);
+    sprintf(buff, terse ? "%.2f\r\n" : "T = %.2f C\r\n", tc_tf);
   }
   UART2_Print(buff);
 }
+typedef struct PTCfg {
+  int initialized;
+  uint16_t max_psi;
+} PTCfg;
+float pt_translate_mv(int id, int16_t pt_p);
+
 void CAN_Rx_PT(FDCAN_RxHeaderTypeDef rxHeader) {
   char buff[64];
   int16_t pt_p = *(int16_t*)(lastRxData+1);
-  float pt_v = 1000.0f * ((float)pt_p - 500.0f) / 4000.0f;
-  sprintf(buff, "P = %.2f psi\r\n", pt_v);
+  float pt_v = pt_translate_mv(rxHeader.Identifier, pt_p);
+  sprintf(buff, terse ? "%.2f\r\n" : "P = %.2f psi\r\n", pt_v);
   UART2_Print(buff);
 }
 float last_pt_v;
+
 void CAN_Rx_PT_Quiet(FDCAN_RxHeaderTypeDef rxHeader) {
   int16_t pt_p = *(int16_t*)(lastRxData+1);
   // 0.57965/1.68179 * (PT2 + 359.67442) - 151.83194
-  last_pt_v = 1000.0f * ((float)pt_p - 500.0f) / 4000.0f;
+  last_pt_v = pt_translate_mv(rxHeader.Identifier, pt_p);//3000.0f * ((float)pt_p - 500.0f) / 4000.0f;
+}
+void CAN_Rx_Relay(FDCAN_RxHeaderTypeDef rxHeader) {
+  if (lastRxData[1]) {
+    UART2_Print(terse ? "ON\rn" : "R = ON\r\n");
+  } else {
+    UART2_Print(terse ? "OFF\rn" : "R = OFF\r\n");
+  }
 }
 void CAN_Rx_TCStat(FDCAN_RxHeaderTypeDef rxHeader) {
   char buff[64];
   uint8_t tc_f = lastRxData[1];
   int16_t tc_t = *(int16_t*)(lastRxData+2);
   float tc_tf = ((float)tc_t) / 16.0;
-  sprintf(buff, "CJC = %.2f C; ", tc_tf);
+  sprintf(buff, terse ? "%.2f" : "CJC = %.2f C; ", tc_tf);
   UART2_Print(buff);
   if (tc_f == 0) {
-    UART2_Print("no fault\r\n");
+    UART2_Print(terse ? "ok" : "no fault\r\n");
   } else {
-    if (tc_f & 1) UART2_Print("open ");
-    if (tc_f & 2) UART2_Print("GND-short ");
-    if (tc_f & 4) UART2_Print("VCC-short ");
-    if (tc_f & 8) UART2_Print("fault ");
+    if (tc_f & 1) UART2_Print(terse ? "o" : "open ");
+    if (tc_f & 2) UART2_Print(terse ? "g" : "GND-short ");
+    if (tc_f & 4) UART2_Print(terse ? "v" : "VCC-short ");
+    if (tc_f & 8) UART2_Print(terse ? "f" : "fault ");
     UART2_Print("\r\n");
   }
 }
@@ -199,6 +306,7 @@ void CAN_Decode() {
 
   if (HAL_FDCAN_GetRxFifoFillLevel(&hfdcan1, FDCAN_RX_FIFO0) == 0) {
     UART2_Print("(NO ACK)\r\n");
+    just_set_solenoid = 0;
     return;
   }
 
@@ -228,6 +336,97 @@ void CAN_Send_Long(uint8_t *buf, uint8_t len) {
 
 
 }
+
+typedef struct {
+  GPIO_TypeDef* dout_port;
+  uint16_t dout_pin;
+  GPIO_TypeDef* sck_port;
+  uint16_t sck_pin;
+  float scale;
+  int32_t offset;
+} HX711_HandleTypeDef;
+
+
+void HX711_Init(HX711_HandleTypeDef *hx);
+int32_t HX711_ReadRaw(HX711_HandleTypeDef *hx);
+float HX711_ReadWeight(HX711_HandleTypeDef *hx);
+void HX711_Tare(HX711_HandleTypeDef *hx, uint16_t samples);
+void HX711_SetParams(HX711_HandleTypeDef *hx, float scale, float offs);
+
+static void HX711_Delay(void)
+{
+  for (volatile int i = 0; i < 50; i++); // small delay (~1us)
+}
+
+void HX711_Init(HX711_HandleTypeDef *hx)
+{
+  HAL_GPIO_WritePin(hx->sck_port, hx->sck_pin, GPIO_PIN_RESET);
+  hx->scale = 1.0f;
+  hx->offset = 0;
+}
+
+int32_t HX711_ReadRaw(HX711_HandleTypeDef *hx)
+{
+  int32_t data = 0;
+
+  // Wait for DOUT to go low (data ready)
+  while (HAL_GPIO_ReadPin(hx->dout_port, hx->dout_pin) == GPIO_PIN_SET);
+
+  for (int i = 0; i < 24; i++)
+  {
+    HAL_GPIO_WritePin(hx->sck_port, hx->sck_pin, GPIO_PIN_SET);
+    HX711_Delay();
+
+    data = data << 1;
+    HAL_GPIO_WritePin(hx->sck_port, hx->sck_pin, GPIO_PIN_RESET);
+    HX711_Delay();
+
+    if (HAL_GPIO_ReadPin(hx->dout_port, hx->dout_pin))
+      data++;
+  }
+
+  // 25th pulse → Channel A, Gain 128
+  HAL_GPIO_WritePin(hx->sck_port, hx->sck_pin, GPIO_PIN_SET);
+  HX711_Delay();
+  HAL_GPIO_WritePin(hx->sck_port, hx->sck_pin, GPIO_PIN_RESET);
+  HX711_Delay();
+
+  // Sign extend 24-bit value
+  if (data & 0x800000)
+    data |= 0xFF000000;
+  char buf[64];
+  return data;
+}
+
+float HX711_ReadWeight(HX711_HandleTypeDef *hx)
+{
+  int32_t raw = HX711_ReadRaw(hx);
+  return (raw - hx->offset) / hx->scale;
+}
+
+void HX711_Tare(HX711_HandleTypeDef *hx, uint16_t samples)
+{
+  int64_t sum = 0;
+  for (uint16_t i = 0; i < samples; i++)
+  {
+    sum += HX711_ReadRaw(hx);
+  }
+  hx->offset = sum / samples;
+}
+
+void HX711_SetParams(HX711_HandleTypeDef *hx, float scale, float offs)
+{
+  hx->offset = offs;
+  hx->scale = scale;
+}
+
+HX711_HandleTypeDef hx = {
+  .dout_port = GPIOD,
+  .dout_pin = GPIO_PIN_1,
+  .sck_port = GPIOD,
+  .sck_pin = GPIO_PIN_0
+};
+
 
 
 
@@ -275,6 +474,8 @@ void CAN_Send(uint8_t cmd)
   CAN_Decode();
 }
 
+
+
 typedef struct ServoCfg {
   int initialized;
   uint16_t min_angle;
@@ -292,6 +493,7 @@ typedef struct NameMap {
   } names[8];
   union {
     ServoCfg servo;
+    PTCfg pt;
   } cfg;
 } NameMap;
 
@@ -341,6 +543,8 @@ int retrieve_id(char *label) {
 const char *dev_classes[] = {"System", "Relay", "Servo", "Thermocouple", "PT"};
 void bus_list_function() {
   FDCAN_TxHeaderTypeDef txHeader = {0};
+  FDCAN_RxHeaderTypeDef rxHeaders[20];
+  uint8_t respTypes[20];
   FDCAN_RxHeaderTypeDef rxHeader;
   uint8_t txData[8] = {0x00};
   uint8_t rxData[8];
@@ -351,38 +555,45 @@ void bus_list_function() {
   txHeader.DataLength = FDCAN_DLC_BYTES_1;
   txHeader.FDFormat = FDCAN_CLASSIC_CAN;
   txHeader.BitRateSwitch = FDCAN_BRS_OFF;
-  UART2_Print("Devices on bus:\r\n");
+  if (!terse) UART2_Print("Devices on bus:\r\n");
   HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &txHeader, txData);
   uint32_t tick = HAL_GetTick();
+
+
+  int num_resp = 0;
   while (HAL_GetTick() - tick < 500) {
     if (HAL_FDCAN_GetRxFifoFillLevel(&hfdcan1, FDCAN_RX_FIFO0) != 0) {
-      HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO0, &rxHeader, rxData);
-      uint16_t resp_id = rxHeader.Identifier;
-      UART2_Print_Int(resp_id);
-      for (int i = 0; i < num_maps; i++) {
-        if (name_maps[i].can_id == resp_id) {
-          UART2_Print(" (");
-          for (int j = 0; j < name_maps[i].num_names; j++) {
-            UART2_Print(name_maps[i].names[j].name);
-            if (name_maps[i].names[j].index != 0xFF) {
-              UART2_Print("/");
-              UART2_Print_Int(name_maps[i].names[j].index);
-            }
-            if (j != name_maps[i].num_names-1) UART2_Print(", ");
-          }
-          UART2_Print(")");
-        }
-      }
-      UART2_Print(" - ");
-      if (rxData[1] > 4) {
-        UART2_Print("Unknown");
-      } else {
-        UART2_Print(dev_classes[rxData[1]]);
-      }
-      UART2_Print("\r\n");
+      HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO0, &rxHeaders[num_resp], rxData);
+      respTypes[num_resp++] = rxData[1];
     }
   }
-  UART2_Print("(end of list)\r\n");
+  for (uint8_t i = 0; i < num_resp; i++) {
+    rxHeader = rxHeaders[i];
+    uint16_t resp_id = rxHeader.Identifier;
+    UART2_Print_Int(resp_id);
+    for (int i = 0; i < num_maps; i++) {
+      if (name_maps[i].can_id == resp_id) {
+        UART2_Print(" (");
+        for (int j = 0; j < name_maps[i].num_names; j++) {
+          UART2_Print(name_maps[i].names[j].name);
+          if (name_maps[i].names[j].index != 0xFF) {
+            UART2_Print("/");
+            UART2_Print_Int(name_maps[i].names[j].index);
+          }
+          if (j != name_maps[i].num_names-1) UART2_Print(", ");
+        }
+        UART2_Print(")");
+      }
+    }
+    UART2_Print(" - ");
+    if (respTypes[i] > 4) {
+      UART2_Print("Unknown");
+    } else {
+      UART2_Print(dev_classes[respTypes[i]]);
+    }
+    UART2_Print("\r\n");
+  }
+  if (!terse) UART2_Print("(end of list)\r\n");
 
 }
 
@@ -475,15 +686,15 @@ void command_bus(char *rest) {
     bus_list_function();
   } else if (!strcmp(word, "vdd")) {
     char buffer[256];
-    sprintf(buffer, "VDD = %d mV\r\n", vref_mV);
+    sprintf(buffer, terse ? "%dm\r\n" : "VDD = %d mV\r\n", vref_mV);
     UART2_Print(buffer);
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Option needed for \"bus\".\r\n");
+    UART2_Print(terse ? "Invalid\r\n" : "Option needed for \"bus\".\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown option for \"bus\": ");
-    UART2_Print(word);
+    UART2_Print(terse ? "Invalid" : "Unknown option for \"bus\": ");
+    if (!terse) UART2_Print(word);
     UART2_Print("\r\n");
   }
 }
@@ -496,16 +707,18 @@ void command_name(char *rest) {
     int id = retrieve_id(rest);
     if (id == 0) {
       cmd_invalid = 1;
-      UART2_Print("Format: name list <device>\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Format: name list <device>\r\n");
       return;
     }
     int yes = 0;
     for (int i = 0; i < num_maps; i++) {
       if (name_maps[i].can_id == id) {
         yes = 1;
-        UART2_Print("Names for device ");
-        UART2_Print_Int(id);
-        UART2_Print(": ");
+        if (!terse) {
+          UART2_Print("Names for device ");
+          UART2_Print_Int(id);
+          UART2_Print(": ");
+        }
         for (int j = 0; j < name_maps[i].num_names; j++) {
           UART2_Print(name_maps[i].names[j].name);
           if (name_maps[i].names[j].index != 0xFF) {
@@ -517,18 +730,18 @@ void command_name(char *rest) {
         UART2_Print("\r\n");
       }
     }
-    if (!yes) {
+    if (!yes && !terse) {
       UART2_Print("No names for that device.\r\n");
     }
   } else {
     int id = retrieve_id(word);
     if (id == 0) {
-      UART2_Print("Option or device needed for \"name\".\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Option or device needed for \"name\".\r\n");
       return;
     }
     if (!*rest) {
       cmd_invalid = 1;
-      UART2_Print("Format: name <device> <name> [<index>]\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Format: name <device> <name> [<index>]\r\n");
     }
     next_word(word, &rest);
     int index = -1;
@@ -537,21 +750,21 @@ void command_name(char *rest) {
         index = atoi(rest);
       } else {
         cmd_invalid = 1;
-        UART2_Print("Format: name <device> <name> [<index>]\r\n");
+        UART2_Print(terse ? "Invalid\r\n" : "Format: name <device> <name> [<index>]\r\n");
         return;
       }
     }
     int result = add_namemap(id, word, index);
     if (result == 1) {
-      UART2_Print("Too many devices in map.\r\n");
+      UART2_Print(terse ? "Err\r\n" : "Too many devices in map.\r\n");
     } else if (result == 2) {
-      UART2_Print("Name already registered.\r\n");
+      UART2_Print(terse ? "Err\r\n" : "Name already registered.\r\n");
     } else if (result == 3) {
-      UART2_Print("Too many names on device.\r\n");
+      UART2_Print(terse ? "Err\r\n" : "Too many names on device.\r\n");
     } else if (result == 4) {
-      UART2_Print("Name too long.\r\n");
+      UART2_Print(terse ? "Err\r\n" : "Name too long.\r\n");
     } else {
-      UART2_Print("Name registered.\r\n");
+      UART2_Print(terse ? "OK\r\n" : "Name registered.\r\n");
     }
   }
 }
@@ -572,24 +785,31 @@ void command_relay(char *rest) {
   if (!strcmp(word, "off")) {
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
       return;
     }
     next_can_id = id;
     int cmd;
-    UART2_Print(rest);
-    UART2_Print(": ");
+    if (!terse) {
+      UART2_Print(rest);
+      UART2_Print(": ");
+    }
+
+    just_set_solenoid = 1;
+    just_set_id = next_can_id;
+    just_set_val = 0;
+    just_set_idx = last_index;
     if (last_index == 1) {
-      UART2_Print("Turning relay OFF.\r\n");
+      if (!terse) UART2_Print("Turning relay OFF.\r\n");
       CAN_Send(0x02);
     } else if (last_index == 2) {
-      UART2_Print("Turning relay OFF.\r\n");
+      if (!terse) UART2_Print("Turning relay OFF.\r\n");
       CAN_Send(0x04);
     } else if (last_index == 3) {
-      UART2_Print("Turning relay OFF.\r\n");
+      if (!terse) UART2_Print("Turning relay OFF.\r\n");
       CAN_Send(0x06);
     } else {
-      UART2_Print("Turning relays OFF.\r\n");
+      if (!terse) UART2_Print("Turning relays OFF.\r\n");
       CAN_Send(0x02);
       CAN_Send(0x04);
       CAN_Send(0x06);
@@ -597,45 +817,71 @@ void command_relay(char *rest) {
   } else if (!strcmp(word, "on")) {
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
       return;
     }
     next_can_id = id;
     int cmd;
-    UART2_Print(rest);
-    UART2_Print(": ");
+    if (!terse) {
+      UART2_Print(rest);
+      UART2_Print(": ");
+    }
+    just_set_solenoid = 1;
+    just_set_id = next_can_id;
+    just_set_val = 1;
+    just_set_idx = last_index;
     if (last_index == 1) {
-      UART2_Print("Turning relay ON.\r\n");
+      if (!terse) UART2_Print("Turning relay ON.\r\n");
       CAN_Send(0x01);
     } else if (last_index == 2) {
-      UART2_Print("Turning relay ON.\r\n");
+      if (!terse) UART2_Print("Turning relay ON.\r\n");
       CAN_Send(0x03);
     } else if (last_index == 3) {
-      UART2_Print("Turning relay ON.\r\n");
+      if (!terse) UART2_Print("Turning relay ON.\r\n");
       CAN_Send(0x05);
     } else {
-      UART2_Print("Need to specify individual relay.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Need to specify individual relay.\r\n");
     }
-  } else if (!strcmp(word, "reset")) {
+  } else if (!strcmp(word, "get")) {
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
+      return;
+    }
+    if (last_index < 1 || last_index > 3) {
+      UART2_Print(terse ? "Invalid\r\n" : "Need to specify individual relay.\r\n");
       return;
     }
     next_can_id = id;
-    UART2_Print(rest);
-    UART2_Print(": Reset board.\r\n");
+    if (!terse) {
+      UART2_Print(rest);
+      UART2_Print(": ");
+    }
+    CAN_Rx_Func = CAN_Rx_Relay;
+    CAN_Send(last_index + 0x10);
+  } else if (!strcmp(word, "reset")) {
+    int id = retrieve_id(rest);
+    if (id == 0) {
+      UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
+      return;
+    }
+    next_can_id = id;
+    if (!terse) {
+      UART2_Print(rest);
+      UART2_Print(": Reset board.\r\n");
+    }
     CAN_Send(0xFF);
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Option needed for \"relay\".\r\n");
+    UART2_Print(terse ? "Invalid\r\n" : "Option needed for \"relay\".\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown option for \"relay\": ");
-    UART2_Print(word);
+    UART2_Print(terse ? "Invalid" : "Unknown option for \"relay\": ");
+    if (!terse) UART2_Print(word);
     UART2_Print("\r\n");
   }
 }
+
 
 uint16_t servo_get_us(char *label, uint16_t angle) {
   ServoCfg *servo = NULL;
@@ -666,6 +912,33 @@ uint16_t servo_get_us(char *label, uint16_t angle) {
   if (angle > servo->max_angle) return 0;
   uint16_t delta = angle - servo->min_angle;
   return servo->min_us + ((uint32_t)(delta) * (servo->max_us - servo->min_us)) / (servo->max_angle - servo->min_angle);
+}
+uint16_t *servo_settings(char *label) {
+  ServoCfg *servo = NULL;
+  ServoCfg def = {0};
+  for (int i = 0; i < num_maps; i++) {
+    if (name_maps[i].can_id == atoi(label)) {
+      servo = &name_maps[i].cfg.servo;
+      break;
+    }
+    for (int j = 0; j < name_maps[i].num_names; j++) {
+      if (!strcmp(name_maps[i].names[j].name, label)) {
+        servo = &name_maps[i].cfg.servo;
+        break;
+      }
+    }
+  }
+  if (servo == NULL) {
+    return NULL;
+  }
+  if (!servo->initialized) {
+    servo->initialized = 1;
+    servo->min_us = 500;
+    servo->max_us = 2500;
+    servo->min_angle = 0;
+    servo->max_angle = 180;
+  }
+  return &(servo->min_angle);
 }
 uint16_t servo_get_us_clamp(int id, uint16_t angle) {
   ServoCfg *servo = NULL;
@@ -717,101 +990,157 @@ void command_servo(char *rest) {
   if (!strcmp(word, "on")) {
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
       return;
     }
     next_can_id = id;
     int cmd;
-    UART2_Print(rest);
-    UART2_Print(": ");
+    if (!terse) {
+      UART2_Print(rest);
+      UART2_Print(": ");
+    }
     if (last_index == 1) {
-      UART2_Print("Turning servo ON.\r\n");
+      if (!terse) UART2_Print("Turning servo ON.\r\n");
       CAN_Send(0x01);
     } else if (last_index == 2) {
-      UART2_Print("Turning servo ON.\r\n");
+      if (!terse) UART2_Print("Turning servo ON.\r\n");
       CAN_Send(0x02);
     } else if (last_index == 3) {
-      UART2_Print("Turning servo ON.\r\n");
+      if (!terse) UART2_Print("Turning servo ON.\r\n");
       CAN_Send(0x03);
     } else if (last_index == 4) {
-      UART2_Print("Turning servo ON.\r\n");
+      if (!terse) UART2_Print("Turning servo ON.\r\n");
       CAN_Send(0x04);
     } else {
-      UART2_Print("Need to specify individual servo.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Need to specify individual servo.\r\n");
     }
   } else if (!strcmp(word, "off")) {
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
       return;
     }
     next_can_id = id;
     int cmd;
-    UART2_Print(rest);
-    UART2_Print(": ");
+    if (!terse) {
+      UART2_Print(rest);
+      UART2_Print(": ");
+    }
     if (last_index == 1) {
-      UART2_Print("Turning servo OFF.\r\n");
+      if (!terse) UART2_Print("Turning servo OFF.\r\n");
       CAN_Send(0x05);
     } else if (last_index == 2) {
-      UART2_Print("Turning servo OFF.\r\n");
+      if (!terse) UART2_Print("Turning servo OFF.\r\n");
       CAN_Send(0x06);
     } else if (last_index == 3) {
-      UART2_Print("Turning servo OFF.\r\n");
+      if (!terse) UART2_Print("Turning servo OFF.\r\n");
       CAN_Send(0x07);
     } else if (last_index == 4) {
-      UART2_Print("Turning servo OFF.\r\n");
+      if (!terse) UART2_Print("Turning servo OFF.\r\n");
       CAN_Send(0x08);
     } else {
-      UART2_Print("Need to specify individual servo.\r\n");
+      UART2_Print(terse ? "Invalid" : "Need to specify individual servo.\r\n");
     }
+  } else if (!strcmp(word, "cfg")) {
+    next_word(word, &rest);
+    int id = retrieve_id(word);
+    if (id == 0) {
+      UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
+      return;
+    }
+    uint16_t *sett_p = servo_settings(word);
+    next_word(word, &rest);
+    if (!strcmp(word, "minus")) {
+      sett_p += 2;
+    } else if (!strcmp(word, "maxus")) {
+      sett_p += 3;
+    } else if (!strcmp(word, "minangle")) {
+      //
+    } else if (!strcmp(word, "maxangle")) {
+      sett_p += 1;
+    } else {
+      UART2_Print(terse ? "Invalid" : "Invalid setting: ");
+      if (!terse) UART2_Print(word);
+      UART2_Print("\r\n");
+    }
+    if (!*rest) {
+      if (!terse) {
+        UART2_Print("Cur ");
+        UART2_Print(word);
+        UART2_Print(" = ");
+      }
+      UART2_Print_Int(*sett_p);
+      UART2_Print("\r\n");
+    } else {
+      uint16_t newval = atoi(rest);
+      if (terse) {
+        UART2_Print("OK\r\n");
+      } else {
+        UART2_Print("New ");
+        UART2_Print(word);
+        UART2_Print(" -> ");
+        UART2_Print_Int(newval);
+        UART2_Print("\r\n");
+      }
+      *sett_p = newval;
+    }
+
   } else if (!strcmp(word, "set")) {
     next_word(word, &rest);
     int id = retrieve_id(word);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
       return;
     }
     uint16_t angle = atoi(rest);
     if (angle == 0 && *rest != '0') {
-      UART2_Print("Invalid angle.\r\n");
+      UART2_Print(terse ? "Err\r\n" : "Invalid angle.\r\n");
       return;
     }
     uint16_t serv_us = servo_get_us(word, angle);
     if (serv_us == 0) {
-      UART2_Print("Angle out of range.\r\n");
+      UART2_Print(terse ? "Err\r\n" : "Angle out of range.\r\n");
       return;
     }
     char buf[3];
     if (last_index < 1 || last_index > 4) {
-      UART2_Print("Need to specify individual servo.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Need to specify individual servo.\r\n");
       return;
     }
-    UART2_Print(rest);
-    UART2_Print(": Setting servo -> ");
-    UART2_Print_Int(angle);
-    UART2_Print(" deg (");
-    UART2_Print_Int(serv_us);
-    UART2_Print(" us).\r\n");
+    if (!terse) {
+      UART2_Print(rest);
+      UART2_Print(": Setting servo -> ");
+      UART2_Print_Int(angle);
+      UART2_Print(" deg (");
+      UART2_Print_Int(serv_us);
+      UART2_Print(" us).\r\n");
+    } else {
+      UART2_Print("OK\r\n");
+    }
     buf[0] = 0x10 + last_index;
     *(uint16_t*)&buf[1] = serv_us;
     CAN_Send_Long(buf, 3);
   } else if (!strcmp(word, "reset")) {
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
       return;
     }
     next_can_id = id;
-    UART2_Print(rest);
-    UART2_Print(": Reset board.\r\n");
+    if (!terse) {
+      UART2_Print(rest);
+      UART2_Print(": Reset board.\r\n");
+    } else {
+      UART2_Print("OK\r\n");
+    }
     CAN_Send(0xFF);
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Option needed for \"servo\".\r\n");
+    UART2_Print(terse ? "Invalid\r\n" : "Option needed for \"servo\".\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown option for \"servo\": ");
-    UART2_Print(word);
+    UART2_Print(terse ? "Invalid" : "Unknown option for \"servo\": ");
+    if (!terse) UART2_Print(word);
     UART2_Print("\r\n");
   }
 }
@@ -821,50 +1150,54 @@ void command_tc(char *rest) {
   if (!strcmp(word, "get")) {
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Invalid ID or device name.\r\n");
       return;
     }
     if (last_index < 1 || last_index > 3) {
-      UART2_Print("Need to specify individual TC.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Need to specify individual TC.\r\n");
       return;
     }
     next_can_id = id;
     UART2_Print(rest);
-    UART2_Print(": ");
+    if (!terse) UART2_Print(": ");
     CAN_Rx_Func = CAN_Rx_TC;
     CAN_Send(last_index);
   } else if (!strcmp(word, "status")) {
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Invalid ID or device name.\r\n");
       return;
     }
     if (last_index < 1 || last_index > 3) {
-      UART2_Print("Need to specify individual TC.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Need to specify individual TC.\r\n");
       return;
     }
     next_can_id = id;
     UART2_Print(rest);
-    UART2_Print(": ");
+    if (!terse) UART2_Print(": ");
     CAN_Rx_Func = CAN_Rx_TCStat;
     CAN_Send(0x03 + last_index);
   } else if (!strcmp(word, "reset")) {
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Invalid ID or device name.\r\n");
       return;
     }
     next_can_id = id;
-    UART2_Print(rest);
-    UART2_Print(": Reset board.\r\n");
+    if (!terse) {
+      UART2_Print(rest);
+      UART2_Print(": Reset board.\r\n");
+    } else {
+      UART2_Print("OK\r\n");
+    }
     CAN_Send(0xFF);
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Option needed for \"tc\".\r\n");
+    UART2_Print(terse ? "Invalid\r\n" :"Option needed for \"tc\".\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown option for \"tc\": ");
-    UART2_Print(word);
+    UART2_Print(terse ? "Invalid" : "Unknown option for \"tc\": ");
+    if (!terse) UART2_Print(word);
     UART2_Print("\r\n");
   }
 
@@ -875,11 +1208,11 @@ void command_pt(char *rest) {
   if (!strcmp(word, "get")) {
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Invalid ID or device name.\r\n");
       return;
     }
     if (last_index < 1 || last_index > 3) {
-      UART2_Print("Need to specify individual PT.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Need to specify individual PT.\r\n");
       return;
     }
     next_can_id = id;
@@ -887,23 +1220,72 @@ void command_pt(char *rest) {
     UART2_Print(": ");
     CAN_Rx_Func = CAN_Rx_PT;
     CAN_Send(last_index);
+  } else if (!strcmp(word, "cfg")) {
+    next_word(word, &rest);
+    int id = retrieve_id(word);
+    if (id == 0) {
+      UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
+      return;
+    }
+    PTCfg *pt = NULL;
+    PTCfg def = {0};
+    for (int i = 0; i < num_maps; i++) {
+      if (name_maps[i].can_id == id) {
+        pt = &name_maps[i].cfg.pt;
+        break;
+      }
+    }
+    if (pt == NULL) {
+      pt = &def;
+    }
+    if (!pt->initialized) {
+      pt->initialized = 1;
+      pt->max_psi = 3000;
+    }
+    next_word(word, &rest);
+    if (!strcmp(word, "max")) {
+      if (!*rest) {
+        if (!terse) {
+          UART2_Print("Cur ");
+          UART2_Print(word);
+          UART2_Print(" = ");
+        }
+        UART2_Print_Int(pt->max_psi);
+        UART2_Print("\r\n");
+      } else {
+        pt->max_psi = atoi(rest);
+        if (terse) {
+          UART2_Print("OK\r\n");
+        } else {
+          UART2_Print("New ");
+          UART2_Print(word);
+          UART2_Print(" -> ");
+          UART2_Print_Int(pt->max_psi);
+          UART2_Print("\r\n");
+        }
+      }
+    }
   } else if (!strcmp(word, "reset")) {
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid ID or device name.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Invalid ID or device name.\r\n");
       return;
     }
     next_can_id = id;
-    UART2_Print(rest);
-    UART2_Print(": Reset board.\r\n");
+    if (!terse) {
+      UART2_Print(rest);
+      UART2_Print(": Reset board.\r\n");
+    } else {
+      UART2_Print("OK\r\n");
+    }
     CAN_Send(0xFF);
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Option needed for \"pt\".\r\n");
+    UART2_Print(terse ? "Invalid\r\n" :"Option needed for \"pt\".\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown option for \"pt\": ");
-    UART2_Print(word);
+    UART2_Print(terse ? "Invalid" :"Unknown option for \"pt\": ");
+    if (!terse) UART2_Print(word);
     UART2_Print("\r\n");
   }
 
@@ -924,14 +1306,14 @@ void command_sd(char *rest) {
     else UART2_Print("SD card not initialized.\r\n");
   } else if (!strcmp(word, "deinit")) {
     if (sd_ok) deinit_sd();
-    else UART2_Print("SD Card not initialized.\r\n");
+    else UART2_Print("SD card not initialized.\r\n");
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Option needed for \"sd\".\r\n");
+    UART2_Print(terse ? "Invalid\r\n" :"Option needed for \"sd\".\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown option for \"sd\": ");
-    UART2_Print(word);
+    UART2_Print(terse ? "Invalid" :"Unknown option for \"sd\": ");
+    if (!terse) UART2_Print(word);
     UART2_Print("\r\n");
   }
 }
@@ -1097,11 +1479,11 @@ void command_file(char *rest) {
     cur_programming = 1;
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Option needed for \"file\".\r\n");
+    UART2_Print(terse ? "Invalid\r\n" :"Option needed for \"file\".\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown option for \"file\": ");
-    UART2_Print(word);
+    UART2_Print(terse ? "Invalid" :"Unknown option for \"file\": ");
+    if (!terse) UART2_Print(word);
     UART2_Print("\r\n");
   }
 }
@@ -1115,12 +1497,16 @@ void command_msg(char *rest) {
     muted |= 2;
   } else if (!strcmp(word, "unquiet")) {
     muted &= ~2;
+  } else if (!strcmp(word, "terse")) {
+    terse = 1;
+  } else if (!strcmp(word, "unterse")) {
+    terse = 0;
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Option needed for \"msg\".\r\n");
+    UART2_Print(terse ? "Invalid\r\n" :"Option needed for \"msg\".\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown option for \"msg\": ");
+    UART2_Print(terse ? "Invalid" :"Unknown option for \"msg\": ");
     UART2_Print(word);
     UART2_Print("\r\n");
   }
@@ -1147,7 +1533,24 @@ void add_time_entry(char *cmd, int reload, int timeout) {
   (*t)->next = NULL;
   (*t)->quiet = 0;
 }
-
+float pt_translate_mv(int id, int16_t pt_p){
+  PTCfg *pt = NULL;
+  PTCfg def = {0};
+  for (int i = 0; i < num_maps; i++) {
+    if (name_maps[i].can_id == id) {
+      pt = &name_maps[i].cfg.pt;
+      break;
+    }
+  }
+  if (pt == NULL) {
+    pt = &def;
+  }
+  if (!pt->initialized) {
+    pt->initialized = 1;
+    pt->max_psi = 3000;
+  }
+  return ((float)pt->max_psi) * ((float)pt_p - 500.0f) / 4000.0f;
+}
 int time_mark = 0;
 void main_tick() {
   TimeEntry *t = root;
@@ -1161,10 +1564,10 @@ void command_time(char *rest) {
   next_word(word, &rest);
   if (!strcmp(word, "stamp")) {
     char buff[64];
-    sprintf(buff, "Timestamp %dms", HAL_GetTick());
+    sprintf(buff, terse ? "%dm" : "Timestamp %dms", HAL_GetTick());
     UART2_Print(buff);
     if (time_mark) {
-      sprintf(buff, ", %dms since mark\r\n", HAL_GetTick() - time_mark);
+      sprintf(buff, terse ? ",%dm" : ", %dms since mark\r\n", HAL_GetTick() - time_mark);
       UART2_Print(buff);
     } else {
       UART2_Print("\r\n");
@@ -1172,12 +1575,12 @@ void command_time(char *rest) {
   } else if (!strcmp(word, "mark")) {
     char buff[64];
     time_mark = HAL_GetTick();
-    sprintf(buff, "Mark set at %dms\r\n", HAL_GetTick());
+    sprintf(buff, terse ? "OK" : "Mark set at %dms\r\n", HAL_GetTick());
     UART2_Print(buff);
   } else if (!strcmp(word, "sleep")) {
     int ms = atoi(rest);
     if (ms == 0) {
-      UART2_Print("Format: time sleep <ms>\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Format: time sleep <ms>\r\n");
       return;
     }
     HAL_Delay(ms);
@@ -1185,31 +1588,39 @@ void command_time(char *rest) {
     next_word(word, &rest);
     int ms = atoi(word);
     if (ms == 0 || !*rest) {
-      UART2_Print("Format: time delay <ms> <command...>\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Format: time delay <ms> <command...>\r\n");
       return;
     }
     add_time_entry(rest, 0, ms);
-    UART2_Print("Running command in ");
-    UART2_Print_Int(ms);
-    UART2_Print("ms.\r\n");
+    if (terse) {
+      UART2_Print("OK\r\n");
+    } else {
+      UART2_Print("Running command in ");
+      UART2_Print_Int(ms);
+      UART2_Print("ms.\r\n");
+    }
   } else if (!strcmp(word, "every")) {
     next_word(word, &rest);
     int ms = atoi(word);
     if (ms == 0 || !*rest) {
-      UART2_Print("Format: time every <ms> <command...>\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Format: time every <ms> <command...>\r\n");
       return;
     }
     add_time_entry(rest, ms, ms);
-    UART2_Print("Running command every ");
-    UART2_Print_Int(ms);
-    UART2_Print("ms.\r\n");
+    if (terse) {
+      UART2_Print("OK\r\n");
+    } else {
+      UART2_Print("Running command every ");
+      UART2_Print_Int(ms);
+      UART2_Print("ms.\r\n");
+    }
   } else if (!strcmp(word, "list")) {
     if (root == NULL) {
-      UART2_Print("No timers active.\r\n");
+      UART2_Print(terse ? "None\r\n" :"No timers active.\r\n");
       return;
     }
     TimeEntry *t = root;
-    UART2_Print("Timers active:\r\n");
+    if (!terse) UART2_Print("Timers active:\r\n");
     int i = 0;
     while (t != NULL) {
       UART2_Print_Int(++i);
@@ -1228,11 +1639,11 @@ void command_time(char *rest) {
   } else if (!strcmp(word, "delete")) {
     int idx = atoi(rest);
     if (idx == 0 && *rest) {
-      UART2_Print("Format: time delete <index>\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Format: time delete <index>\r\n");
       return;
     }
     if (root == NULL) {
-      UART2_Print("No timers active.\r\n");
+      UART2_Print(terse ? "None\r\n" :"No timers active.\r\n");
       return;
     }
     TimeEntry *t = root;
@@ -1249,18 +1660,18 @@ void command_time(char *rest) {
       t = t->next;
     }
     if (t == NULL) {
-      UART2_Print("No timer with that index.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"No timer with that index.\r\n");
     } else {
-      UART2_Print("Timer deleted.\r\n");
+      UART2_Print(terse ? "OK\r\n" :"Timer deleted.\r\n");
     }
   } else if (!strcmp(word, "quiet")) {
     int idx = atoi(rest);
     if (idx == 0 && *rest) {
-      UART2_Print("Format: time quiet <index>\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "Format: time quiet <index>\r\n");
       return;
     }
     if (root == NULL) {
-      UART2_Print("No timers active.\r\n");
+      UART2_Print(terse ? "None" : "No timers active.\r\n");
       return;
     }
     TimeEntry *t = root;
@@ -1276,17 +1687,17 @@ void command_time(char *rest) {
       t = t->next;
     }
     if (t == NULL) {
-      UART2_Print("No timer with that index.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" : "No timer with that index.\r\n");
     } else {
       UART2_Print(t->quiet ? "Timer silenced.\r\n" : "Timer unsilenced.\r\n");
     }
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Option needed for \"time\".\r\n");
+    UART2_Print(terse ? "Invalid\r\n" :"Option needed for \"time\".\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown option for \"time\": ");
-    UART2_Print(word);
+    UART2_Print(terse ? "Invalid" :"Unknown option for \"time\": ");
+    if (!terse) UART2_Print(word);
     UART2_Print("\r\n");
   }
 }
@@ -1302,49 +1713,49 @@ void command_log(char *rest) {
   next_word(word, &rest);
   if (!strcmp(word, "open")) {
     if (islogopen) {
-      UART2_Print("Log file already open.\r\n");
+      UART2_Print(terse ? "Err\r\n" :"Log file already open.\r\n");
       return;
     }
     if (!*rest) {
-      UART2_Print("Format: log open <filename>.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Format: log open <filename>.\r\n");
       return;
     }
     fres = f_open(&logfile, rest, FA_WRITE | FA_OPEN_APPEND);
     if (fres != FR_OK) {
-      UART2_Print("Unable to open log file.\r\n");
+      UART2_Print(terse ? "Err\r\n" :"Unable to open log file.\r\n");
       return;
     }
     islogopen = 1;
   } else if (!strcmp(word, "close")) {
     if (!islogopen) {
-      UART2_Print("Log file is not open.\r\n");
+      UART2_Print(terse ? "Err\r\n" :"Log file is not open.\r\n");
       return;
     }
     islogopen = 0;
     fres = f_sync(&logfile);
     if (fres != FR_OK) {
-      UART2_Print("Unable to sync log file.\r\n");
+      UART2_Print(terse ? "Err\r\n" :"Unable to sync log file.\r\n");
       f_close(&logfile);
       return;
     }
     fres = f_close(&logfile);
     if (fres != FR_OK) {
-      UART2_Print("Unable to close log file.\r\n");
+      UART2_Print(terse ? "Err\r\n" :"Unable to close log file.\r\n");
       return;
     }
   } else if (!strcmp(word, "sync")) {
     if (!islogopen) {
-      UART2_Print("Log file is not open.\r\n");
+      UART2_Print(terse ? "Err\r\n" :"Log file is not open.\r\n");
       return;
     }
     fres = f_sync(&logfile);
     if (fres != FR_OK) {
-      UART2_Print("Unable to sync log file.\r\n");
+      UART2_Print(terse ? "Err\r\n" :"Unable to sync log file.\r\n");
       return;
     }
-  } else if (!strcmp(word, "line")) {
+  } else if (!strcmp(word, "line") || !strcmp(word, "print")) {
     if (!islogopen) {
-      UART2_Print("Log file is not open.\r\n");
+      UART2_Print(terse ? "Err\r\n" :"Log file is not open.\r\n");
       return;
     }
     char buffer[1024];
@@ -1360,13 +1771,13 @@ void command_log(char *rest) {
       } else if (word[0] == 'P') {
         int id = retrieve_id(word+1);
         if (id == 0) {
-          UART2_Print("Invalid PT name: ");
-          UART2_Print(word + 1);
+          UART2_Print(terse ? "Invalid" :"Invalid PT name: ");
+          if (!terse) UART2_Print(word + 1);
           UART2_Print("\r\n");
           return;
         }
         if (last_index < 1 || last_index > 3) {
-          UART2_Print("Need to specify individual PT.\r\n");
+          UART2_Print(terse ? "Invalid\r\n" :"Need to specify individual PT.\r\n");
           return;
         }
         next_can_id = id;
@@ -1379,9 +1790,11 @@ void command_log(char *rest) {
         if (word[1] == 'e') sprintf(bufp, "%.3f", control_last_err);
         if (word[1] == 'a') sprintf(bufp, "%.3f", control_last_eff);
         if (word[1] == 't') sprintf(bufp, "%d", control_last_ts);
+      } else if (word[0] == 'L') {
+        sprintf(bufp, "%.2f", HX711_ReadWeight(&hx));
       } else {
-        UART2_Print("Invalid line specifier: ");
-        UART2_Print(word);
+        UART2_Print(terse ? "Invalid\r\n" :"Invalid line specifier: ");
+        if (!terse) UART2_Print(word);
         return;
       }
       int ilen = strlen(bufp);
@@ -1389,16 +1802,16 @@ void command_log(char *rest) {
       bufp[ilen + 1] = 0;
       bufp += ilen + 1;
     }
-    f_puts(buffer, &logfile);
-    UART2_Print("Log line: ");
+    if (!strcmp(word, "line")) f_puts(buffer, &logfile);
+    if (!terse) UART2_Print("Log line: ");
     UART2_Print(buffer);
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Option needed for \"log\".\r\n");
+    UART2_Print(terse ? "Invalid\r\n" :"Option needed for \"log\".\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown option for \"log\": ");
-    UART2_Print(word);
+    UART2_Print(terse ? "Invalid" :"Unknown option for \"log\": ");
+    if (!terse) UART2_Print(word);
     UART2_Print("\r\n");
   }
 }
@@ -1417,10 +1830,6 @@ float control_mina;
 float control_maxa;
 float control_read() {
   if (control_stype == 0) {
-    // UART2_Print_Int(control_sid);
-    // UART2_Print(" ");
-    // UART2_Print_Int(control_sidx);
-    // UART2_Print("\r\n");
     next_can_id = control_sid;
     last_pt_v = 0;
     CAN_Rx_Func = CAN_Rx_PT_Quiet;
@@ -1442,39 +1851,6 @@ float control_read() {
 void control_write(float f) {
   if (control_atype == 0) {
     char buf[3];
-    /*next_word(word, &rest);
-     i nt id = retrieve_id(w*ord);
-     if (id == 0) {
-       UART2_Print("Invalid ID or device name.\r\n");
-       return;
-  }
-  uint16_t angle = atoi(rest);
-  if (angle == 0 && *rest != '0') {
-    UART2_Print("Invalid angle.\r\n");
-    return;
-  }
-  uint16_t serv_us = servo_get_us(word, angle);
-  if (serv_us == 0) {
-    UART2_Print("Angle out of range.\r\n");
-    return;
-  }
-  char buf[3];
-  if (last_index < 1 || last_index > 4) {
-    UART2_Print("Need to specify individual servo.\r\n");
-    return;
-  }
-  UART2_Print(rest);
-  UART2_Print(": Setting servo -> ");
-  UART2_Print_Int(angle);
-  UART2_Print(" deg (");
-  UART2_Print_Int(serv_us);
-  UART2_Print(" us).\r\n");
-  buf[0] = 0x10 + last_index;
-  *(uint16_t*)&buf[1] = serv_us;
-  CAN_Send_Long(buf, 3);
-     *
-     *
-     */
     uint16_t serv_us = servo_get_us_clamp(control_aid, f);
     buf[0] = 0x10 + control_aidx;
     *(uint16_t*)&buf[1] = serv_us;
@@ -1489,46 +1865,46 @@ void command_loop(char *rest) {
   if (!strcmp(word, "p")) {
     if (*rest) {
       float val = atof(rest);
-      sprintf(buffer, "New P = %f\r\n", val);
+      sprintf(buffer, terse ? "OK\r\n" : "New P = %f\r\n", val);
       control_p = val;
     } else {
-      sprintf(buffer, "Current P = %f\r\n", control_p);
+      sprintf(buffer, terse ? "%f\r\n" : "Current P = %f\r\n", control_p);
     }
     UART2_Print(buffer);
   } else if (!strcmp(word, "i")) {
     if (*rest) {
       float val = atof(rest);
-      sprintf(buffer, "New I = %f\r\n", val);
+      sprintf(buffer, terse ? "OK\r\n" : "New I = %f\r\n", val);
       control_i = val;
     } else {
-      sprintf(buffer, "Current I = %f\r\n", control_i);
+      sprintf(buffer, terse ? "%f\r\n" : "Current I = %f\r\n", control_i);
     }
     UART2_Print(buffer);
   } else if (!strcmp(word, "d")) {
     if (*rest) {
       float val = atof(rest);
-      sprintf(buffer, "New D = %f\r\n", val);
+      sprintf(buffer, terse ? "OK\r\n" : "New D = %f\r\n", val);
       control_d = val;
     } else {
-      sprintf(buffer, "Current D = %f\r\n", control_d);
+      sprintf(buffer, terse ? "%f\r\n" : "Current D = %f\r\n", control_d);
     }
     UART2_Print(buffer);
   } else if (!strcmp(word, "min")) {
     if (*rest) {
       float val = atof(rest);
-      sprintf(buffer, "New min = %f\r\n", val);
+      sprintf(buffer, terse ? "OK\r\n" : "New min = %f\r\n", val);
       control_mina = val;
     } else {
-      sprintf(buffer, "Current min = %f\r\n", control_mina);
+      sprintf(buffer, terse ? "%f\r\n" : "Current min = %f\r\n", control_mina);
     }
     UART2_Print(buffer);
   } else if (!strcmp(word, "max")) {
     if (*rest) {
       float val = atof(rest);
-      sprintf(buffer, "New max = %f\r\n", val);
+      sprintf(buffer, terse ? "OK\r\n" : "New max = %f\r\n", val);
       control_maxa = val;
     } else {
-      sprintf(buffer, "Current max = %f\r\n", control_maxa);
+      sprintf(buffer, terse ? "%f\r\n" : "Current max = %f\r\n", control_maxa);
     }
     UART2_Print(buffer);
   } else if (!strcmp(word, "sensor")) {
@@ -1538,62 +1914,70 @@ void command_loop(char *rest) {
     } else if (!strcmp(word, "dpt")) {
       control_stype = 1;
     } else {
-      UART2_Print("Invalid sensor type: ");
-      UART2_Print(word);
+      UART2_Print(terse ? "Invalid" :"Invalid sensor type: ");
+      if (!terse) UART2_Print(word);
       UART2_Print("\r\n");
       return;
     }
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid sensor name: ");
-      UART2_Print(rest);
+      UART2_Print(terse ? "Invalid" :"Invalid sensor name: ");
+      if (!terse)UART2_Print(rest);
       UART2_Print("\r\n");
       return;
     }
     control_sid = id;
     control_sidx = last_index;
-    UART2_Print("Now reading from ");
-    UART2_Print(rest);
-    UART2_Print("\r\n");
+    if (terse) {
+      UART2_Print("OK\r\n");
+    } else {
+      UART2_Print("Now reading from ");
+      UART2_Print(rest);
+      UART2_Print("\r\n");
+    }
 
   } else if (!strcmp(word, "act")) {
     next_word(word, &rest);
     if (!strcmp(word, "servo")) {
       control_atype = 0;
     } else {
-      UART2_Print("Invalid actuator type: ");
-      UART2_Print(word);
+      UART2_Print(terse ? "Invalid" :"Invalid actuator type: ");
+      if (!terse) UART2_Print(word);
       UART2_Print("\r\n");
       return;
     }
     int id = retrieve_id(rest);
     if (id == 0) {
-      UART2_Print("Invalid actuator name: ");
-      UART2_Print(rest);
+      UART2_Print(terse ? "Invalid" :"Invalid actuator name: ");
+      if (!terse) UART2_Print(rest);
       UART2_Print("\r\n");
       return;
     }
     control_aid = id;
     control_aidx = last_index;
-    UART2_Print("Now writing to ");
-    UART2_Print(rest);
-    UART2_Print("\r\n");
+    if (terse) {
+      UART2_Print("OK\r\n");
+    } else {
+      UART2_Print("Now writing to ");
+      UART2_Print(rest);
+      UART2_Print("\r\n");
+    }
   } else if (!strcmp(word, "setp")) {
     if (*rest) {
       float val = atof(rest);
-      sprintf(buffer, "New setpoint = %f\r\n", val);
+      sprintf(buffer, terse ? "OK\r\n" : "New setpoint = %f\r\n", val);
       control_setp = val;
     } else {
-      sprintf(buffer, "Current setpoint = %f\r\n", control_setp);
+      sprintf(buffer, terse ? "%f\r\n" : "Current setpoint = %f\r\n", control_setp);
     }
     UART2_Print(buffer);
   } else if (!strcmp(word, "run")) {
     if (!control_sid) {
-      UART2_Print("Control source not configured.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Control source not configured.\r\n");
       return;
     }
     if (!control_aid) {
-      UART2_Print("Control actuator not configured.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Control actuator not configured.\r\n");
       return;
     }
     float dt = 0.001f;
@@ -1610,19 +1994,36 @@ void command_loop(char *rest) {
     control_write(control_last_eff);
   } else if (!strcmp(word, "stat")) {
     if (!control_last_ts) {
-      UART2_Print("Loop hasn't been run.\r\n");
+      UART2_Print(terse ? "Invalid\r\n" :"Loop hasn't been run.\r\n");
       return;
     }
-    sprintf(buffer, "Last run at %dms, S=%f Err=%f A=%f\r\n", control_last_ts, control_last_rd, control_last_err, control_last_eff);
+    sprintf(buffer, terse ? "%dm,%f,%f,%f\r\n" : "Last run at %dms, S=%f Err=%f A=%f\r\n", control_last_ts, control_last_rd, control_last_err, control_last_eff);
     UART2_Print(buffer);
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Option needed for \"loop\".\r\n");
+    UART2_Print(terse ? "Invalid\r\n" :"Option needed for \"loop\".\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown option for \"loop\": ");
-    UART2_Print(word);
+    UART2_Print(terse ? "Invalid" :"Unknown option for \"loop\": ");
+    if (!terse) UART2_Print(word);
     UART2_Print("\r\n");
+  }
+}
+void command_lc(char *rest) {
+  char word[32];
+  next_word(word, &rest);
+  if (!strcmp(word, "init")) {
+    HX711_Init(&hx);
+  } else if (!strcmp(word, "setup")) {
+    next_word(word, &rest);
+    float scale = atof(word);
+    float offs = atof(rest);
+    HX711_SetParams(&hx, scale, offs);
+  } else if (!strcmp(word, "read")) {
+    float weight = HX711_ReadWeight(&hx);
+    char buffer[256];
+    sprintf(buffer, "LC = %.2f lb\r\n", weight);
+    UART2_Print(buffer);
   }
 }
 int prog_lines = 0;
@@ -1637,7 +2038,7 @@ void process_command(char *buf) {
   if (cur_programming) {
     if (!strcmp(buf, "file endp")) {
       char buffer[64];
-      sprintf(buffer, "Programmed %d lines.\r\n", prog_lines);
+      sprintf(buffer, terse ? "OK %d\r\n" :"Programmed %d lines.\r\n", prog_lines);
       UART2_Print(buffer);
       prog_lines = 0;
       cur_programming = 0;
@@ -1649,7 +2050,7 @@ void process_command(char *buf) {
       int olen;
       fres = f_write(&pfil, buf, len, &olen);
       if (fres != FR_OK) {
-        UART2_Print("Warning, write failed.\r\n");
+        UART2_Print(terse ? "Err\r\n" : "Warning, write failed.\r\n");
       } else {
         prog_lines += 1;
       }
@@ -1685,15 +2086,17 @@ void process_command(char *buf) {
     command_log(buf);
   } else if (!strcmp(word, "loop")) {
     command_loop(buf);
+  } else if (!strcmp(word, "lc")) {
+    command_lc(buf);
   } else if (!strcmp(word, "adventure")) {
     //adventuremain();
   } else if (!*word) {
     cmd_invalid = 1;
-    UART2_Print("Enter a command.\r\n");
+    UART2_Print(terse ? "Invalid\r\n" : "Enter a command.\r\n");
   } else {
     cmd_invalid = 1;
-    UART2_Print("Unknown command: ");
-    UART2_Print(word);
+    UART2_Print(terse ? "Invalid" : "Unknown command: ");
+    if (!terse) UART2_Print(word);
     UART2_Print("\r\n");
   }
 }
@@ -1799,6 +2202,7 @@ int main(void)
   volatile uint16_t v = HAL_ADC_GetValue(&hadc1);
 
   HAL_Delay(400); //a short delay is important to let the SD card settle
+  restore_solenoid();
 
   //some variables for FatFs
 
@@ -1815,6 +2219,8 @@ int main(void)
   muted |= 1;
   process_command("file run startup.scr");
   muted &= ~1;
+
+  HX711_Init(&hx);
 
   /* USER CODE END 2 */
 
@@ -2331,7 +2737,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0|GPIO_PIN_2|GPIO_PIN_3, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PB0 */
   GPIO_InitStruct.Pin = GPIO_PIN_0;
@@ -2347,11 +2753,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PD0 PD1 PD2 PD3 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3;
+  /*Configure GPIO pins : PD0 PD2 PD3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_2|GPIO_PIN_3;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PD1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_1;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */

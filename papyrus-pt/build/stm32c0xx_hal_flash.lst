@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccUwUxl3.s 			page 1
+ARM GAS  /tmp/ccvg22CE.s 			page 1
 
 
    1              		.cpu cortex-m0plus
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
   30:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****        and the read and write protection mechanisms.
   31:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
   32:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   [..] The Flash memory interface accelerates code execution with a system of instruction
-ARM GAS  /tmp/ccUwUxl3.s 			page 2
+ARM GAS  /tmp/ccvg22CE.s 			page 2
 
 
   33:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****        prefetch and cache lines.
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
   87:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
   88:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** /** @addtogroup STM32C0xx_HAL_Driver
   89:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   * @{
-ARM GAS  /tmp/ccUwUxl3.s 			page 3
+ARM GAS  /tmp/ccvg22CE.s 			page 3
 
 
   90:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   */
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  144:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****     program operations.
  145:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
  146:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** @endverbatim
-ARM GAS  /tmp/ccUwUxl3.s 			page 4
+ARM GAS  /tmp/ccvg22CE.s 			page 4
 
 
  147:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   * @{
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  201:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****     CLEAR_BIT(FLASH->CR, TypeProgram);
  202:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   }
  203:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
-ARM GAS  /tmp/ccUwUxl3.s 			page 5
+ARM GAS  /tmp/ccvg22CE.s 			page 5
 
 
  204:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   /* Process Unlocked */
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  258:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****       /* Program double-word (64-bit) at a specified address */
  259:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****       FLASH_Program_DoubleWord(Address, Data);
  260:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****     }
-ARM GAS  /tmp/ccUwUxl3.s 			page 6
+ARM GAS  /tmp/ccvg22CE.s 			page 6
 
 
  261:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****     else
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  315:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****     /*Stop the procedure ongoing*/
  316:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****     pFlash.ProcedureOnGoing = FLASH_TYPENONE;
  317:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
-ARM GAS  /tmp/ccUwUxl3.s 			page 7
+ARM GAS  /tmp/ccvg22CE.s 			page 7
 
 
  318:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****     /* Error callback */
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  372:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   * @retval None
  373:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   */
  374:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** __weak void HAL_FLASH_EndOfOperationCallback(uint32_t ReturnValue)
-ARM GAS  /tmp/ccUwUxl3.s 			page 8
+ARM GAS  /tmp/ccvg22CE.s 			page 8
 
 
  375:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** {
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  429:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   if (READ_BIT(FLASH->CR, FLASH_CR_LOCK) != 0x00U)
  430:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   {
  431:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****     /* Authorize the FLASH Registers access */
-ARM GAS  /tmp/ccUwUxl3.s 			page 9
+ARM GAS  /tmp/ccvg22CE.s 			page 9
 
 
  432:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****     WRITE_REG(FLASH->KEYR, FLASH_KEY1);
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  486:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   return status;
  487:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** }
  488:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
-ARM GAS  /tmp/ccUwUxl3.s 			page 10
+ARM GAS  /tmp/ccvg22CE.s 			page 10
 
 
  489:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** /**
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  543:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   * @retval FLASH_ErrorCode The returned value can be
  544:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   *            @arg @ref HAL_FLASH_ERROR_NONE No error set
  545:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   *            @arg @ref HAL_FLASH_ERROR_OP FLASH Operation error
-ARM GAS  /tmp/ccUwUxl3.s 			page 11
+ARM GAS  /tmp/ccvg22CE.s 			page 11
 
 
  546:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   *            @arg @ref HAL_FLASH_ERROR_PROG FLASH Programming error
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  600:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   /* clear error flags */
  601:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   __HAL_FLASH_CLEAR_FLAG(error);
  602:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
-ARM GAS  /tmp/ccUwUxl3.s 			page 12
+ARM GAS  /tmp/ccvg22CE.s 			page 12
 
 
  603:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   if (error != 0x00U)
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
   46 000c 0260     		str	r2, [r0]
  638:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
  639:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   /* Barrier to ensure programming is performed in 2 steps, in right order
-ARM GAS  /tmp/ccUwUxl3.s 			page 13
+ARM GAS  /tmp/ccvg22CE.s 			page 13
 
 
  640:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****     (independently of compiler optimization behavior) */
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
   49:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_FORCEINLINE
   50:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_FORCEINLINE                   __attribute__((always_inline)) static inline
   51:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
-ARM GAS  /tmp/ccUwUxl3.s 			page 14
+ARM GAS  /tmp/ccvg22CE.s 			page 14
 
 
   52:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __NO_RETURN
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  106:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
  107:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
  108:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(add
-ARM GAS  /tmp/ccUwUxl3.s 			page 15
+ARM GAS  /tmp/ccvg22CE.s 			page 15
 
 
  109:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  163:Drivers/CMSIS/Include/cmsis_gcc.h ****   _start();
  164:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  165:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccUwUxl3.s 			page 16
+ARM GAS  /tmp/ccvg22CE.s 			page 16
 
 
  166:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __PROGRAM_START           __cmsis_start
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  220:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+r" (r)
  221:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
  222:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
-ARM GAS  /tmp/ccUwUxl3.s 			page 17
+ARM GAS  /tmp/ccvg22CE.s 			page 17
 
 
  223:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
   64 0012 4360     		str	r3, [r0, #4]
  645:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** }
   65              		.loc 1 645 1 view .LVU10
-ARM GAS  /tmp/ccUwUxl3.s 			page 18
+ARM GAS  /tmp/ccvg22CE.s 			page 18
 
 
   66              		@ sp needed
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  662:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
  663:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   /* Enter critical section: row programming should not be longer than 7 ms */
  664:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   primask_bit = __get_PRIMASK();
-ARM GAS  /tmp/ccUwUxl3.s 			page 19
+ARM GAS  /tmp/ccvg22CE.s 			page 19
 
 
  106              		.loc 1 664 3 view .LVU18
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  312:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  313:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
  314:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccUwUxl3.s 			page 20
+ARM GAS  /tmp/ccvg22CE.s 			page 20
 
 
  315:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM ("rev16 %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  369:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Reverses the bit order of the given value.
  370:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    value  Value to reverse
  371:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Reversed value
-ARM GAS  /tmp/ccUwUxl3.s 			page 21
+ARM GAS  /tmp/ccvg22CE.s 			page 21
 
 
  372:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  426:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  427:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   LDR Exclusive (8 bit)
  428:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Executes a exclusive LDR instruction for 8 bit value.
-ARM GAS  /tmp/ccUwUxl3.s 			page 22
+ARM GAS  /tmp/ccvg22CE.s 			page 22
 
 
  429:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    ptr  Pointer to data
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  483:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  484:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  485:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
-ARM GAS  /tmp/ccUwUxl3.s 			page 23
+ARM GAS  /tmp/ccvg22CE.s 			page 23
 
 
  486:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   STR Exclusive (8 bit)
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  540:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __CLREX(void)
  541:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  542:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("clrex" ::: "memory");
-ARM GAS  /tmp/ccUwUxl3.s 			page 24
+ARM GAS  /tmp/ccvg22CE.s 			page 24
 
 
  543:Drivers/CMSIS/Include/cmsis_gcc.h **** }
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  597:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("rrx %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
  598:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
  599:Drivers/CMSIS/Include/cmsis_gcc.h **** }
-ARM GAS  /tmp/ccUwUxl3.s 			page 25
+ARM GAS  /tmp/ccvg22CE.s 			page 25
 
 
  600:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  654:Drivers/CMSIS/Include/cmsis_gcc.h ****     uint32_t result;
  655:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  656:Drivers/CMSIS/Include/cmsis_gcc.h ****    __ASM volatile ("ldrt %0, %1" : "=r" (result) : "Q" (*ptr) );
-ARM GAS  /tmp/ccUwUxl3.s 			page 26
+ARM GAS  /tmp/ccvg22CE.s 			page 26
 
 
  657:Drivers/CMSIS/Include/cmsis_gcc.h ****    return(result);
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  711:Drivers/CMSIS/Include/cmsis_gcc.h ****     const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
  712:Drivers/CMSIS/Include/cmsis_gcc.h ****     const int32_t min = -1 - max ;
  713:Drivers/CMSIS/Include/cmsis_gcc.h ****     if (val > max)
-ARM GAS  /tmp/ccUwUxl3.s 			page 27
+ARM GAS  /tmp/ccvg22CE.s 			page 27
 
 
  714:Drivers/CMSIS/Include/cmsis_gcc.h ****     {
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  768:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  769:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  770:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccUwUxl3.s 			page 28
+ARM GAS  /tmp/ccvg22CE.s 			page 28
 
 
  771:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  825:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  826:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Store-Release (32 bit)
  827:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Executes a STL instruction for 32 bit values.
-ARM GAS  /tmp/ccUwUxl3.s 			page 29
+ARM GAS  /tmp/ccvg22CE.s 			page 29
 
 
  828:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]  value  Value to store
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  882:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  883:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Store-Release Exclusive (8 bit)
  884:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Executes a STLB exclusive instruction for 8 bit values.
-ARM GAS  /tmp/ccUwUxl3.s 			page 30
+ARM GAS  /tmp/ccvg22CE.s 			page 30
 
 
  885:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]  value  Value to store
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  939:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
  940:Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
  941:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
-ARM GAS  /tmp/ccUwUxl3.s 			page 31
+ARM GAS  /tmp/ccvg22CE.s 			page 31
 
 
  942:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  996:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  997:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Control Register
  998:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Writes the given value to the Control Register.
-ARM GAS  /tmp/ccUwUxl3.s 			page 32
+ARM GAS  /tmp/ccvg22CE.s 			page 32
 
 
  999:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
 1053:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               xPSR Register value
 1054:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
 1055:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE uint32_t __get_xPSR(void)
-ARM GAS  /tmp/ccUwUxl3.s 			page 33
+ARM GAS  /tmp/ccvg22CE.s 			page 33
 
 
 1056:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
 1110:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
 1111:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __TZ_set_PSP_NS(uint32_t topOfProcStack)
 1112:Drivers/CMSIS/Include/cmsis_gcc.h **** {
-ARM GAS  /tmp/ccUwUxl3.s 			page 34
+ARM GAS  /tmp/ccvg22CE.s 			page 34
 
 
 1113:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psp_ns, %0" : : "r" (topOfProcStack) : );
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
 1167:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msp_ns, %0" : : "r" (topOfMainStack) : );
 1168:Drivers/CMSIS/Include/cmsis_gcc.h **** }
 1169:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
-ARM GAS  /tmp/ccUwUxl3.s 			page 35
+ARM GAS  /tmp/ccvg22CE.s 			page 35
 
 
 1170:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  123              	.LBE12:
  665:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   __disable_irq();
  124              		.loc 1 665 3 is_stmt 1 view .LVU24
-ARM GAS  /tmp/ccUwUxl3.s 			page 36
+ARM GAS  /tmp/ccvg22CE.s 			page 36
 
 
  125              	.LBB14:
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  166              	.L5:
  668:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   {
  167              		.loc 1 668 16 is_stmt 1 view .LVU39
-ARM GAS  /tmp/ccUwUxl3.s 			page 37
+ARM GAS  /tmp/ccvg22CE.s 			page 37
 
 
  168 0020 3F2B     		cmp	r3, #63
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
 1234:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __set_PRIMASK(uint32_t priMask)
  184              		.loc 2 1234 27 view .LVU45
  185              	.LBB19:
-ARM GAS  /tmp/ccUwUxl3.s 			page 38
+ARM GAS  /tmp/ccvg22CE.s 			page 38
 
 
 1235:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  238              	.LFB362:
  393:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   /* Prevent unused argument(s) compilation warning */
  239              		.loc 1 393 1 is_stmt 1 view -0
-ARM GAS  /tmp/ccUwUxl3.s 			page 39
+ARM GAS  /tmp/ccvg22CE.s 			page 39
 
 
  240              		.cfi_startproc
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  286              		.loc 1 291 3 view .LVU62
  291:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   {
  287              		.loc 1 291 32 is_stmt 0 view .LVU63
-ARM GAS  /tmp/ccUwUxl3.s 			page 40
+ARM GAS  /tmp/ccvg22CE.s 			page 40
 
 
  288 0014 274A     		ldr	r2, .L27+12
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  327 003c 9A60     		str	r2, [r3, #8]
  328              	.L20:
  353:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   }
-ARM GAS  /tmp/ccUwUxl3.s 			page 41
+ARM GAS  /tmp/ccvg22CE.s 			page 41
 
 
  329              		.loc 1 353 5 is_stmt 1 view .LVU79
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  369 0064 124A     		ldr	r2, .L27+8
  370 0066 1469     		ldr	r4, [r2, #16]
  371              	.LVL21:
-ARM GAS  /tmp/ccUwUxl3.s 			page 42
+ARM GAS  /tmp/ccvg22CE.s 			page 42
 
 
  299:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   }
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  334:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****       {
  412              		.loc 1 334 7 is_stmt 1 view .LVU108
  334:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****       {
-ARM GAS  /tmp/ccUwUxl3.s 			page 43
+ARM GAS  /tmp/ccvg22CE.s 			page 43
 
 
  413              		.loc 1 334 10 is_stmt 0 view .LVU109
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  460              		.loc 1 429 3 view .LVU118
  429:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   {
  461              		.loc 1 429 7 is_stmt 0 view .LVU119
-ARM GAS  /tmp/ccUwUxl3.s 			page 44
+ARM GAS  /tmp/ccvg22CE.s 			page 44
 
 
  462 0000 084B     		ldr	r3, .L34
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  506              		.section	.text.HAL_FLASH_Lock,"ax",%progbits
  507              		.align	1
  508              		.global	HAL_FLASH_Lock
-ARM GAS  /tmp/ccUwUxl3.s 			page 45
+ARM GAS  /tmp/ccvg22CE.s 			page 45
 
 
  509              		.syntax unified
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  555              		.section	.text.HAL_FLASH_OB_Unlock,"ax",%progbits
  556              		.align	1
  557              		.global	HAL_FLASH_OB_Unlock
-ARM GAS  /tmp/ccUwUxl3.s 			page 46
+ARM GAS  /tmp/ccvg22CE.s 			page 46
 
 
  558              		.syntax unified
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  600              		@ sp needed
  601 001e 7047     		bx	lr
  602              	.LVL35:
-ARM GAS  /tmp/ccUwUxl3.s 			page 47
+ARM GAS  /tmp/ccvg22CE.s 			page 47
 
 
  603              	.L44:
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  507:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
  650              		.loc 1 507 1 is_stmt 0 view .LVU163
  651              		@ sp needed
-ARM GAS  /tmp/ccUwUxl3.s 			page 48
+ARM GAS  /tmp/ccvg22CE.s 			page 48
 
 
  652 0014 7047     		bx	lr
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  705              	HAL_FLASH_GetError:
  706              	.LFB368:
  557:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c ****   return pFlash.ErrorCode;
-ARM GAS  /tmp/ccUwUxl3.s 			page 49
+ARM GAS  /tmp/ccvg22CE.s 			page 49
 
 
  707              		.loc 1 557 1 is_stmt 1 view -0
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  754              	.LVL40:
  586:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
  755              		.loc 1 586 12 discriminator 1 view .LVU179
-ARM GAS  /tmp/ccUwUxl3.s 			page 50
+ARM GAS  /tmp/ccvg22CE.s 			page 50
 
 
  756 0008 4419     		adds	r4, r0, r5
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  795 0028 03D0     		beq	.L62
  606:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
  796              		.loc 1 606 5 is_stmt 1 view .LVU195
-ARM GAS  /tmp/ccUwUxl3.s 			page 51
+ARM GAS  /tmp/ccvg22CE.s 			page 51
 
 
  606:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  836              		.align	2
  837              	.L66:
  838 0050 00200240 		.word	1073881088
-ARM GAS  /tmp/ccUwUxl3.s 			page 52
+ARM GAS  /tmp/ccvg22CE.s 			page 52
 
 
  839 0054 FAC30000 		.word	50170
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  886 0016 1A70     		strb	r2, [r3]
  170:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
  887              		.loc 1 170 3 is_stmt 1 view .LVU220
-ARM GAS  /tmp/ccUwUxl3.s 			page 53
+ARM GAS  /tmp/ccvg22CE.s 			page 53
 
 
  173:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  927 0042 5361     		str	r3, [r2, #20]
  928              	.LVL56:
  929              	.L70:
-ARM GAS  /tmp/ccUwUxl3.s 			page 54
+ARM GAS  /tmp/ccvg22CE.s 			page 54
 
 
  205:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  974              		.global	HAL_FLASH_Program_IT
  975              		.syntax unified
  976              		.code	16
-ARM GAS  /tmp/ccUwUxl3.s 			page 55
+ARM GAS  /tmp/ccvg22CE.s 			page 55
 
 
  977              		.thumb_func
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  1020              		.loc 1 237 3 is_stmt 1 view .LVU258
  237:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_flash.c **** 
  1021              		.loc 1 237 12 is_stmt 0 view .LVU259
-ARM GAS  /tmp/ccUwUxl3.s 			page 56
+ARM GAS  /tmp/ccvg22CE.s 			page 56
 
 
  1022 001e FA20     		movs	r0, #250
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  1062 0040 C023     		movs	r3, #192
  1063 0042 9B04     		lsls	r3, r3, #18
  1064 0044 0B43     		orrs	r3, r1
-ARM GAS  /tmp/ccUwUxl3.s 			page 57
+ARM GAS  /tmp/ccvg22CE.s 			page 57
 
 
  1065 0046 5361     		str	r3, [r2, #20]
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  1110      00000000 
  1110      00000000 
  1111              		.text
-ARM GAS  /tmp/ccUwUxl3.s 			page 58
+ARM GAS  /tmp/ccvg22CE.s 			page 58
 
 
  1112              	.Letext0:
@@ -3429,53 +3429,53 @@ ARM GAS  /tmp/ccUwUxl3.s 			page 1
  1117              		.file 7 "Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_flash.h"
  1118              		.file 8 "Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal.h"
  1119              		.file 9 "Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_flash_ex.h"
-ARM GAS  /tmp/ccUwUxl3.s 			page 59
+ARM GAS  /tmp/ccvg22CE.s 			page 59
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32c0xx_hal_flash.c
-     /tmp/ccUwUxl3.s:19     .text.FLASH_Program_DoubleWord:00000000 $t
-     /tmp/ccUwUxl3.s:24     .text.FLASH_Program_DoubleWord:00000000 FLASH_Program_DoubleWord
-     /tmp/ccUwUxl3.s:71     .text.FLASH_Program_DoubleWord:00000018 $d
-     /tmp/ccUwUxl3.s:76     .RamFunc:00000000 $t
-     /tmp/ccUwUxl3.s:81     .RamFunc:00000000 FLASH_Program_Fast
-     /tmp/ccUwUxl3.s:203    .RamFunc:00000034 $d
-     /tmp/ccUwUxl3.s:208    .text.HAL_FLASH_EndOfOperationCallback:00000000 $t
-     /tmp/ccUwUxl3.s:214    .text.HAL_FLASH_EndOfOperationCallback:00000000 HAL_FLASH_EndOfOperationCallback
-     /tmp/ccUwUxl3.s:230    .text.HAL_FLASH_OperationErrorCallback:00000000 $t
-     /tmp/ccUwUxl3.s:236    .text.HAL_FLASH_OperationErrorCallback:00000000 HAL_FLASH_OperationErrorCallback
-     /tmp/ccUwUxl3.s:252    .text.HAL_FLASH_IRQHandler:00000000 $t
-     /tmp/ccUwUxl3.s:258    .text.HAL_FLASH_IRQHandler:00000000 HAL_FLASH_IRQHandler
-     /tmp/ccUwUxl3.s:436    .text.HAL_FLASH_IRQHandler:000000a8 $d
-     /tmp/ccUwUxl3.s:1109   .bss.pFlash:00000000 pFlash
-     /tmp/ccUwUxl3.s:445    .text.HAL_FLASH_Unlock:00000000 $t
-     /tmp/ccUwUxl3.s:451    .text.HAL_FLASH_Unlock:00000000 HAL_FLASH_Unlock
-     /tmp/ccUwUxl3.s:500    .text.HAL_FLASH_Unlock:00000024 $d
-     /tmp/ccUwUxl3.s:507    .text.HAL_FLASH_Lock:00000000 $t
-     /tmp/ccUwUxl3.s:513    .text.HAL_FLASH_Lock:00000000 HAL_FLASH_Lock
-     /tmp/ccUwUxl3.s:551    .text.HAL_FLASH_Lock:0000001c $d
-     /tmp/ccUwUxl3.s:556    .text.HAL_FLASH_OB_Unlock:00000000 $t
-     /tmp/ccUwUxl3.s:562    .text.HAL_FLASH_OB_Unlock:00000000 HAL_FLASH_OB_Unlock
-     /tmp/ccUwUxl3.s:610    .text.HAL_FLASH_OB_Unlock:00000024 $d
-     /tmp/ccUwUxl3.s:617    .text.HAL_FLASH_OB_Lock:00000000 $t
-     /tmp/ccUwUxl3.s:623    .text.HAL_FLASH_OB_Lock:00000000 HAL_FLASH_OB_Lock
-     /tmp/ccUwUxl3.s:661    .text.HAL_FLASH_OB_Lock:0000001c $d
-     /tmp/ccUwUxl3.s:666    .text.HAL_FLASH_OB_Launch:00000000 $t
-     /tmp/ccUwUxl3.s:672    .text.HAL_FLASH_OB_Launch:00000000 HAL_FLASH_OB_Launch
-     /tmp/ccUwUxl3.s:694    .text.HAL_FLASH_OB_Launch:00000010 $d
-     /tmp/ccUwUxl3.s:699    .text.HAL_FLASH_GetError:00000000 $t
-     /tmp/ccUwUxl3.s:705    .text.HAL_FLASH_GetError:00000000 HAL_FLASH_GetError
-     /tmp/ccUwUxl3.s:723    .text.HAL_FLASH_GetError:00000008 $d
-     /tmp/ccUwUxl3.s:728    .text.FLASH_WaitForLastOperation:00000000 $t
-     /tmp/ccUwUxl3.s:734    .text.FLASH_WaitForLastOperation:00000000 FLASH_WaitForLastOperation
-     /tmp/ccUwUxl3.s:838    .text.FLASH_WaitForLastOperation:00000050 $d
-     /tmp/ccUwUxl3.s:845    .text.HAL_FLASH_Program:00000000 $t
-     /tmp/ccUwUxl3.s:851    .text.HAL_FLASH_Program:00000000 HAL_FLASH_Program
-     /tmp/ccUwUxl3.s:967    .text.HAL_FLASH_Program:0000005c $d
-     /tmp/ccUwUxl3.s:973    .text.HAL_FLASH_Program_IT:00000000 $t
-     /tmp/ccUwUxl3.s:979    .text.HAL_FLASH_Program_IT:00000000 HAL_FLASH_Program_IT
-     /tmp/ccUwUxl3.s:1099   .text.HAL_FLASH_Program_IT:00000068 $d
-     /tmp/ccUwUxl3.s:1106   .bss.pFlash:00000000 $d
+     /tmp/ccvg22CE.s:19     .text.FLASH_Program_DoubleWord:00000000 $t
+     /tmp/ccvg22CE.s:24     .text.FLASH_Program_DoubleWord:00000000 FLASH_Program_DoubleWord
+     /tmp/ccvg22CE.s:71     .text.FLASH_Program_DoubleWord:00000018 $d
+     /tmp/ccvg22CE.s:76     .RamFunc:00000000 $t
+     /tmp/ccvg22CE.s:81     .RamFunc:00000000 FLASH_Program_Fast
+     /tmp/ccvg22CE.s:203    .RamFunc:00000034 $d
+     /tmp/ccvg22CE.s:208    .text.HAL_FLASH_EndOfOperationCallback:00000000 $t
+     /tmp/ccvg22CE.s:214    .text.HAL_FLASH_EndOfOperationCallback:00000000 HAL_FLASH_EndOfOperationCallback
+     /tmp/ccvg22CE.s:230    .text.HAL_FLASH_OperationErrorCallback:00000000 $t
+     /tmp/ccvg22CE.s:236    .text.HAL_FLASH_OperationErrorCallback:00000000 HAL_FLASH_OperationErrorCallback
+     /tmp/ccvg22CE.s:252    .text.HAL_FLASH_IRQHandler:00000000 $t
+     /tmp/ccvg22CE.s:258    .text.HAL_FLASH_IRQHandler:00000000 HAL_FLASH_IRQHandler
+     /tmp/ccvg22CE.s:436    .text.HAL_FLASH_IRQHandler:000000a8 $d
+     /tmp/ccvg22CE.s:1109   .bss.pFlash:00000000 pFlash
+     /tmp/ccvg22CE.s:445    .text.HAL_FLASH_Unlock:00000000 $t
+     /tmp/ccvg22CE.s:451    .text.HAL_FLASH_Unlock:00000000 HAL_FLASH_Unlock
+     /tmp/ccvg22CE.s:500    .text.HAL_FLASH_Unlock:00000024 $d
+     /tmp/ccvg22CE.s:507    .text.HAL_FLASH_Lock:00000000 $t
+     /tmp/ccvg22CE.s:513    .text.HAL_FLASH_Lock:00000000 HAL_FLASH_Lock
+     /tmp/ccvg22CE.s:551    .text.HAL_FLASH_Lock:0000001c $d
+     /tmp/ccvg22CE.s:556    .text.HAL_FLASH_OB_Unlock:00000000 $t
+     /tmp/ccvg22CE.s:562    .text.HAL_FLASH_OB_Unlock:00000000 HAL_FLASH_OB_Unlock
+     /tmp/ccvg22CE.s:610    .text.HAL_FLASH_OB_Unlock:00000024 $d
+     /tmp/ccvg22CE.s:617    .text.HAL_FLASH_OB_Lock:00000000 $t
+     /tmp/ccvg22CE.s:623    .text.HAL_FLASH_OB_Lock:00000000 HAL_FLASH_OB_Lock
+     /tmp/ccvg22CE.s:661    .text.HAL_FLASH_OB_Lock:0000001c $d
+     /tmp/ccvg22CE.s:666    .text.HAL_FLASH_OB_Launch:00000000 $t
+     /tmp/ccvg22CE.s:672    .text.HAL_FLASH_OB_Launch:00000000 HAL_FLASH_OB_Launch
+     /tmp/ccvg22CE.s:694    .text.HAL_FLASH_OB_Launch:00000010 $d
+     /tmp/ccvg22CE.s:699    .text.HAL_FLASH_GetError:00000000 $t
+     /tmp/ccvg22CE.s:705    .text.HAL_FLASH_GetError:00000000 HAL_FLASH_GetError
+     /tmp/ccvg22CE.s:723    .text.HAL_FLASH_GetError:00000008 $d
+     /tmp/ccvg22CE.s:728    .text.FLASH_WaitForLastOperation:00000000 $t
+     /tmp/ccvg22CE.s:734    .text.FLASH_WaitForLastOperation:00000000 FLASH_WaitForLastOperation
+     /tmp/ccvg22CE.s:838    .text.FLASH_WaitForLastOperation:00000050 $d
+     /tmp/ccvg22CE.s:845    .text.HAL_FLASH_Program:00000000 $t
+     /tmp/ccvg22CE.s:851    .text.HAL_FLASH_Program:00000000 HAL_FLASH_Program
+     /tmp/ccvg22CE.s:967    .text.HAL_FLASH_Program:0000005c $d
+     /tmp/ccvg22CE.s:973    .text.HAL_FLASH_Program_IT:00000000 $t
+     /tmp/ccvg22CE.s:979    .text.HAL_FLASH_Program_IT:00000000 HAL_FLASH_Program_IT
+     /tmp/ccvg22CE.s:1099   .text.HAL_FLASH_Program_IT:00000068 $d
+     /tmp/ccvg22CE.s:1106   .bss.pFlash:00000000 $d
 
 UNDEFINED SYMBOLS
 FLASH_PageErase
