@@ -135,7 +135,7 @@ uint32_t HX711_GetData(uint8_t channel, uint8_t cs, uint8_t gain) {
   pulses <<= 1;
   uint8_t clock_status = 0;
   uint32_t idx = 0;
-  for (pulses; pulses > 0; pulses--) {
+  while (pulses > 0) {
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_SCK);
     clock_status ^= 1;
     if (clock_status) {
@@ -143,10 +143,11 @@ uint32_t HX711_GetData(uint8_t channel, uint8_t cs, uint8_t gain) {
       buffer |= (data << idx);
       idx++;
     }
+    pulses--;
   }
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_SCK, GPIO_PIN_RESET);
   // should be set to HIGH when done
-  if (HAL_GPIO_ReadPIn(GPIO_PIN_DOUT)) {
+  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_DOUT)) {
     return buffer;
   }
   return ERROR_BUFFER;
@@ -190,7 +191,7 @@ int main(void)
   uint8_t rxData[8];
   uint8_t txData[8];
 
-  uint32_t lastTick;
+  uint32_t lastTick = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -324,7 +325,21 @@ static void MX_FDCAN1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN FDCAN1_Init 2 */
-
+  FDCAN_FilterTypeDef filter = {0};
+  filter.IdType = FDCAN_STANDARD_ID;
+  filter.FilterIndex = 0;
+  filter.FilterType = FDCAN_FILTER_DUAL;
+  filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+  filter.FilterID1 = CAN_CMD_ID;
+  filter.FilterID2 = 0;
+  HAL_FDCAN_ConfigFilter(&hfdcan1, &filter);
+  HAL_FDCAN_ConfigGlobalFilter(
+    &hfdcan1,
+    FDCAN_REJECT,  // Non-matching standard frames
+    FDCAN_REJECT,  // Non-matching extended frames
+    FDCAN_REJECT,  // Reject remote standard frames
+    FDCAN_REJECT   // Reject remote extended frames
+  );
   /* USER CODE END FDCAN1_Init 2 */
 
 }
