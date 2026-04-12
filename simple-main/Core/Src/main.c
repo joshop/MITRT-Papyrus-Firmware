@@ -233,7 +233,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
 void CAN_Rx_Default(FDCAN_RxHeaderTypeDef rxHeader) {
   if(just_set_solenoid) {
     emergency_solenoid[(just_set_id - 105) * 3 + just_set_idx - 1] = just_set_val;
-    update_solenoid();
+    //update_solenoid();
   }
   UART2_Print("OK\r\n");
   just_set_solenoid = 0;
@@ -255,12 +255,15 @@ typedef struct PTCfg {
   int initialized;
   uint16_t max_psi;
 } PTCfg;
-float pt_translate_mv(int id, int16_t pt_p);
+int last_index;
+float pt_translate_mv(int id, int idx, int16_t pt_p);
+
+uint16_t max_psi_tmp[10];
 
 void CAN_Rx_PT(FDCAN_RxHeaderTypeDef rxHeader) {
   char buff[64];
   int16_t pt_p = *(int16_t*)(lastRxData+1);
-  float pt_v = pt_translate_mv(rxHeader.Identifier, pt_p);
+  float pt_v = pt_translate_mv(rxHeader.Identifier, last_index, pt_p);
   sprintf(buff, terse ? "%.2f\r\n" : "P = %.2f psi\r\n", pt_v);
   UART2_Print(buff);
 }
@@ -269,7 +272,7 @@ float last_pt_v;
 void CAN_Rx_PT_Quiet(FDCAN_RxHeaderTypeDef rxHeader) {
   int16_t pt_p = *(int16_t*)(lastRxData+1);
   // 0.57965/1.68179 * (PT2 + 359.67442) - 151.83194
-  last_pt_v = pt_translate_mv(rxHeader.Identifier, pt_p);//3000.0f * ((float)pt_p - 500.0f) / 4000.0f;
+  last_pt_v = pt_translate_mv(rxHeader.Identifier, last_index, pt_p);//3000.0f * ((float)pt_p - 500.0f) / 4000.0f;
 }
 void CAN_Rx_Relay(FDCAN_RxHeaderTypeDef rxHeader) {
   if (lastRxData[1]) {
@@ -277,6 +280,12 @@ void CAN_Rx_Relay(FDCAN_RxHeaderTypeDef rxHeader) {
   } else {
     UART2_Print(terse ? "OFF\rn" : "R = OFF\r\n");
   }
+}void CAN_Rx_RelayPower(FDCAN_RxHeaderTypeDef rxHeader) {
+  uint16_t vin = *(uint16_t*)(lastRxData+1);
+  uint16_t vdd = *(uint16_t*)(lastRxData+3);
+  char buffer[64];
+  sprintf(buffer, "VBAT=%dmV VDD=%dmV\r\n", vin, vdd);
+  UART2_Print(buffer);
 }
 void CAN_Rx_TCStat(FDCAN_RxHeaderTypeDef rxHeader) {
   char buff[64];
@@ -526,7 +535,7 @@ int add_namemap(int can_id, char *name, uint8_t index) {
   memset(&(m->cfg), 0, sizeof(m->cfg));
   return 0;
 }
-int last_index;
+
 
 int retrieve_id(char *label) {
   last_index = -1;
@@ -842,6 +851,19 @@ void command_relay(char *rest) {
     } else {
       UART2_Print(terse ? "Invalid\r\n" : "Need to specify individual relay.\r\n");
     }
+  } else if (!strcmp(word, "power")) {
+    int id = retrieve_id(rest);
+    if (id == 0) {
+      UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
+      return;
+    }
+    next_can_id = id;
+    if (!terse) {
+      UART2_Print(rest);
+      UART2_Print(": ");
+    }
+    CAN_Rx_Func = CAN_Rx_RelayPower;
+    CAN_Send(0x20);
   } else if (!strcmp(word, "get")) {
     int id = retrieve_id(rest);
     if (id == 0) {
@@ -858,7 +880,7 @@ void command_relay(char *rest) {
       UART2_Print(": ");
     }
     CAN_Rx_Func = CAN_Rx_Relay;
-    CAN_Send(last_index + 0x10);
+    CAN_Send(last_index + 0x10 - 1);
   } else if (!strcmp(word, "reset")) {
     int id = retrieve_id(rest);
     if (id == 0) {
@@ -1088,6 +1110,7 @@ void command_servo(char *rest) {
   } else if (!strcmp(word, "set")) {
     next_word(word, &rest);
     int id = retrieve_id(word);
+    next_can_id = id;
     if (id == 0) {
       UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
       return;
@@ -1227,7 +1250,7 @@ void command_pt(char *rest) {
       UART2_Print(terse ? "Invalid\r\n" : "Invalid ID or device name.\r\n");
       return;
     }
-    PTCfg *pt = NULL;
+    /*PTCfg *pt = NULL;
     PTCfg def = {0};
     for (int i = 0; i < num_maps; i++) {
       if (name_maps[i].can_id == id) {
@@ -1241,7 +1264,7 @@ void command_pt(char *rest) {
     if (!pt->initialized) {
       pt->initialized = 1;
       pt->max_psi = 3000;
-    }
+    }*/
     next_word(word, &rest);
     if (!strcmp(word, "max")) {
       if (!*rest) {
@@ -1250,17 +1273,17 @@ void command_pt(char *rest) {
           UART2_Print(word);
           UART2_Print(" = ");
         }
-        UART2_Print_Int(pt->max_psi);
+        UART2_Print_Int(max_psi_tmp[(id - 400) * 3 + last_index]);
         UART2_Print("\r\n");
       } else {
-        pt->max_psi = atoi(rest);
+        max_psi_tmp[(id - 400) * 3 + last_index] = atoi(rest);
         if (terse) {
           UART2_Print("OK\r\n");
         } else {
           UART2_Print("New ");
           UART2_Print(word);
           UART2_Print(" -> ");
-          UART2_Print_Int(pt->max_psi);
+          UART2_Print_Int(max_psi_tmp[(id - 400) * 3 + last_index]);
           UART2_Print("\r\n");
         }
       }
@@ -1533,8 +1556,8 @@ void add_time_entry(char *cmd, int reload, int timeout) {
   (*t)->next = NULL;
   (*t)->quiet = 0;
 }
-float pt_translate_mv(int id, int16_t pt_p){
-  PTCfg *pt = NULL;
+float pt_translate_mv(int id, int idx, int16_t pt_p){
+  /*PTCfg *pt = NULL;
   PTCfg def = {0};
   for (int i = 0; i < num_maps; i++) {
     if (name_maps[i].can_id == id) {
@@ -1548,8 +1571,9 @@ float pt_translate_mv(int id, int16_t pt_p){
   if (!pt->initialized) {
     pt->initialized = 1;
     pt->max_psi = 3000;
-  }
-  return ((float)pt->max_psi) * ((float)pt_p - 500.0f) / 4000.0f;
+  }*/
+  return ((float)max_psi_tmp[(id - 400) * 3 + idx]) * ((float)pt_p - 500.0f) / 4000.0f;
+  //return max_psi_tmp[(id - 400) * 3 + idx];
 }
 int time_mark = 0;
 void main_tick() {
@@ -1754,6 +1778,7 @@ void command_log(char *rest) {
       return;
     }
   } else if (!strcmp(word, "line") || !strcmp(word, "print")) {
+    int is_logging = !strcmp(word, "line");
     if (!islogopen) {
       UART2_Print(terse ? "Err\r\n" :"Log file is not open.\r\n");
       return;
@@ -1802,7 +1827,7 @@ void command_log(char *rest) {
       bufp[ilen + 1] = 0;
       bufp += ilen + 1;
     }
-    if (!strcmp(word, "line")) f_puts(buffer, &logfile);
+    if (is_logging) f_puts(buffer, &logfile);
     if (!terse) UART2_Print("Log line: ");
     UART2_Print(buffer);
   } else if (!*word) {
@@ -2026,6 +2051,18 @@ void command_lc(char *rest) {
     UART2_Print(buffer);
   }
 }
+void command_mservo(char *rest) {
+  char word[32];
+  next_word(word, &rest);
+  if (!strcmp(word, "set")) {
+    next_word(word, &rest);
+    int idx = atoi(word);
+    int angle = atoi(rest);
+
+
+  }
+
+}
 int prog_lines = 0;
 int adventuremain();
 void process_command(char *buf) {
@@ -2088,6 +2125,8 @@ void process_command(char *buf) {
     command_loop(buf);
   } else if (!strcmp(word, "lc")) {
     command_lc(buf);
+  } else if (!strcmp(word, "mservo")) {
+    command_mservo(buf);
   } else if (!strcmp(word, "adventure")) {
     //adventuremain();
   } else if (!*word) {
@@ -2182,7 +2221,7 @@ int main(void)
   }
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  HAL_Delay(500);
+  HAL_Delay(150);
   LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(ADC1),
                                  LL_ADC_PATH_INTERNAL_VREFINT);
 
@@ -2201,8 +2240,12 @@ int main(void)
   HAL_ADC_PollForConversion(&hadc1, 100);
   volatile uint16_t v = HAL_ADC_GetValue(&hadc1);
 
-  HAL_Delay(400); //a short delay is important to let the SD card settle
-  restore_solenoid();
+  HAL_Delay(200); //a short delay is important to let the SD card settle
+
+  for (int i = 0; i < 10; i++) {
+    max_psi_tmp[i] = 3000;
+  }
+  //restore_solenoid();
 
   //some variables for FatFs
 

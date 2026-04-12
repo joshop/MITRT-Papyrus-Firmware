@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccj104Qy.s 			page 1
+ARM GAS  /tmp/ccfbTntG.s 			page 1
 
 
    1              		.cpu cortex-m0plus
@@ -25,7 +25,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
   22              		.code	16
   23              		.thumb_func
   25              	HAL_PWR_DeInit:
-  26              	.LFB230:
+  26              	.LFB358:
    1:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** /**
    2:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   ******************************************************************************
    3:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @file    stm32c0xx_hal_pwr.c
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
   30:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** 
   31:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** /** @addtogroup PWR
   32:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @{
-ARM GAS  /tmp/ccj104Qy.s 			page 2
+ARM GAS  /tmp/ccfbTntG.s 			page 2
 
 
   33:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   */
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
   38 000a DA62     		str	r2, [r3, #44]
   76:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   __HAL_RCC_PWR_RELEASE_RESET();
   39              		.loc 1 76 3 view .LVU2
-ARM GAS  /tmp/ccj104Qy.s 			page 3
+ARM GAS  /tmp/ccfbTntG.s 			page 3
 
 
   40 000c DA6A     		ldr	r2, [r3, #44]
@@ -135,7 +135,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
   50 0018 00100240 		.word	1073876992
   51 001c FFFFFFEF 		.word	-268435457
   52              		.cfi_endproc
-  53              	.LFE230:
+  53              	.LFE358:
   55              		.section	.text.HAL_PWR_EnableWakeUpPin,"ax",%progbits
   56              		.align	1
   57              		.global	HAL_PWR_EnableWakeUpPin
@@ -144,7 +144,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
   60              		.thumb_func
   62              	HAL_PWR_EnableWakeUpPin:
   63              	.LVL0:
-  64              	.LFB231:
+  64              	.LFB359:
   78:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** 
   79:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** /**
   80:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @}
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  108:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****            main mode.
  109:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****       (+) Standby mode: all clocks are stopped except LSI and LSE, regulator is
  110:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****           disable.
-ARM GAS  /tmp/ccj104Qy.s 			page 4
+ARM GAS  /tmp/ccfbTntG.s 			page 4
 
 
  111:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****       (+) Shutdown mode: all clocks are stopped except LSE, regulator is
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  165:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****          and Standby/Shutdown modes control) are not impacted.
  166:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** 
  167:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****     *** Shutdown mode ***
-ARM GAS  /tmp/ccj104Qy.s 			page 5
+ARM GAS  /tmp/ccfbTntG.s 			page 5
 
 
  168:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****    ======================
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
   73 0002 CA68     		ldr	r2, [r1, #12]
   74 0004 3F23     		movs	r3, #63
   75 0006 0340     		ands	r3, r0
-ARM GAS  /tmp/ccj104Qy.s 			page 6
+ARM GAS  /tmp/ccfbTntG.s 			page 6
 
 
   76 0008 9A43     		bics	r2, r3
@@ -323,7 +323,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
   91              	.L5:
   92 0018 00700040 		.word	1073770496
   93              		.cfi_endproc
-  94              	.LFE231:
+  94              	.LFE359:
   96              		.section	.text.HAL_PWR_DisableWakeUpPin,"ax",%progbits
   97              		.align	1
   98              		.global	HAL_PWR_DisableWakeUpPin
@@ -332,7 +332,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  101              		.thumb_func
  103              	HAL_PWR_DisableWakeUpPin:
  104              	.LVL2:
- 105              	.LFB232:
+ 105              	.LFB360:
  218:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** 
  219:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** /**
  220:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @brief  Disable the WakeUp PINx functionality.
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  113 0000 0349     		ldr	r1, .L8
  114 0002 8B68     		ldr	r3, [r1, #8]
  115 0004 3F22     		movs	r2, #63
-ARM GAS  /tmp/ccj104Qy.s 			page 7
+ARM GAS  /tmp/ccfbTntG.s 			page 7
 
 
  116 0006 0240     		ands	r2, r0
@@ -373,7 +373,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  124              	.L8:
  125 0010 00700040 		.word	1073770496
  126              		.cfi_endproc
- 127              	.LFE232:
+ 127              	.LFE360:
  129              		.section	.text.HAL_PWR_EnterSLEEPMode,"ax",%progbits
  130              		.align	1
  131              		.global	HAL_PWR_EnterSLEEPMode
@@ -382,7 +382,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  134              		.thumb_func
  136              	HAL_PWR_EnterSLEEPMode:
  137              	.LVL3:
- 138              	.LFB233:
+ 138              	.LFB361:
  234:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** 
  235:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** /**
  236:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @brief  Enter Sleep mode.
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  259:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   CLEAR_BIT(SCB->SCR, ((uint32_t)SCB_SCR_SLEEPDEEP_Msk));
  146              		.loc 1 259 3 view .LVU17
  147 0000 064A     		ldr	r2, .L14
-ARM GAS  /tmp/ccj104Qy.s 			page 8
+ARM GAS  /tmp/ccfbTntG.s 			page 8
 
 
  148 0002 1369     		ldr	r3, [r2, #16]
@@ -478,12 +478,12 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  186              	.L15:
  187 001a C046     		.align	2
  188              	.L14:
-ARM GAS  /tmp/ccj104Qy.s 			page 9
+ARM GAS  /tmp/ccfbTntG.s 			page 9
 
 
  189 001c 00ED00E0 		.word	-536810240
  190              		.cfi_endproc
- 191              	.LFE233:
+ 191              	.LFE361:
  193              		.section	.text.HAL_PWR_EnterSTOPMode,"ax",%progbits
  194              		.align	1
  195              		.global	HAL_PWR_EnterSTOPMode
@@ -492,7 +492,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  198              		.thumb_func
  200              	HAL_PWR_EnterSTOPMode:
  201              	.LVL5:
- 202              	.LFB234:
+ 202              	.LFB362:
  275:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** 
  276:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** /**
  277:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @brief  Enter Stop mode
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  213 0004 0720     		movs	r0, #7
  214              	.LVL6:
  215              		.loc 1 306 3 is_stmt 0 view .LVU30
-ARM GAS  /tmp/ccj104Qy.s 			page 10
+ARM GAS  /tmp/ccfbTntG.s 			page 10
 
 
  216 0006 8343     		bics	r3, r0
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  250 0024 8B43     		bics	r3, r1
  251 0026 1361     		str	r3, [r2, #16]
  327:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** }
-ARM GAS  /tmp/ccj104Qy.s 			page 11
+ARM GAS  /tmp/ccfbTntG.s 			page 11
 
 
  252              		.loc 1 327 1 view .LVU39
@@ -621,7 +621,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  268 0030 00700040 		.word	1073770496
  269 0034 00ED00E0 		.word	-536810240
  270              		.cfi_endproc
- 271              	.LFE234:
+ 271              	.LFE362:
  273              		.section	.text.HAL_PWR_EnterSTANDBYMode,"ax",%progbits
  274              		.align	1
  275              		.global	HAL_PWR_EnterSTANDBYMode
@@ -629,7 +629,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  277              		.code	16
  278              		.thumb_func
  280              	HAL_PWR_EnterSTANDBYMode:
- 281              	.LFB235:
+ 281              	.LFB363:
  328:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** 
  329:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** /**
  330:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @brief  Enter Standby mode.
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  288 0000 064A     		ldr	r2, .L23
  289 0002 1368     		ldr	r3, [r2]
  290 0004 0721     		movs	r1, #7
-ARM GAS  /tmp/ccj104Qy.s 			page 12
+ARM GAS  /tmp/ccfbTntG.s 			page 12
 
 
  291 0006 8B43     		bics	r3, r1
@@ -694,7 +694,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  314 001c 00700040 		.word	1073770496
  315 0020 00ED00E0 		.word	-536810240
  316              		.cfi_endproc
- 317              	.LFE235:
+ 317              	.LFE363:
  319              		.section	.text.HAL_PWR_EnableSleepOnExit,"ax",%progbits
  320              		.align	1
  321              		.global	HAL_PWR_EnableSleepOnExit
@@ -702,7 +702,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  323              		.code	16
  324              		.thumb_func
  326              	HAL_PWR_EnableSleepOnExit:
- 327              	.LFB236:
+ 327              	.LFB364:
  354:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** 
  355:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** /**
  356:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @brief  Enable Sleep-On-Exit Cortex feature
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  328              		.loc 1 365 1 is_stmt 1 view -0
  329              		.cfi_startproc
  330              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccj104Qy.s 			page 13
+ARM GAS  /tmp/ccfbTntG.s 			page 13
 
 
  331              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -740,7 +740,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  344              	.L26:
  345 000c 00ED00E0 		.word	-536810240
  346              		.cfi_endproc
- 347              	.LFE236:
+ 347              	.LFE364:
  349              		.section	.text.HAL_PWR_DisableSleepOnExit,"ax",%progbits
  350              		.align	1
  351              		.global	HAL_PWR_DisableSleepOnExit
@@ -748,7 +748,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  353              		.code	16
  354              		.thumb_func
  356              	HAL_PWR_DisableSleepOnExit:
- 357              	.LFB237:
+ 357              	.LFB365:
  369:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** 
  370:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** /**
  371:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @brief  Disable Sleep-On-Exit Cortex feature
@@ -778,13 +778,13 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  371 000a 7047     		bx	lr
  372              	.L30:
  373              		.align	2
-ARM GAS  /tmp/ccj104Qy.s 			page 14
+ARM GAS  /tmp/ccfbTntG.s 			page 14
 
 
  374              	.L29:
  375 000c 00ED00E0 		.word	-536810240
  376              		.cfi_endproc
- 377              	.LFE237:
+ 377              	.LFE365:
  379              		.section	.text.HAL_PWR_EnableSEVOnPend,"ax",%progbits
  380              		.align	1
  381              		.global	HAL_PWR_EnableSEVOnPend
@@ -792,7 +792,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  383              		.code	16
  384              		.thumb_func
  386              	HAL_PWR_EnableSEVOnPend:
- 387              	.LFB238:
+ 387              	.LFB366:
  382:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** 
  383:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** /**
  384:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @brief  Enable Cortex Sev On Pending feature.
@@ -825,7 +825,7 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  404              	.L32:
  405 000c 00ED00E0 		.word	-536810240
  406              		.cfi_endproc
- 407              	.LFE238:
+ 407              	.LFE366:
  409              		.section	.text.HAL_PWR_DisableSEVOnPend,"ax",%progbits
  410              		.align	1
  411              		.global	HAL_PWR_DisableSEVOnPend
@@ -833,12 +833,12 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  413              		.code	16
  414              		.thumb_func
  416              	HAL_PWR_DisableSEVOnPend:
- 417              	.LFB239:
+ 417              	.LFB367:
  395:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** 
  396:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c **** /**
  397:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @brief  Disable Cortex Sev On Pending feature.
  398:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   * @note   Clear SEVONPEND bit of SCR register. When this bit is clear, only
-ARM GAS  /tmp/ccj104Qy.s 			page 15
+ARM GAS  /tmp/ccfbTntG.s 			page 15
 
 
  399:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_pwr.c ****   *         enable interrupts or events can wakeup processor from WFE
@@ -868,47 +868,47 @@ ARM GAS  /tmp/ccj104Qy.s 			page 1
  434              	.L35:
  435 000c 00ED00E0 		.word	-536810240
  436              		.cfi_endproc
- 437              	.LFE239:
+ 437              	.LFE367:
  439              		.text
  440              	.Letext0:
  441              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
  442              		.file 3 "/usr/arm-none-eabi/include/sys/_stdint.h"
  443              		.file 4 "Drivers/CMSIS/Include/core_cm0plus.h"
  444              		.file 5 "Drivers/CMSIS/Device/ST/STM32C0xx/Include/stm32c092xx.h"
-ARM GAS  /tmp/ccj104Qy.s 			page 16
+ARM GAS  /tmp/ccfbTntG.s 			page 16
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32c0xx_hal_pwr.c
-     /tmp/ccj104Qy.s:19     .text.HAL_PWR_DeInit:00000000 $t
-     /tmp/ccj104Qy.s:25     .text.HAL_PWR_DeInit:00000000 HAL_PWR_DeInit
-     /tmp/ccj104Qy.s:50     .text.HAL_PWR_DeInit:00000018 $d
-     /tmp/ccj104Qy.s:56     .text.HAL_PWR_EnableWakeUpPin:00000000 $t
-     /tmp/ccj104Qy.s:62     .text.HAL_PWR_EnableWakeUpPin:00000000 HAL_PWR_EnableWakeUpPin
-     /tmp/ccj104Qy.s:92     .text.HAL_PWR_EnableWakeUpPin:00000018 $d
-     /tmp/ccj104Qy.s:97     .text.HAL_PWR_DisableWakeUpPin:00000000 $t
-     /tmp/ccj104Qy.s:103    .text.HAL_PWR_DisableWakeUpPin:00000000 HAL_PWR_DisableWakeUpPin
-     /tmp/ccj104Qy.s:125    .text.HAL_PWR_DisableWakeUpPin:00000010 $d
-     /tmp/ccj104Qy.s:130    .text.HAL_PWR_EnterSLEEPMode:00000000 $t
-     /tmp/ccj104Qy.s:136    .text.HAL_PWR_EnterSLEEPMode:00000000 HAL_PWR_EnterSLEEPMode
-     /tmp/ccj104Qy.s:189    .text.HAL_PWR_EnterSLEEPMode:0000001c $d
-     /tmp/ccj104Qy.s:194    .text.HAL_PWR_EnterSTOPMode:00000000 $t
-     /tmp/ccj104Qy.s:200    .text.HAL_PWR_EnterSTOPMode:00000000 HAL_PWR_EnterSTOPMode
-     /tmp/ccj104Qy.s:268    .text.HAL_PWR_EnterSTOPMode:00000030 $d
-     /tmp/ccj104Qy.s:274    .text.HAL_PWR_EnterSTANDBYMode:00000000 $t
-     /tmp/ccj104Qy.s:280    .text.HAL_PWR_EnterSTANDBYMode:00000000 HAL_PWR_EnterSTANDBYMode
-     /tmp/ccj104Qy.s:314    .text.HAL_PWR_EnterSTANDBYMode:0000001c $d
-     /tmp/ccj104Qy.s:320    .text.HAL_PWR_EnableSleepOnExit:00000000 $t
-     /tmp/ccj104Qy.s:326    .text.HAL_PWR_EnableSleepOnExit:00000000 HAL_PWR_EnableSleepOnExit
-     /tmp/ccj104Qy.s:345    .text.HAL_PWR_EnableSleepOnExit:0000000c $d
-     /tmp/ccj104Qy.s:350    .text.HAL_PWR_DisableSleepOnExit:00000000 $t
-     /tmp/ccj104Qy.s:356    .text.HAL_PWR_DisableSleepOnExit:00000000 HAL_PWR_DisableSleepOnExit
-     /tmp/ccj104Qy.s:375    .text.HAL_PWR_DisableSleepOnExit:0000000c $d
-     /tmp/ccj104Qy.s:380    .text.HAL_PWR_EnableSEVOnPend:00000000 $t
-     /tmp/ccj104Qy.s:386    .text.HAL_PWR_EnableSEVOnPend:00000000 HAL_PWR_EnableSEVOnPend
-     /tmp/ccj104Qy.s:405    .text.HAL_PWR_EnableSEVOnPend:0000000c $d
-     /tmp/ccj104Qy.s:410    .text.HAL_PWR_DisableSEVOnPend:00000000 $t
-     /tmp/ccj104Qy.s:416    .text.HAL_PWR_DisableSEVOnPend:00000000 HAL_PWR_DisableSEVOnPend
-     /tmp/ccj104Qy.s:435    .text.HAL_PWR_DisableSEVOnPend:0000000c $d
+     /tmp/ccfbTntG.s:19     .text.HAL_PWR_DeInit:00000000 $t
+     /tmp/ccfbTntG.s:25     .text.HAL_PWR_DeInit:00000000 HAL_PWR_DeInit
+     /tmp/ccfbTntG.s:50     .text.HAL_PWR_DeInit:00000018 $d
+     /tmp/ccfbTntG.s:56     .text.HAL_PWR_EnableWakeUpPin:00000000 $t
+     /tmp/ccfbTntG.s:62     .text.HAL_PWR_EnableWakeUpPin:00000000 HAL_PWR_EnableWakeUpPin
+     /tmp/ccfbTntG.s:92     .text.HAL_PWR_EnableWakeUpPin:00000018 $d
+     /tmp/ccfbTntG.s:97     .text.HAL_PWR_DisableWakeUpPin:00000000 $t
+     /tmp/ccfbTntG.s:103    .text.HAL_PWR_DisableWakeUpPin:00000000 HAL_PWR_DisableWakeUpPin
+     /tmp/ccfbTntG.s:125    .text.HAL_PWR_DisableWakeUpPin:00000010 $d
+     /tmp/ccfbTntG.s:130    .text.HAL_PWR_EnterSLEEPMode:00000000 $t
+     /tmp/ccfbTntG.s:136    .text.HAL_PWR_EnterSLEEPMode:00000000 HAL_PWR_EnterSLEEPMode
+     /tmp/ccfbTntG.s:189    .text.HAL_PWR_EnterSLEEPMode:0000001c $d
+     /tmp/ccfbTntG.s:194    .text.HAL_PWR_EnterSTOPMode:00000000 $t
+     /tmp/ccfbTntG.s:200    .text.HAL_PWR_EnterSTOPMode:00000000 HAL_PWR_EnterSTOPMode
+     /tmp/ccfbTntG.s:268    .text.HAL_PWR_EnterSTOPMode:00000030 $d
+     /tmp/ccfbTntG.s:274    .text.HAL_PWR_EnterSTANDBYMode:00000000 $t
+     /tmp/ccfbTntG.s:280    .text.HAL_PWR_EnterSTANDBYMode:00000000 HAL_PWR_EnterSTANDBYMode
+     /tmp/ccfbTntG.s:314    .text.HAL_PWR_EnterSTANDBYMode:0000001c $d
+     /tmp/ccfbTntG.s:320    .text.HAL_PWR_EnableSleepOnExit:00000000 $t
+     /tmp/ccfbTntG.s:326    .text.HAL_PWR_EnableSleepOnExit:00000000 HAL_PWR_EnableSleepOnExit
+     /tmp/ccfbTntG.s:345    .text.HAL_PWR_EnableSleepOnExit:0000000c $d
+     /tmp/ccfbTntG.s:350    .text.HAL_PWR_DisableSleepOnExit:00000000 $t
+     /tmp/ccfbTntG.s:356    .text.HAL_PWR_DisableSleepOnExit:00000000 HAL_PWR_DisableSleepOnExit
+     /tmp/ccfbTntG.s:375    .text.HAL_PWR_DisableSleepOnExit:0000000c $d
+     /tmp/ccfbTntG.s:380    .text.HAL_PWR_EnableSEVOnPend:00000000 $t
+     /tmp/ccfbTntG.s:386    .text.HAL_PWR_EnableSEVOnPend:00000000 HAL_PWR_EnableSEVOnPend
+     /tmp/ccfbTntG.s:405    .text.HAL_PWR_EnableSEVOnPend:0000000c $d
+     /tmp/ccfbTntG.s:410    .text.HAL_PWR_DisableSEVOnPend:00000000 $t
+     /tmp/ccfbTntG.s:416    .text.HAL_PWR_DisableSEVOnPend:00000000 HAL_PWR_DisableSEVOnPend
+     /tmp/ccfbTntG.s:435    .text.HAL_PWR_DisableSEVOnPend:0000000c $d
 
 NO UNDEFINED SYMBOLS

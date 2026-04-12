@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccAsoGAp.s 			page 1
+ARM GAS  /tmp/ccbyX6FW.s 			page 1
 
 
    1              		.cpu cortex-m0plus
@@ -26,7 +26,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
   23              		.thumb_func
   25              	HAL_DMAEx_ConfigMuxSync:
   26              	.LVL0:
-  27              	.LFB230:
+  27              	.LFB358:
    1:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** /**
    2:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   ******************************************************************************
    3:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   * @file    stm32c0xx_hal_dma_ex.c
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
   29:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****    (+) Configure the DMA_MUX Request Generator Block using HAL_DMAEx_ConfigMuxRequestGenerator func
   30:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****        Functions HAL_DMAEx_EnableMuxRequestGenerator and HAL_DMAEx_DisableMuxRequestGenerator can t
   31:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****        to respectively enable/disable the request generator.
-ARM GAS  /tmp/ccAsoGAp.s 			page 2
+ARM GAS  /tmp/ccbyX6FW.s 			page 2
 
 
   32:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
   86:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** 
   87:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** /**
   88:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   * @brief  Configure the DMAMUX synchronization parameters for a given DMA channel (instance).
-ARM GAS  /tmp/ccAsoGAp.s 			page 3
+ARM GAS  /tmp/ccbyX6FW.s 			page 3
 
 
   89:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   * @param  hdma Pointer to a DMA_HandleTypeDef structure that contains
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
   62 0016 4355     		strb	r3, [r0, r5]
   63              		.loc 1 108 5 view .LVU14
  109:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** 
-ARM GAS  /tmp/ccAsoGAp.s 			page 4
+ARM GAS  /tmp/ccbyX6FW.s 			page 4
 
 
  110:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****     /* Set the new synchronization parameters (and keep the request ID filled during the Init)*/
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  128:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****     /*DMA State not Ready*/
  129:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****     return HAL_ERROR;
  100              		.loc 1 129 12 view .LVU23
-ARM GAS  /tmp/ccAsoGAp.s 			page 5
+ARM GAS  /tmp/ccbyX6FW.s 			page 5
 
 
  101 0048 0120     		movs	r0, #1
@@ -259,7 +259,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  112              		.loc 1 108 5 discriminator 1 view .LVU26
  113 004e FCE7     		b	.L2
  114              		.cfi_endproc
- 115              	.LFE230:
+ 115              	.LFE358:
  117              		.section	.text.HAL_DMAEx_ConfigMuxRequestGenerator,"ax",%progbits
  118              		.align	1
  119              		.global	HAL_DMAEx_ConfigMuxRequestGenerator
@@ -268,7 +268,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  122              		.thumb_func
  124              	HAL_DMAEx_ConfigMuxRequestGenerator:
  125              	.LVL7:
- 126              	.LFB231:
+ 126              	.LFB359:
  132:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** 
  133:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** /**
  134:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   * @brief  Configure the DMAMUX request generator block used by the given DMA channel (instance).
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  146:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   assert_param(IS_DMA_ALL_INSTANCE(hdma->Instance));
  139              		.loc 1 146 3 is_stmt 1 view .LVU29
  147:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** 
-ARM GAS  /tmp/ccAsoGAp.s 			page 6
+ARM GAS  /tmp/ccbyX6FW.s 			page 6
 
 
  148:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   assert_param(IS_DMAMUX_REQUEST_GEN_SIGNAL_ID(pRequestGeneratorConfig->SignalID));
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  178 002a 0243     		orrs	r2, r0
  163:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****                                    pRequestGeneratorConfig->Polarity;
  179              		.loc 1 163 59 view .LVU48
-ARM GAS  /tmp/ccAsoGAp.s 			page 7
+ARM GAS  /tmp/ccbyX6FW.s 			page 7
 
 
  180 002c 4968     		ldr	r1, [r1, #4]
@@ -404,7 +404,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  207 003e 0220     		movs	r0, #2
  208 0040 FCE7     		b	.L6
  209              		.cfi_endproc
- 210              	.LFE231:
+ 210              	.LFE359:
  212              		.section	.text.HAL_DMAEx_EnableMuxRequestGenerator,"ax",%progbits
  213              		.align	1
  214              		.global	HAL_DMAEx_EnableMuxRequestGenerator
@@ -413,12 +413,12 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  217              		.thumb_func
  219              	HAL_DMAEx_EnableMuxRequestGenerator:
  220              	.LVL13:
- 221              	.LFB232:
+ 221              	.LFB360:
  174:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** 
  175:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** /**
  176:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   * @brief  Enable the DMAMUX request generator block used by the given DMA channel (instance).
  177:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   * @param  hdma Pointer to a DMA_HandleTypeDef structure that contains
-ARM GAS  /tmp/ccAsoGAp.s 			page 8
+ARM GAS  /tmp/ccbyX6FW.s 			page 8
 
 
  178:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   *                     the configuration information for the specified DMA channel.
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  253              		.loc 1 200 1 view .LVU71
  254              		@ sp needed
  255 001a 7047     		bx	lr
-ARM GAS  /tmp/ccAsoGAp.s 			page 9
+ARM GAS  /tmp/ccbyX6FW.s 			page 9
 
 
  256              	.LVL15:
@@ -500,7 +500,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  268              		.loc 1 198 12 view .LVU75
  269 0022 FAE7     		b	.L10
  270              		.cfi_endproc
- 271              	.LFE232:
+ 271              	.LFE360:
  273              		.section	.text.HAL_DMAEx_DisableMuxRequestGenerator,"ax",%progbits
  274              		.align	1
  275              		.global	HAL_DMAEx_DisableMuxRequestGenerator
@@ -509,7 +509,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  278              		.thumb_func
  280              	HAL_DMAEx_DisableMuxRequestGenerator:
  281              	.LVL19:
- 282              	.LFB233:
+ 282              	.LFB361:
  201:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** 
  202:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** /**
  203:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   * @brief  Disable the DMAMUX request generator block used by the given DMA channel (instance).
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  292 0002 C35C     		ldrb	r3, [r0, r3]
  293              		.loc 1 216 6 view .LVU80
  294 0004 002B     		cmp	r3, #0
-ARM GAS  /tmp/ccAsoGAp.s 			page 10
+ARM GAS  /tmp/ccbyX6FW.s 			page 10
 
 
  295 0006 08D0     		beq	.L15
@@ -597,8 +597,8 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  332              	.L17:
  333 0024 FFFFFEFF 		.word	-65537
  334              		.cfi_endproc
- 335              	.LFE233:
-ARM GAS  /tmp/ccAsoGAp.s 			page 11
+ 335              	.LFE361:
+ARM GAS  /tmp/ccbyX6FW.s 			page 11
 
 
  337              		.section	.text.HAL_DMAEx_MUX_IRQHandler,"ax",%progbits
@@ -609,7 +609,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  342              		.thumb_func
  344              	HAL_DMAEx_MUX_IRQHandler:
  345              	.LVL25:
- 346              	.LFB234:
+ 346              	.LFB362:
  229:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** 
  230:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c **** /**
  231:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****   * @brief  Handles DMAMUX interrupt request.
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  244:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****     /* Clear the DMAMUX synchro overrun flag */
  245:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****     hdma->DMAmuxChannelStatus->CFR = hdma->DMAmuxChannelStatusMask;
  377              		.loc 1 245 5 is_stmt 1 view .LVU104
-ARM GAS  /tmp/ccAsoGAp.s 			page 12
+ARM GAS  /tmp/ccbyX6FW.s 			page 12
 
 
  378              		.loc 1 245 9 is_stmt 0 view .LVU105
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  417 003e 10D0     		beq	.L19
  261:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****     {
  262:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****       /* Disable the request gen overrun interrupt */
-ARM GAS  /tmp/ccAsoGAp.s 			page 13
+ARM GAS  /tmp/ccbyX6FW.s 			page 13
 
 
  263:Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma_ex.c ****       hdma->DMAmuxRequestGen->RGCR &= ~DMAMUX_RGxCR_OIE;
@@ -778,12 +778,12 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  456              	.L23:
  457              		.align	2
  458              	.L22:
-ARM GAS  /tmp/ccAsoGAp.s 			page 14
+ARM GAS  /tmp/ccbyX6FW.s 			page 14
 
 
  459 0064 FFFEFFFF 		.word	-257
  460              		.cfi_endproc
- 461              	.LFE234:
+ 461              	.LFE362:
  463              		.text
  464              	.Letext0:
  465              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
@@ -793,22 +793,22 @@ ARM GAS  /tmp/ccAsoGAp.s 			page 1
  469              		.file 6 "Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_def.h"
  470              		.file 7 "Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_dma.h"
  471              		.file 8 "Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_dma_ex.h"
-ARM GAS  /tmp/ccAsoGAp.s 			page 15
+ARM GAS  /tmp/ccbyX6FW.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32c0xx_hal_dma_ex.c
-     /tmp/ccAsoGAp.s:19     .text.HAL_DMAEx_ConfigMuxSync:00000000 $t
-     /tmp/ccAsoGAp.s:25     .text.HAL_DMAEx_ConfigMuxSync:00000000 HAL_DMAEx_ConfigMuxSync
-     /tmp/ccAsoGAp.s:118    .text.HAL_DMAEx_ConfigMuxRequestGenerator:00000000 $t
-     /tmp/ccAsoGAp.s:124    .text.HAL_DMAEx_ConfigMuxRequestGenerator:00000000 HAL_DMAEx_ConfigMuxRequestGenerator
-     /tmp/ccAsoGAp.s:213    .text.HAL_DMAEx_EnableMuxRequestGenerator:00000000 $t
-     /tmp/ccAsoGAp.s:219    .text.HAL_DMAEx_EnableMuxRequestGenerator:00000000 HAL_DMAEx_EnableMuxRequestGenerator
-     /tmp/ccAsoGAp.s:274    .text.HAL_DMAEx_DisableMuxRequestGenerator:00000000 $t
-     /tmp/ccAsoGAp.s:280    .text.HAL_DMAEx_DisableMuxRequestGenerator:00000000 HAL_DMAEx_DisableMuxRequestGenerator
-     /tmp/ccAsoGAp.s:333    .text.HAL_DMAEx_DisableMuxRequestGenerator:00000024 $d
-     /tmp/ccAsoGAp.s:338    .text.HAL_DMAEx_MUX_IRQHandler:00000000 $t
-     /tmp/ccAsoGAp.s:344    .text.HAL_DMAEx_MUX_IRQHandler:00000000 HAL_DMAEx_MUX_IRQHandler
-     /tmp/ccAsoGAp.s:459    .text.HAL_DMAEx_MUX_IRQHandler:00000064 $d
+     /tmp/ccbyX6FW.s:19     .text.HAL_DMAEx_ConfigMuxSync:00000000 $t
+     /tmp/ccbyX6FW.s:25     .text.HAL_DMAEx_ConfigMuxSync:00000000 HAL_DMAEx_ConfigMuxSync
+     /tmp/ccbyX6FW.s:118    .text.HAL_DMAEx_ConfigMuxRequestGenerator:00000000 $t
+     /tmp/ccbyX6FW.s:124    .text.HAL_DMAEx_ConfigMuxRequestGenerator:00000000 HAL_DMAEx_ConfigMuxRequestGenerator
+     /tmp/ccbyX6FW.s:213    .text.HAL_DMAEx_EnableMuxRequestGenerator:00000000 $t
+     /tmp/ccbyX6FW.s:219    .text.HAL_DMAEx_EnableMuxRequestGenerator:00000000 HAL_DMAEx_EnableMuxRequestGenerator
+     /tmp/ccbyX6FW.s:274    .text.HAL_DMAEx_DisableMuxRequestGenerator:00000000 $t
+     /tmp/ccbyX6FW.s:280    .text.HAL_DMAEx_DisableMuxRequestGenerator:00000000 HAL_DMAEx_DisableMuxRequestGenerator
+     /tmp/ccbyX6FW.s:333    .text.HAL_DMAEx_DisableMuxRequestGenerator:00000024 $d
+     /tmp/ccbyX6FW.s:338    .text.HAL_DMAEx_MUX_IRQHandler:00000000 $t
+     /tmp/ccbyX6FW.s:344    .text.HAL_DMAEx_MUX_IRQHandler:00000000 HAL_DMAEx_MUX_IRQHandler
+     /tmp/ccbyX6FW.s:459    .text.HAL_DMAEx_MUX_IRQHandler:00000064 $d
 
 NO UNDEFINED SYMBOLS
