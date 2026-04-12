@@ -192,6 +192,8 @@ int main(void)
   uint8_t txData[8];
 
   uint32_t lastTick = 0;
+
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
