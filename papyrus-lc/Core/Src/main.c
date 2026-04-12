@@ -218,18 +218,18 @@ int main(void)
       switch (rxData[0])
       {
         case 0x00:
-          txData[1] = 0x04; break;
+          txData[1] = 0x05; break;
         case 0x01:
-          // *(uint16_t*)(txData+1) = (ch2_mV*2500)/1500;
-          CAN_SendAck(txData, 3);
+          *(uint32_t*)(txData+1) = HX711_GetData(0, 0, 0);
+          CAN_SendAck(txData, 5);
           continue;
         case 0x02:
-          // *(uint16_t*)(txData+1) = (ch3_mV*2500)/1500;
-          CAN_SendAck(txData, 3);
+          *(uint32_t*)(txData+1) = HX711_GetData(0, 1, 0);
+          CAN_SendAck(txData, 5);
           continue;
         case 0x03:
-          // *(uint16_t*)(txData+1) = (ch4_mV*2500)/1500;
-          CAN_SendAck(txData, 3);
+          *(uint32_t*)(txData+1) = HX711_GetData(0, 2, 0);
+          CAN_SendAck(txData, 5);
           continue;
 
         case 0xFF:
