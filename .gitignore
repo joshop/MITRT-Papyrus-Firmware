@@ -1,0 +1,6 @@
+.vscode/
+build/
+
+# STMForVSCode Plugin junk
+openocd.cfg
+STM32-for-VSCode.config.yaml
