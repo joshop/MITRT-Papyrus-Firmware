@@ -57,6 +57,29 @@ static void MX_FDCAN1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+// calibration parameters
+typedef struct {
+  float tare;
+  float scaleFactor;
+} HX711_Calibration;
+
+// default values
+HX711_Calibration CS_0 = {
+  .tare = 0,
+  .scaleFactor = 1
+};
+HX711_Calibration CS_1 = {
+  .tare = 0,
+  .scaleFactor = 1
+};
+HX711_Calibration CS_2 = {
+  .tare = 0,
+  .scaleFactor = 1
+};
+
+
+
 void CAN_SendAck(uint8_t *data, uint8_t len)
 {
   FDCAN_TxHeaderTypeDef txHeader = {0};
@@ -76,23 +99,23 @@ void CAN_SendAck(uint8_t *data, uint8_t len)
 }
 
 /**
- * @brief Retrieves the data from the specified HX711 channel and IC via bitbanging.
+ * @brief Retrieves the raw data from the specified HX711 channel and IC via bitbanging.
  * Data should only be retrieved if `DOUT` on the desired IC is set to `LOW`.
  * @param channel (uint8_t) set to 0 (channel A) or 1 (channel B)
- * @param cs (uint8_t) which load cell to read from (0, 1, 2)
+ * @param cs (uint8_t) which load cell to read from {0, 1, 2}
  * @param gain (uint8_t) if channel 0, set to 128 (0) or 64 (1)
  * @returns (uint32_t) Data in the lower 6 bytes, in 2's complement format.
- * if `0xFFFFFFFF`, an error has occured
+ * if `0xFF00000x`, an error has occured
  * if `0x800000`, minimum. if `0x7FFFFF`, maximum.
  */
-uint32_t HX711_GetData(uint8_t channel, uint8_t cs, uint8_t gain) {
+uint32_t HX711_ReadRaw(uint8_t channel, uint8_t cs, uint8_t gain) {
   // error status codes
   uint32_t ERROR_NOT_READY = 0xFF000001;
   uint32_t ERROR_INVALID_ARG = 0xFF000002;
   uint32_t ERROR_BUFFER = 0xFF000003;
 
   uint32_t pulses;
-  uint32_t buffer;
+  uint32_t buffer = 0;
 
   switch (channel) {
     case 0:
@@ -104,6 +127,7 @@ uint32_t HX711_GetData(uint8_t channel, uint8_t cs, uint8_t gain) {
       break;
     case 1:
       pulses = 26;
+      break;
     default:
       return ERROR_INVALID_ARG;
   }
@@ -114,12 +138,15 @@ uint32_t HX711_GetData(uint8_t channel, uint8_t cs, uint8_t gain) {
     case 0:
       GPIO_PIN_DOUT = GPIO_PIN_6;
       GPIO_PIN_SCK = GPIO_PIN_1;
+      break;
     case 1:
       GPIO_PIN_DOUT = GPIO_PIN_5;
       GPIO_PIN_SCK = GPIO_PIN_2;
+      break;
     case 2:
       GPIO_PIN_DOUT = GPIO_PIN_4;
       GPIO_PIN_SCK = GPIO_PIN_3;
+      break;
     default:
       return ERROR_INVALID_ARG;
   }
@@ -151,6 +178,79 @@ uint32_t HX711_GetData(uint8_t channel, uint8_t cs, uint8_t gain) {
     return buffer;
   }
   return ERROR_BUFFER;
+}
+
+/**
+ * @brief Retrieves the sign extended data from the specified HX711 channel and IC via bitbanging.
+ * Data should only be retrieved if `DOUT` on the desired IC is set to `LOW`.
+ * @param channel (uint8_t) set to 0 (channel A) or 1 (channel B)
+ * @param cs (uint8_t) which load cell to read from {0, 1, 2}
+ * @param gain (uint8_t) if channel 0, set to 128 (0) or 64 (1)
+ * @returns (float) Data.
+ * if `0xFF00000x`, an error has occured
+ * if `0x800000`, minimum. if `0x7FFFFF`, maximum.
+ */
+float HX711_ReadData(uint8_t channel, uint8_t cs, uint8_t gain) {
+  HX711_Calibration *cal;
+  switch (cs) {
+    case 0:
+      cal = &CS_0;
+      break;
+    case 1:
+      cal = &CS_1;
+      break;
+    case 2:
+      cal = &CS_2;
+      break;
+    default:
+      cal = &CS_0;
+      break;
+  }
+  uint32_t data = HX711_ReadRaw(channel, cs, gain);
+  // if we have an error, return that error
+  if (data & 0xFF000000) {
+    return (float) data;
+  }
+  int32_t signExtended = (int32_t) (data << 8) >> 8;
+  return (float)(signExtended - cal->tare) * cal->scaleFactor;
+}
+
+/**
+ * @brief Given an `n`, will give the average.
+ */
+float HX711_AverageLastN(uint8_t cs, uint32_t n) {
+  float sum = 0;
+  for (uint8_t i = 0; i < n; i++) {
+    sum += HX711_ReadData(0, cs, 0);
+  }
+  return sum/(float) n;
+}
+
+/**
+ * @brief Returns and sets the "tare" (zero) value.
+ * @param cal (HX711_Calibration) CS_1, CS_2, or CS_3
+ * @param cs (uint8_t) one of {0, 1, 2}
+ */
+float HX711_Tare(HX711_Calibration *cal, uint8_t cs) {
+  float data = HX711_AverageLastN(cs, 10);
+  cal->tare = data;
+  return data;
+}
+
+/**
+ * @brief Given a known weight, will return the "scale factor" needed to calibrate the readings.
+ * The known weight is by default set in code.
+ * This will also set the scaleFactor internally.
+ * The scale must be tare'd first.
+ * @param cal (HX711_Calibration) CS_1, CS_2, or CS_3
+ * @param cs (uint8_t) one of {0, 1, 2}
+ */
+float HX711_ScaleFactor(HX711_Calibration *cal, uint8_t cs) {
+  float data = HX711_AverageLastN(cs, 10);
+  float weight = 100.0f;
+  float scaleFactor = weight/(data - cal->tare);
+  cal->scaleFactor = scaleFactor;
+  return scaleFactor;
 }
 /* USER CODE END 0 */
 
@@ -222,18 +322,44 @@ int main(void)
         case 0x00:
           txData[1] = 0x05; break;
         case 0x01:
-          *(uint32_t*)(txData+1) = HX711_GetData(0, 0, 0);
+          HX711_ReadData(0, 0, 0);
+          *(uint32_t*)(txData+1) = HX711_ReadData(0, 0, 0);
           CAN_SendAck(txData, 5);
           continue;
         case 0x02:
-          *(uint32_t*)(txData+1) = HX711_GetData(0, 1, 0);
+          HX711_ReadData(0, 1, 0);
+          *(uint32_t*)(txData+1) = HX711_ReadData(0, 1, 0);
           CAN_SendAck(txData, 5);
           continue;
         case 0x03:
-          *(uint32_t*)(txData+1) = HX711_GetData(0, 2, 0);
+          HX711_ReadData(0, 2, 0);
+          *(uint32_t*)(txData+1) = HX711_ReadData(0, 2, 0);
           CAN_SendAck(txData, 5);
           continue;
-
+        case 0x04:
+          *(uint32_t*)(txData+1) = HX711_Tare(&CS_0, 0);
+          CAN_SendAck(txData, 5);
+          continue;
+        case 0x05:
+          *(uint32_t*)(txData+1) = HX711_Tare(&CS_1, 1);
+          CAN_SendAck(txData, 5);
+          continue;
+        case 0x06:
+          *(uint32_t*)(txData+1) = HX711_Tare(&CS_2, 2);
+          CAN_SendAck(txData, 5);
+          continue;
+        case 0x07:
+          *(uint32_t*)(txData+1) = HX711_ScaleFactor(&CS_0, 0);
+          CAN_SendAck(txData, 5);
+          continue;
+        case 0x08:
+          *(uint32_t*)(txData+1) = HX711_ScaleFactor(&CS_0, 1);
+          CAN_SendAck(txData, 5);
+          continue;
+        case 0x09:
+          *(uint32_t*)(txData+1) = HX711_ScaleFactor(&CS_2, 2);
+          CAN_SendAck(txData, 5);
+          continue;
         case 0xFF:
           CAN_SendAck(txData, 2);
           HAL_Delay(10);
