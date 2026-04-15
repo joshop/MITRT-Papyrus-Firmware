@@ -57,6 +57,7 @@ static void MX_FDCAN1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+float test_data = 0;
 
 // calibration parameters
 typedef struct {
@@ -66,8 +67,8 @@ typedef struct {
 
 // default values
 HX711_Calibration CS_0 = {
-  .tare = 0,
-  .scaleFactor = 1
+  .tare = 29811,
+  .scaleFactor = 1.47928989
 };
 HX711_Calibration CS_1 = {
   .tare = 0,
@@ -78,7 +79,8 @@ HX711_Calibration CS_2 = {
   .scaleFactor = 1
 };
 
-
+uint16_t GPIO_PIN_DOUT;
+uint16_t GPIO_PIN_SCK;
 
 void CAN_SendAck(uint8_t *data, uint8_t len)
 {
@@ -132,8 +134,6 @@ uint32_t HX711_ReadRaw(uint8_t channel, uint8_t cs, uint8_t gain) {
       return ERROR_INVALID_ARG;
   }
 
-  uint16_t GPIO_PIN_DOUT;
-  uint16_t GPIO_PIN_SCK;
   switch (cs) {
     case 0:
       GPIO_PIN_DOUT = GPIO_PIN_6;
@@ -159,16 +159,16 @@ uint32_t HX711_ReadRaw(uint8_t channel, uint8_t cs, uint8_t gain) {
   // pulse SCK and put data onto the buffer
   // remember to set SCK to LOW (if it somehow isn't)
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_SCK, GPIO_PIN_RESET);
+  uint32_t idx = pulses-1;
   pulses <<= 1;
   uint8_t clock_status = 0;
-  uint32_t idx = 0;
   while (pulses > 0) {
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_SCK);
     clock_status ^= 1;
     if (clock_status) {
       uint32_t data = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_DOUT);
       buffer |= (data << idx);
-      idx++;
+      idx--;
     }
     pulses--;
   }
@@ -218,12 +218,31 @@ float HX711_ReadData(uint8_t channel, uint8_t cs, uint8_t gain) {
 /**
  * @brief Given an `n`, will give the average.
  */
+int32_t HX711_AverageLastNRaw(uint8_t cs, uint32_t n) {
+  int32_t sum = 0;
+  uint8_t i = 0;
+  while (i < n) {
+    if(!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_DOUT)) {
+      uint32_t data = HX711_ReadRaw(0, cs, 0);
+      int32_t signExtended = (int32_t) (data << 8) >> 8;
+      sum += signExtended;
+      i++;
+    }
+  }
+  return sum/n;
+}
+
 float HX711_AverageLastN(uint8_t cs, uint32_t n) {
   float sum = 0;
-  for (uint8_t i = 0; i < n; i++) {
-    sum += HX711_ReadData(0, cs, 0);
+  uint8_t i = 0;
+  while (i < n) {
+    if(!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_DOUT)) {
+      float data = HX711_ReadData(0, cs, 0);
+      sum += data;
+      i++;
+    }
   }
-  return sum/(float) n;
+  return sum/n;
 }
 
 /**
@@ -231,8 +250,8 @@ float HX711_AverageLastN(uint8_t cs, uint32_t n) {
  * @param cal (HX711_Calibration) CS_1, CS_2, or CS_3
  * @param cs (uint8_t) one of {0, 1, 2}
  */
-float HX711_Tare(HX711_Calibration *cal, uint8_t cs) {
-  float data = HX711_AverageLastN(cs, 10);
+int32_t HX711_Tare(HX711_Calibration *cal, uint8_t cs) {
+  int32_t data = HX711_AverageLastNRaw(cs, 10);
   cal->tare = data;
   return data;
 }
@@ -246,11 +265,15 @@ float HX711_Tare(HX711_Calibration *cal, uint8_t cs) {
  * @param cs (uint8_t) one of {0, 1, 2}
  */
 float HX711_ScaleFactor(HX711_Calibration *cal, uint8_t cs) {
-  float data = HX711_AverageLastN(cs, 10);
-  float weight = 100.0f;
-  float scaleFactor = weight/(data - cal->tare);
+  int32_t data = HX711_AverageLastNRaw(cs, 10);
+  float weight = 750.0;
+  float scaleFactor = weight/((float) (data - cal->tare));
   cal->scaleFactor = scaleFactor;
   return scaleFactor;
+}
+
+float HX711_Test() {
+  return HX711_ReadData(0, 0, 0);
 }
 /* USER CODE END 0 */
 
@@ -294,6 +317,7 @@ int main(void)
   uint32_t lastTick = 0;
 
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+  //HX711_Tare(&CS_0, 0);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -305,6 +329,10 @@ int main(void)
       HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
       lastTick = HAL_GetTick();
     }
+
+    //test_data = HX711_AverageLastN(0, 10);
+    //HX711_Tare(&CS_0, 0);
+    //HX711_ScaleFactor(&CS_0, 0);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
