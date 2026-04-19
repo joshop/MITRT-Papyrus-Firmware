@@ -304,6 +304,16 @@ void CAN_Rx_TCStat(FDCAN_RxHeaderTypeDef rxHeader) {
     UART2_Print("\r\n");
   }
 }
+/*
+Load Cell CAN Rx
+*/
+void CAN_Rx_LC(FDCAN_RxHeaderTypeDef rxHeader) {
+  char buff[64];
+  float lc_v = *(float*)(lastRxData+1);
+  //float pt_v = pt_translate_mv(rxHeader.Identifier, last_index, pt_p);
+  sprintf(buff, terse ? "%f" : "%f millipounds", lc_v);
+  UART2_Print(buff);
+}
 
 void (*CAN_Rx_Func)(FDCAN_RxHeaderTypeDef) = CAN_Rx_Default;
 
@@ -345,6 +355,11 @@ void CAN_Send_Long(uint8_t *buf, uint8_t len) {
 
 
 }
+
+
+/*
+Old HX711 Load Cell Functions
+*/
 
 typedef struct {
   GPIO_TypeDef* dout_port;
@@ -662,6 +677,12 @@ void command_help(char *rest) {
     "pt - control pressure transducers\r\n"
     "  pt get <device>: reads PT pressure\r\n"
     "  pt reset <device>: resets PT boards\r\n"
+    "lc - control load cells\r\n"
+    "  lc get <device> [<channel>] [<gain>]: reads load cell, default is channel A w/ 128 gain\r\n"
+    "  lc tare <device>: tares load cell\r\n"
+    "  lc sf <device>: scale factors load cell, 0.75 lb weight\r\n"
+    "  lc cfg <device> <tare> <scaleFactor>: write values to load cell config struct\r\n"
+    "  lc reset: resets LC boards\r\n"
     "time - timer functions\r\n"
     "  time stamp: get current timestamp\r\n"
     "  time mark: set mark, time stamp shows time since mark\r\n"
@@ -1312,6 +1333,151 @@ void command_pt(char *rest) {
     UART2_Print("\r\n");
   }
 
+}
+
+/*
+Load Cell Commands
+*/
+
+void command_lc(char *rest) {
+  /* 01: device 1, channel A, 128 gain
+   * 02: device 2, channel A, 128 gain
+   * 03: device 3, channel A, 128 gain
+   * 04: device 1, channel B, 32 gain (unchangable)
+   * 05: device 2, channel B, 32 gain (unchangable)
+   * 06: device 3, channel B, 32 gain (unchangable)
+   * 07: device 1, channel A, 64 gain
+   * 08: device 2, channel A, 64 gain
+   * 09: device 3, channel A, 64 gain
+   * 0A: tare device 1
+   * 0B: tare device 2
+   * 0C: tare device 3
+   * 0D: scale factor device 1
+   * 0E: scale factor device 2
+   * 0F: scale factor device 3
+   * FF: reset
+   */
+
+  char word[32];
+  next_word(word, &rest);
+  if (!strcmp(word, "get")) {
+    // check if we have a channel arg
+    next_word(word, &rest);
+    int id = retrieve_id(rest);
+    int channel = 0;
+    int gain = 0;
+    if (word == 'B') {
+      channel = 1;
+    } else if (word != '\0') {
+      UART2_Print(terse ? "Invalid\r\n" :"Invalid channel.\r\n");
+      return;
+    }
+    // check if we have a gain arg
+    next_word(word, &rest);
+    if (word == '64') {
+      if (channel) {
+        UART2_Print(terse ? "Invalid\r\n" :"Cannot get channel B with gain of 64.\r\n");
+        return;
+      }
+      gain = 1;
+    } else if (word != '\0') {
+      UART2_Print(terse ? "Invalid\r\n" :"Invalid gain.\r\n");
+      return;
+    }
+    if (id == 0) {
+      UART2_Print(terse ? "Invalid\r\n" :"Invalid ID or device name.\r\n");
+      return;
+    }
+    if (last_index < 1 || last_index > 3) {
+      UART2_Print(terse ? "Invalid\r\n" :"Need to specify individual LC.\r\n");
+      return;
+    }
+    next_can_id = id;
+    UART2_Print(id);
+    UART2_Print(": ");
+    CAN_Rx_Func = CAN_Rx_LC;
+    switch(last_index){
+      case 1:
+        if (channel) {
+          CAN_Send(0x04);
+        } else if (gain) {
+          CAN_Send(0x07);
+        } else {
+          CAN_Send(0x01);
+        }
+        break;
+      case 2:
+        if (channel) {
+          CAN_Send(0x05);
+        } else if (gain) {
+          CAN_Send(0x08);
+        } else {
+          CAN_Send(0x02);
+        }
+        break;
+      case 3:
+        if (channel) {
+          CAN_Send(0x06);
+        } else if (gain) {
+          CAN_Send(0x09);
+        } else {
+          CAN_Send(0x03);
+        }
+        break;
+    }
+  } else if (!strcmp(word, "tare")) {
+    next_word(word, &rest);
+    int id = retrieve_id(rest);
+    if (id == 0) {
+      UART2_Print(terse ? "Invalid\r\n" :"Invalid ID or device name.\r\n");
+      return;
+    }
+    if (last_index < 1 || last_index > 3) {
+      UART2_Print(terse ? "Invalid\r\n" :"Need to specify individual LC.\r\n");
+      return;
+    }
+    next_can_id = id;
+    UART2_Print(id);
+    UART2_Print(": ");
+    switch(last_index) {
+      case 1:
+        CAN_Send(0x0A);
+        break;
+      case 2:
+        CAN_Send(0x0B);
+        break;
+      case 3:
+        CAN_Send(0x0C);
+        break;
+    }
+  } else if (!strcmp(word, "sf")) {
+    next_word(word, &rest);
+    int id = retrieve_id(rest);
+    if (id == 0) {
+      UART2_Print(terse ? "Invalid\r\n" :"Invalid ID or device name.\r\n");
+      return;
+    }
+    if (last_index < 1 || last_index > 3) {
+      UART2_Print(terse ? "Invalid\r\n" :"Need to specify individual LC.\r\n");
+      return;
+    }
+    next_can_id = id;
+    UART2_Print(id);
+    UART2_Print(": ");
+    switch(last_index) {
+      case 1:
+        CAN_Send(0x0D);
+        break;
+      case 2:
+        CAN_Send(0x0E);
+        break;
+      case 3:
+        CAN_Send(0x0F);
+        break;
+    }
+  } else if (!strcmp(word, "cfg")) {
+    UART2_Print(terse ? "Err": "Unimplemented command.");
+  }
 }
 
 int sd_ok = 0;
@@ -2034,23 +2200,23 @@ void command_loop(char *rest) {
     UART2_Print("\r\n");
   }
 }
-void command_lc(char *rest) {
-  char word[32];
-  next_word(word, &rest);
-  if (!strcmp(word, "init")) {
-    HX711_Init(&hx);
-  } else if (!strcmp(word, "setup")) {
-    next_word(word, &rest);
-    float scale = atof(word);
-    float offs = atof(rest);
-    HX711_SetParams(&hx, scale, offs);
-  } else if (!strcmp(word, "read")) {
-    float weight = HX711_ReadWeight(&hx);
-    char buffer[256];
-    sprintf(buffer, "LC = %.2f lb\r\n", weight);
-    UART2_Print(buffer);
-  }
-}
+// void command_lc(char *rest) {
+//   char word[32];
+//   next_word(word, &rest);
+//   if (!strcmp(word, "init")) {
+//     HX711_Init(&hx);
+//   } else if (!strcmp(word, "setup")) {
+//     next_word(word, &rest);
+//     float scale = atof(word);
+//     float offs = atof(rest);
+//     HX711_SetParams(&hx, scale, offs);
+//   } else if (!strcmp(word, "read")) {
+//     float weight = HX711_ReadWeight(&hx);
+//     char buffer[256];
+//     sprintf(buffer, "LC = %.2f lb\r\n", weight);
+//     UART2_Print(buffer);
+//   }
+// }
 void command_mservo(char *rest) {
   char word[32];
   next_word(word, &rest);
