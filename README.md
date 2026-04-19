@@ -2,7 +2,7 @@
 
 <img src="https://wikis.mit.edu/confluence/download/attachments/147336067/lpc_1.png?version=3&modificationDate=1760673386000&api=v2" width="150" height="150">
 
-This repository contains the firmware associated with [Papyrus](https://wikis.mit.edu/confluence/pages/viewpage.action?pageId=324950985), a modular flight computer built as part of [Project Osiris](https://wikis.mit.edu/confluence/display/RocketTeam/Project+Osiris), a liquid fuel engine with active thrust vector and throttle control.
+This repository contains the firmware associated with [Papyrus](https://wikis.mit.edu/confluence/pages/viewpage.action?pageId=324950985), a modular system built as part of [Project Osiris](https://wikis.mit.edu/confluence/display/RocketTeam/Project+Osiris), a liquid fuel engine with active thrust vector and throttle control.
 
 Information on our boards can be found on our [wiki](https://wikis.mit.edu/confluence/pages/viewpage.action?pageId=147336067).
 
