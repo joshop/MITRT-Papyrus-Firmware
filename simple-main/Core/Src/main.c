@@ -1363,6 +1363,7 @@ void command_lc(char *rest) {
   if (!strcmp(word, "get")) {
     // check if we have a channel arg
     next_word(word, &rest);
+    char *dev = rest;
     int id = retrieve_id(rest);
     int channel = 0;
     int gain = 0;
@@ -1393,7 +1394,7 @@ void command_lc(char *rest) {
       return;
     }
     next_can_id = id;
-    UART2_Print(id);
+    UART2_Print(dev);
     UART2_Print(": ");
     CAN_Rx_Func = CAN_Rx_LC;
     switch(last_index){
@@ -1437,7 +1438,7 @@ void command_lc(char *rest) {
       return;
     }
     next_can_id = id;
-    UART2_Print(id);
+    UART2_Print(rest);
     UART2_Print(": ");
     switch(last_index) {
       case 1:
@@ -1462,7 +1463,7 @@ void command_lc(char *rest) {
       return;
     }
     next_can_id = id;
-    UART2_Print(id);
+    UART2_Print(rest);
     UART2_Print(": ");
     switch(last_index) {
       case 1:
@@ -1477,6 +1478,17 @@ void command_lc(char *rest) {
     }
   } else if (!strcmp(word, "cfg")) {
     UART2_Print(terse ? "Err": "Unimplemented command.");
+  } else if (!strcmp(word, "reset")) {
+    UART2_Print(terse ? "OK" : "Board reset.");
+    CAN_Send(0xFF);
+  } else if (!*word) {
+    cmd_invalid = 1;
+    UART2_Print(terse ? "Invalid\r\n" : "Option needed for \"lc\".\r\n");
+  } else {
+    cmd_invalid = 1;
+    UART2_Print(terse ? "Invalid" : "Unknown option for \"lc\": ");
+    if (!terse) UART2_Print(word);
+    UART2_Print("\r\n");
   }
 }
 
