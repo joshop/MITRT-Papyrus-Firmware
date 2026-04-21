@@ -365,26 +365,56 @@ int main(void)
           CAN_SendAck(txData, 5);
           continue;
         case 0x04:
-          *(uint32_t*)(txData+1) = HX711_Tare(&CS_0, 0);
+          HX711_ReadData(1, 0, 0);
+          *(uint32_t*)(txData+1) = HX711_ReadData(1, 0, 0);
           CAN_SendAck(txData, 5);
           continue;
         case 0x05:
-          *(uint32_t*)(txData+1) = HX711_Tare(&CS_1, 1);
+          HX711_ReadData(1, 1, 0);
+          *(uint32_t*)(txData+1) = HX711_ReadData(1, 1, 0);
           CAN_SendAck(txData, 5);
           continue;
         case 0x06:
-          *(uint32_t*)(txData+1) = HX711_Tare(&CS_2, 2);
+          HX711_ReadData(1, 2, 0);
+          *(uint32_t*)(txData+1) = HX711_ReadData(1, 2, 0);
           CAN_SendAck(txData, 5);
           continue;
         case 0x07:
-          *(uint32_t*)(txData+1) = HX711_ScaleFactor(&CS_0, 0);
+          HX711_ReadData(0, 0, 1);
+          *(uint32_t*)(txData+1) = HX711_ReadData(0, 0, 1);
           CAN_SendAck(txData, 5);
           continue;
         case 0x08:
-          *(uint32_t*)(txData+1) = HX711_ScaleFactor(&CS_0, 1);
+          HX711_ReadData(0, 1, 1);
+          *(uint32_t*)(txData+1) = HX711_ReadData(0, 1, 1);
           CAN_SendAck(txData, 5);
           continue;
         case 0x09:
+          HX711_ReadData(0, 2, 1);
+          *(uint32_t*)(txData+1) = HX711_ReadData(0, 2, 1);
+          CAN_SendAck(txData, 5);
+          continue;
+        case 0x10:
+          *(uint32_t*)(txData+1) = HX711_Tare(&CS_0, 0);
+          CAN_SendAck(txData, 5);
+          continue;
+        case 0x11:
+          *(uint32_t*)(txData+1) = HX711_Tare(&CS_1, 1);
+          CAN_SendAck(txData, 5);
+          continue;
+        case 0x12:
+          *(uint32_t*)(txData+1) = HX711_Tare(&CS_2, 2);
+          CAN_SendAck(txData, 5);
+          continue;
+        case 0x13:
+          *(uint32_t*)(txData+1) = HX711_ScaleFactor(&CS_0, 0);
+          CAN_SendAck(txData, 5);
+          continue;
+        case 0x14:
+          *(uint32_t*)(txData+1) = HX711_ScaleFactor(&CS_0, 1);
+          CAN_SendAck(txData, 5);
+          continue;
+        case 0x15:
           *(uint32_t*)(txData+1) = HX711_ScaleFactor(&CS_2, 2);
           CAN_SendAck(txData, 5);
           continue;
