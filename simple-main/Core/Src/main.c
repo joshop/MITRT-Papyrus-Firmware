@@ -247,7 +247,7 @@ void CAN_Rx_TC(FDCAN_RxHeaderTypeDef rxHeader) {
   if (lastRxData[1] == 0xFF && lastRxData[2] == 0xFF) {
     sprintf(buff, terse ? "\r\nErr" : "TC Fault\r\n");
   } else {
-    sprintf(buff, terse ? "%.2f\r\n" : "T = %.2f C\r\n", tc_tf);
+    sprintf(buff, terse ? "%.2f\r\n" : "T=%.2fC\r\n", tc_tf);
   }
   UART2_Print(buff);
 }
@@ -264,7 +264,7 @@ void CAN_Rx_PT(FDCAN_RxHeaderTypeDef rxHeader) {
   char buff[64];
   int16_t pt_p = *(int16_t*)(lastRxData+1);
   float pt_v = pt_translate_mv(rxHeader.Identifier, last_index, pt_p);
-  sprintf(buff, terse ? "%.2f\r\n" : "P = %.2f psi\r\n", pt_v);
+  sprintf(buff, terse ? "%.1f\r\n" : "P=%.1fpsi\r\n", pt_v);
   UART2_Print(buff);
 }
 float last_pt_v;
@@ -276,9 +276,9 @@ void CAN_Rx_PT_Quiet(FDCAN_RxHeaderTypeDef rxHeader) {
 }
 void CAN_Rx_Relay(FDCAN_RxHeaderTypeDef rxHeader) {
   if (lastRxData[1]) {
-    UART2_Print(terse ? "ON\rn" : "R = ON\r\n");
+    UART2_Print(terse ? "ON\rn" : "R=ON\r\n");
   } else {
-    UART2_Print(terse ? "OFF\rn" : "R = OFF\r\n");
+    UART2_Print(terse ? "OFF\rn" : "R=OFF\r\n");
   }
 }void CAN_Rx_RelayPower(FDCAN_RxHeaderTypeDef rxHeader) {
   uint16_t vin = *(uint16_t*)(lastRxData+1);
@@ -292,7 +292,7 @@ void CAN_Rx_TCStat(FDCAN_RxHeaderTypeDef rxHeader) {
   uint8_t tc_f = lastRxData[1];
   int16_t tc_t = *(int16_t*)(lastRxData+2);
   float tc_tf = ((float)tc_t) / 16.0;
-  sprintf(buff, terse ? "%.2f" : "CJC = %.2f C; ", tc_tf);
+  sprintf(buff, terse ? "%.2f" : "CJC=%.2f C; ", tc_tf);
   UART2_Print(buff);
   if (tc_f == 0) {
     UART2_Print(terse ? "ok" : "no fault\r\n");
@@ -1377,7 +1377,7 @@ void list_all_files() {
   }
   f_closedir(&dir);
 }
-void process_command(char *buf);
+void process_command(char *buf, int no_program);
 void command_file(char *rest) {
   FIL fil;
   FRESULT fres;
@@ -1489,7 +1489,7 @@ void command_file(char *rest) {
       TCHAR *rres = f_gets((TCHAR*)cmdbuf, 320, &fil);
       if (cmdbuf[strlen(cmdbuf)-1] == '\n') cmdbuf[strlen(cmdbuf)-1] = 0;
       if (rres == 0) break;
-      process_command(cmdbuf);
+      process_command(cmdbuf, 1);
     }
     f_close(&fil);
   } else if (!strcmp(word, "program")) {
@@ -1500,6 +1500,9 @@ void command_file(char *rest) {
       return;
     }
     cur_programming = 1;
+    UART2_Print("Begin programming: ");
+    UART2_Print(rest);
+    UART2_Print("\r\n");
   } else if (!*word) {
     cmd_invalid = 1;
     UART2_Print(terse ? "Invalid\r\n" :"Option needed for \"file\".\r\n");
@@ -2065,14 +2068,14 @@ void command_mservo(char *rest) {
 }
 int prog_lines = 0;
 int adventuremain();
-void process_command(char *buf) {
+void process_command(char *buf, int no_program) {
   char word[32];
   FRESULT fres;
   // int wlen = strcspn(buf, " ");
   // memcpy(word, buf, wlen);
   // word[wlen] = 0;
   // buf += wlen + 1;
-  if (cur_programming) {
+  if (cur_programming && !no_program) {
     if (!strcmp(buf, "file endp")) {
       char buffer[64];
       sprintf(buffer, terse ? "OK %d\r\n" :"Programmed %d lines.\r\n", prog_lines);
@@ -2081,6 +2084,9 @@ void process_command(char *buf) {
       cur_programming = 0;
       f_close(&pfil);
     } else {
+      UART2_Print("[");
+      UART2_Print(buf);
+      UART2_Print("]\r\n");
       int len = strlen(buf);
       buf[len] = '\n';
       buf[++len] = 0;
@@ -2260,7 +2266,7 @@ int main(void)
   setvbuf(stdin, NULL, _IONBF, 0);
   UART2_Print("Papyrus reset\r\n");
   muted |= 1;
-  process_command("file run startup.scr");
+  process_command("file run startup.scr", 1);
   muted &= ~1;
 
   HX711_Init(&hx);
@@ -2283,7 +2289,7 @@ int main(void)
         /*UART2_Print("> ");
         UART2_Print(cmdBuf);
         UART2_Print("\r\n");*/
-        process_command(cmdBuf);
+        process_command(cmdBuf, 0);
         idx = 0;
       }
       else {
@@ -2297,7 +2303,7 @@ int main(void)
     while (t != NULL) {
       if (t->timeout <= 0) {
         if (t->quiet) muted |= 1;
-        process_command(t->cmdbuf);
+        process_command(t->cmdbuf, 1);
         muted &= ~1;
         if (t->reload) {
           t->timeout = t->reload;

@@ -33,7 +33,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
-#define CAN_CMD_ID     111
+#define CAN_CMD_ID     105
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
